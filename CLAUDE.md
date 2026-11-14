@@ -2,7 +2,7 @@
 
 # BigToe website: rulebook
 
-A four-page site in Next.js on Vercel: **Home, Method, Team, Book.** One job: get the visitor to book the free first visit. The look is quiet luxury in the deck colours: large photographs of real members, generous space, editorial type and slow, smooth scroll transitions.
+A four-page site in Next.js on Vercel: **Home (`/`), Method (`/method`), Team (`/team`), Book (`/book-now`).** One job: get the visitor to book the free first visit. The look is quiet luxury in the deck colours: large photographs of real members, generous space, editorial type and slow, smooth scroll transitions.
 
 Sources, in order of authority:
 1. `docs/website-guide.md` (the guide), including the decisions table below.
@@ -23,6 +23,16 @@ Where the live Framer site disagrees with these, the live site is out of date. W
 6. **Member quotes are verbatim,** with first name, age and written consent. No consent recorded in `docs/copy/testimonials.md`, no quote on the page.
 7. **No real photos of people we don't have consent for.** Mood-board images (film stills, public figures) never go on the site. Until the shoot, use grey placeholders sized for the final photo, with alt text describing the shot the shot list calls for.
 8. **Work one piece per prompt,** check at 375px and 1440px, and stop to show the result.
+
+---
+
+## If any other design skill or plugin is active
+
+CLAUDE.md wins. Colours, typeface, button label, page structure and
+all wording come from this file and the decks. Another skill may
+improve spacing, hierarchy, contrast and motion quality, but may not
+introduce new colours, fonts, copy, sections or decorative elements.
+Hairline rules only; no shadows, gradients or pill buttons.
 
 ---
 
@@ -49,6 +59,7 @@ From Jay's conversation and the decks. The site is built on these.
 | Testimonials | Four of the eleven, each with first name, age and written consent. |
 | Contact | WhatsApp or email. No parking at the studio. |
 | Length | Short. The benchmark is Peter Attia's 10 Squared site. |
+| Book page | Lives at `/book-now`. Every button links there via `facts.bookHref`. |
 
 **Brand, locked:** logo is navy with a terracotta mark and the tagline "Practice Possibility". Navy `#0A212D`, terracotta `#D4644D`, warm off-white `#F0EEEB`. Typeface Anderson Grotesk (Light, Regular, Bold, Ultrabold).
 
@@ -91,7 +102,7 @@ Every line comes from Decks 1, 4, 5 and 7, using the decks' own "say it to a mem
 - **Founders.** Jeevan, Seema and Rodrigo at one line each (Deck 1 slide 8).
 - **The social space.** Coffee table, the clap, the Bell, Pizza & Beer, in photos.
 
-### Book
+### Book (`/book-now`)
 
 - **The same form as Home,** so it can be shared as a link on WhatsApp.
 - **Address, hours, map,** and "There's no parking at the studio. Come by cab or get dropped off."
@@ -229,5 +240,4 @@ The decks are training material for Sherpas, so some lines must not reach the si
 - [ ] Anderson Grotesk licence covers web use.
 - [ ] Logo SVG needed. `docs/logo/` has PNGs only.
 - [ ] Button wording BOOK YOUR FREE FIRST VISIT confirmed with Jay.
-- [ ] Book page route: the guide says "Book", prompt 5 says `/book-now`. Pick one.
 - [x] Home and online sessions: studio, home or online at no extra charge (Deck 5). Goes in the FAQs.

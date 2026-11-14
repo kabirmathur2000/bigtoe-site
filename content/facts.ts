@@ -16,8 +16,8 @@ export const facts = {
 
   /** The one button label used everywhere. Wording to confirm with Jay. */
   ctaLabel: "BOOK YOUR FREE FIRST VISIT",
-  /** Book page route. Open item: guide says "Book", prompt 5 says /book-now. */
-  bookHref: "/book",
+  /** Book page route (decisions table). */
+  bookHref: "/book-now",
 
   heroLine: "The second half of life should be the stronger half.",
 
