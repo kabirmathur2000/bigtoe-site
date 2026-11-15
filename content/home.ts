@@ -84,3 +84,58 @@ export const patterns = {
     age: todo("age"),
   },
 } as const;
+
+export const firstHour = {
+  /** Guide, Home block 4. */
+  label: "YOUR FIRST HOUR",
+  headline: "Your first hour.",
+  steps: [
+    {
+      id: "visit",
+      title: "The first visit is free.",
+      /** Guide; Deck 2 slide 14. */
+      body: "An hour with a Sherpa. A trainer gives orders. A Sherpa walks beside you.",
+      shot: "The greeting at the door: a Sherpa welcoming a new member",
+    },
+    {
+      id: "audit",
+      title: "Then the Reserve Audit.",
+      meta: facts.reserveAudit.first,
+      /** Guide (about 60 minutes); Deck 7 slide 5. */
+      body: "About 60 minutes. Four dials:",
+      dials: ["Body composition", "Balance and mobility", "Functional strength", "Conditioning"],
+      close: "Every test here is a job your body does in daily life.",
+      shot: "The audit: the body scan, a Sherpa beside the member",
+    },
+    {
+      id: "score",
+      title: "You leave with your Strength Reserve Score.",
+      /** Deck 7 slides 2 and 12. */
+      body: "Every sport has a score. This is ours. Your Strength Reserve is only as good as your weakest dial. That is where we start.",
+      shot: "One audit test in progress, the Sherpa within reach",
+    },
+    {
+      id: "coffee",
+      title: "Then coffee.",
+      /** Deck 1 slide 18. */
+      body: "A table, a seat, a coffee, and people who notice when you're gone.",
+      shot: "Coffee being poured at the social table after the audit",
+    },
+  ],
+  /** Deck 2 slide 10. */
+  stay: {
+    headline: "Seen. Belong. Progress.",
+    items: [
+      { title: "Seen", body: "Every member matters as a person." },
+      { title: "Belong", body: "The floor is a team." },
+      { title: "Progress", body: "You can see yourself getting better." },
+    ],
+  },
+  /** docs/copy/testimonials.md, testimonial 2. Consent still needed. */
+  testimonial: {
+    quote:
+      "Once I was absentmindedly rubbing my arm after an exercise, and he picked up on it instantly, checked on me throughout the class, and adjusted the workout. It's that level of attention that makes you feel seen.",
+    name: todo("first name"),
+    age: todo("age"),
+  },
+} as const;
