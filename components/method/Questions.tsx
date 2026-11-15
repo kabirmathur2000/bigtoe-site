@@ -12,14 +12,10 @@ export function Questions() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <Section className="py-section">
+    <Section chapter>
       <div className="mx-auto max-w-wide px-gutter">
         <div className="md:ml-[8.333%] md:max-w-3xl">
-          <Reveal>
-            <RevealItem as="p" className="text-label uppercase opacity-70">{questions.label}</RevealItem>
-          </Reveal>
-
-          <Reveal as="ul" className="mt-8 border-t border-current/15" stagger={0.1}>
+          <Reveal as="ul" className="border-t border-current/15" stagger={0.1}>
             {questions.items.map((item, i) => {
               const isOpen = open === i;
               const panel = `${id}-q${i}`;
@@ -31,7 +27,7 @@ export function Questions() {
                       aria-expanded={isOpen}
                       aria-controls={panel}
                       onClick={() => setOpen(isOpen ? null : i)}
-                      className="flex w-full items-baseline justify-between gap-6 py-6 text-left text-h3"
+                      className="flex w-full items-baseline justify-between gap-6 py-5 text-left text-h3"
                     >
                       <span>{item.q}</span>
                       <span aria-hidden className={`shrink-0 transition-transform duration-500 ease-soft ${isOpen ? "rotate-45" : ""}`}>+</span>

@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Section } from "@/components/motion/SectionTone";
 import { poem } from "@/content/home";
 
@@ -18,14 +17,11 @@ export function Poem() {
   const last = poem.stanzas.length - 1;
 
   return (
-    <Section className="py-section">
+    <Section chapter>
       <div className="mx-auto max-w-wide px-gutter">
-        <Reveal className="md:ml-[8.333%]">
-          <RevealItem as="p" className="text-label uppercase opacity-70">{poem.label}</RevealItem>
-        </Reveal>
-        <div className="mt-12 max-w-[20em] text-[1.625rem] leading-[1.2] md:mt-16 md:ml-[8.333%] md:text-h2">
+        <div className="max-w-[20em] text-[1.625rem] leading-[1.2] md:ml-[8.333%] md:text-h2">
           {poem.stanzas.map((stanza, s) => (
-            <div key={s} className={s > 0 ? "mt-[1.6em]" : undefined}>
+            <div key={s} className={s > 0 ? "mt-[1.1em]" : undefined}>
               {stanza.map((line, i) => {
                 const className = `-indent-[1em] pl-[1em] ${s === last ? "" : "opacity-65"}`;
                 if (reduce) return <p key={line} className={className}>{line}</p>;

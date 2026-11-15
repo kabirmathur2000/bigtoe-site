@@ -16,10 +16,14 @@
   --page-fg: var(--navy);
 
   --gutter: 20px;
+  /* Fixed header, and the mobile bottom bar that covers the foot of the screen. */
+  --header-h: 4rem;
+  --bar-h: 4.5rem;
+  --chapter-pad: clamp(1.25rem, 4.5svh, 4rem);
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 @media (min-width: 768px) {
-  :root { --gutter: 48px; }
+  :root { --gutter: 48px; --header-h: 5rem; --bar-h: 0px; }
 }
 @media (min-width: 1200px) {
   :root { --gutter: 64px; }
@@ -119,6 +123,35 @@ html.tones-managed [data-tone] {
 }
 
 /* ------------------------------------------------------------------ */
+/* Chapters: each fills the screen below the header, content centred, */
+/* clear of the mobile bottom bar. Taller content simply grows.       */
+/* In a layer so utilities on a chapter can override it.              */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .chapter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100svh - var(--header-h));
+    padding-top: var(--chapter-pad);
+    padding-bottom: calc(var(--chapter-pad) + var(--bar-h));
+    scroll-margin-top: var(--header-h);
+  }
+  /* Auto side margins would otherwise shrink a centred container to its content. */
+  .chapter > * { width: 100%; }
+}
+
+/* Guided scrolling on touch screens: the browser's own proximity snap   */
+/* (Lenis handles mouse and trackpad). Never with reduced motion.         */
+@media (pointer: coarse) and (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: var(--header-h);
+  }
+  [data-chapter] { scroll-snap-align: start; }
+}
+
+/* ------------------------------------------------------------------ */
 /* Load-time motion that needs no JS (hero subline, button, media).   */
 /* ------------------------------------------------------------------ */
 @keyframes fade-up {
@@ -133,23 +166,14 @@ html.tones-managed [data-tone] {
 .settle { animation: settle 2400ms var(--ease-soft) both; }
 
 /* ------------------------------------------------------------------ */
-/* Member words band: a few words at a time, a 40s loop.              */
+/* Member words: each word fades in once and stays.                   */
 /* ------------------------------------------------------------------ */
-@keyframes member-word {
-  0% { opacity: 0; transform: translateY(12px); }
-  5%, 18% { opacity: 1; transform: none; }
-  23%, 100% { opacity: 0; transform: none; }
-}
-/* Each group of words arrives (1/6 of the loop apart) before the last leaves. */
 .member-word {
-  animation: member-word 40s ease-in-out var(--delay, 0s) infinite both;
-  transition: color 700ms var(--ease-soft);
+  transition: opacity 900ms var(--ease-soft), color 700ms var(--ease-soft);
 }
 .member-word:hover,
 .member-word[data-picked] {
   color: var(--color-terracotta);
-  opacity: 1 !important;
-  animation-play-state: paused;
 }
 
 /* ------------------------------------------------------------------ */
@@ -180,10 +204,6 @@ html.tones-managed [data-tone] {
   /* Hover zoom on photographs is movement: off. */
   [class*="group-hover:scale"] {
     transform: none !important;
-  }
-  .member-word {
-    animation: none !important;
-    opacity: 1;
   }
   /* The page cross-fade is a fade, so it stays; only the group's
      position and size animation (movement) is removed. */

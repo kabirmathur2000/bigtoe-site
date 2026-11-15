@@ -9,15 +9,16 @@ import { booking } from "@/content/booking";
  */
 export function BookingSection({ id = "waitlist" }: { id?: string }) {
   return (
-    <Section id={id} tone="navy" className="py-section">
+    <Section chapter id={id} tone="navy" className="pb-(--chapter-pad)">
       {/* Marks the form so the mobile bottom bar hides while it is on screen. */}
       <div data-booking-form />
       <div className="mx-auto max-w-wide px-gutter">
-        <div className="max-w-2xl md:ml-[8.333%]">
-          <Reveal>
+        {/* Stacked on phones and tablets; heading beside the form on wide screens. */}
+        <div className="max-w-2xl md:ml-[8.333%] lg:grid lg:max-w-none lg:grid-cols-12 lg:gap-12 lg:ml-0">
+          <Reveal className="lg:col-span-4 lg:col-start-2">
             <RevealItem as="h2" className="text-h1">{booking.heading}</RevealItem>
           </Reveal>
-          <div className="mt-12 md:mt-16">
+          <div className="mt-8 md:mt-10 lg:col-span-6 lg:col-start-6 lg:mt-0">
             <BookingForm />
           </div>
         </div>

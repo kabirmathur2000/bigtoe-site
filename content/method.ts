@@ -7,7 +7,7 @@ import { facts } from "./facts";
 
 /** Chapter 1. Deck 1 slide 11 (the light-bulb picture from slide 10). */
 export const fades = {
-  label: "WHAT FADES",
+  /** Deck label, not shown (it shapes the page order): WHAT FADES. */
   headline: "Three things fade with age. We train all three.",
   bulbs: [
     { name: "Muscle", line: "The size of the bulb." },
@@ -20,7 +20,7 @@ export const fades = {
 
 /** Chapter 2. Deck 4: slide 16 summary line (cut), slides 6, 7, 10 and 13. */
 export const training = {
-  label: "HOW WE TRAIN",
+  /** Deck label, not shown (it shapes the page order): HOW WE TRAIN. */
   headline: "Barefoot, free weights, one supervised hour.",
   lines: [
     "Your foot is built to feel the ground.",
@@ -35,7 +35,7 @@ export const training = {
 
 /** Chapter 3. Deck 7 slides 1, 5 and 12; the score as a sport (Deck 7 cover). */
 export const scoreboard = {
-  label: "THE SCOREBOARD",
+  /** Deck label, not shown (it shapes the page order): THE SCOREBOARD. */
   headline: "Every sport has a score. This is ours.",
   /** Always shown above the dials, so they never read as a member's results. */
   example: "Example",
@@ -58,7 +58,7 @@ export const scoreboard = {
 
 /** Chapter 5. Approved list: Deck 4 slide 21, Deck 1 slides 18 and 22, Deck 2, Deck 5 slide 17. */
 export const questions = {
-  label: "QUESTIONS",
+  /** Deck label, not shown (it shapes the page order): QUESTIONS. */
   items: [
     {
       q: "Only twice a week? Will I see results?",
@@ -102,7 +102,7 @@ export const questions = {
 
 export const patterns = {
   /** Guide, Find Your Pattern (moved from Home to Method). */
-  label: "WHO WE SERVE",
+  /** Deck label, not shown (it shapes the page order): WHO WE SERVE. */
   headline: "Find your pattern.",
   /**
    * The four personas (Deck 1 slide 19; Deck 3 slide 8 calls them

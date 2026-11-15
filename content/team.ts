@@ -6,7 +6,7 @@ import { todo } from "./facts";
 
 /** Chapter 1. docs/copy/jay-story.md, word for word. Label: Deck 1 slide 2. */
 export const story = {
-  label: "IN JAY'S WORDS",
+  /** Deck label, not shown (it shapes the page order): IN JAY'S WORDS. */
   headline: "Why we built this",
   paragraphs: [
     "In 2019, I injured my back at a gym. It put me flat for six months. Lying there, I asked what I had actually built. Wealth: full. Health: low. Time to enjoy it: gone.",
@@ -21,7 +21,7 @@ export const story = {
 
 /** Chapter 2. Deck 1 slide 25. */
 export const sherpas = {
-  label: "WHO CARRIES IT FORWARD",
+  /** Deck label, not shown (it shapes the page order): WHO CARRIES IT FORWARD. */
   headline: "Behind each face is a real person.",
   todo: todo("confirm Sherpa name spellings"),
   /**
@@ -48,7 +48,7 @@ export const sherpas = {
  * from docs/copy/founder-lines.md only once marked approved: none yet.
  */
 export const foundersNote = {
-  label: "NOTE FROM THE FOUNDERS",
+  /** Deck label, not shown (it shapes the page order): NOTE FROM THE FOUNDERS. */
   headline: "Practice Possibility",
   intro: [
     "We are four founders, aged 41 to 59. At this age, society expects you to start \"slowing down\", accepting the nagging back, the fading energy, or the shrinking horizon as a natural tax on aging. We chose a different path: the work of staying capable.",
@@ -79,7 +79,7 @@ export const foundersNote = {
 
 /** Chapter 4. Deck 1 slide 18, cut, never reworded. */
 export const social = {
-  label: "THE SOCIAL SPACE",
+  /** Deck label, not shown (it shapes the page order): THE SOCIAL SPACE. */
   headline: "Fun is how people stay in the game.",
   body: "BigToe is life in miniature: a table, a seat, a coffee, and people who notice when you’re gone. Every quarter we hold a Pizza & Beer Party. Every hour ends in a clap.",
   close: "You don’t climb alone.",

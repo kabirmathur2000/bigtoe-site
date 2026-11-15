@@ -5,7 +5,7 @@ import { facts, todo } from "./facts";
 
 export const book = {
   /** Deck 5 slide 17 label. */
-  label: "TRAINING ANYWHERE",
+  /** Deck label, not shown (it shapes the page order): TRAINING ANYWHERE. */
   /** Deck 5 slide 17. */
   headline: facts.where,
   addressLabel: "Address",

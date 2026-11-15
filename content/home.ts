@@ -1,14 +1,13 @@
 /**
- * Home page copy: six chapters, each opening with a Deck 1 slide label.
+ * Home page copy: six chapters in Deck 1 order. The deck labels shape the order but are not shown.
  * Every line comes from CLAUDE.md, the guide or the decks, cut but never
  * reworded; facts are imported, never retyped. American spelling.
  */
 import { facts, todo } from "./facts";
-import { noticed } from "./testimonials";
 
 /** Chapter 1, the hero. Deck 1 slide 3. */
 export const hero = {
-  label: "THE MAIN POINT",
+  /** Deck label, not shown (it shapes the page order): THE MAIN POINT. */
   headline: "We train for a sport called life.",
   subline: "Most people play it untrained. We train for it.",
   media: {
@@ -19,7 +18,7 @@ export const hero = {
 
 /** Chapter 2. Deck 1 slide 4, cut. */
 export const belief = {
-  label: "THE CORE BELIEF",
+  /** Deck label, not shown (it shapes the page order): THE CORE BELIEF. */
   headline: facts.heroLine,
   lines: ["The problem isn't your age.", "Capability is built at any age, not spent."],
 } as const;
@@ -31,7 +30,7 @@ export const belief = {
  */
 export const poem = {
   /** Deck 1 slide 5 label. */
-  label: "OUR MISSION",
+  /** Deck label, not shown (it shapes the page order): OUR MISSION. */
   stanzas: [
     ["We get better at what we practice."],
     [
@@ -46,7 +45,7 @@ export const poem = {
 
 /** Chapter 4. Deck 1 slide 15, then the guide's first steps. */
 export const answer = {
-  label: "OUR ANSWER",
+  /** Deck label, not shown (it shapes the page order): OUR ANSWER. */
   term: "Strength Reserve",
   /** Deck 1 slide 15. */
   definition: "The capacity you build above what daily life asks of you.",
@@ -84,15 +83,13 @@ export const memberWords = {
     "personal", "trust", "patient", "compassion", "grounding", "home",
     "rare", "balance", "seen", "sacred", "no injuries", "a way of life",
   ],
-  /** docs/copy/testimonials.md, testimonial 2 (the Sherpa who noticed). */
-  testimonial: noticed,
-  /** Deck 9 slide 13, Jay. */
+  /** Deck 9 slide 13, Jay. Fades in once every word is in. */
   close: "No policy produces that. No manual teaches it.",
 } as const;
 
 /** Chapter 6. Deck 1 slide 24, then the price and guarantee, then the form. */
 export const promise = {
-  label: "OUR PROMISE",
+  /** Deck label, not shown (it shapes the page order): OUR PROMISE. */
   headline: "Look better. Move better. Feel better.",
   rows: [
     { label: "Price", value: facts.price.range, note: facts.price.note },

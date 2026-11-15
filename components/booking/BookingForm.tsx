@@ -140,14 +140,14 @@ export function BookingForm() {
   );
 
   return (
-    <form ref={formRef} noValidate onSubmit={onSubmit} aria-busy={pending} className="space-y-10">
+    <form ref={formRef} noValidate onSubmit={onSubmit} aria-busy={pending} className="space-y-7 md:space-y-8">
       {/* Spam trap: off-screen, skipped by keyboard and screen readers. */}
       <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
         <label htmlFor={`${id}-${HONEYPOT}`}>{booking.honeypotLabel}</label>
         <input id={`${id}-${HONEYPOT}`} name={HONEYPOT} type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
       </div>
 
-      <div className="grid gap-10 md:grid-cols-2 md:gap-8">
+      <div className="grid gap-7 md:grid-cols-2 md:gap-8">
         {text("firstName", "given-name")}
         {text("lastName", "family-name")}
       </div>
@@ -162,21 +162,22 @@ export function BookingForm() {
         <FieldError id={`${id}-contact-error`} message={errors.contact} />
       </div>
 
-      {select("day120")}
-
-      {select("heardFrom")}
+      <div className="grid gap-7 md:grid-cols-2 md:gap-8">
+        {select("day120")}
+        {select("heardFrom")}
+      </div>
 
       <div>
         <FieldLabel htmlFor={`${id}-note`}>
           {f.note.label} <span className="ml-2 font-normal normal-case tracking-normal opacity-70">({f.note.optional})</span>
         </FieldLabel>
         <textarea
-          id={`${id}-note`} name="note" rows={3} maxLength={MAX_LENGTH.note} value={values.note} onChange={set("note")}
+          id={`${id}-note`} name="note" rows={2} maxLength={MAX_LENGTH.note} value={values.note} onChange={set("note")}
           className={`${field} resize-y`}
         />
       </div>
 
-      <div className="pt-2">
+      <div>
         <Button type="submit" disabled={pending} className="w-full disabled:opacity-60 md:w-auto">
           {booking.submit}
         </Button>

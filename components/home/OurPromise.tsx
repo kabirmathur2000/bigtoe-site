@@ -8,11 +8,10 @@ import { promise } from "@/content/home";
  */
 export function OurPromise() {
   return (
-    <Section className="py-section">
+    <Section chapter>
       <div className="mx-auto grid max-w-wide gap-12 px-gutter md:grid-cols-12">
         <Reveal className="md:col-span-6 md:col-start-2">
-          <RevealItem as="p" className="text-label uppercase opacity-70">{promise.label}</RevealItem>
-          <RevealItem as="h2" className="mt-6 text-h1">{promise.headline}</RevealItem>
+          <RevealItem as="h2" className="text-h1">{promise.headline}</RevealItem>
         </Reveal>
 
         <Reveal as="ul" className="border-t border-current/15 md:col-span-4 md:col-start-8 md:self-end" stagger={0.18}>

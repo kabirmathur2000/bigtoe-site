@@ -7,9 +7,9 @@
 - **Clean, and less is more.** Every chapter fits one screen, with about 40 words of body text at most. When in doubt, cut.
   - **Exempt: Jay's story and the founders' note,** because they are quoted word for word. They sit in a narrow column (about 34rem) with generous line spacing (about 1.8), and each paragraph fades in on its own as it is reached.
 - **American spelling throughout** (aging, realizing), matching the studio wall. Deck lines with British spelling (programme, pretence, ageing, practise) are quoted in American spelling; that is the only change allowed to a quoted line.
-- **Story first.** Each page is a short story in chapters. Each chapter opens with a small spaced-out label in Anderson Grotesk Bold, in the style of Deck 1's slide labels (THE MAIN POINT, THE CORE BELIEF, OUR MISSION, OUR ANSWER, OUR PROMISE).
+- **Story first.** Each page is a short story in chapters. **Deck labels shape the order of each page but are not shown** (THE MAIN POINT, THE CORE BELIEF, OUR MISSION, OUR ANSWER, OUR PROMISE, and their equivalents on Method, Team and Book live as comments in `content/*.ts`). The one label shown on the site is "IN OUR MEMBERS' WORDS".
 - **References.** 10 Squared (10squared.com) for absolute simplicity: single column, few words, one ask, no decoration. Apple (apple.com) for a few luxurious transitions: full-bleed chapters, large type, one image pinned while text moves past.
-- **Home has at most four signature motions:** the hero video, the poem's line-by-line reveal, the word loop, and the slow fade into the waitlist. Everything else only fades in quietly. All motion obeys the soft-fade and reduced-motion rules below, and only the three brand colors are used.
+- **Home has at most four signature motions:** the hero video, the poem's line-by-line reveal, the word cloud building as you scroll, and the slow fade into the waitlist. Everything else only fades in quietly. All motion obeys the soft-fade and reduced-motion rules below, and only the three brand colors are used.
 
 A four-page site in Next.js on Vercel: **Home (`/`), Method (`/method`), Team (`/team`), Book (`/book-now`).** One job: get the visitor to book the free first visit. The look is quiet luxury in the deck colours: large photographs of real members, generous space, editorial type and slow, smooth scroll transitions.
 
@@ -80,13 +80,14 @@ Four pages, one job: get the visitor to book the free first visit.
 
 ### Home: six chapters and the waitlist
 
-Each chapter fits one screen and opens with its Deck 1 label.
+Each chapter fills one screen, in Deck 1's order (the labels are not shown).
 
 1. **THE MAIN POINT** (the hero). "We train for a sport called life." and "Most people play it untrained. We train for it." (Deck 1 slide 3). One button. Full-bleed video placeholder: a member with a Sherpa beside them.
 2. **THE CORE BELIEF.** "The second half of life should be the stronger half." Then "The problem isn't your age." and "Capability is built at any age, not spent." (Deck 1 slide 4, cut, never reworded).
 3. **OUR MISSION.** The studio-wall poem, unchanged (see "Fixed wording"). Left-aligned narrow column, Regular at sub-headline size, each line revealed on its own, a longer pause between stanzas, only the last line at full strength.
 4. **OUR ANSWER.** Strength Reserve: "The capacity you build above what daily life asks of you." (Deck 1 slide 15). Then three short steps beside one photograph: the free first visit; the Reserve Audit in sessions 2 to 4; test, train, retest. One screen, so no pinned scroll: a simple fade.
-5. **IN OUR MEMBERS' WORDS.** The word loop (words in `content/home.ts`, from the BigToe word cloud poster; a few at a time over 40 seconds; hover or tap for terracotta; static under reduced motion). Then testimonial 2 (the Sherpa who noticed) and "No policy produces that. No manual teaches it." (Deck 9 slide 13).
+5. **IN OUR MEMBERS' WORDS** (the one label shown). The word cloud (words in `content/home.ts`, from the BigToe word cloud poster) pins while the visitor scrolls about one and a half screens; words are added a small group at a time, largest first, and stay (scrolling back never removes them). When all are in, "No policy produces that. No manual teaches it." (Deck 9 slide 13) fades in and the chapter releases. Hover or tap turns a word terracotta. Reduced motion: all words at once, no pin.
+   - **Member quotes row,** straight after (modelled on 10 Squared's "What Our Members Say"): one card per quote in `docs/copy/testimonials.md`, verbatim, with first name and age (visible TODOs while missing, plus a consent TODO). Swiped on touch; arrow buttons, arrow keys or drag on desktop; settles one card at a time with the next card partly visible. No autoplay. Light cards, hairline borders. **No card goes live without recorded written consent.**
 6. **OUR PROMISE.** "Look better. Move better. Feel better." (Deck 1 slide 24). The price range. The guarantee. Then the slow fade to navy and the waitlist.
 
 **The waitlist** (end of chapter 6, on navy, the page's only navy section). Modelled on 10 Squared: a heading (`facts.ctaHeading`), the form, nothing else. Fields: first name; last name; WhatsApp number or email; "By day 120, I want to be able to…" (select, options still open); "How did you hear about us?" (Member referral, Instagram, Google, Other); anything we should know (optional). The same component serves `/book-now`.
@@ -174,7 +175,7 @@ The text on the studio wall. It lives in `content/home.ts` (`poem`) and **must n
 
 - **Anderson Grotesk throughout,** self-hosted from `public/fonts` (licence for web use still to confirm).
 - **Headlines Light or Regular, 64 to 88px on desktop,** sentence case, tight line spacing (about 1.05).
-- **Bold only for small spaced-out labels above headlines** (the deck device, e.g. "THE CORE BELIEF"): about 12 to 13px, uppercase, letter-spacing about 0.16em.
+- **Bold only for small spaced-out labels** (field and row labels such as Price or Hours, "Example" on the dials, and "IN OUR MEMBERS' WORDS"; chapter labels are not shown): about 12 to 13px, uppercase, letter-spacing about 0.16em.
 - **Body 18 to 20px Regular,** left-aligned, lines no longer than about 65 characters.
 
 Type scale (fluid, mobile → desktop):
@@ -211,15 +212,23 @@ Type scale (fluid, mobile → desktop):
 
 ### Motion and flow
 
-- **Smooth, weighted scrolling** across the site (Lenis).
-- **Home's four signature motions, and no others:** the hero video (slow silent loop; headline readable immediately), the poem's line-by-line reveal, the word loop, and the slow fade into the navy waitlist.
+- **Smooth, weighted scrolling** across the site (Lenis). See the scrolling rule below.
+- **Home's four signature motions, and no others:** the hero video (slow silent loop; headline readable immediately), the poem's line-by-line reveal, the word cloud build, and the slow fade into the navy waitlist.
 - **Reveal (everything else):** a quiet fade in over about 0.9s, one line after another. No rising.
 - **Method and Team** may use, sparingly: Find Your Pattern cards that widen when chosen; one pinned photograph while text moves past (Apple style); the Strength Reserve score counting up once; ImageReveal (soft wipe with a very slight settle).
 - **Section colour changes cross-fade with the scroll,** over about 60% of the viewport height, instead of cutting hard from off-white to navy.
 - **Pages cross-fade slowly** (about one second) between Home, Method and Team.
 - **Hover:** photographs zoom about 3%; buttons darken slowly.
 - **Limits:** nothing bounces, spins or delays reading; smooth on a mid-range phone.
-- **Reduced motion:** under `prefers-reduced-motion`, all movement is off: no rising, sliding, zooming, resizing or looping. Colour and opacity changes stay as the same slow fade (section colours, the page cross-fade, hover colours). Never a hard colour switch.
+- **Reduced motion:** under `prefers-reduced-motion`, all movement is off: no rising, sliding, zooming, resizing, looping, pinning or snapping. Colour and opacity changes stay as the same slow fade (section colours, the page cross-fade, hover colours). Never a hard colour switch.
+
+### Scrolling: full screens and guided scrolling
+
+- **Every chapter fills the screen** (100svh below the header) and its text and images are fully visible, never cut off, clear of the mobile bottom bar. Use `<Section chapter>`; the `.chapter` style in `globals.css` sets the height, centring and padding.
+- **Check at 375x667, 390x844, 768x1024, 1280x720 and 1440x900.** Where a chapter does not fit, tighten spacing or image size. Never cut copy without asking.
+- **Exempt, scrolling freely:** Jay's story, the founders' note, the questions, and the waitlist form.
+- **Gentle guided scrolling** (Lenis, `components/motion/SmoothScroll.tsx`): when the visitor pauses within about a quarter of a screen of the chapter they are heading into, the page glides the rest of the way a little faster and settles softly at its start. Proximity only, never mandatory, and only in the direction of travel: the page never traps or fights the visitor, a small scroll stays a small scroll, and nothing is pulled back. A chapter taller than the screen scrolls freely, with a resting point at its end. Touch screens use the browser's own proximity snap.
+- **Reduced motion: snapping is off completely** (Lenis is off, and the touch snap is not applied).
 
 ### Tone on the page
 
@@ -278,7 +287,7 @@ The decks are training material for Sherpas, so some lines must not reach the si
 - [ ] Address and hours (43 Basant Lok, 3rd Floor; 6 am to 10 pm daily) still current.
 - [ ] Does every audit end with coffee, or only sometimes.
 - [ ] The six "By day 120" options from the pre-trial form.
-- [ ] Names, ages and written consent for the four testimonials.
+- [ ] Names, ages and written consent for the four testimonials (all four now show as cards on Home, with TODOs).
 - [ ] Jay's son has seen the founder story before it goes public.
 - [ ] What the free first visit includes and what to call it. Confirmed: the Reserve Audit itself happens in sessions 2 to 4.
 - [ ] Resend: API key, verified sending domain (`RESEND_FROM`) and `CONTACT_EMAIL` set in Vercel.

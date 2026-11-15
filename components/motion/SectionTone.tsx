@@ -4,20 +4,27 @@ import { useEffect, type ReactNode } from "react";
 
 export type Tone = "light" | "navy";
 
-/** A full-width block with a tone. Paints itself until the controller takes over. */
+/**
+ * A full-width block with a tone. Paints itself until the controller takes over.
+ * `chapter` makes it a full-screen chapter (see `.chapter` in globals.css):
+ * at least one screen tall below the header, content centred, and a point
+ * the guided scrolling settles on.
+ */
 export function Section({
   tone = "light",
+  chapter = false,
   children,
   className = "",
   id,
 }: {
   tone?: Tone;
+  chapter?: boolean;
   children: ReactNode;
   className?: string;
   id?: string;
 }) {
   return (
-    <section id={id} data-tone={tone} className={className}>
+    <section id={id} data-tone={tone} data-chapter={chapter || undefined} className={chapter ? `chapter ${className}` : className}>
       {children}
     </section>
   );

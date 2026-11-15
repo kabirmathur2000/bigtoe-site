@@ -3,10 +3,6 @@ import { Section } from "@/components/motion/SectionTone";
 import { Placeholder } from "@/components/ui/Photo";
 import { foundersNote, sherpas, social, story } from "@/content/team";
 
-const Label = ({ children }: { children: string }) => (
-  <RevealItem as="p" className="text-label uppercase opacity-70">{children}</RevealItem>
-);
-
 const Todo = ({ children }: { children: string }) => (
   <RevealItem as="p" className="mt-4 text-caption text-terracotta">{children}</RevealItem>
 );
@@ -21,7 +17,7 @@ const reading = "max-w-[34rem] md:ml-[8.333%]";
 function Paragraph({ children, className }: { children: string; className?: string }) {
   return (
     <Reveal>
-      <RevealItem as="p" className={`mt-10 ${className ?? "text-body-lg leading-[1.8] opacity-85"}`}>{children}</RevealItem>
+      <RevealItem as="p" className={`mt-7 md:mt-8 ${className ?? "text-body-lg leading-[1.8] opacity-85"}`}>{children}</RevealItem>
     </Reveal>
   );
 }
@@ -29,18 +25,17 @@ function Paragraph({ children, className }: { children: string; className?: stri
 /** Chapter 1: Jay's story, word for word. Text only; his portrait signs the note below. */
 export function Story() {
   return (
-    <Section className="py-section">
+    <Section chapter>
       <div className="mx-auto max-w-wide px-gutter">
         <div className={reading}>
           <Reveal stagger={0.2}>
-            <Label>{story.label}</Label>
-            <RevealItem as="h1" className="mt-6 text-h1">{story.headline}</RevealItem>
+            <RevealItem as="h1" className="text-h1">{story.headline}</RevealItem>
           </Reveal>
           {story.paragraphs.map((p, i) => (
             <Paragraph key={i} className={i === 2 ? "text-h3 leading-[1.5]" : undefined}>{p}</Paragraph>
           ))}
           <Reveal>
-            <RevealItem as="p" className="mt-12 text-label uppercase opacity-70">{story.signature}</RevealItem>
+            <RevealItem as="p" className="mt-8 text-label uppercase opacity-70">{story.signature}</RevealItem>
             <Todo>{story.todo}</Todo>
           </Reveal>
         </div>
@@ -52,17 +47,16 @@ export function Story() {
 /** Chapter 2: the Sherpas first, portrait, first name and one line each. */
 export function Sherpas() {
   return (
-    <Section className="py-section">
+    <Section chapter>
       <div className="mx-auto max-w-wide px-gutter">
         <Reveal className="md:ml-[8.333%]">
-          <Label>{sherpas.label}</Label>
-          <RevealItem as="h2" className="mt-6 text-h1">{sherpas.headline}</RevealItem>
+          <RevealItem as="h2" className="text-h1">{sherpas.headline}</RevealItem>
           <Todo>{sherpas.todo}</Todo>
         </Reveal>
-        <Reveal as="ul" className="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 md:mt-16 md:ml-[8.333%] md:max-w-5xl md:grid-cols-4 md:gap-x-8" stagger={0.15}>
+        <Reveal as="ul" className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 md:mt-12 md:ml-[8.333%] md:max-w-5xl md:grid-cols-4 md:gap-x-8" stagger={0.15}>
           {sherpas.people.map((p) => (
             <RevealItem as="li" key={p.name}>
-              <Placeholder ratio="4 / 5" shot={p.shot} />
+              <Placeholder ratio="" shot={p.shot} className="aspect-square md:aspect-[4/5]" />
               <p className="mt-4 text-h3">{p.name}</p>
               {p.line && <p className="mt-1 text-caption opacity-75 md:text-body">{p.line}</p>}
               {p.todo && <p className="mt-1 text-caption text-terracotta">{p.todo}</p>}
@@ -78,12 +72,11 @@ export function Sherpas() {
 export function FoundersNote() {
   const n = foundersNote;
   return (
-    <Section className="py-section">
+    <Section chapter>
       <div className="mx-auto max-w-wide px-gutter">
         <div className={reading}>
           <Reveal stagger={0.15}>
-            <Label>{n.label}</Label>
-            <RevealItem as="h2" className="mt-6 text-h1">{n.headline}</RevealItem>
+            <RevealItem as="h2" className="text-h1">{n.headline}</RevealItem>
           </Reveal>
           {n.intro.map((p, i) => (
             <Paragraph key={i}>{p}</Paragraph>
@@ -123,18 +116,17 @@ export function FoundersNote() {
 /** Chapter 4: the social space, Deck 1 slide 18 in its own words. */
 export function Social() {
   return (
-    <Section className="py-section">
-      <div className="mx-auto grid max-w-wide gap-10 px-gutter md:grid-cols-12 md:gap-12">
+    <Section chapter>
+      <div className="mx-auto grid max-w-wide gap-6 px-gutter md:grid-cols-12 md:gap-12">
         <Reveal className="md:col-span-5 md:col-start-2 md:self-center" stagger={0.2}>
-          <Label>{social.label}</Label>
-          <RevealItem as="h2" className="mt-6 text-h1">{social.headline}</RevealItem>
-          <RevealItem as="p" className="mt-8 text-body-lg opacity-85">{social.body}</RevealItem>
-          <RevealItem as="p" className="mt-6 text-h3">{social.close}</RevealItem>
+          <RevealItem as="h2" className="text-h1">{social.headline}</RevealItem>
+          <RevealItem as="p" className="mt-5 text-body-lg opacity-85 md:mt-8">{social.body}</RevealItem>
+          <RevealItem as="p" className="mt-4 text-h3 md:mt-6">{social.close}</RevealItem>
         </Reveal>
-        <div className="grid grid-cols-2 gap-4 md:col-span-5 md:col-start-8 md:gap-6">
-          <Placeholder ratio="3 / 2" shot={social.shots[0]} className="col-span-2" />
-          <Placeholder ratio="1 / 1" shot={social.shots[1]} />
-          <Placeholder ratio="1 / 1" shot={social.shots[2]} />
+        <div className="grid grid-cols-2 gap-3 md:col-span-5 md:col-start-8 md:gap-6">
+          <Placeholder ratio="" shot={social.shots[0]} className="col-span-2 aspect-[2/1] md:aspect-[3/2]" />
+          <Placeholder ratio="" shot={social.shots[1]} className="aspect-[3/2] md:aspect-square" />
+          <Placeholder ratio="" shot={social.shots[2]} className="aspect-[3/2] md:aspect-square" />
         </div>
       </div>
     </Section>
