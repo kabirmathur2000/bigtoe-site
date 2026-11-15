@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { facts, mailtoHref, todo, whatsappHref } from "@/content/facts";
-import { footer } from "@/content/site";
+import Link from "next/link";
+import { footer, nav } from "@/content/site";
 import { NotOnBook } from "./NotOnBook";
 import logoTag from "@/public/brand/logo-tag-light.png";
 
@@ -63,6 +64,15 @@ export function Footer() {
             </li>
           </ul>
         </div>
+
+        {/* Method and Team, reachable from the navy zone, where the header stays away. */}
+        <nav aria-label={footer.navLabel} className="flex gap-8 border-t border-current/15 pt-6 md:col-span-10 md:col-start-2">
+          {nav.links.map((l) => (
+            <Link key={l.href} href={l.href} className="inline-flex min-h-11 items-center text-body transition-opacity duration-500 hover:opacity-75">
+              {l.label}
+            </Link>
+          ))}
+        </nav>
       </div>
     </footer>
   );

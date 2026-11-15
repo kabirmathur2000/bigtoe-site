@@ -125,9 +125,12 @@ export function SmoothScroll() {
         return block();
       }
 
+      // Below full strength the page first scrolls normally for a short
+      // stretch, then the glide takes over. Same rule in both directions.
       travelled += Math.abs(data.deltaY);
       const needed = (1 - MAGNET.strength) * 0.4 * window.innerHeight;
       if (travelled >= needed) glide(lenis, dir);
+      else lenis.scrollTo(at + data.deltaY, touch ? { immediate: true } : { duration: 0.8, easing: easeOut });
       return block();
     };
 
@@ -150,7 +153,11 @@ export function SmoothScroll() {
         duration: 1.2,
         easing: easeOut,
         anchors: true,
-        allowNestedScroll: true,
+        // One listener on the whole window for wheel and touch; no element
+        // (pinned photos, the word cloud, the quotes) handles scrolling itself.
+        wrapper: window,
+        eventsTarget: window,
+        allowNestedScroll: false,
         syncTouch: true,
         virtualScroll: (d) => onVirtual(d as VirtualScroll),
       });

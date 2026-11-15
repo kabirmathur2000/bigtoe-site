@@ -18,14 +18,18 @@ const SWIPE = 40;
 /**
  * Member quotes (on navy): one quote at a time, centred, with first name and
  * age. Swipe on phones, small arrows (and arrow keys) on desktop; quotes
- * cross-fade slowly. No autoplay. Nothing else on the screen.
+ * cross-fade slowly. No loop and no autoplay: the next arrow fades out at
+ * the last quote, the previous arrow at the first. Nothing else on screen.
  */
 export function MemberQuotes() {
   const { items } = memberQuotes;
   const [active, setActive] = useState(0);
   const start = useRef<{ x: number; y: number } | null>(null);
 
-  const go = (dir: 1 | -1) => setActive((i) => (i + dir + items.length) % items.length);
+  // No loop: the first and last quotes are the ends.
+  const go = (dir: 1 | -1) => setActive((i) => Math.max(0, Math.min(items.length - 1, i + dir)));
+  const atStart = active === 0;
+  const atEnd = active === items.length - 1;
 
   const onStart = (e: TouchEvent) => {
     const t = e.touches[0];
@@ -40,8 +44,10 @@ export function MemberQuotes() {
     if (Math.abs(dx) > SWIPE && Math.abs(dx) > Math.abs(t.clientY - s.y)) go(dx < 0 ? 1 : -1);
   };
 
-  const arrow =
-    "hidden h-11 w-11 shrink-0 items-center justify-center opacity-60 transition-opacity duration-700 ease-soft hover:opacity-100 md:flex";
+  const arrow = (off: boolean) =>
+    `hidden h-11 w-11 shrink-0 items-center justify-center transition-opacity duration-700 ease-soft md:flex ${
+      off ? "pointer-events-none opacity-0" : "opacity-60 hover:opacity-100"
+    }`;
 
   return (
     <Section chapter tone="navy">
@@ -58,9 +64,9 @@ export function MemberQuotes() {
         onTouchEnd={onEnd}
         onTouchCancel={() => (start.current = null)}
         data-swipe
-        className="mx-auto flex w-full max-w-wide touch-pan-y items-center gap-4 px-gutter focus-visible:outline-offset-4 md:gap-10"
+        className="mx-auto flex w-full max-w-wide items-center gap-4 px-gutter focus-visible:outline-offset-4 md:gap-10"
       >
-        <button type="button" className={arrow} onClick={() => go(-1)} aria-label={memberQuotes.previous}>
+        <button type="button" className={arrow(atStart)} onClick={() => go(-1)} disabled={atStart} aria-hidden={atStart} aria-label={memberQuotes.previous}>
           <Arrow dir="left" />
         </button>
 
@@ -90,7 +96,7 @@ export function MemberQuotes() {
           })}
         </div>
 
-        <button type="button" className={arrow} onClick={() => go(1)} aria-label={memberQuotes.next}>
+        <button type="button" className={arrow(atEnd)} onClick={() => go(1)} disabled={atEnd} aria-hidden={atEnd} aria-label={memberQuotes.next}>
           <Arrow dir="right" />
         </button>
       </div>

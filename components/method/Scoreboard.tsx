@@ -14,10 +14,12 @@ const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 const values: number[] = scoreboard.dials.map((d) => d.value);
 const score = Math.round(values.reduce((a, b) => a + b, 0) / values.length);
 const weakest = values.indexOf(Math.min(...values));
+const strongest = values.indexOf(Math.max(...values));
 
 /**
  * Chapter 3, THE SCOREBOARD. Four example dials count up once to Deck 7's
- * example member, then the weakest dial turns terracotta. Always labelled
+ * example member, then the weakest dial turns terracotta and the strongest
+ * a muted green (the one colour exception, dials only). Always labelled
  * "Example". Under reduced motion the final numbers show at once.
  */
 export function Scoreboard() {
@@ -67,10 +69,11 @@ export function Scoreboard() {
           <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3 md:mt-6 md:grid-cols-4 md:gap-x-10 md:gap-y-6">
             {scoreboard.dials.map((d, i) => {
               const now = Math.round(d.value * t);
-              const accent = done && i === weakest;
+              // Deck 5's sorting: weakest terracotta, strongest a muted green, the rest navy.
+              const tint = !done ? "" : i === weakest ? "text-terracotta" : i === strongest ? "text-dial-green" : "";
               return (
                 <li key={d.name} className="flex items-center gap-3 md:block">
-                  <div className={`relative w-14 shrink-0 md:w-full md:max-w-32 transition-colors duration-700 ease-soft ${accent ? "text-terracotta" : ""}`}>
+                  <div className={`relative w-14 shrink-0 md:w-full md:max-w-32 transition-colors duration-700 ease-soft ${tint}`}>
                     <svg aria-hidden viewBox="0 0 100 100" className="w-full -rotate-90" fill="none">
                       <circle cx="50" cy="50" r={R} stroke="currentColor" strokeOpacity="0.15" strokeWidth="1" />
                       <circle

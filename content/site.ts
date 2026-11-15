@@ -10,6 +10,8 @@ export const nav = {
 } as const;
 
 export const footer = {
+  /** Screen-reader name for the footer's page links. */
+  navLabel: "Footer",
   hoursLabel: "Hours",
   contactLabel: "Contact",
   whatsappLabel: "WhatsApp",

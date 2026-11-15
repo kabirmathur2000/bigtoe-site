@@ -8,6 +8,8 @@
   --navy: #0a212d;
   --terracotta: #d4644d;
   --offwhite: #f0eeeb;
+  /* The one exception to the three brand colours: the strongest dial on the Scoreboard only. */
+  --dial-green: #4a7458;
   /* Button hover: terracotta darkened toward navy, not a new colour. */
 
   /* Page background, driven by SectionToneController for cross-fades. */
@@ -32,6 +34,7 @@
   --color-navy: #0a212d;
   --color-terracotta: #d4644d;
   --color-offwhite: #f0eeeb;
+  --color-dial-green: #4a7458;
 
   /* Type scale (fluid 375px → 1440px). See CLAUDE.md. */
   --text-display: clamp(3rem, 2.12rem + 3.756vw, 5.5rem);

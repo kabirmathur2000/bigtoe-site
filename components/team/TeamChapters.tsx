@@ -2,25 +2,19 @@ import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Section } from "@/components/motion/SectionTone";
 import { BookButton } from "@/components/ui/BookButton";
 import { Placeholder } from "@/components/ui/Photo";
-import { foundersNote, sherpas, social, story } from "@/content/team";
+import { sherpas, social, story } from "@/content/team";
 
 const Todo = ({ children }: { children: string }) => (
   <RevealItem as="p" className="mt-4 text-caption text-terracotta">{children}</RevealItem>
 );
 
-/**
- * Jay's story and the founders' note are quoted word for word, so they are
- * exempt from the 40-word rule. They sit in a narrow column with generous
- * line spacing, centred, and each paragraph fades in on its own as it is reached.
- */
-const reading = "mx-auto max-w-[34rem]";
 
-function Paragraph({ children, className }: { children: string; className?: string }) {
-  return (
-    <Reveal>
-      <RevealItem as="p" className={`mt-7 md:mt-8 ${className ?? "text-body-lg leading-[1.8] opacity-85"}`}>{children}</RevealItem>
-    </Reveal>
-  );
+/** Jay's story with its chosen phrases in Bold (story.bold), text unchanged. */
+function withBold(text: string) {
+  const escape = (b: string) => b.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const parts = text.split(new RegExp(`(${story.bold.map(escape).join("|")})`));
+  const bold = story.bold as readonly string[];
+  return parts.map((part, i) => (bold.includes(part) ? <strong key={i} className="font-bold">{part}</strong> : part));
 }
 
 /**
@@ -40,7 +34,7 @@ export function Story() {
             const text = (
               <>
                 {i === 0 && <span aria-hidden>“</span>}
-                {p}
+                {withBold(p)}
                 {i === last && <span aria-hidden>”</span>}
               </>
             );
@@ -91,50 +85,6 @@ export function Sherpas() {
   );
 }
 
-/** Chapter 3: the founders' note, approved text, signed with four portraits. */
-export function FoundersNote() {
-  const n = foundersNote;
-  return (
-    <Section chapter className="pt-12 md:pt-16">
-      <div className="mx-auto max-w-wide px-gutter">
-        <div className={reading}>
-          <Reveal stagger={0.15}>
-            <RevealItem as="h2" className="text-h1">{n.headline}</RevealItem>
-          </Reveal>
-          {n.intro.map((p, i) => (
-            <Paragraph key={i}>{p}</Paragraph>
-          ))}
-          <Paragraph>{n.pillarsIntro}</Paragraph>
-          <div className="mt-6 border-t border-current/15">
-            {n.pillars.map((p) => (
-              <Reveal as="div" key={p.name}>
-                <RevealItem as="div" className="border-b border-current/15 py-5">
-                  <span className="block text-h3">{p.name}</span>
-                  <span className="mt-1 block text-body leading-[1.75] opacity-80">{p.line}</span>
-                </RevealItem>
-              </Reveal>
-            ))}
-          </div>
-          <Paragraph>{n.reserve}</Paragraph>
-          <Reveal>
-            <Todo>{n.reserveTodo}</Todo>
-          </Reveal>
-          <Paragraph className="text-h3 leading-[1.5]">{n.close}</Paragraph>
-        </div>
-
-        <Reveal as="ul" className="mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-x-4 gap-y-8 md:mt-20 md:grid-cols-4 md:gap-x-8" stagger={0.15}>
-          {n.founders.map((f) => (
-            <RevealItem as="li" key={f.name}>
-              <Placeholder ratio="4 / 5" shot={f.shot} />
-              <p className="mt-3 text-body">{f.name}, {f.age}</p>
-              {f.line && <p className="mt-1 text-caption opacity-75">{f.line}</p>}
-            </RevealItem>
-          ))}
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
 
 /** Chapter 4: the social space, Deck 1 slide 18 in its own words. */
 export function Social() {

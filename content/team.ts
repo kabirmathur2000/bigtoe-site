@@ -3,6 +3,7 @@
  * docs/copy or Deck 1; nothing is reworded. American spelling.
  */
 import { todo } from "./facts";
+import { poem } from "./home";
 
 /** Chapter 1. docs/copy/jay-story.md, word for word. Label: Deck 1 slide 2. */
 export const story = {
@@ -14,6 +15,8 @@ export const story = {
     "You can't buy a new body. Biology doesn't accept cash. Longer is what everybody asks for. Stronger is what you build. That's why we built BigToe.",
   ],
   signature: "Jay, 59. Co-founder.",
+  /** Shown in Bold, everything else unchanged (the one exception to Bold-for-labels). */
+  bold: ["at a gym", "if he had to look after me", "Stronger is what you build."],
   /** CLAUDE.md, still open. */
   todo: todo("Jay's son to see this story before it goes public"),
   shot: "Portrait of Jay on the training floor",
@@ -75,6 +78,20 @@ export const foundersNote = {
     { name: "Seema Jindal", age: 58, line: null },
     { name: "Rodrigo Pérez", age: 51, line: null },
   ].map((f) => ({ ...f, line: f.line as string | null, shot: `Portrait of ${f.name.split(" ")[0]}, co-founder, on the training floor` })),
+} as const;
+
+/**
+ * The founders, three screens after Jay's words (each a glide stop):
+ * the note's opening, Rooted. Real. Rebellious., then the four founders under
+ * the poem's last line, with the full approved note expandable in place.
+ */
+export const founders = {
+  /** "Rooted. Real. Rebellious." from the pillar names (Deck 1 slide 7). */
+  values: foundersNote.pillars,
+  /** The poem's last line (studio wall), never retyped. */
+  line: poem.stanzas[poem.stanzas.length - 1][0],
+  readNote: "Read the founders\u2019 note",
+  closeNote: "Close the founders\u2019 note",
 } as const;
 
 /** Chapter 4. Deck 1 slide 18, cut, never reworded. */
