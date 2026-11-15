@@ -159,9 +159,9 @@ export function BookingForm() {
   return (
     <form ref={formRef} noValidate onSubmit={onSubmit} aria-busy={pending} className="space-y-7 short:space-y-5 md:space-y-8">
       {/* Spam trap: off-screen, skipped by keyboard and screen readers. */}
-      <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
-        <label htmlFor={`${id}-${HONEYPOT}`}>{booking.honeypotLabel}</label>
-        <input id={`${id}-${HONEYPOT}`} name={HONEYPOT} type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label htmlFor={`${id}-${HONEYPOT}`} aria-hidden="true">{booking.honeypotLabel}</label>
+        <input id={`${id}-${HONEYPOT}`} name={HONEYPOT} type="text" aria-hidden="true" tabIndex={-1} autoComplete="off" defaultValue="" />
       </div>
 
       <div className="grid gap-7 short:gap-5 md:grid-cols-2 md:gap-8">

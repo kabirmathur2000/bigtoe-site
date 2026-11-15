@@ -96,8 +96,9 @@ export function Social() {
       <div className="mx-auto max-w-wide px-gutter">
         <Reveal className="max-w-3xl md:ml-[8.333%]" stagger={0.2}>
           <RevealItem as="h2" className="text-h1">{social.headline}</RevealItem>
-          <RevealItem as="p" className="mt-5 max-w-text text-body-lg opacity-85 md:mt-8">{social.body}</RevealItem>
-          <RevealItem as="p" className="mt-4 text-h3 md:mt-6">{social.close}</RevealItem>
+          {social.lines.map((l, i) => (
+            <RevealItem key={l} as="p" className={`text-h3 ${i ? "mt-2" : "mt-6 md:mt-10"}`}>{l}</RevealItem>
+          ))}
         </Reveal>
         <div data-cta className="mt-8 md:mt-12 md:ml-[8.333%]">
           <BookButton placement="team-end" />

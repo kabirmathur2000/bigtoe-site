@@ -9,7 +9,6 @@ import { facts, todo } from "./facts";
 export const hero = {
   /** Deck label, not shown (it shapes the page order): THE MAIN POINT. */
   headline: "We train for a sport called life.",
-  subline: "Most people play it untrained. We train for it.",
   media: {
     shot: "Silent video loop: a member mid-lift with a Sherpa beside them",
     caption: todo("member first name, age. Mid-lift, with their Sherpa."),
@@ -22,7 +21,6 @@ export const belief = {
   /** Shown as a small label: one of the two labels on the site (with IN OUR MEMBERS' WORDS). */
   label: "Our belief",
   headline: facts.heroLine,
-  lines: ["The problem isn't your age."],
 } as const;
 
 /** Chapter 3 (moved from Method, unchanged). Deck 7 slides 1, 5 and 12; the score as a sport (Deck 7 cover). */
@@ -40,8 +38,6 @@ export const scoreboard = {
   ],
   outOf: "out of 100",
   scoreName: "Strength Reserve",
-  /** Deck 7 slide 5, THE SCORE. */
-  scoreNote: "the average of the four dials",
   /** Deck 7 slide 12, "say it to a member". */
   weakest: "Your Strength Reserve is only as good as your weakest dial. That is where we start.",
 } as const;
@@ -126,8 +122,6 @@ export const memberWords = {
     { word: "personal", size: "large" },
     { word: "stronger", size: "largest" },
   ] as { word: string; size: "small" | "medium" | "large" | "largest"; key?: boolean }[],
-  /** Deck 9 slide 13, Jay. Fades in once every word is in. */
-  close: "No policy produces that. No manual teaches it.",
 } as const;
 
 /** Chapter 6. Deck 1 slide 24, then the price and guarantee, then the form. */

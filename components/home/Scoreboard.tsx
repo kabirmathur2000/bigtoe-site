@@ -100,7 +100,6 @@ export function Scoreboard() {
                 <span aria-hidden>{Math.round(score * t)}</span>
                 <span className="sr-only">{score}</span>
               </p>
-              <p className="text-body opacity-70">{scoreboard.scoreNote}</p>
             </div>
             <Reveal className="md:col-span-7" stagger={0.2}>
               <RevealItem as="p" className="text-body-lg leading-snug md:text-h3">{scoreboard.weakest}</RevealItem>

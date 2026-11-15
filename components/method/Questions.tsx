@@ -6,7 +6,7 @@ import { Section } from "@/components/motion/SectionTone";
 import { BookButton } from "@/components/ui/BookButton";
 import { questions } from "@/content/method";
 
-/** Chapter 5, QUESTIONS: six collapsed questions, then the page's one button. */
+/** Chapter 5, QUESTIONS: six collapsed questions, then the page’s one button. */
 export function Questions() {
   const id = useId();
   const [open, setOpen] = useState<number | null>(null);

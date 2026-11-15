@@ -81,7 +81,8 @@ export const founders = {
     { name: "Real", line: "How we show up: honest, present, without pretense." },
     {
       name: "Rebellious",
-      line: "We refuse to accept that decline is inevitable, or that people in their 40s, 50s and 60s have had their moment.",
+      /** Deck 1 slide 7, ending at the refusal (approved cut). */
+      line: "We refuse to accept that decline is inevitable.",
     },
   ],
   /** The poem's last line (studio wall), never retyped. */
@@ -101,6 +102,6 @@ export const photoBreak = {
 export const social = {
   /** Deck label, not shown (it shapes the page order): THE SOCIAL SPACE. */
   headline: "Fun is how people stay in the game.",
-  body: "BigToe is life in miniature: a table, a seat, a coffee, and people who notice when you’re gone. Every quarter we hold a Pizza & Beer Party. Every hour ends in a clap.",
-  close: "You don’t climb alone.",
+  /** Two Deck 1 slide 18 lines, one per line. */
+  lines: ["Every hour ends in a clap.", "Every quarter we hold a Pizza & Beer Party."],
 } as const;

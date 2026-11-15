@@ -7,8 +7,6 @@ import { memberWords } from "@/content/home";
 
 /** The words build over about three seconds once the chapter has arrived. */
 const BUILD_MS = 3000;
-/** Pause after the last word before the close line fades in. */
-const CLOSE_AFTER_MS = 400;
 
 /**
  * Poster sizes. Every word is at least 24px, so the terracotta key words
@@ -32,14 +30,12 @@ const DISPLAY = [14, 0, 6, 15, 7, 1, 16, 23, 17, 8, 2, 18, 9, 3, 19, 10, 20, 4, 
  * has arrived (most of it on screen), the words appear on their own, one at
  * a time over about three seconds, smallest first and "stronger" last, and
  * stay. Key words are terracotta, the rest off-white, as on the poster.
- * Then the Deck 9 line fades in. The next gesture moves on. Reduced
- * motion: every word at once.
+ * Reduced motion: every word at once.
  */
 export function MemberWords() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(0);
-  const [closed, setClosed] = useState(false);
   const { words } = memberWords;
   const total = words.length;
 
@@ -54,7 +50,6 @@ export function MemberWords() {
         io.disconnect();
         const step = BUILD_MS / total;
         for (let i = 1; i <= total; i++) timers.push(window.setTimeout(() => setShown(i), (i - 1) * step));
-        timers.push(window.setTimeout(() => setClosed(true), BUILD_MS + CLOSE_AFTER_MS));
       },
       { threshold: 0.85 },
     );
@@ -66,7 +61,6 @@ export function MemberWords() {
   }, [reduce, total]);
 
   const visible = reduce ? total : shown;
-  const done = reduce || closed;
 
   const content = (
     <div className="mx-auto w-full max-w-wide px-gutter">
@@ -88,10 +82,6 @@ export function MemberWords() {
             );
           })}
         </ul>
-
-        <p className={`mt-8 max-w-3xl text-h3 transition-opacity duration-[1200ms] ease-soft md:mt-12 ${done ? "opacity-100" : "opacity-0"}`}>
-          {memberWords.close}
-        </p>
       </div>
     </div>
   );

@@ -14,8 +14,6 @@ export const fades = {
     { name: "Strength", line: "How bright the bulb burns." },
     { name: "Power", line: "How fast the switch works." },
   ],
-  /** Deck 1 slide 11, REMEMBER, cut. */
-  close: "Power goes first, long before size.",
 } as const;
 
 /** Chapter 2. Deck 4 slides 8 and 9; Deck 1 ("If a member asks"). */
@@ -23,8 +21,6 @@ export const barefoot = {
   /** Deck label, not shown (it shapes the page order): UNDER THEIR FEET. */
   /** Deck 1, "If a member asks"; Deck 4 slide 8 heading. */
   headline: "It all starts with the big toe.",
-  /** Deck 4 slide 8, "say it to a member". */
-  line: "Your foot is built to feel the ground. Barefoot, it gets strong again, and you lift from a solid base.",
   /** Deck 4 slide 9, word for word. */
   weights: "Free weights, not fixed machines.",
   shot: "Bare feet on the training floor, a member mid-lift",
@@ -58,8 +54,6 @@ export const paths = {
     },
   ],
   minutes: (n: number) => `${n} min`,
-  /** Deck 4 slides 10 and 11 ("arrive 10 minutes early and foam roll"), to the member. */
-  early: "Arrive 10 minutes early to foam roll.",
 } as const;
 
 /** Chapter 5. Approved list (plus the price question): Deck 4 slide 21, Deck 1 slides 18 and 22, Deck 2, Deck 5 slide 17. */
@@ -80,27 +74,17 @@ export const questions = {
       source: { text: "Watson et al, J Bone Miner Res 2018", href: "https://doi.org/10.1002/jbmr.3284" },
     },
     {
-      /** "They" turned to the member, kept general (approved). */
-      q: "Why so much strength, not cardio?",
-      a: ["Most members already walk or do cardio. Strength is what most of us lack."],
-    },
-    {
       q: "Will I feel out of place?",
-      a: ["Introduced on day one. Never a stranger on the floor.", "A team floor where everyone is introduced and looked after."],
+      a: ["Introduced on day one. Never a stranger on the floor."],
     },
     {
-      /** Four deck sentences, not joined (Deck 1 slide 18; Deck 2 The Road Trip). */
+      /** Deck 2 (The Road Trip) and Deck 1 slide 18, as approved. */
       q: "I've never enjoyed exercise. Is this for me?",
-      a: [
-        "Fun is how people stay in the game.",
-        "There is no finish line. So the journey has to be fun.",
-        "Every hour ends in a clap.",
-        "You don't climb alone.",
-      ],
+      a: ["There is no finish line. So the journey has to be fun. You don't climb alone."],
     },
     {
       q: "Can I train at home or online?",
-      a: [facts.where, "Can't make it? We'll make it 30 minutes at home or online. The week still counts."],
+      a: [facts.where],
     },
     {
       /** Decisions table: price and guarantee, from facts. */

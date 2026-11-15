@@ -21,7 +21,7 @@ const TOTAL = 60;
 /**
  * Chapter 3, two paths: the Deck 4 line, then one bar per path, each a
  * 60-minute hour split into mobility, strength and cardio (Deck 4 slide
- * 10), then the foam-roll line. The bars grow in once, slowly, when the
+ * 10), with the hour shown once above them. The bars grow in once, slowly, when the
  * chapter arrives; static under reduced motion.
  */
 export function Paths() {
@@ -52,13 +52,12 @@ export function Paths() {
         <div className="md:ml-[8.333%] md:max-w-5xl">
           <h2 className="max-w-3xl text-h2 md:text-h1">{paths.headline}</h2>
 
-          <div ref={ref} className="mt-8 space-y-8 md:mt-14 md:space-y-12">
+          {/* The hour, once, above both bars. */}
+          <p className="mt-8 text-label uppercase opacity-75 md:mt-14">{paths.hour}</p>
+          <div ref={ref} className="mt-4 space-y-8 md:mt-6 md:space-y-12">
             {paths.bars.map((bar, b) => (
               <figure key={bar.name}>
-                <figcaption className="flex items-baseline justify-between gap-4 text-label uppercase">
-                  <span>{bar.name}</span>
-                  <span className="opacity-75">{paths.hour}</span>
-                </figcaption>
+                <figcaption className="text-label uppercase">{bar.name}</figcaption>
 
                 {/* The bar: one segment per part, sized by its minutes. */}
                 <div aria-hidden className="mt-3 flex h-8 gap-0.5 md:h-11">
@@ -91,7 +90,6 @@ export function Paths() {
             ))}
           </div>
 
-          <p className="mt-8 border-t border-current/15 pt-5 text-body-lg md:mt-12 md:pt-6">{paths.early}</p>
         </div>
       </div>
     </Section>
