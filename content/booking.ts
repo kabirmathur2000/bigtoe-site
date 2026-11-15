@@ -33,6 +33,8 @@ export const booking = {
   },
 
   submit: facts.ctaLabel,
+  /** One short line above the button (approved wording; the guide says "The first visit is free."). */
+  freeVisit: "A free first visit.",
   /** Hidden spam trap; real visitors never see it. */
   honeypotLabel: "Company",
 

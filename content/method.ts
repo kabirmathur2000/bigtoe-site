@@ -111,6 +111,11 @@ export const questions = {
   sourceLabel: "Source",
 } as const;
 
+/** The photo break at the colour change (guide shot list: each Sherpa coaching). */
+export const photoBreak = {
+  shot: "A Sherpa coaching a member on the training floor",
+} as const;
+
 export const patterns = {
   /** Guide, Find Your Pattern (moved from Home to Method). */
   /** Deck label, not shown (it shapes the page order): WHO WE SERVE. */

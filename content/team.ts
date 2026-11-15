@@ -92,15 +92,15 @@ export const founders = {
   close: "Close",
 } as const;
 
+/** The photo break at the colour change (guide shot list: the greeting at the door). */
+export const photoBreak = {
+  shot: "The greeting at the door: a Sherpa welcoming a member by first name",
+} as const;
+
 /** Chapter 4. Deck 1 slide 18, cut, never reworded. */
 export const social = {
   /** Deck label, not shown (it shapes the page order): THE SOCIAL SPACE. */
   headline: "Fun is how people stay in the game.",
   body: "BigToe is life in miniature: a table, a seat, a coffee, and people who notice when you’re gone. Every quarter we hold a Pizza & Beer Party. Every hour ends in a clap.",
   close: "You don’t climb alone.",
-  shots: [
-    "Coffee being poured at the social table",
-    "The clap at the end of the hour",
-    "The founders together at the coffee table",
-  ],
 } as const;

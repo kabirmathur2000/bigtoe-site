@@ -2,6 +2,10 @@
 
 # BigToe website: rulebook
 
+## North star
+
+**The site's only job is to make a visitor curious enough to join the waitlist and come in for a trial.** Less is 20x more. If a screen does not serve that, cut it. Reference: 10squared.com for flow, where each screen is its own setting: a brand-colour text screen or a full-bleed photograph.
+
 ## Baseline
 
 - **Simple and minimal.** As little information per screen as possible, so the reader actually takes it in. One idea per screen. When in doubt, cut. Reference: 10squared.com.
@@ -15,7 +19,7 @@
 - **American spelling throughout** (aging, realizing), matching the studio wall. Deck lines with British spelling (programme, pretence, ageing, practise) are quoted in American spelling; that is the only change allowed to a quoted line.
 - **Story first.** Each page is a short story in chapters. **Deck labels shape the order of each page but are not shown** (THE MAIN POINT, THE CORE BELIEF, OUR MISSION, OUR ANSWER, OUR PROMISE, and their equivalents on Method, Team and Book live as comments in `content/*.ts`). Two labels are shown on the site, both small: "Our belief" (above the core belief on Home) and "IN OUR MEMBERS' WORDS".
 - **References.** 10 Squared (10squared.com) for absolute simplicity: single column, few words, one ask, no decoration. Apple (apple.com) for a few luxurious transitions: full-bleed chapters, large type, one image pinned while text moves past.
-- **Home has at most four signature motions:** the hero video, the Scoreboard dials counting up once, the word cloud building once its chapter arrives, and the one slow fade from light to navy. Everything else only fades in quietly. All motion obeys the soft-fade and reduced-motion rules below, and only the three brand colors are used.
+- **Home's signature motions, and no others:** the hero video, the Scoreboard dials counting up once, the loop diagram drawing in, the word cloud building once its chapter arrives, and the one slow fade from light to navy (across the photo break). Everything else only fades in quietly. All motion obeys the soft-fade and reduced-motion rules below, and only the three brand colors are used.
 
 A four-page site in Next.js on Vercel: **Home (`/`), Method (`/method`), Team (`/team`), Book (`/book-now`).** One job: get the visitor to book the free first visit. The look is quiet luxury in the deck colours: large photographs of real members, generous space, editorial type and slow, smooth scroll transitions.
 
@@ -84,35 +88,37 @@ From Jay's conversation and the decks. The site is built on these.
 
 Four pages, one job: get the visitor to book the free first visit.
 
-### Home: six chapters and the waitlist
+### Home: six screens and one photo break
 
-Each chapter fills one screen, in Deck 1's order (the labels are not shown).
+Each screen is its own setting: a brand-colour text screen or a full-bleed photograph. Deck labels are not shown.
 
-1. **THE MAIN POINT** (the hero), 10 Squared style: the video placeholder (a member with a Sherpa beside them) across the top of the screen, then "We train for a sport called life." and "Most people play it untrained. We train for it." (Deck 1 slide 3) below it, with the button on desktop. Exactly one screen at every size.
-2. **THE CORE BELIEF.** A small label, "Our belief", then "The second half of life should be the stronger half." Then "The problem isn't your age." (Deck 1 slide 4, cut, never reworded).
-3. **THE SCOREBOARD** (moved from Method, unchanged). "Every sport has a score. This is ours." Four dials (InBody, Balance & Mobility, Functional Strength, Conditioning; names only) count up once to Deck 7's example 78, 42, 90 and 66; weakest terracotta, strongest green. The score, 69, is "the average of the four dials". **Always labelled "Example"** so it never reads as a real member's results. Then "Your Strength Reserve is only as good as your weakest dial. That is where we start." Reduced motion shows the final numbers. Last light chapter on Home. (The poem chapter is gone; the full poem is in the footer.)
-4. **OUR ANSWER** (navy from here to the footer). Strength Reserve: "The capacity you build above what daily life asks of you." (Deck 1 slide 15). Then three short steps: the free first visit ("An hour with a Sherpa."); the Reserve Audit, sessions 2 to 4; test, train, retest (titles only). **Split layout:** on desktop one photo stays pinned on one half while the text moves past on the other; stacked on phones.
-5. **IN OUR MEMBERS' WORDS** (the one label shown). Not pinned: when the chapter arrives, the words build on their own over about three seconds in order of size, **smallest first, largest last**, and stay. Sizes and colours match the BigToe word cloud poster (`content/home.ts`):
+1. **THE MAIN POINT** (the hero), 10 Squared style: the full-bleed video placeholder (a member with a Sherpa beside them) across the top, then "We train for a sport called life." and "Most people play it untrained. We train for it." (Deck 1 slide 3) below it. No button on the hero: the navigation and the bottom bar carry it. Exactly one screen at every size. (Light.)
+2. **THE CORE BELIEF.** A small label, "Our belief", then "The second half of life should be the stronger half." Then "The problem isn't your age." (Deck 1 slide 4, cut, never reworded). (Light.)
+3. **THE SCOREBOARD** (unchanged). "Every sport has a score. This is ours." Four dials (InBody, Balance & Mobility, Functional Strength, Conditioning; names only) count up once to Deck 7's example 78, 42, 90 and 66; weakest terracotta, strongest green. The score, 69, is "the average of the four dials". **Always labelled "Example"** so it never reads as a real member's results. Then "Your Strength Reserve is only as good as your weakest dial. That is where we start." Reduced motion shows the final numbers. (Light.)
+4. **THE LOOP** (`components/home/Loop.tsx`), after Love.Life's "A smarter way to take care of you" panel, in BigToe's words and brand. One large panel, navy hairline border, 8px corners, on the brand light colour, divided into four columns by gently curved navy hairlines: **Test**, "We don't guess. We test."; **Pledge**, "A goal you chose, signed by both of us."; **Train**, "16 targeted sessions, one Sherpa beside you."; **Retest**, "If your numbers don't move, the failure is ours." (Deck 0/7, Deck 5 slide 10, Deck 1). A thin terracotta line rises gently left to right across all four: the Strength Reserve widening. Below: "You never finish a program. You complete a loop." (Deck 5 slide 23, turned to "you"). As it arrives, the curves draw in slowly, the terracotta line rises, then each column's words fade in left to right; static under reduced motion. Phones: stacked, curves across, the terracotta line rising top to bottom. One SVG drawn at the panel's real pixel size so hairlines stay crisp. (Light.)
+- **Photo break** (`components/ui/PhotoBreak.tsx`): one full-bleed photo screen, placeholder "Members and Sherpas at the coffee table after a session". It is the first navy section; the colour fade runs across it and is complete when the photo fills the screen.
+5. **IN OUR MEMBERS' WORDS** (navy). The word cloud: when the chapter arrives, the words build on their own over about three seconds in order of size, **smallest first, largest last**, and stay. Sizes and colours match the BigToe word cloud poster (`content/home.ts`):
    - Small: a way of life, no injuries, balance, seen, sacred, grounding
    - Medium: passion, mindset, honest, trust, patient, rare, home, compassion
    - Large: motivated, pushed, joy, care, family, mobility, noticed, energy, personal
    - Largest, last: stronger
    - **Terracotta key words:** mobility, care, pushed, joy, motivated, passion, sacred, grounding. All others off-white on navy. Every word is at least 24px so terracotta passes contrast on navy.
    - When all are in, "No policy produces that. No manual teaches it." (Deck 9 slide 13) fades in. Reduced motion: all words at once.
-   - **Member quotes,** straight after: one quote at a time, centred, verbatim from `docs/copy/testimonials.md`, with first name and age (visible TODOs while missing, plus a consent TODO). Swipe on phones, small arrows on desktop, a slow cross-fade between quotes, no autoplay and **no loop**: the next arrow fades out at the last quote, the previous arrow at the first. Nothing else on that screen. **No quote goes live without recorded written consent.**
-6. **OUR PROMISE.** "Look better. Move better. Feel better." (Deck 1 slide 24). Then one small line, "Memberships from ₹25,000 a month.", and the guarantee in one short line. No range and no "set after the audit" note on Home.
+   - **Member quotes,** on the next screen: one quote at a time, centred, verbatim from `docs/copy/testimonials.md`, with first name and age (visible TODOs while missing, plus a consent TODO). Swipe on phones, small arrows on desktop, a slow cross-fade between quotes, no autoplay and **no loop**: the next arrow fades out at the last quote, the previous arrow at the first. **No quote goes live without recorded written consent.**
+6. **OUR PROMISE** (navy). "Look better. Move better. Feel better." (Deck 1 slide 24). Then one small line, "Memberships from ₹25,000 a month.", and the guarantee in one short line ("Guarantee: 30 days, money back."). No range and no "set after the audit" note on Home. Then the waitlist on the next screen.
 
-**The waitlist** (end of chapter 6, on navy). Modelled on 10 Squared: a heading (`facts.ctaHeading`), the form, nothing else. Four fields only: first name; last name; WhatsApp number or email; "By day 120, I want to be able to…" (select, options still open). Fits one screen at every size; on desktop the heading sits beside the form. The same component serves `/book-now`. **After a successful submit:** the thanks, then "Before you walk in, tell us a little about yourself." and the button "Fill in the short form", opening `facts.preVisitFormUrl` (https://forms.gle/7GWfSvARWfdz4hkE9) in a new tab; then WhatsApp (outline button) or the email line.
+**The waitlist** (end of chapter 6, on navy). Modelled on 10 Squared: a heading (`facts.ctaHeading`), the form, nothing else. Four fields only: first name; last name; WhatsApp number or email; "By day 120, I want to be able to…" (select, options still open). One short line, "A free first visit.", sits above the button. Fits one screen at every size; on desktop the heading sits beside the form. The same component serves `/book-now`. **After a successful submit:** the thanks, then "Before you walk in, tell us a little about yourself." and the button "Fill in the short form", opening `facts.preVisitFormUrl` (https://forms.gle/7GWfSvARWfdz4hkE9) in a new tab; then WhatsApp (outline button) or the email line.
 
-**Not on Home:** the four pattern cards (Method), testimonial 1 (kept in `content/testimonials.ts` for Team or Book), Jay's story (Team only). The navigation link to Team is enough.
+**Not on Home:** Our answer and its steps (removed; the loop replaces them), the poem chapter (the poem is in the footer), the four pattern cards (Method), Jay's story (Team only).
 
-### Method: five chapters and seven questions (built)
+### Method: five chapters, one photo break, seven questions
 
 All light, no navy. Every line is a deck line, cut, never reworded ("they" may become "you"). Copy in `content/method.ts`; components in `components/method/`.
 
 1. **WHAT FADES.** "Three things fade with age. We train all three." Three line-drawn bulbs: Muscle, "The size of the bulb."; Strength, "How bright the bulb burns."; Power, "How fast the switch works." (Deck 1 slides 10 to 11). Close: "Power goes first, long before size." No medical terms.
 2. **BAREFOOT.** "It all starts with the big toe." (Deck 1; Deck 4 slide 8), then "Your foot is built to feel the ground. Barefoot, it gets strong again, and you lift from a solid base." (Deck 4 slide 8), then "Free weights, not fixed machines." (Deck 4 slide 9, word for word). One photo (bare feet on the floor) beside the words on desktop, no split layout.
 3. **TWO PATHS.** "Neither path is better. We start where you are today." (Deck 4 slide 13). Then two horizontal bars, one 60-minute hour each, from Deck 4 slide 10 ("All three, supervised, in one session"): Strength & Conditioning, Mobility 10, Strength 40, Cardio 10; Mobility & Conditioning, Mobility 30, Strength 25, Cardio 5. **Path minutes are now shown, from Deck 4.** Every segment labelled with name and minutes (Mobility terracotta, Strength navy, Cardio a navy outline), so colour is never the only cue. Then "Arrive 10 minutes early to foam roll." The bars grow in once, slowly; static under reduced motion. (`components/method/Paths.tsx`.)
+- **Photo break** at the colour change: "A Sherpa coaching a member on the training floor". The fade to navy runs across it.
 4. **WHO WE SERVE.** "Find your pattern." The four persona cards (Deck 1 slide 19, Deck 3 slide 8), one "what you need" line each, `components/method/Patterns.tsx`.
 5. **QUESTIONS.** Seven collapsed, approved:
    - "Only twice a week? Will I see results?" (Deck 4 slide 21)
@@ -129,7 +135,7 @@ Held back for now: "Same score, different person" (Deck 7 slide 12) and the tap-
 
 ### Team
 
-- **Order:** Jay's words, the founders, the Sherpas (light); the social space, its button and the footer (navy).
+- **Order:** Jay's words, the founders, the Sherpas (light); a photo break, "The greeting at the door: a Sherpa welcoming a member by first name", carrying the fade; the social space, its button and the footer (navy).
 - **Jay's words** (no heading). Jay's story from `docs/copy/jay-story.md`, verbatim, as a large centred quote signed "Jay, 59. Co-founder." On desktop a wider column and larger type, filling the screen comfortably. "at a gym", "if he had to look after me" and "Stronger is what you build." are in Bold (`story.bold`), the one exception to Bold-for-labels.
 - **The founders,** two screens:
   - "Rooted. Real. Rebellious." Each word large with its Deck 1 slide 7 definition, revealed one at a time.
@@ -137,7 +143,7 @@ Held back for now: "Same score, different person" (Deck 7 slide 12) and the tap-
 - **The founders' note** (`docs/copy/founders-note.md`, approved, three paragraphs) opens from that button in a full-screen overlay in the brand light colour that rises and fades in slowly; paragraphs reveal one at a time, centred and large, then the four founders' names. Close button, Escape or a tap outside the text closes it with a slow fade. The page behind does not scroll; focus stays inside and returns to the button. Reduced motion: a slow fade, no movement. The "Kilimanjaro at 80" TODO stays in `content/team.ts` and is not shown.
 - **Sherpas.** Portrait, first name and one-line story each, from Deck 1 slide 25 (Himanshu, Saurav, Sumit, Tanuj).
 - **Founder one-liners** (Deck 1 slide 8, `docs/copy/founder-lines.md`) are not shown until approved.
-- **The social space.** Coffee table, the clap, the Bell, Pizza & Beer, in photos.
+- **The social space.** A text screen (Deck 1 slide 18): the headline, the short body, "You don't climb alone." and the one button. No photos of its own: the photo break before it carries the picture.
 
 ### Book (`/book-now`)
 
@@ -164,12 +170,12 @@ Held back for now: "Same score, different person" (Deck 7 slide 12) and the tap-
 - **Contrast:** all text passes WCAG AA. Secondary text and labels use navy or off-white at 75% opacity or more, never less.
 - **One button visible at a time.** The navigation button (desktop) and the bottom bar (mobile) step aside while an in-page button or the form is on screen. On `/book-now` every button scrolls to the form (`#waitlist`) instead of reloading the page.
 - **Colour zones: each page changes colour once.** Brand light first, then one slow fade to navy at about the halfway point, then navy to the end, including the footer. Each colour holds for at least three sections where the page has them. **No fade back to light anywhere.**
-  - Home: The main point, Our belief, The scoreboard on light. From Our answer to the footer, navy.
-  - Method: What fades, Barefoot, Two paths on light. Who we serve, Questions and the footer, navy.
-  - Team: Jay's words, the Sherpas, the founders' note on light. The social space, the button and the footer, navy.
+  - Home: the hero, Our belief, the scoreboard, the loop on light. The photo break carries the fade. From the members' words to the footer, navy.
+  - Method: What fades, Barefoot, Two paths on light. The photo break carries the fade. Who we serve, Questions and the footer, navy.
+  - Team: Jay's words, the founders, the Sherpas on light. The photo break carries the fade. The social space, the button and the footer, navy.
   - Book: where we train on light; the form and the footer, navy.
   - Mark zone sections `tone="navy"`; the first one starts the fade (`SectionToneController`). On navy, text is #F0EEEB.
-- **The fade is gradual,** over about 60% of the screen height, so the page never jumps. Our members are over 40; nothing on the page should startle.
+- **The fade is gradual,** so the page never jumps: across the photo break where a page has one (complete when the photo fills the screen), otherwise over about 60% of the screen height. **Each section keeps its own text colour** (navy on light sections, off-white on navy ones), so text never flips mid-fade. Our members are over 40; nothing on the page should startle.
 - **Footer links:** Method and Team in the navy footer on every page.
 - **Footer layout:** left column, the LogoTag and the address (with the parking line). Right column, hours and contact, with the poem directly below them, all right-aligned on desktop. On phones, stacked: logo, address, hours, contact, then the poem. Method and Team links along the bottom.
 - **Footer poem:** the full Practice Possibility poem, word for word, in small type at 75% opacity, on every page including Home (`components/layout/FooterPoem.tsx`).
@@ -223,7 +229,7 @@ Type scale (fluid, mobile → desktop):
 ### Space and layout
 
 - **One idea per screen.** Each block fills most of a screen: one headline, a few lines, one photograph.
-- **Split layout in one place only:** Home's Our answer. On desktop one photo stays pinned on one half while the text moves past on the other; stacked on phones.
+- **No split layouts.** Each screen is a text screen or a full-bleed photograph (10 Squared). One photo break per page, at the colour change.
 - **Section gaps:** about 140px on desktop, 80px on mobile (`--space-section`).
 - **Side gutters:** 20px on mobile, 48px tablet, 64px desktop.
 - **Containers:** `wide` 1440px (full-bleed photos may exceed it), `content` 1200px, `text` 65ch.
@@ -243,7 +249,7 @@ Type scale (fluid, mobile → desktop):
 ### Motion and flow
 
 - **Native scrolling. The visitor is always in control of scrolling:** the page scrolls continuously with them, at their speed, with the browser's own scrolling. No scroll hijacking, no snapping, no added smoothing. (Only in-page links, such as the buttons to the form on `/book-now`, glide to their target, and not under reduced motion.)
-- **Home's four signature motions, and no others:** the hero video (slow silent loop; headline readable immediately), the Scoreboard dials counting up once, the word cloud build, and the one slow fade from light to navy.
+- **Home's signature motions, and no others:** the hero video (slow silent loop; headline readable immediately), the Scoreboard dials counting up once, the loop diagram drawing in, the word cloud build, and the one slow fade from light to navy across the photo break.
 - **Reveal (everything else):** a quiet fade in over about 0.9s, one line after another. No rising.
 - **Method and Team** may use, sparingly: Find Your Pattern cards that widen when chosen; one pinned photograph while text moves past (Apple style); the Strength Reserve score counting up once; ImageReveal (soft wipe with a very slight settle).
 - **Section colour changes cross-fade with the scroll,** over about 60% of the viewport height, instead of cutting hard from off-white to navy.
@@ -256,12 +262,12 @@ Type scale (fluid, mobile → desktop):
 
 - **Every chapter fills the screen** (100svh; the first chapter 100svh below the navigation) and its text and images are fully visible, never cut off, clear of the mobile bottom bar. Use `<Section chapter>`; the `.chapter` style in `globals.css` sets the height, centring and padding.
 - **Check at 375x667, 390x844, 768x1024, 1280x720 and 1440x900.** Where a chapter does not fit, tighten spacing or image size. Never cut copy without asking.
-- **Allowed to run longer than one screen:** the questions, where taller than the screen. On desktop, the split layout gives each step a screen while its photo stays pinned. The founders' note scrolls inside its own overlay. Everything else, the waitlist form and the thank-you step included, fits one screen.
+- **Allowed to run longer than one screen:** the questions, where taller than the screen. The founders' note scrolls inside its own overlay. Everything else, the waitlist form and the thank-you step included, fits one screen.
 - **One left edge.** Chapter content starts at the second column of the 12-column grid (`md:ml-[8.333%]` or `md:col-start-2`), including the poem, the word cloud and the footer. Exceptions: Jay's story and the founders' note are centred; the navigation bar spans the screen with its own inset.
 - **Room below the navigation.** Chapters taller than the screen (Jay's story, the questions) start at least 48px below the navigation.
 - **Tap targets** are at least 44px tall, including navigation and footer links.
-- **Phones.** On short phones (phone layout and under about 720px tall; the `short:` variant), photos in Our answer and Barefoot step aside and chapter padding tightens; taller phones keep their photos. On all phones: Our answer shows step titles only; the What fades, Scoreboard and Book headlines are 34px; the Scoreboard dials sit 2x2 with each name beside a small dial; Who we serve shows the four titles only until a card is opened; the Sherpas are a list with a small portrait beside name and line; the social space shows one photo.
-- **What stays from the old guided scrolling:** each chapter sized to one screen, the scroll-linked reveals, the one colour fade, the word cloud building on arrival and the split layout's pinned photo. The stop engine and Lenis are removed.
+- **Phones.** On short phones (phone layout and under about 720px tall; the `short:` variant), the Barefoot photo steps aside and chapter padding tightens; taller phones keep their photos. On all phones: the What fades, Scoreboard and Book headlines are 34px; the Scoreboard dials sit 2x2 with each name beside a small dial; Who we serve shows the four titles only until a card is opened; the Sherpas are a list with a small portrait beside name and line.
+- **What stays from the old guided scrolling:** each chapter sized to one screen, the scroll-linked reveals, the one colour fade, and the word cloud building on arrival. The stop engine, Lenis and the split layout are removed.
 - **Reduced motion:** native scrolling, in-page links jump instead of gliding, the navigation bar stays visible.
 
 ### Tone on the page

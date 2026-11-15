@@ -66,32 +66,30 @@ export const poem = {
   ],
 } as const;
 
-/** Chapter 4. Deck 1 slide 15, then the guide's first steps. */
-export const answer = {
-  /** Deck label, not shown (it shapes the page order): OUR ANSWER. */
-  term: "Strength Reserve",
-  /** Deck 1 slide 15. */
-  definition: "The capacity you build above what daily life asks of you.",
+/**
+ * Chapter 4, the loop (Deck 5's closed loop, in four steps). Lines as
+ * approved: Deck 7 / Deck 0 ("We don't guess. We test."), Deck 5 slide 10
+ * (goals agreed, "Signed by both"; "16 targeted sessions"), Deck 1 ("one
+ * Sherpa beside you"; "If a client's numbers don't move, the failure is
+ * ours", turned to "you").
+ */
+export const loop = {
+  /** Deck label, not shown (it shapes the page order): THE LOOP. */
   steps: [
-    {
-      id: "visit",
-      /** Guide, Home block 4. */
-      title: "The first visit is free.",
-      body: "An hour with a Sherpa.",
-    },
-    {
-      id: "audit",
-      /** Guide, Home block 4, cut. */
-      title: "Then the Reserve Audit.",
-      meta: facts.reserveAudit.first,
-    },
-    {
-      id: "loop",
-      /** Guide, Method ("Test, train, retest"); Deck 5 slide 3, cut. */
-      title: "Test, train, retest.",
-    },
+    { word: "Test", line: "We don\u2019t guess. We test." },
+    { word: "Pledge", line: "A goal you chose, signed by both of us." },
+    { word: "Train", line: "16 targeted sessions, one Sherpa beside you." },
+    { word: "Retest", line: "If your numbers don\u2019t move, the failure is ours." },
   ],
-  shot: "The audit: the body scan, a Sherpa beside the member",
+  /** Deck 5 slide 23 ("A client never finishes a programme. They complete a loop."), turned to "you". */
+  close: "You never finish a program. You complete a loop.",
+  /** Screen-reader name for the diagram. */
+  label: "The loop: test, pledge, train, retest",
+} as const;
+
+/** The photo break between the light and navy halves; the colour fade happens across it. */
+export const photoBreak = {
+  shot: "Members and Sherpas at the coffee table after a session",
 } as const;
 
 /** Chapter 5. */

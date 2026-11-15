@@ -20,7 +20,7 @@ export function BookingSection({ id = "waitlist", leadIn = false }: { id?: strin
           <Reveal className="lg:col-span-4 lg:col-start-2">
             <RevealItem as="h2" className="text-h1">{booking.heading}</RevealItem>
           </Reveal>
-          <div className="mt-8 md:mt-10 lg:col-span-6 lg:col-start-6 lg:mt-0">
+          <div className="mt-8 short:mt-5 md:mt-10 lg:col-span-6 lg:col-start-6 lg:mt-0">
             <BookingForm />
           </div>
         </div>

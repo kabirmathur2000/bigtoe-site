@@ -157,14 +157,14 @@ export function BookingForm() {
   );
 
   return (
-    <form ref={formRef} noValidate onSubmit={onSubmit} aria-busy={pending} className="space-y-7 md:space-y-8">
+    <form ref={formRef} noValidate onSubmit={onSubmit} aria-busy={pending} className="space-y-7 short:space-y-5 md:space-y-8">
       {/* Spam trap: off-screen, skipped by keyboard and screen readers. */}
       <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
         <label htmlFor={`${id}-${HONEYPOT}`}>{booking.honeypotLabel}</label>
         <input id={`${id}-${HONEYPOT}`} name={HONEYPOT} type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
       </div>
 
-      <div className="grid gap-7 md:grid-cols-2 md:gap-8">
+      <div className="grid gap-7 short:gap-5 md:grid-cols-2 md:gap-8">
         {text("firstName", "given-name")}
         {text("lastName", "family-name")}
       </div>
@@ -182,6 +182,7 @@ export function BookingForm() {
       {select("day120")}
 
       <div>
+        <p className="mb-4 text-body-lg short:mb-3">{booking.freeVisit}</p>
         <Button type="submit" disabled={pending} className="w-full disabled:opacity-60 md:w-auto">
           {booking.submit}
         </Button>

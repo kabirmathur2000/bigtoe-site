@@ -13,18 +13,21 @@ export type Tone = "light" | "navy";
 export function Section({
   tone = "light",
   chapter = false,
+  photoBreak = false,
   children,
   className = "",
   id,
 }: {
   tone?: Tone;
   chapter?: boolean;
+  /** The full-bleed photo between the halves; the colour fade happens across it. */
+  photoBreak?: boolean;
   children: ReactNode;
   className?: string;
   id?: string;
 }) {
   return (
-    <section id={id} data-tone={tone} data-chapter={chapter || undefined} className={chapter ? `chapter ${className}` : className}>
+    <section id={id} data-tone={tone} data-chapter={chapter || undefined} data-photo-break={photoBreak || undefined} className={chapter ? `chapter ${className}` : className}>
       {children}
     </section>
   );
@@ -39,9 +42,12 @@ const BAND = 0.6;
  * Scroll-linked page colour, one change per page. The page background
  * mixes from off-white to navy as the first navy section's top travels up
  * through the middle 60% of the screen, and then stays navy to the end,
- * footer included; there is no fade back. Text switches colour at the
- * halfway point and eases over 700ms. The change is a fade, not movement,
- * so it runs the same under reduced motion: never a hard switch.
+ * footer included; there is no fade back. Where a photo break is the first
+ * navy section, the fade runs across it and is complete when the photo
+ * fills the screen. Each section keeps its own text colour; only text
+ * outside sections (the footer) follows the page, switching at halfway.
+ * The change is a fade, not movement, so it runs the same under reduced
+ * motion: never a hard switch.
  */
 export function SectionToneController() {
   useEffect(() => {
@@ -63,7 +69,12 @@ export function SectionToneController() {
       const first = document.querySelector<HTMLElement>('main [data-tone="navy"]');
       if (first) {
         const r = first.getBoundingClientRect();
-        amount = clamp((start - r.top) / (start - end));
+        // A photo break carries the fade: it starts as the photo enters the
+        // lower part of the screen and is complete when the photo fills it.
+        const photo = first.hasAttribute("data-photo-break");
+        const from = photo ? vh * 0.7 : start;
+        const to = photo ? 0 : end;
+        amount = clamp((from - r.top) / (from - to));
       }
 
       // Any navy at all counts as the navy zone (the header keeps out of it).

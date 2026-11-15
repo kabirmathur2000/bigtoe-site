@@ -1,5 +1,4 @@
 import { Section } from "@/components/motion/SectionTone";
-import { BookButton } from "@/components/ui/BookButton";
 import { HeroMedia } from "@/components/ui/HeroMedia";
 import { hero } from "@/content/home";
 
@@ -8,8 +7,8 @@ import { hero } from "@/content/home";
  * the screen, the headline and its short line below. Exactly one screen at
  * every size below the header (clear of the mobile bottom bar), so one
  * gesture moves past it.
- * The headline is readable on first paint; the line and button fade in.
- * On phones the fixed bottom bar is the one button.
+ * The headline is readable on first paint; the line fades in. The button
+ * lives in the navigation (desktop) and the bottom bar (phones).
  */
 export function Hero() {
   return (
@@ -29,9 +28,6 @@ export function Hero() {
           <p className="fade-up text-body-lg text-balance opacity-80" style={{ animationDelay: "350ms" }}>
             {hero.subline}
           </p>
-          <div data-cta className="fade-up mt-6 hidden md:block" style={{ animationDelay: "500ms" }}>
-            <BookButton placement="hero" />
-          </div>
         </div>
       </div>
     </Section>

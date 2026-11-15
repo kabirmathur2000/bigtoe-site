@@ -86,23 +86,21 @@ export function Sherpas() {
 }
 
 
-/** Chapter 4: the social space, Deck 1 slide 18 in its own words. */
+/**
+ * Chapter 4: the social space, Deck 1 slide 18 in its own words. A text
+ * screen: the photo break just before it carries the picture.
+ */
 export function Social() {
   return (
     <Section chapter tone="navy">
-      <div className="mx-auto grid max-w-wide gap-6 px-gutter md:grid-cols-12 md:gap-12">
-        <Reveal className="md:col-span-5 md:col-start-2 md:self-center" stagger={0.2}>
+      <div className="mx-auto max-w-wide px-gutter">
+        <Reveal className="max-w-3xl md:ml-[8.333%]" stagger={0.2}>
           <RevealItem as="h2" className="text-h1">{social.headline}</RevealItem>
-          <RevealItem as="p" className="mt-5 text-body-lg opacity-85 md:mt-8">{social.body}</RevealItem>
+          <RevealItem as="p" className="mt-5 max-w-text text-body-lg opacity-85 md:mt-8">{social.body}</RevealItem>
           <RevealItem as="p" className="mt-4 text-h3 md:mt-6">{social.close}</RevealItem>
         </Reveal>
-        <div data-cta className="order-last md:order-none md:col-span-5 md:col-start-2 md:row-start-2">
+        <div data-cta className="mt-8 md:mt-12 md:ml-[8.333%]">
           <BookButton placement="team-end" />
-        </div>
-        <div className="grid grid-cols-2 gap-3 short:hidden md:col-span-5 md:col-start-8 md:row-span-2 md:row-start-1 md:self-center md:gap-6">
-          <Placeholder ratio="" shot={social.shots[0]} className="col-span-2 aspect-[5/2] md:aspect-[3/2]" />
-          <Placeholder ratio="" shot={social.shots[1]} className="hidden md:flex md:aspect-square" />
-          <Placeholder ratio="" shot={social.shots[2]} className="hidden md:flex md:aspect-square" />
         </div>
       </div>
     </Section>

@@ -123,10 +123,14 @@ p { text-wrap: pretty; }
 /* ------------------------------------------------------------------ */
 [data-tone="light"] { background: var(--offwhite); color: var(--navy); }
 [data-tone="navy"] { background: var(--navy); color: var(--offwhite); }
+/* Each section keeps its own text colour (navy on light sections,
+   off-white on navy ones), so text never flips mid-fade. */
 html.tones-managed [data-tone] {
   background: transparent;
   color: inherit;
 }
+html.tones-managed main [data-tone="light"] { color: var(--navy); }
+html.tones-managed main [data-tone="navy"] { color: var(--offwhite); }
 
 /* ------------------------------------------------------------------ */
 /* Chapters: each fills the screen, content centred,                  */
