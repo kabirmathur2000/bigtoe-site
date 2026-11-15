@@ -31,7 +31,7 @@ export const facts = {
 
   price: {
     range: "₹25,000 to ₹45,000 a month",
-    note: "Set after the Reserve Audit, given in writing before commitment.",
+    note: "Set after the Reserve Audit, and given in writing before you commit.",
   },
 
   /** Exact wording still to confirm ("no argument" or "refund with interest"). */

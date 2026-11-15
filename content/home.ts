@@ -139,3 +139,14 @@ export const firstHour = {
     age: todo("age"),
   },
 } as const;
+
+export const investment = {
+  /** Guide, Home block 5. */
+  label: "INVESTMENT",
+  headline: "The first step is free.",
+  rows: [
+    { label: "First visit", value: facts.firstStep.summary },
+    { label: "Price", value: facts.price.range, note: facts.price.note },
+    { label: "Guarantee", value: `${facts.guarantee}.` },
+  ],
+} as const;
