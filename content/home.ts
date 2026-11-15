@@ -159,7 +159,7 @@ export const firstHour = {
   },
 } as const;
 
-/** Word cloud band after block 4. Words supplied by Kabir, largest first. */
+/** Word cloud band after block 4. Source: BigToe word cloud poster, from member testimonials. Largest first. */
 export const memberWords = {
   label: "IN OUR MEMBERS' WORDS",
   words: [

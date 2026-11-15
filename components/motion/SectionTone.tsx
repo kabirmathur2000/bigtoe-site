@@ -32,13 +32,13 @@ const BAND = 0.6;
  * Scroll-linked section colour. The page background mixes from off-white to
  * navy as a navy section's top travels up through the middle 60% of the
  * screen, and back as its bottom does. Text switches colour at the halfway
- * point, where both read on the mid tone. Under reduced motion the colour
- * snaps at the halfway point instead of blending.
+ * point, where both read on the mid tone, and eases over 700ms.
+ * The colour change is a fade, not movement, so it runs the same under
+ * reduced motion: never a hard switch, on any setting.
  */
 export function SectionToneController() {
   useEffect(() => {
     const root = document.documentElement;
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     root.classList.add("tones-managed");
 
     let frame = 0;
@@ -64,7 +64,6 @@ export function SectionToneController() {
         amount = Math.max(amount, Math.min(enter, leave));
       });
 
-      if (mq.matches) amount = amount >= 0.5 ? 1 : 0;
       const pct = Math.round(amount * 1000) / 10;
       if (pct === lastAmount) return;
       lastAmount = pct;
@@ -80,7 +79,6 @@ export function SectionToneController() {
     update();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
-    mq.addEventListener("change", schedule);
     // Pages change under the layout; recompute when the DOM changes.
     const mo = new MutationObserver(schedule);
     mo.observe(document.body, { childList: true, subtree: true });
@@ -89,7 +87,6 @@ export function SectionToneController() {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
-      mq.removeEventListener("change", schedule);
       mo.disconnect();
       root.classList.remove("tones-managed");
       root.style.removeProperty("--page-bg");

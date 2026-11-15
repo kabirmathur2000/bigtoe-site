@@ -18,7 +18,7 @@ Where the live Framer site disagrees with these, the live site is out of date. W
 1. **All BigToe wording comes from the decks or the guide.** Never invent claims, statistics, prices or member quotes. If something is missing, put a visible TODO in the content file (rendered on the page as `TODO: …`) and list it at the end of your reply.
 2. **Every reusable fact lives in `content/facts.ts` and is imported.** Price, guarantee, address, hours, email, WhatsApp, button label, session length, frequency and the like are never typed twice.
 3. **All page copy lives in `content/*.ts`, never inside components.** Components take copy as props or import it from `content/`. No sentences of copy in `.tsx` files.
-4. **No health promises.** Nothing that says prevent, reverse, cure or live longer; nothing "inevitable"; no medical or diagnostic language.
+4. **No health promises.** Nothing that says prevent, reverse, cure or live longer; nothing "inevitable" (one exception: the Rooted, Real, Rebellious refusal, below); no medical or diagnostic language.
 5. **One button label everywhere:** `facts.ctaLabel` (BOOK YOUR FREE FIRST VISIT). Never a variant.
 6. **Member quotes are verbatim,** with first name, age and written consent. No consent recorded in `docs/copy/testimonials.md`, no quote on the page.
 7. **No real photos of people we don't have consent for.** Mood-board images (film stills, public figures) never go on the site. Until the shoot, use grey placeholders sized for the final photo, with alt text describing the shot the shot list calls for.
@@ -123,10 +123,12 @@ Every line comes from Decks 1, 4, 5 and 7, using the decks' own "say it to a mem
 ### Colour
 
 - **Deck colours only.** No new colours. Tokens: `--color-navy #0A212D`, `--color-terracotta #D4644D`, `--color-offwhite #F0EEEB`. Tints for hairlines and secondary text are made from these with opacity, not new hues.
+- **"Off-white" always means the brand light colour `#F0EEEB`,** anywhere in this project. Never introduce another light shade. Only the three brand colours are used.
 - **Proportions:** roughly 70% off-white, 20% navy, 10% terracotta.
 - **Terracotta is for the button and one accent per screen.**
 - **Navy sections are rare, like stepping into an evening lounge.** At most two navy sections on any page, never adjacent, with at least two off-white sections between them. Home has one: the form (block 6). The footer is off-white.
-- **Colour changes between sections are rare and gentle.** The cross-fade runs over about 60% of the viewport height so the page never jumps. Our members are over 40; nothing on the page should startle.
+- **Colour changes between sections are rare and gentle.** Every change between light and navy is a slow, gradual fade over about 60% of the screen height, so the page never jumps. Our members are over 40; nothing on the page should startle.
+- **Never switch colour all at once, on any setting.** Under `prefers-reduced-motion`, movement goes (no rising, sliding or zooming), but colour changes keep the same slow fade.
 - **No gradients, no drop shadows, no glossy effects.** Thin hairline rules instead.
 
 ### Core beliefs
@@ -203,7 +205,8 @@ Type scale (fluid, mobile → desktop):
 - **Section colour changes cross-fade with the scroll,** over about 60% of the viewport height, instead of cutting hard from off-white to navy.
 - **Pages cross-fade slowly** (about one second) between Home, Method and Team.
 - **Hover:** photographs zoom about 3%; buttons darken slowly.
-- **Limits:** nothing bounces, spins or delays reading; all motion off under `prefers-reduced-motion`; smooth on a mid-range phone.
+- **Limits:** nothing bounces, spins or delays reading; smooth on a mid-range phone.
+- **Reduced motion:** under `prefers-reduced-motion`, all movement is off: no rising, sliding, zooming, resizing or looping. Colour and opacity changes stay as the same slow fade (section colours, the page cross-fade, hover colours). Never a hard colour switch.
 
 ### Tone on the page
 
@@ -218,7 +221,7 @@ Type scale (fluid, mobile → desktop):
 - **First names, both ways.** Never "sir", "ma'am" or "client". The decks say "client" internally; the site always says **member**.
 - **Never "at your age".**
 - **Member, Sherpa, Belong, Strength Reserve.** Deck words only. Never Performance Guide, Tribe, Reserve Score, trainer.
-- **No health promises.** Nothing that says prevent, reverse, cure, live longer or "inevitable"; no medical or diagnostic language.
+- **No health promises.** Nothing that says prevent, reverse, cure, live longer or "inevitable"; no medical or diagnostic language. **"Inevitable" is allowed only in Deck 1's refusal: "We refuse to accept that decline is inevitable."** (Rooted, Real, Rebellious; founders' note).
 - **One idea per block, explainable in 20 seconds.**
 - **Fun is allowed.** Coffee, pizza, the clap and the Bell belong on the page.
 - **Borrow the decks' "say it to a member" lines.** They are written for a nervous first-timer, who is who reads the site.
@@ -232,7 +235,7 @@ Type scale (fluid, mobile → desktop):
 The decks are training material for Sherpas, so some lines must not reach the site:
 
 - Deck 1 slides 12 to 13 (intellectual foundation): quotes such as "Mindset can reverse physical decay" and "Reversal is real" break the no-promises rule. Do not use.
-- Deck 1 slide 7: "decline is inevitable" uses a banned word. Rephrase or skip.
+- Deck 1 slide 7: "inevitable" is banned everywhere except the Rebellious refusal itself, "We refuse to accept that decline is inevitable.", which is approved word for word.
 - Deck 1 slide 6: "Roughly half of the extra years…" has no source on the slide. Not usable until a source is given.
 - Deck 4 slide 21: "low muscle is linked to a higher risk of death" and slide 5 "how long you stay well" lean on longevity. Do not use.
 - Deck 1 slide 16 (nutrition as a pillar) and Deck 5 slide 6 (1:23 clock): overridden by the decisions table.

@@ -162,7 +162,9 @@ html.tones-managed [data-tone] {
 }
 
 /* ------------------------------------------------------------------ */
-/* Reduced motion: everything off.                                    */
+/* Reduced motion: no movement (rising, sliding, zooming, resizing).  */
+/* Colour and opacity changes still fade at their normal, slow pace:  */
+/* a colour never switches all at once, on any setting.               */
 /* ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -170,17 +172,22 @@ html.tones-managed [data-tone] {
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
     animation-delay: 0ms !important;
+    transition-property: color, background-color, border-color, outline-color,
+      text-decoration-color, fill, stroke, opacity !important;
+    scroll-behavior: auto !important;
+  }
+  /* Hover zoom on photographs is movement: off. */
+  [class*="group-hover:scale"] {
+    transform: none !important;
   }
   .member-word {
     animation: none !important;
     opacity: 1;
   }
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
+  /* The page cross-fade is a fade, so it stays; only the group's
+     position and size animation (movement) is removed. */
+  ::view-transition-group(*) {
     animation: none !important;
   }
 }
