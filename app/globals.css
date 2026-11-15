@@ -125,7 +125,7 @@ html.tones-managed [data-tone] {
 }
 
 /* ------------------------------------------------------------------ */
-/* Chapters: each fills the screen below the header, content centred, */
+/* Chapters: each fills the screen, content centred,                  */
 /* clear of the mobile bottom bar. Taller content simply grows.       */
 /* In a layer so utilities on a chapter can override it.              */
 /* ------------------------------------------------------------------ */
@@ -137,12 +137,17 @@ html.tones-managed [data-tone] {
   }
 }
 
-/* Chapters sit below the header. In the navy zone the header keeps out of
-   sight (HeaderShell), so navy chapters take the full screen, except under
-   reduced motion, where the header always stays visible. */
-:root { --chapter-offset: var(--header-h); }
+/* Every chapter takes the full screen and each stop is a chapter's very
+   top, so nothing of the previous screen ever shows, whether the header is
+   hidden or not. Light chapters keep a band the height of the header at
+   their top (--chapter-band): when the header slides back on the way up it
+   covers only that band. Navy chapters need none (the header keeps out of
+   the navy zone). Under reduced motion the header always stays visible, so
+   chapters sit below it instead. */
+:root { --chapter-offset: var(--header-h); --chapter-band: 0px; }
 @media (prefers-reduced-motion: no-preference) {
-  [data-tone="navy"] { --chapter-offset: 0px; }
+  :root { --chapter-offset: 0px; --chapter-band: var(--header-h); }
+  [data-tone="navy"] { --chapter-band: 0px; }
 }
 
 /* Short phones also get a little less breathing room above and below each chapter. */
@@ -156,9 +161,14 @@ html.tones-managed [data-tone] {
     flex-direction: column;
     justify-content: center;
     min-height: calc(100svh - var(--chapter-offset));
-    padding-top: var(--chapter-pad);
+    padding-top: calc(var(--chapter-band) + var(--chapter-pad));
     padding-bottom: calc(var(--chapter-pad) + var(--bar-h));
     scroll-margin-top: var(--chapter-offset);
+  }
+  /* The first chapter sits below the header at the top of the page (stop 0). */
+  main > .chapter:first-child {
+    min-height: calc(100svh - var(--header-h));
+    padding-top: var(--chapter-pad);
   }
   /* Auto side margins would otherwise shrink a centred container to its content. */
   .chapter > * { width: 100%; }

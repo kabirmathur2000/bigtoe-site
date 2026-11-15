@@ -39,10 +39,11 @@ function buildStops(): Stop[] {
   );
   const list: Stop[] = [];
   for (const el of els) {
-    // In the navy zone the header is hidden, so chapters there start at the very top.
-    const offset = el.closest('[data-tone="navy"]') ? 0 : header;
-    const visible = window.innerHeight - offset;
-    const start = clamp(el.getBoundingClientRect().top + window.scrollY - offset);
+    // Each stop is a chapter's very top (light chapters keep a band for the
+    // header). The first chapter sits below the header at the top of the page.
+    const visible = window.innerHeight;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const start = top <= header + 1 ? 0 : clamp(top);
     const tall = el.offsetHeight > visible + 2;
     if (!tall) {
       list.push({ y: start });

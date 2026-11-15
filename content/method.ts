@@ -25,8 +25,8 @@ export const barefoot = {
   headline: "It all starts with the big toe.",
   /** Deck 4 slide 8, "say it to a member". */
   line: "Your foot is built to feel the ground. Barefoot, it gets strong again, and you lift from a solid base.",
-  /** Deck 4 slide 9, "Free weights, not fixed machines", cut. */
-  weights: "Free weights, not machines.",
+  /** Deck 4 slide 9, word for word. */
+  weights: "Free weights, not fixed machines.",
   shot: "Bare feet on the training floor, a member mid-lift",
 } as const;
 
