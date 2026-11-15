@@ -39,12 +39,12 @@ export const scoreboard = {
   headline: "Every sport has a score. This is ours.",
   /** Always shown above the dials, so they never read as a member's results. */
   example: "Example",
-  /** Deck 7 slide 5: the four dials, each out of 100, with the deck's own lines. */
+  /** Deck 7 slide 5: the four dials, each out of 100. */
   dials: [
-    { name: "InBody", line: "What you are made of.", value: 78 },
-    { name: "Balance & Mobility", line: "Getting up off the floor. Stepping off a curb.", value: 42 },
-    { name: "Functional Strength", line: "Carrying, pushing, pulling, holding on.", value: 90 },
-    { name: "Conditioning", line: "The stairs. The bus you have to catch.", value: 66 },
+    { name: "InBody", value: 78 },
+    { name: "Balance & Mobility", value: 42 },
+    { name: "Functional Strength", value: 90 },
+    { name: "Conditioning", value: 66 },
   ],
   outOf: "out of 100",
   scoreName: "Strength Reserve",

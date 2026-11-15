@@ -53,13 +53,18 @@ export function Sherpas() {
           <RevealItem as="h2" className="text-h1">{sherpas.headline}</RevealItem>
           <Todo>{sherpas.todo}</Todo>
         </Reveal>
-        <Reveal as="ul" className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 md:mt-12 md:ml-[8.333%] md:max-w-5xl md:grid-cols-4 md:gap-x-8" stagger={0.15}>
+        {/* Phones: a list, small portrait beside name and line. Wider: four portraits. */}
+        <Reveal as="ul" className="mt-4 border-t border-current/15 md:mt-12 md:ml-[8.333%] md:grid md:max-w-5xl md:grid-cols-4 md:gap-x-8 md:border-0" stagger={0.15}>
           {sherpas.people.map((p) => (
-            <RevealItem as="li" key={p.name}>
-              <Placeholder ratio="" shot={p.shot} className="aspect-square md:aspect-[4/5]" />
-              <p className="mt-4 text-h3">{p.name}</p>
-              {p.line && <p className="mt-1 text-caption opacity-75 md:text-body">{p.line}</p>}
-              {p.todo && <p className="mt-1 text-caption text-terracotta">{p.todo}</p>}
+            <RevealItem as="li" key={p.name} className="flex items-center gap-4 border-b border-current/15 py-1.5 md:block md:border-0 md:py-0">
+              <div className="w-12 shrink-0 md:w-auto">
+                <Placeholder ratio="" shot={p.shot} className="aspect-[4/5] p-0 [&>span]:hidden md:p-4 md:[&>span]:inline" />
+              </div>
+              <div>
+                <p className="text-h3 md:mt-4">{p.name}</p>
+                {p.line && <p className="mt-1 text-caption opacity-75 md:text-body">{p.line}</p>}
+                {p.todo && <p className="mt-1 text-caption text-terracotta">{p.todo}</p>}
+              </div>
             </RevealItem>
           ))}
         </Reveal>
@@ -124,9 +129,9 @@ export function Social() {
           <RevealItem as="p" className="mt-4 text-h3 md:mt-6">{social.close}</RevealItem>
         </Reveal>
         <div className="grid grid-cols-2 gap-3 md:col-span-5 md:col-start-8 md:gap-6">
-          <Placeholder ratio="" shot={social.shots[0]} className="col-span-2 aspect-[2/1] md:aspect-[3/2]" />
-          <Placeholder ratio="" shot={social.shots[1]} className="aspect-[3/2] md:aspect-square" />
-          <Placeholder ratio="" shot={social.shots[2]} className="aspect-[3/2] md:aspect-square" />
+          <Placeholder ratio="" shot={social.shots[0]} className="col-span-2 aspect-[5/2] md:aspect-[3/2]" />
+          <Placeholder ratio="" shot={social.shots[1]} className="hidden md:flex md:aspect-square" />
+          <Placeholder ratio="" shot={social.shots[2]} className="hidden md:flex md:aspect-square" />
         </div>
       </div>
     </Section>

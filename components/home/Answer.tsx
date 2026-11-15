@@ -14,7 +14,7 @@ export function Answer() {
       <div className="mx-auto grid w-full max-w-wide gap-8 px-gutter md:grid-cols-12 md:items-center md:gap-12">
         {/* On mobile the photo follows the steps and is shorter, to keep the chapter near one screen. */}
         <div className="order-last md:order-none md:col-span-5 md:col-start-2">
-          <Placeholder ratio="" shot={answer.shot} className="aspect-[5/2] md:aspect-[4/5] md:max-h-[64svh]" />
+          <Placeholder ratio="" shot={answer.shot} className="aspect-[5/2] short:hidden md:aspect-[4/5] md:max-h-[64svh]" />
         </div>
 
         <div className="md:col-span-5 md:col-start-8">
@@ -31,7 +31,7 @@ export function Answer() {
                   {"meta" in s && <span className="ml-4">{s.meta}</span>}
                 </p>
                 <h3 className="mt-1 text-h3">{s.title}</h3>
-                <p className="mt-1 text-body opacity-75">{s.body}</p>
+                <p className="mt-1 hidden text-body opacity-75 md:block">{s.body}</p>
               </RevealItem>
             ))}
           </Reveal>

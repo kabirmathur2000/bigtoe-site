@@ -27,7 +27,7 @@ export function Fades() {
     <Section chapter>
       <div className="mx-auto max-w-wide px-gutter">
         <Reveal className="max-w-3xl md:ml-[8.333%]" stagger={0.18}>
-          <RevealItem as="h1" className="text-h1">{fades.headline}</RevealItem>
+          <RevealItem as="h1" className="text-[2.125rem] leading-[1.05] font-light tracking-[-0.015em] md:text-h1">{fades.headline}</RevealItem>
         </Reveal>
 
         <Reveal as="ul" className="mt-8 grid gap-0 md:mt-14 md:ml-[8.333%] md:max-w-5xl md:grid-cols-3 md:gap-10" stagger={0.2} delay={0.2}>
@@ -62,7 +62,7 @@ export function Training() {
     <Section chapter>
       <div className="mx-auto grid w-full max-w-wide gap-6 px-gutter md:grid-cols-12 md:items-center md:gap-12">
         <div className="order-last md:order-none md:col-span-5 md:col-start-2">
-          <Placeholder ratio="" shot={training.shot} className="aspect-[5/2] md:aspect-[4/5] md:max-h-[64svh]" />
+          <Placeholder ratio="" shot={training.shot} className="aspect-[5/2] short:hidden md:aspect-[4/5] md:max-h-[64svh]" />
         </div>
 
         <div className="md:col-span-5 md:col-start-8">
@@ -70,15 +70,15 @@ export function Training() {
             <RevealItem as="h2" className="text-h1">{training.headline}</RevealItem>
           </Reveal>
 
-          <Reveal as="ul" className="mt-6 border-t border-current/15 md:mt-8" stagger={0.18} delay={0.2}>
+          <Reveal as="ul" className="mt-5 border-t border-current/15 md:mt-8" stagger={0.18} delay={0.2}>
             {training.lines.map((l) => (
-              <RevealItem as="li" key={l} className="border-b border-current/15 py-3 text-body-lg md:py-4">
+              <RevealItem as="li" key={l} className="border-b border-current/15 py-2.5 text-body-lg md:py-4">
                 {l}
               </RevealItem>
             ))}
           </Reveal>
 
-          <Reveal className="mt-6 md:mt-8" stagger={0.18} delay={0.5}>
+          <Reveal className="mt-5 md:mt-8" stagger={0.18} delay={0.5}>
             <RevealItem as="p" className="text-label uppercase opacity-60">
               {training.paths.join("  ·  ")}
             </RevealItem>
