@@ -12,6 +12,9 @@ function Arrow({ dir }: { dir: "left" | "right" }) {
   );
 }
 
+/** Runs the row out to the screen's right edge, past the gutter (and the container on wide screens). */
+const EDGE = "calc(var(--gutter) + max(0px, (100vw - 90rem) / 2))";
+
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /**
@@ -88,8 +91,9 @@ export function MemberQuotes() {
     "flex h-12 w-12 items-center justify-center border border-current/25 transition-colors duration-700 ease-soft hover:border-current disabled:opacity-30 disabled:hover:border-current/25";
 
   return (
-    <Section chapter>
-      <div className="mx-auto w-full max-w-wide px-gutter">
+    // The row runs to the screen edge; the chapter clips it so the page never widens.
+    <Section chapter className="overflow-x-clip">
+      <div className="mx-auto w-full max-w-wide px-gutter pt-6 md:pt-12">
         <div className="md:ml-[8.333%]">
           <ul
             ref={row}
@@ -101,19 +105,20 @@ export function MemberQuotes() {
             onPointerMove={onMove}
             onPointerUp={onUp}
             onPointerCancel={onUp}
+            style={{ marginRight: `calc(-1 * ${EDGE})`, paddingRight: EDGE }}
             className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain [scrollbar-width:none] select-none focus-visible:outline-offset-4 md:cursor-grab md:gap-6 [&::-webkit-scrollbar]:hidden"
           >
             {memberQuotes.items.map((q, i) => (
               <li
                 key={i}
-                className="flex w-[84%] shrink-0 snap-start flex-col justify-between border border-current/15 bg-offwhite p-6 sm:w-[60%] md:w-[44%] md:p-10 lg:w-[38%]"
+                className="flex w-[84%] shrink-0 snap-start flex-col justify-start border border-current/15 bg-offwhite p-6 sm:w-[60%] md:w-[44%] md:p-10 lg:w-[38%]"
               >
                 <blockquote className="text-body-lg md:text-h3">
                   <span aria-hidden>“</span>
                   {q.quote}
                   <span aria-hidden>”</span>
                 </blockquote>
-                <div className="mt-8 border-t border-current/15 pt-4">
+                <div className="mt-6 border-t border-current/15 pt-4 md:mt-auto">
                   <p className="text-caption text-terracotta">{q.name}, {q.age}</p>
                   <p className="mt-1 text-caption text-terracotta">{memberQuotes.consent}</p>
                 </div>

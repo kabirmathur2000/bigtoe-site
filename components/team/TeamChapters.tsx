@@ -1,5 +1,6 @@
 import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Section } from "@/components/motion/SectionTone";
+import { BookButton } from "@/components/ui/BookButton";
 import { Placeholder } from "@/components/ui/Photo";
 import { foundersNote, sherpas, social, story } from "@/content/team";
 
@@ -10,9 +11,9 @@ const Todo = ({ children }: { children: string }) => (
 /**
  * Jay's story and the founders' note are quoted word for word, so they are
  * exempt from the 40-word rule. They sit in a narrow column with generous
- * line spacing, and each paragraph fades in on its own as it is reached.
+ * line spacing, centred, and each paragraph fades in on its own as it is reached.
  */
-const reading = "max-w-[34rem] md:ml-[8.333%]";
+const reading = "mx-auto max-w-[34rem]";
 
 function Paragraph({ children, className }: { children: string; className?: string }) {
   return (
@@ -25,7 +26,7 @@ function Paragraph({ children, className }: { children: string; className?: stri
 /** Chapter 1: Jay's story, word for word. Text only; his portrait signs the note below. */
 export function Story() {
   return (
-    <Section chapter>
+    <Section chapter className="pt-12 md:pt-16">
       <div className="mx-auto max-w-wide px-gutter">
         <div className={reading}>
           <Reveal stagger={0.2}>
@@ -77,7 +78,7 @@ export function Sherpas() {
 export function FoundersNote() {
   const n = foundersNote;
   return (
-    <Section chapter>
+    <Section chapter className="pt-12 md:pt-16">
       <div className="mx-auto max-w-wide px-gutter">
         <div className={reading}>
           <Reveal stagger={0.15}>
@@ -104,7 +105,7 @@ export function FoundersNote() {
           <Paragraph className="text-h3 leading-[1.5]">{n.close}</Paragraph>
         </div>
 
-        <Reveal as="ul" className="mt-14 grid grid-cols-2 gap-x-4 gap-y-8 md:mt-20 md:ml-[8.333%] md:max-w-4xl md:grid-cols-4 md:gap-x-8" stagger={0.15}>
+        <Reveal as="ul" className="mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-x-4 gap-y-8 md:mt-20 md:grid-cols-4 md:gap-x-8" stagger={0.15}>
           {n.founders.map((f) => (
             <RevealItem as="li" key={f.name}>
               <Placeholder ratio="4 / 5" shot={f.shot} />
@@ -128,7 +129,10 @@ export function Social() {
           <RevealItem as="p" className="mt-5 text-body-lg opacity-85 md:mt-8">{social.body}</RevealItem>
           <RevealItem as="p" className="mt-4 text-h3 md:mt-6">{social.close}</RevealItem>
         </Reveal>
-        <div className="grid grid-cols-2 gap-3 md:col-span-5 md:col-start-8 md:gap-6">
+        <div data-cta className="order-last md:order-none md:col-span-5 md:col-start-2 md:row-start-2">
+          <BookButton />
+        </div>
+        <div className="grid grid-cols-2 gap-3 short:hidden md:col-span-5 md:col-start-8 md:row-span-2 md:row-start-1 md:self-center md:gap-6">
           <Placeholder ratio="" shot={social.shots[0]} className="col-span-2 aspect-[5/2] md:aspect-[3/2]" />
           <Placeholder ratio="" shot={social.shots[1]} className="hidden md:flex md:aspect-square" />
           <Placeholder ratio="" shot={social.shots[2]} className="hidden md:flex md:aspect-square" />

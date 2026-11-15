@@ -14,7 +14,7 @@ export function Visit() {
 
         <Reveal className="border-t border-current/15 md:col-span-4 md:col-start-8 md:self-end" stagger={0.15}>
           <RevealItem className="border-b border-current/15 py-6">
-            <p className="text-label uppercase opacity-60">{book.addressLabel}</p>
+            <p className="text-label uppercase opacity-75">{book.addressLabel}</p>
             <div className="mt-2">
               <address className="not-italic text-body-lg">
                 {facts.address.lines.map((l) => (
@@ -32,7 +32,7 @@ export function Visit() {
             </div>
           </RevealItem>
           <RevealItem className="border-b border-current/15 py-6">
-            <p className="text-label uppercase opacity-60">{book.hoursLabel}</p>
+            <p className="text-label uppercase opacity-75">{book.hoursLabel}</p>
             <p className="mt-2 text-body-lg">{facts.hours}</p>
           </RevealItem>
         </Reveal>

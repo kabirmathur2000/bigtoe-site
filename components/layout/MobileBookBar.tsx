@@ -1,38 +1,14 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { BookButton } from "@/components/ui/Button";
+import { BookButton } from "@/components/ui/BookButton";
+import { useCtaHidden } from "./useCtaHidden";
 
 /**
  * Mobile only: the button fixed to the bottom of the screen. It slides away
- * while a booking form ([data-booking-form] inside its section) is on screen.
+ * while another button or the booking form is on screen, so one shows at a time.
  */
 export function MobileBookBar() {
-  const pathname = usePathname();
-  // Keyed by path so a stale "hidden" never carries over to another page.
-  const [state, setState] = useState({ path: pathname, hidden: false });
-  const hidden = state.path === pathname && state.hidden;
-
-  useEffect(() => {
-    const forms = Array.from(document.querySelectorAll<HTMLElement>("[data-booking-form]"))
-      .map((m) => m.closest("section"))
-      .filter((s): s is HTMLElement => !!s);
-    if (!forms.length) return;
-    const visible = new Set<Element>();
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) visible.add(e.target);
-          else visible.delete(e.target);
-        }
-        setState({ path: pathname, hidden: visible.size > 0 });
-      },
-      { rootMargin: "0px 0px -15% 0px" },
-    );
-    forms.forEach((f) => io.observe(f));
-    return () => io.disconnect();
-  }, [pathname]);
+  const hidden = useCtaHidden("0px 0px -15% 0px");
 
   return (
     <div

@@ -11,13 +11,18 @@ export function OurPromise() {
     <Section chapter>
       <div className="mx-auto grid max-w-wide gap-12 px-gutter md:grid-cols-12">
         <Reveal className="md:col-span-6 md:col-start-2">
-          <RevealItem as="h2" className="text-h1">{promise.headline}</RevealItem>
+          <RevealItem as="h2" className="text-h1">
+            {/* One sentence per line. */}
+            {promise.headline.split(/(?<=\.)\s+/).map((line) => (
+              <span key={line} className="block">{line}</span>
+            ))}
+          </RevealItem>
         </Reveal>
 
         <Reveal as="ul" className="border-t border-current/15 md:col-span-4 md:col-start-8 md:self-end" stagger={0.18}>
           {promise.rows.map((r) => (
             <RevealItem as="li" key={r.label} className="border-b border-current/15 py-6">
-              <span className="block text-label uppercase opacity-60">{r.label}</span>
+              <span className="block text-label uppercase opacity-75">{r.label}</span>
               <span className="mt-2 block text-h3">{r.value}</span>
               {"note" in r && <span className="mt-2 block text-body opacity-70">{r.note}</span>}
             </RevealItem>

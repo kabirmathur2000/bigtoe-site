@@ -37,7 +37,7 @@ export function HeroMedia({
           />
         ) : (
           <div role="img" aria-label={shot} className="flex h-full w-full items-end bg-navy/15 p-4 md:p-6">
-            <span className="text-caption text-navy/50">{shot}</span>
+            <span className="text-caption text-navy/75">{shot}</span>
           </div>
         )}
       </div>

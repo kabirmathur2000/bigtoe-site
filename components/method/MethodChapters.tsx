@@ -79,8 +79,11 @@ export function Training() {
           </Reveal>
 
           <Reveal className="mt-5 md:mt-8" stagger={0.18} delay={0.5}>
-            <RevealItem as="p" className="text-label uppercase opacity-60">
-              {training.paths.join("  ·  ")}
+            {/* One path per line, so a name never breaks. */}
+            <RevealItem as="p" className="text-label uppercase opacity-75">
+              {training.paths.map((p) => (
+                <span key={p} className="block whitespace-nowrap not-first:mt-1">{p}</span>
+              ))}
             </RevealItem>
             <RevealItem as="p" className="mt-3 text-h3">{training.pathsLine}</RevealItem>
           </Reveal>

@@ -8,7 +8,7 @@ import { memberWords } from "@/content/home";
 /** Words added per step, largest first. */
 const GROUP = 3;
 /** Share of the pinned scroll by which every word is in; the close line follows. */
-const WORDS_BY = 0.7;
+const WORDS_BY = 0.75;
 
 /** Size tier by rank (the content list is largest first). */
 function tier(rank: number) {
@@ -29,7 +29,7 @@ const clamp = (n: number) => Math.min(1, Math.max(0, n));
 
 /**
  * Chapter 5, IN OUR MEMBERS' WORDS. The chapter pins while the visitor
- * scrolls about one and a half screens. Words fade in a small group at a
+ * scrolls about 0.8 of a screen. Words fade in a small group at a
  * time, largest first, and stay; scrolling back never removes them. Once
  * all are in, the Deck 9 line fades in and the chapter releases. Hover or
  * tap turns a word terracotta. Reduced motion: every word at once, no pin.
@@ -78,7 +78,7 @@ export function MemberWords() {
     <div className="mx-auto w-full max-w-wide px-gutter">
       <p className="text-label uppercase opacity-70 md:ml-[8.333%]">{memberWords.label}</p>
 
-      <ul className="mx-auto mt-6 flex max-w-content flex-wrap items-baseline justify-center gap-x-5 gap-y-1 md:mt-12 md:gap-x-12 md:gap-y-3">
+      <ul className="mt-6 flex max-w-content flex-wrap items-baseline gap-x-5 gap-y-1 md:mt-12 md:ml-[8.333%] md:gap-x-12 md:gap-y-3">
         {ORDER.map((rank) => (
           <li
             key={rank}
@@ -94,7 +94,7 @@ export function MemberWords() {
       </ul>
 
       <p
-        className={`mx-auto mt-8 max-w-3xl text-center text-h3 transition-opacity duration-[1200ms] ease-soft md:mt-14 ${
+        className={`mt-8 max-w-3xl text-h3 transition-opacity duration-[1200ms] ease-soft md:mt-14 md:ml-[8.333%] ${
           done ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -106,8 +106,8 @@ export function MemberWords() {
   if (reduce) return <Section chapter>{content}</Section>;
 
   return (
-    // One screen plus about one and a half screens of pinned scroll.
-    <Section chapter className="block h-[calc(250svh-var(--header-h))] p-0">
+    // One screen plus about 0.8 of a screen of pinned scroll.
+    <Section chapter className="block h-[calc(180svh-var(--header-h))] p-0">
       <div
         ref={ref}
         className="sticky top-(--header-h) flex h-[calc(100svh-var(--header-h))] flex-col justify-center pt-(--chapter-pad) pb-[calc(var(--chapter-pad)+var(--bar-h))]"

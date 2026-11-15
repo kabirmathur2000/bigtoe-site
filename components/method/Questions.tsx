@@ -3,7 +3,7 @@
 import { useId, useState } from "react";
 import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Section } from "@/components/motion/SectionTone";
-import { BookButton } from "@/components/ui/Button";
+import { BookButton } from "@/components/ui/BookButton";
 import { questions } from "@/content/method";
 
 /** Chapter 5, QUESTIONS: six collapsed questions, then the page's one button. */
@@ -12,7 +12,7 @@ export function Questions() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <Section chapter>
+    <Section chapter className="pt-12 md:pt-16">
       <div className="mx-auto max-w-wide px-gutter">
         <div className="md:ml-[8.333%] md:max-w-3xl">
           <Reveal as="ul" className="border-t border-current/15" stagger={0.1}>
@@ -68,7 +68,7 @@ export function Questions() {
             })}
           </Reveal>
 
-          <div className="mt-16">
+          <div data-cta className="mt-10">
             <BookButton />
           </div>
         </div>

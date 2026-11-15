@@ -62,7 +62,7 @@ export function Scoreboard() {
         </Reveal>
 
         <div ref={ref} className="mt-4 border-t border-current/15 pt-3 md:mt-10 md:pt-4 md:ml-[8.333%] md:max-w-5xl">
-          <p className="text-label uppercase text-terracotta">{scoreboard.example}</p>
+          <p className="text-label uppercase opacity-75">{scoreboard.example}</p>
 
           <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3 md:mt-6 md:grid-cols-4 md:gap-x-10 md:gap-y-6">
             {scoreboard.dials.map((d, i) => {
@@ -78,7 +78,7 @@ export function Scoreboard() {
                         strokeDasharray={C} strokeDashoffset={C * (1 - (d.value * t) / 100)}
                       />
                     </svg>
-                    <span aria-hidden className="absolute inset-0 flex items-center justify-center text-body-lg tabular-nums md:text-h2">
+                    <span aria-hidden className="absolute inset-0 flex items-center justify-center text-[1.5rem] tabular-nums md:text-h3">
                       {now}
                     </span>
                   </div>
@@ -92,8 +92,8 @@ export function Scoreboard() {
           {/* The score beside the lesson: the weakest dial matters more than the total. */}
           <div className="mt-4 grid gap-3 border-t border-current/15 pt-3 md:mt-8 md:pt-4 md:grid-cols-12 md:gap-10">
             <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 md:col-span-5 md:block">
-              <p className="text-label uppercase opacity-60">{scoreboard.scoreName}</p>
-              <p className="text-h2 tabular-nums md:mt-2 md:text-h1">
+              <p className="text-label uppercase opacity-75">{scoreboard.scoreName}</p>
+              <p className="text-h1 tabular-nums md:mt-1 md:text-display">
                 <span aria-hidden>{Math.round(score * t)}</span>
                 <span className="sr-only">{score}</span>
               </p>

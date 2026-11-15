@@ -4,7 +4,7 @@ import { footer } from "@/content/site";
 import logoTag from "@/public/brand/logo-tag.png";
 
 function Label({ children }: { children: React.ReactNode }) {
-  return <p className="mb-3 text-label uppercase opacity-60">{children}</p>;
+  return <p className="mb-3 text-label uppercase opacity-75">{children}</p>;
 }
 
 function Todo({ children }: { children: string }) {
@@ -17,7 +17,7 @@ export function Footer() {
   return (
     <footer data-tone="light" className="border-t border-current/15 pb-28 md:pb-0">
       <div className="mx-auto grid max-w-wide gap-12 px-gutter py-20 md:grid-cols-12 md:py-28">
-        <div className="md:col-span-6">
+        <div className="md:col-span-5 md:col-start-2">
           <Image
             src={logoTag}
             alt={`${facts.brand}. ${facts.tagline}`}
@@ -35,25 +35,25 @@ export function Footer() {
           )}
         </div>
 
-        <div className="md:col-span-3">
+        <div className="md:col-span-3 md:col-start-7">
           <Label>{footer.hoursLabel}</Label>
           <p>{facts.hours}</p>
         </div>
 
         <div className="md:col-span-3">
           <Label>{footer.contactLabel}</Label>
-          <ul className="space-y-2">
+          <ul>
             <li>
               <span className="sr-only">{footer.whatsappLabel}: </span>
               {wa ? (
-                <a href={wa} className="underline-offset-4 hover:underline">{footer.whatsappLabel}</a>
+                <a href={wa} className="inline-flex min-h-11 items-center underline-offset-4 hover:underline">{footer.whatsappLabel}</a>
               ) : (
                 <Todo>{todo(footer.missingWhatsapp)}</Todo>
               )}
             </li>
             <li>
               <span className="sr-only">{footer.emailLabel}: </span>
-              <a href={mailtoHref} className="underline-offset-4 hover:underline">{facts.email}</a>
+              <a href={mailtoHref} className="inline-flex min-h-11 items-center underline-offset-4 hover:underline">{facts.email}</a>
             </li>
           </ul>
         </div>

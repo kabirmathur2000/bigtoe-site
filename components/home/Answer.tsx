@@ -26,7 +26,7 @@ export function Answer() {
           <Reveal as="ul" className="mt-5 border-t border-current/15" stagger={0.18} delay={0.2}>
             {answer.steps.map((s, i) => (
               <RevealItem as="li" key={s.id} className="border-b border-current/15 py-3.5 md:py-4">
-                <p className="text-label uppercase opacity-60">
+                <p className="text-label uppercase opacity-75">
                   {String(i + 1).padStart(2, "0")}
                   {"meta" in s && <span className="ml-4">{s.meta}</span>}
                 </p>

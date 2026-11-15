@@ -49,7 +49,7 @@ function Thanks({ firstName }: { firstName: string }) {
       {wa ? (
         <>
           <div className="mt-10">
-            <ButtonLink href={wa} variant="outline-light" target="_blank" rel="noopener noreferrer">
+            <ButtonLink href={wa} variant="on-navy" target="_blank" rel="noopener noreferrer">
               {t.whatsappLabel}
             </ButtonLink>
           </div>
@@ -126,7 +126,7 @@ export function BookingForm() {
         <select
           id={`${id}-${k}`} name={k} value={values[k]} onChange={set(k)}
           aria-invalid={!!errors[k]} aria-describedby={describe(k)}
-          className={`${field} cursor-pointer appearance-none pr-8 [&>option]:bg-navy [&>option]:text-offwhite ${values[k] ? "" : "text-current/50"}`}
+          className={`${field} cursor-pointer appearance-none pr-8 [&>option]:bg-navy [&>option]:text-offwhite ${values[k] ? "" : "text-current/75"}`}
         >
           <option value="" disabled>{f[k].placeholder}</option>
           {f[k].options.map((o) => (
@@ -169,7 +169,7 @@ export function BookingForm() {
 
       <div>
         <FieldLabel htmlFor={`${id}-note`}>
-          {f.note.label} <span className="ml-2 font-normal normal-case tracking-normal opacity-70">({f.note.optional})</span>
+          {f.note.label} <span className="ml-2 font-normal normal-case tracking-normal">({f.note.optional})</span>
         </FieldLabel>
         <textarea
           id={`${id}-note`} name="note" rows={2} maxLength={MAX_LENGTH.note} value={values.note} onChange={set("note")}
@@ -178,7 +178,7 @@ export function BookingForm() {
       </div>
 
       <div>
-        <Button type="submit" disabled={pending} className="w-full disabled:opacity-60 md:w-auto">
+        <Button type="submit" variant="on-navy" disabled={pending} className="w-full disabled:opacity-60 md:w-auto">
           {booking.submit}
         </Button>
         <p aria-live="polite" className="mt-4 min-h-6 text-caption text-terracotta">

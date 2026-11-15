@@ -5,7 +5,7 @@
 ## First rules
 
 - **Clean, and less is more.** Every chapter fits one screen, with about 40 words of body text at most. When in doubt, cut.
-  - **Exempt: Jay's story and the founders' note,** because they are quoted word for word. They sit in a narrow column (about 34rem) with generous line spacing (about 1.8), and each paragraph fades in on its own as it is reached.
+  - **Exempt: Jay's story and the founders' note,** because they are quoted word for word. They sit in a narrow, centred column (about 34rem) with generous line spacing (about 1.8), and each paragraph fades in on its own as it is reached.
 - **American spelling throughout** (aging, realizing), matching the studio wall. Deck lines with British spelling (programme, pretence, ageing, practise) are quoted in American spelling; that is the only change allowed to a quoted line.
 - **Story first.** Each page is a short story in chapters. **Deck labels shape the order of each page but are not shown** (THE MAIN POINT, THE CORE BELIEF, OUR MISSION, OUR ANSWER, OUR PROMISE, and their equivalents on Method, Team and Book live as comments in `content/*.ts`). The one label shown on the site is "IN OUR MEMBERS' WORDS".
 - **References.** 10 Squared (10squared.com) for absolute simplicity: single column, few words, one ask, no decoration. Apple (apple.com) for a few luxurious transitions: full-bleed chapters, large type, one image pinned while text moves past.
@@ -141,10 +141,14 @@ Held back for now: "Same score, different person" (Deck 7 slide 12) and the tap-
 
 - **Deck colours only.** No new colours. Tokens: `--color-navy #0A212D`, `--color-terracotta #D4644D`, `--color-offwhite #F0EEEB`. Tints for hairlines and secondary text are made from these with opacity, not new hues.
 - **"Off-white" always means the brand light colour `#F0EEEB`,** anywhere in this project. Never introduce another light shade. Only the three brand colours are used.
-- **Proportions:** roughly 70% off-white, 20% navy, 10% terracotta.
-- **Terracotta is for the button and one accent per screen.**
+- **Proportions:** roughly 70% off-white, 25% navy, 5% terracotta.
+- **Buttons:** navy fill with off-white (#F0EEEB) text everywhere; on a navy section, off-white fill with navy text. Hover is a slow darken. Square corners, no shadows. **Terracotta is never a button colour.**
+- **Terracotta is the one accent per screen** (the Power bulb, the weakest dial, a hovered word). Terracotta text must be large (24px+, or 19px+ bold) to pass AA; the temporary TODO text is the only exception and goes at launch.
+- **Contrast:** all text passes WCAG AA. Secondary text and labels use navy or off-white at 75% opacity or more, never less.
+- **One button visible at a time.** The header button (desktop) and the bottom bar (mobile) step aside while an in-page button or the form is on screen. On `/book-now` every button scrolls to the form (`#waitlist`) instead of reloading the page.
 - **Navy sections are rare, like stepping into an evening lounge.** At most two navy sections on any page, never adjacent, with at least two off-white sections between them. Home has one: the waitlist at the end of chapter 6. The footer is off-white.
 - **Colour changes between sections are rare and gentle.** Every change between light and navy is a slow, gradual fade over about 60% of the screen height, so the page never jumps. Our members are over 40; nothing on the page should startle.
+- **The waitlist holds its colour.** The submit button, footer and logo only ever sit on a settled colour, never mid-fade: the fade into navy finishes before the submit button can appear, and the fade back to light starts only once the form has fully passed under the header, in empty navy below it, finishing before the footer appears (`data-tone-release` in `BookingSection`).
 - **Never switch colour all at once, on any setting.** Under `prefers-reduced-motion`, movement goes (no rising, sliding or zooming), but colour changes keep the same slow fade.
 - **No gradients, no drop shadows, no glossy effects.** Thin hairline rules instead.
 
@@ -227,6 +231,9 @@ Type scale (fluid, mobile → desktop):
 - **Every chapter fills the screen** (100svh below the header) and its text and images are fully visible, never cut off, clear of the mobile bottom bar. Use `<Section chapter>`; the `.chapter` style in `globals.css` sets the height, centring and padding.
 - **Check at 375x667, 390x844, 768x1024, 1280x720 and 1440x900.** Where a chapter does not fit, tighten spacing or image size. Never cut copy without asking.
 - **Exempt, scrolling freely:** Jay's story, the founders' note, the questions, and the waitlist form.
+- **One left edge.** Chapter content starts at the second column of the 12-column grid (`md:ml-[8.333%]` or `md:col-start-2`), including the poem, the word cloud and the footer. Exceptions: Jay's story and the founders' note are centred; the header logo sits at the gutter.
+- **Room below the header.** Chapters taller than the screen (Jay's story, the founders' note, the questions) start at least 48px below the header.
+- **Tap targets** are at least 44px tall, including header and footer links.
 - **Phones.** On short phones (phone layout and under about 720px tall; the `short:` variant), photos in Our answer and How we train step aside and chapter padding tightens; taller phones keep their photos. On all phones: Our answer shows step titles only; the What fades, Scoreboard and Book headlines are 34px; the Scoreboard dials sit 2x2 with each name beside a small dial; Who we serve shows the four titles only until a card is opened; the Sherpas are a list with a small portrait beside name and line; the social space shows one photo.
 - **Gentle guided scrolling** (Lenis, `components/motion/SmoothScroll.tsx`): when the visitor pauses within about a quarter of a screen of the chapter they are heading into, the page glides the rest of the way a little faster and settles softly at its start. Proximity only, never mandatory, and only in the direction of travel: the page never traps or fights the visitor, a small scroll stays a small scroll, and nothing is pulled back. A chapter taller than the screen scrolls freely, with a resting point at its end. Touch screens use the browser's own proximity snap.
 - **Reduced motion: snapping is off completely** (Lenis is off, and the touch snap is not applied).

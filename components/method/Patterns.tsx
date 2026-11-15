@@ -19,7 +19,7 @@ export function Patterns() {
           <RevealItem as="h2" className="text-h1">{patterns.headline}</RevealItem>
         </Reveal>
 
-        <ul className="mt-6 flex flex-col gap-0 md:mt-12 md:ml-[8.333%] md:h-[min(640px,58svh)] md:flex-row md:gap-4">
+        <ul className="mt-6 flex flex-col gap-0 md:mt-12 md:ml-[8.333%] md:h-[min(640px,62svh)] md:flex-row md:gap-4">
           {patterns.items.map((p) => {
             const isOpen = open === p.id;
             return (
@@ -46,10 +46,10 @@ export function Patterns() {
                       aria-label={p.shot}
                       className="absolute inset-0 flex items-end bg-navy/15 p-4 transition-transform duration-[1200ms] ease-soft group-hover:scale-[1.03]"
                     >
-                      <span className="text-caption text-navy/50">{p.shot}</span>
+                      <span className="text-caption text-navy/75">{p.shot}</span>
                     </div>
                   </div>
-                  <span className={`flex items-baseline justify-between gap-4 border-t border-current/15 py-4 md:mt-4 md:h-24 md:pt-4 md:pb-0 ${isOpen ? "mt-3" : ""}`}>
+                  <span className={`flex items-baseline justify-between gap-4 border-t border-current/15 py-4 md:mt-4 md:min-h-24 ${isOpen ? "mt-3" : ""}`}>
                     <span className="text-h3">{p.title}</span>
                     <span aria-hidden className={`text-h3 transition-transform duration-500 ${isOpen ? "rotate-45" : ""}`}>+</span>
                   </span>
@@ -57,7 +57,7 @@ export function Patterns() {
 
                 <div
                   id={`pattern-${p.id}`}
-                  className={`grid transition-[grid-template-rows,opacity] duration-700 ease-soft md:block md:h-40 md:overflow-hidden ${
+                  className={`grid transition-[grid-template-rows,opacity] duration-700 ease-soft ${
                     isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                   }`}
                 >

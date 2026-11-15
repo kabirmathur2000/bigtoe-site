@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Section } from "@/components/motion/SectionTone";
-import { BookButton, ButtonLink } from "@/components/ui/Button";
+import { BookButton } from "@/components/ui/BookButton";
+import { ButtonLink } from "@/components/ui/Button";
 import { Photo } from "@/components/ui/Photo";
 import { styleguide as sg } from "@/content/styleguide";
 

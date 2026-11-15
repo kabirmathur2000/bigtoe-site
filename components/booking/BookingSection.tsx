@@ -9,7 +9,7 @@ import { booking } from "@/content/booking";
  */
 export function BookingSection({ id = "waitlist" }: { id?: string }) {
   return (
-    <Section chapter id={id} tone="navy" className="pb-(--chapter-pad)">
+    <Section chapter id={id} tone="navy" className="pb-0 md:pt-[calc(var(--chapter-pad)+28svh)]">
       {/* Marks the form so the mobile bottom bar hides while it is on screen. */}
       <div data-booking-form />
       <div className="mx-auto max-w-wide px-gutter">
@@ -23,6 +23,14 @@ export function BookingSection({ id = "waitlist" }: { id?: string }) {
           </div>
         </div>
       </div>
+      {/*
+        The page fades back to light only once the form has fully passed
+        under the header (the marker), and finishes before the footer can
+        appear, so the button, footer and logo only ever sit on a settled
+        colour. The empty navy below is where that fade happens.
+      */}
+      <div data-tone-release aria-hidden className="mt-(--chapter-pad)" />
+      <div aria-hidden className="h-[calc(145svh-var(--header-h))]" />
     </Section>
   );
 }

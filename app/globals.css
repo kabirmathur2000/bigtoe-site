@@ -9,7 +9,9 @@
   --terracotta: #d4644d;
   --offwhite: #f0eeeb;
   /* Button hover: terracotta darkened toward navy, not a new colour. */
-  --terracotta-deep: color-mix(in srgb, var(--terracotta) 82%, var(--navy));
+  /* Button hovers: a slow darken of each fill. */
+  --navy-deep: color-mix(in srgb, var(--navy) 72%, #000);
+  --offwhite-deep: color-mix(in srgb, var(--offwhite) 86%, var(--navy));
 
   /* Page background, driven by SectionToneController for cross-fades. */
   --page-bg: var(--offwhite);

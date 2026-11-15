@@ -34,6 +34,8 @@ const clamp = (n: number) => Math.min(1, Math.max(0, n));
 
 /** Share of the viewport height a colour change is spread across. */
 const BAND = 0.6;
+/** Share of the screen the fade back to light takes after a release marker (see BookingSection). */
+const RELEASE = 0.45;
 
 /**
  * Scroll-linked section colour. The page background mixes from off-white to
@@ -62,6 +64,16 @@ export function SectionToneController() {
       document.querySelectorAll<HTMLElement>('[data-tone="navy"]').forEach((el) => {
         const r = el.getBoundingClientRect();
         const enter = clamp((start - r.top) / (start - end));
+        // A section with a release marker stays navy until the marker has
+        // passed under the header, then fades over RELEASE of the screen.
+        const release = el.querySelector<HTMLElement>("[data-tone-release]");
+        if (release) {
+          const header = document.querySelector("header")?.offsetHeight ?? 0;
+          const t = release.getBoundingClientRect().top;
+          const leave = clamp((t - (header - vh * RELEASE)) / (vh * RELEASE));
+          amount = Math.max(amount, Math.min(enter, leave));
+          return;
+        }
         // Near the end of the page the bottom edge may never reach `end`;
         // shorten the band so the change can always finish.
         const bottomAtMax = r.bottom - (maxScroll - window.scrollY);

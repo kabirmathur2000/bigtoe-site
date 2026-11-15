@@ -20,7 +20,7 @@ export function Placeholder({
       style={ratio ? { aspectRatio: ratio } : undefined}
       className={`relative flex w-full items-end bg-current/15 p-4 ${className}`}
     >
-      <span className="text-caption opacity-50">{shot}</span>
+      <span className="text-caption opacity-75">{shot}</span>
     </div>
   );
 }
