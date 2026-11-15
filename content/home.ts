@@ -1,5 +1,5 @@
 /**
- * Home page copy: six chapters in Deck 1 order. The deck labels shape the order but are not shown.
+ * Home page copy: six chapters in Deck 1 order (the poem moved to the footer, the Scoreboard in from Method). The deck labels shape the order but are not shown.
  * Every line comes from CLAUDE.md, the guide or the decks, cut but never
  * reworded; facts are imported, never retyped. American spelling.
  */
@@ -19,18 +19,41 @@ export const hero = {
 /** Chapter 2. Deck 1 slide 4, cut. */
 export const belief = {
   /** Deck label, not shown (it shapes the page order): THE CORE BELIEF. */
+  /** Shown as a small label: one of the two labels on the site (with IN OUR MEMBERS' WORDS). */
+  label: "Our belief",
   headline: facts.heroLine,
   lines: ["The problem isn't your age."],
 } as const;
 
+/** Chapter 3 (moved from Method, unchanged). Deck 7 slides 1, 5 and 12; the score as a sport (Deck 7 cover). */
+export const scoreboard = {
+  /** Deck label, not shown (it shapes the page order): THE SCOREBOARD. */
+  headline: "Every sport has a score. This is ours.",
+  /** Always shown above the dials, so they never read as a member's results. */
+  example: "Example",
+  /** Deck 7 slide 5: the four dials, each out of 100. */
+  dials: [
+    { name: "InBody", value: 78 },
+    { name: "Balance & Mobility", value: 42 },
+    { name: "Functional Strength", value: 90 },
+    { name: "Conditioning", value: 66 },
+  ],
+  outOf: "out of 100",
+  scoreName: "Strength Reserve",
+  /** Deck 7 slide 5, THE SCORE. */
+  scoreNote: "the average of the four dials",
+  /** Deck 7 slide 12, "say it to a member". */
+  weakest: "Your Strength Reserve is only as good as your weakest dial. That is where we start.",
+} as const;
+
 /**
- * Chapter 3. The Practice Possibility poem: the text on the studio wall.
+ * The Practice Possibility poem: the text on the studio wall, shown in the footer.
  * FIXED WORDING. Never edit a character: spelling, capitals and
  * punctuation stay exactly as on the wall. See CLAUDE.md.
  */
 export const poem = {
   /** Deck 1 slide 5 label. */
-  /** Deck label, not shown (it shapes the page order): OUR MISSION. */
+  /** Deck label OUR MISSION; the poem now lives in the footer on every page. */
   stanzas: [
     ["We get better at what we practice."],
     [
@@ -113,8 +136,7 @@ export const memberWords = {
 export const promise = {
   /** Deck label, not shown (it shapes the page order): OUR PROMISE. */
   headline: "Look better. Move better. Feel better.",
-  rows: [
-    { label: "Price", value: facts.price.range, note: facts.price.note },
-    { label: "Guarantee", value: `${facts.guarantee}.` },
-  ],
+  /** One small line each: the lowest price, then the guarantee. The range is a Method question. */
+  price: facts.price.fromLine,
+  guarantee: `Guarantee: ${facts.guarantee}.`,
 } as const;

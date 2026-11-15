@@ -3,30 +3,25 @@ import { Section } from "@/components/motion/SectionTone";
 import { promise } from "@/content/home";
 
 /**
- * Chapter 6, OUR PROMISE. The promise, then the price and guarantee, stated
- * plainly once. The page then fades slowly into the navy form below.
+ * Chapter 6, OUR PROMISE. The promise, then one small line for the price
+ * (from the lowest) and one for the guarantee. The full range lives in
+ * Method's questions.
  */
 export function OurPromise() {
   return (
     <Section chapter tone="navy">
-      <div className="mx-auto grid max-w-wide gap-12 px-gutter md:grid-cols-12">
-        <Reveal className="md:col-span-6 md:col-start-2">
+      <div className="mx-auto max-w-wide px-gutter">
+        <Reveal className="md:ml-[8.333%]" stagger={0.25}>
           <RevealItem as="h2" className="text-h1">
             {/* One sentence per line. */}
             {promise.headline.split(/(?<=\.)\s+/).map((line) => (
               <span key={line} className="block">{line}</span>
             ))}
           </RevealItem>
-        </Reveal>
-
-        <Reveal as="ul" className="border-t border-current/15 md:col-span-4 md:col-start-8 md:self-end" stagger={0.18}>
-          {promise.rows.map((r) => (
-            <RevealItem as="li" key={r.label} className="border-b border-current/15 py-6">
-              <span className="block text-label uppercase opacity-75">{r.label}</span>
-              <span className="mt-2 block text-h3">{r.value}</span>
-              {"note" in r && <span className="mt-2 block text-body opacity-70">{r.note}</span>}
-            </RevealItem>
-          ))}
+          <div className="mt-10 max-w-text border-t border-current/15 pt-6 md:mt-14">
+            <RevealItem as="p" className="text-body-lg">{promise.price}</RevealItem>
+            <RevealItem as="p" className="mt-1 text-body-lg opacity-75">{promise.guarantee}</RevealItem>
+          </div>
         </Reveal>
       </div>
     </Section>

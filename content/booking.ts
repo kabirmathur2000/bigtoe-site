@@ -20,12 +20,6 @@ export const booking = {
         facts.day120Options ??
         Array.from({ length: 6 }, (_, i) => todo(`day-120 option ${i + 1}`)),
     },
-    heardFrom: {
-      label: "How did you hear about us?",
-      placeholder: "Choose one",
-      options: ["Member referral", "Instagram", "Google", "Other"],
-    },
-    note: { label: "Anything we should know", optional: "Optional" },
   },
 
   errors: {
@@ -34,7 +28,6 @@ export const booking = {
     contactMissing: "Please add a WhatsApp number or an email address.",
     contactInvalid: "That doesn't look like a WhatsApp number or an email address.",
     day120: "Please choose one.",
-    heardFrom: "Please choose one.",
 
     failed: `Something went wrong and your details weren't sent. Please try again, or email ${facts.email}.`,
   },

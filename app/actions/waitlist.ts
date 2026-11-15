@@ -30,8 +30,6 @@ export async function submitWaitlist(formData: FormData): Promise<SubmitResult> 
     `${f.lastName.label}: ${values.lastName.trim()}`,
     `${f.contact.label}: ${values.contact.trim()}`,
     `${f.day120.label} ${values.day120}`,
-    `${f.heardFrom.label} ${values.heardFrom}`,
-    `${f.note.label}: ${values.note.trim() || "-"}`,
     "",
     `Form: ${facts.ctaHeading}`,
   ].join("\n");

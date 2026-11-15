@@ -4,16 +4,16 @@ import { Belief } from "@/components/home/Belief";
 import { Hero } from "@/components/home/Hero";
 import { MemberQuotes } from "@/components/home/MemberQuotes";
 import { MemberWords } from "@/components/home/MemberWords";
-import { Poem } from "@/components/home/Poem";
 import { OurPromise } from "@/components/home/OurPromise";
+import { Scoreboard } from "@/components/home/Scoreboard";
 
-/** Home: six chapters (the members' words followed by their quotes), then the form on navy. See CLAUDE.md. */
+/** Home: hero, our belief, the scoreboard (light); our answer, members' words and quotes, our promise, the form (navy). See CLAUDE.md. */
 export default function Home() {
   return (
     <>
       <Hero />
       <Belief />
-      <Poem />
+      <Scoreboard />
       <Answer />
       <MemberWords />
       <MemberQuotes />

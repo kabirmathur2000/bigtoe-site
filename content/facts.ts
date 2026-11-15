@@ -48,8 +48,17 @@ export const facts = {
   },
 
   price: {
-    range: "₹25,000 to ₹45,000 a month",
-    note: "Set after the Reserve Audit, and given in writing before you commit.",
+    /** Decisions table: ₹25,000 to ₹45,000 a month. */
+    from: "₹25,000",
+    to: "₹45,000",
+    get range() {
+      return `${this.from} to ${this.to} a month`;
+    },
+    /** Home's promise screen: the lowest price only. */
+    get fromLine() {
+      return `Memberships from ${this.from} a month.`;
+    },
+    note: "set after your Reserve Audit, and given in writing before you commit",
   },
 
   /** Exact wording still to confirm ("no argument" or "refund with interest"). */

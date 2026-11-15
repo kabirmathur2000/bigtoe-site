@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Fades, Training } from "@/components/method/MethodChapters";
+import { Barefoot, Fades } from "@/components/method/MethodChapters";
+import { Paths } from "@/components/method/Paths";
 import { Patterns } from "@/components/method/Patterns";
 import { Questions } from "@/components/method/Questions";
-import { Scoreboard } from "@/components/method/Scoreboard";
 import { meta } from "@/content/site";
 
 export const metadata: Metadata = meta.pages.method;
 
-/** Method: what fades, how we train, the scoreboard, who we serve, questions. All light. */
+/** Method: what fades, barefoot, two paths (light); who we serve, questions (navy). */
 export default function MethodPage() {
   return (
     <>
       <Fades />
-      <Training />
-      <Scoreboard />
+      <Barefoot />
+      <Paths />
       <Patterns />
       <Questions />
     </>

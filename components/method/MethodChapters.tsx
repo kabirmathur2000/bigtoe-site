@@ -1,8 +1,7 @@
 import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Section } from "@/components/motion/SectionTone";
 import { Placeholder } from "@/components/ui/Photo";
-import { Split } from "@/components/ui/Split";
-import { fades, training } from "@/content/method";
+import { barefoot, fades } from "@/content/method";
 
 /** A plain line-drawn bulb, hairline weight. */
 function Bulb({ accent = false }: { accent?: boolean }) {
@@ -58,32 +57,26 @@ export function Fades() {
   );
 }
 
-/** Chapter 2, HOW WE TRAIN. Split layout: the photo stays pinned while the headline, the three lines and the two paths move past. */
-export function Training() {
+/**
+ * Chapter 2, barefoot and free weights: the big toe, the barefoot reason,
+ * then free weights. One photo beside the words on desktop (no split
+ * layout); above them on taller phones, set aside on short ones.
+ */
+export function Barefoot() {
   return (
-    <Split
-      photo={<Placeholder ratio="" shot={training.shot} className="aspect-[5/2] short:hidden md:aspect-[4/5] md:max-h-[72svh]" />}
-      blocks={[
-        <Reveal key="headline">
-          <RevealItem as="h2" className="text-h1">{training.headline}</RevealItem>
-        </Reveal>,
-        <Reveal key="lines" as="ul" className="border-t border-current/15" stagger={0.18}>
-          {training.lines.map((l) => (
-            <RevealItem as="li" key={l} className="border-b border-current/15 py-2.5 text-body-lg md:py-5 md:text-h3">
-              {l}
-            </RevealItem>
-          ))}
-        </Reveal>,
-        <Reveal key="paths" stagger={0.18}>
-          {/* One path per line, so a name never breaks. */}
-          <RevealItem as="p" className="text-label uppercase opacity-75">
-            {training.paths.map((p) => (
-              <span key={p} className="block whitespace-nowrap not-first:mt-1">{p}</span>
-            ))}
+    <Section chapter>
+      <div className="mx-auto grid max-w-wide items-center gap-6 px-gutter md:grid-cols-12 md:gap-12">
+        <Reveal className="md:order-2 md:col-span-5 md:col-start-7">
+          <RevealItem>
+            <Placeholder ratio="" shot={barefoot.shot} className="aspect-[5/2] short:hidden md:aspect-[4/5] md:max-h-[68svh]" />
           </RevealItem>
-          <RevealItem as="p" className="mt-3 text-h3 md:mt-5 md:text-h2">{training.pathsLine}</RevealItem>
-        </Reveal>,
-      ]}
-    />
+        </Reveal>
+        <Reveal className="md:order-1 md:col-span-5 md:col-start-2" stagger={0.25}>
+          <RevealItem as="h2" className="text-h1">{barefoot.headline}</RevealItem>
+          <RevealItem as="p" className="mt-5 max-w-text text-body-lg md:mt-8">{barefoot.line}</RevealItem>
+          <RevealItem as="p" className="mt-6 border-t border-current/15 pt-5 text-h3 md:mt-10 md:pt-6">{barefoot.weights}</RevealItem>
+        </Reveal>
+      </div>
+    </Section>
   );
 }

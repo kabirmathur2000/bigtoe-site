@@ -11,7 +11,7 @@ export function BookingSection({ id = "waitlist", leadIn = false }: { id?: strin
   return (
     // leadIn: when the form starts the navy zone (Book), extra room above it
     // lets the fade finish before the button comes into view on wide screens.
-    <Section chapter free id={id} tone="navy" className={`pb-(--chapter-pad) ${leadIn ? "md:pt-[calc(var(--chapter-pad)+28svh)]" : ""}`}>
+    <Section chapter id={id} tone="navy" className={`pb-(--chapter-pad) ${leadIn ? "md:pt-[calc(var(--chapter-pad)+28svh)]" : ""}`}>
       {/* Marks the form so the mobile bottom bar hides while it is on screen. */}
       <div data-booking-form />
       <div className="mx-auto max-w-wide px-gutter">

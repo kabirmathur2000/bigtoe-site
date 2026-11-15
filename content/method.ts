@@ -1,5 +1,5 @@
 /**
- * Method page copy: five chapters, all light. Every line is a deck line,
+ * Method page copy: five chapters (three light, then navy). Every line is a deck line,
  * cut but never reworded ("they" may become "you"; American spelling).
  */
 
@@ -18,42 +18,51 @@ export const fades = {
   close: "Power goes first, long before size.",
 } as const;
 
-/** Chapter 2. Deck 4: slide 16 summary line (cut), slides 6, 7, 10 and 13. */
-export const training = {
-  /** Deck label, not shown (it shapes the page order): HOW WE TRAIN. */
-  headline: "Barefoot, free weights, one supervised hour.",
-  lines: [
-    "Your foot is built to feel the ground.",
-    "No machines.",
-  ],
-  paths: ["Mobility & Conditioning", "Strength & Conditioning"],
-  /** Deck 4 slide 13, "say it to a member". */
-  pathsLine: "Neither path is better. We start where you are today.",
+/** Chapter 2. Deck 4 slides 8 and 9; Deck 1 ("If a member asks"). */
+export const barefoot = {
+  /** Deck label, not shown (it shapes the page order): UNDER THEIR FEET. */
+  /** Deck 1, "If a member asks"; Deck 4 slide 8 heading. */
+  headline: "It all starts with the big toe.",
+  /** Deck 4 slide 8, "say it to a member". */
+  line: "Your foot is built to feel the ground. Barefoot, it gets strong again, and you lift from a solid base.",
+  /** Deck 4 slide 9, "Free weights, not fixed machines", cut. */
+  weights: "Free weights, not machines.",
   shot: "Bare feet on the training floor, a member mid-lift",
 } as const;
 
-/** Chapter 3. Deck 7 slides 1, 5 and 12; the score as a sport (Deck 7 cover). */
-export const scoreboard = {
-  /** Deck label, not shown (it shapes the page order): THE SCOREBOARD. */
-  headline: "Every sport has a score. This is ours.",
-  /** Always shown above the dials, so they never read as a member's results. */
-  example: "Example",
-  /** Deck 7 slide 5: the four dials, each out of 100. */
-  dials: [
-    { name: "InBody", value: 78 },
-    { name: "Balance & Mobility", value: 42 },
-    { name: "Functional Strength", value: 90 },
-    { name: "Conditioning", value: 66 },
+/**
+ * Chapter 3. Deck 4 slide 13 ("say it to a member"), then slide 10, "All
+ * three, supervised, in one session": the minutes of each path's hour.
+ */
+export const paths = {
+  /** Deck label, not shown (it shapes the page order): THE HOUR. */
+  headline: "Neither path is better. We start where you are today.",
+  hour: facts.session.length,
+  /** Deck 4 slide 10. Each path's minutes add up to the hour. */
+  bars: [
+    {
+      name: "Strength & Conditioning",
+      parts: [
+        { name: "Mobility", minutes: 10 },
+        { name: "Strength", minutes: 40 },
+        { name: "Cardio", minutes: 10 },
+      ],
+    },
+    {
+      name: "Mobility & Conditioning",
+      parts: [
+        { name: "Mobility", minutes: 30 },
+        { name: "Strength", minutes: 25 },
+        { name: "Cardio", minutes: 5 },
+      ],
+    },
   ],
-  outOf: "out of 100",
-  scoreName: "Strength Reserve",
-  /** Deck 7 slide 5, THE SCORE. */
-  scoreNote: "the average of the four dials",
-  /** Deck 7 slide 12, "say it to a member". */
-  weakest: "Your Strength Reserve is only as good as your weakest dial. That is where we start.",
+  minutes: (n: number) => `${n} min`,
+  /** Deck 4 slides 10 and 11 ("arrive 10 minutes early and foam roll"), to the member. */
+  early: "Arrive 10 minutes early to foam roll.",
 } as const;
 
-/** Chapter 5. Approved list: Deck 4 slide 21, Deck 1 slides 18 and 22, Deck 2, Deck 5 slide 17. */
+/** Chapter 5. Approved list (plus the price question): Deck 4 slide 21, Deck 1 slides 18 and 22, Deck 2, Deck 5 slide 17. */
 export const questions = {
   /** Deck label, not shown (it shapes the page order): QUESTIONS. */
   items: [
@@ -92,6 +101,11 @@ export const questions = {
     {
       q: "Can I train at home or online?",
       a: [facts.where, "Can't make it? We'll make it 30 minutes at home or online. The week still counts."],
+    },
+    {
+      /** Decisions table: price and guarantee, from facts. */
+      q: "What does it cost?",
+      a: [`${facts.price.range}, ${facts.price.note}.`, `${facts.guarantee}.`],
     },
   ],
   sourceLabel: "Source",

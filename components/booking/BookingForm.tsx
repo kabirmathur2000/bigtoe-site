@@ -126,7 +126,7 @@ export function BookingForm() {
     </div>
   );
 
-  const select = (k: "day120" | "heardFrom") => (
+  const select = (k: "day120") => (
     <div>
       <FieldLabel htmlFor={`${id}-${k}`}>{f[k].label}</FieldLabel>
       <div className="relative">
@@ -169,20 +169,7 @@ export function BookingForm() {
         <FieldError id={`${id}-contact-error`} message={errors.contact} />
       </div>
 
-      <div className="grid gap-7 md:grid-cols-2 md:gap-8">
-        {select("day120")}
-        {select("heardFrom")}
-      </div>
-
-      <div>
-        <FieldLabel htmlFor={`${id}-note`}>
-          {f.note.label} <span className="ml-2 font-normal normal-case tracking-normal">({f.note.optional})</span>
-        </FieldLabel>
-        <textarea
-          id={`${id}-note`} name="note" rows={2} maxLength={MAX_LENGTH.note} value={values.note} onChange={set("note")}
-          className={`${field} resize-y`}
-        />
-      </div>
+      {select("day120")}
 
       <div>
         <Button type="submit" disabled={pending} className="w-full disabled:opacity-60 md:w-auto">

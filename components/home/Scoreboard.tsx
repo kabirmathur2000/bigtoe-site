@@ -4,7 +4,7 @@ import { useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Section } from "@/components/motion/SectionTone";
-import { scoreboard } from "@/content/method";
+import { scoreboard } from "@/content/home";
 
 const DURATION = 1800;
 const R = 44;
