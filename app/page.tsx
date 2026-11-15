@@ -1,3 +1,4 @@
+import { BookingSection } from "@/components/booking/BookingSection";
 import { FirstHour } from "@/components/home/FirstHour";
 import { Hero } from "@/components/home/Hero";
 import { Investment } from "@/components/home/Investment";
@@ -12,6 +13,7 @@ export default function Home() {
       <Patterns />
       <FirstHour />
       <Investment />
+      <BookingSection />
     </>
   );
 }

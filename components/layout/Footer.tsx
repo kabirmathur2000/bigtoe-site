@@ -14,7 +14,7 @@ function Todo({ children }: { children: string }) {
 export function Footer() {
   const wa = whatsappHref();
   return (
-    <footer data-tone="navy" className="pb-28 md:pb-0">
+    <footer data-tone="navy" className="border-t border-offwhite/15 pb-28 md:pb-0">
       <div className="mx-auto grid max-w-wide gap-12 px-gutter py-20 md:grid-cols-4 md:py-28">
         <div>
           {/* The navy logo is inverted to off-white on navy until a light SVG exists. */}
