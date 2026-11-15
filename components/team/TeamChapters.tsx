@@ -23,22 +23,40 @@ function Paragraph({ children, className }: { children: string; className?: stri
   );
 }
 
-/** Chapter 1: Jay's story, word for word. Text only; his portrait signs the note below. */
+/**
+ * Chapter 1: Jay's words. No visible heading: his story, word for word, as
+ * a large centred quote, signed. Wider and larger on desktop so it fills the
+ * screen comfortably. The page title stays for screen readers.
+ */
 export function Story() {
+  const last = story.paragraphs.length - 1;
   return (
-    <Section chapter className="pt-12 md:pt-16">
+    <Section chapter>
       <div className="mx-auto max-w-wide px-gutter">
-        <div className={reading}>
-          {/* First screen: a CSS fade that starts at first paint, not after scripts load. */}
-          <h1 className="fade-up text-h1">{story.headline}</h1>
-          {story.paragraphs.map((p, i) => (
-            <Paragraph key={i} className={i === 2 ? "text-h3 leading-[1.5]" : undefined}>{p}</Paragraph>
-          ))}
-          <Reveal>
-            <RevealItem as="p" className="mt-8 text-label uppercase opacity-70">{story.signature}</RevealItem>
-            <Todo>{story.todo}</Todo>
-          </Reveal>
-        </div>
+        <h1 className="sr-only">{story.headline}</h1>
+        <blockquote className="mx-auto max-w-[34rem] text-center md:max-w-[52rem]">
+          {story.paragraphs.map((p, i) => {
+            const cls = "text-[1.25rem] leading-[1.5] md:text-[2rem] md:leading-[1.35] md:font-light";
+            const text = (
+              <>
+                {i === 0 && <span aria-hidden>“</span>}
+                {p}
+                {i === last && <span aria-hidden>”</span>}
+              </>
+            );
+            // The first paragraph fades in with CSS at first paint; the rest as they are reached.
+            if (i === 0) return <p key={i} className={`fade-up ${cls}`}>{text}</p>;
+            return (
+              <Reveal key={i}>
+                <RevealItem as="p" className={`mt-5 md:mt-8 ${cls}`}>{text}</RevealItem>
+              </Reveal>
+            );
+          })}
+        </blockquote>
+        <Reveal className="mt-8 text-center md:mt-12">
+          <RevealItem as="p" className="text-label uppercase opacity-75">{story.signature}</RevealItem>
+          <Todo>{story.todo}</Todo>
+        </Reveal>
       </div>
     </Section>
   );
@@ -121,7 +139,7 @@ export function FoundersNote() {
 /** Chapter 4: the social space, Deck 1 slide 18 in its own words. */
 export function Social() {
   return (
-    <Section chapter>
+    <Section chapter tone="navy">
       <div className="mx-auto grid max-w-wide gap-6 px-gutter md:grid-cols-12 md:gap-12">
         <Reveal className="md:col-span-5 md:col-start-2 md:self-center" stagger={0.2}>
           <RevealItem as="h2" className="text-h1">{social.headline}</RevealItem>

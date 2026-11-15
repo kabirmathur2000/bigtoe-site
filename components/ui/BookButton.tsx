@@ -20,7 +20,7 @@ export function BookButton({
   /** Where the button sits, for analytics: "header", "hero", "mobile-bar"… */
   placement: string;
   className?: string;
-  variant?: "primary" | "on-navy";
+  variant?: "primary";
 }) {
   const page = usePathname();
   const onBookPage = page === facts.bookHref;

@@ -13,7 +13,7 @@ export function Patterns() {
   const [open, setOpen] = useState<string | null>(null);
 
   return (
-    <Section chapter>
+    <Section chapter tone="navy">
       <div className="mx-auto max-w-wide px-gutter">
         <Reveal className="md:ml-[8.333%]">
           <RevealItem as="h2" className="text-h1">{patterns.headline}</RevealItem>
@@ -44,9 +44,9 @@ export function Patterns() {
                     <div
                       role="img"
                       aria-label={p.shot}
-                      className="absolute inset-0 flex items-end bg-navy/15 p-4 transition-transform duration-[1200ms] ease-soft group-hover:scale-[1.03]"
+                      className="absolute inset-0 flex items-end bg-current/15 p-4 transition-transform duration-[1200ms] ease-soft group-hover:scale-[1.03]"
                     >
-                      <span className="text-caption text-navy/75">{p.shot}</span>
+                      <span className="text-caption opacity-75">{p.shot}</span>
                     </div>
                   </div>
                   <span className={`flex items-baseline justify-between gap-4 border-t border-current/15 py-4 md:mt-4 md:min-h-24 ${isOpen ? "mt-3" : ""}`}>

@@ -1,6 +1,7 @@
 import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Section } from "@/components/motion/SectionTone";
 import { Placeholder } from "@/components/ui/Photo";
+import { Split } from "@/components/ui/Split";
 import { fades, training } from "@/content/method";
 
 /** A plain line-drawn bulb, hairline weight. */
@@ -57,39 +58,32 @@ export function Fades() {
   );
 }
 
-/** Chapter 2, HOW WE TRAIN: one photograph beside three short lines and the two paths. */
+/** Chapter 2, HOW WE TRAIN. Split layout: the photo stays pinned while the headline, the three lines and the two paths move past. */
 export function Training() {
   return (
-    <Section chapter>
-      <div className="mx-auto grid w-full max-w-wide gap-6 px-gutter md:grid-cols-12 md:items-center md:gap-12">
-        <div className="order-last md:order-none md:col-span-5 md:col-start-2">
-          <Placeholder ratio="" shot={training.shot} className="aspect-[5/2] short:hidden md:aspect-[4/5] md:max-h-[64svh]" />
-        </div>
-
-        <div className="md:col-span-5 md:col-start-8">
-          <Reveal stagger={0.18}>
-            <RevealItem as="h2" className="text-h1">{training.headline}</RevealItem>
-          </Reveal>
-
-          <Reveal as="ul" className="mt-5 border-t border-current/15 md:mt-8" stagger={0.18} delay={0.2}>
-            {training.lines.map((l) => (
-              <RevealItem as="li" key={l} className="border-b border-current/15 py-2.5 text-body-lg md:py-4">
-                {l}
-              </RevealItem>
-            ))}
-          </Reveal>
-
-          <Reveal className="mt-5 md:mt-8" stagger={0.18} delay={0.5}>
-            {/* One path per line, so a name never breaks. */}
-            <RevealItem as="p" className="text-label uppercase opacity-75">
-              {training.paths.map((p) => (
-                <span key={p} className="block whitespace-nowrap not-first:mt-1">{p}</span>
-              ))}
+    <Split
+      photo={<Placeholder ratio="" shot={training.shot} className="aspect-[5/2] short:hidden md:aspect-[4/5] md:max-h-[72svh]" />}
+      blocks={[
+        <Reveal key="headline">
+          <RevealItem as="h2" className="text-h1">{training.headline}</RevealItem>
+        </Reveal>,
+        <Reveal key="lines" as="ul" className="border-t border-current/15" stagger={0.18}>
+          {training.lines.map((l) => (
+            <RevealItem as="li" key={l} className="border-b border-current/15 py-2.5 text-body-lg md:py-5 md:text-h3">
+              {l}
             </RevealItem>
-            <RevealItem as="p" className="mt-3 text-h3">{training.pathsLine}</RevealItem>
-          </Reveal>
-        </div>
-      </div>
-    </Section>
+          ))}
+        </Reveal>,
+        <Reveal key="paths" stagger={0.18}>
+          {/* One path per line, so a name never breaks. */}
+          <RevealItem as="p" className="text-label uppercase opacity-75">
+            {training.paths.map((p) => (
+              <span key={p} className="block whitespace-nowrap not-first:mt-1">{p}</span>
+            ))}
+          </RevealItem>
+          <RevealItem as="p" className="mt-3 text-h3 md:mt-5 md:text-h2">{training.pathsLine}</RevealItem>
+        </Reveal>,
+      ]}
+    />
   );
 }

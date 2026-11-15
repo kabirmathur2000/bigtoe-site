@@ -1,42 +1,31 @@
 import { Reveal, RevealItem } from "@/components/motion/Reveal";
-import { Section } from "@/components/motion/SectionTone";
 import { Placeholder } from "@/components/ui/Photo";
+import { Split } from "@/components/ui/Split";
 import { answer } from "@/content/home";
 
 /**
- * Chapter 4, OUR ANSWER. The Strength Reserve in one line, then three short
- * steps beside one photograph. One screen, so no pinned scroll: it simply
- * fades in.
+ * Chapter 4, OUR ANSWER (navy from here on). Split layout: the photo stays
+ * pinned while the Strength Reserve and the three steps move past, one per
+ * screen on desktop. Phones: step titles only, photo after (short screens: none).
  */
 export function Answer() {
   return (
-    <Section chapter>
-      <div className="mx-auto grid w-full max-w-wide gap-8 px-gutter md:grid-cols-12 md:items-center md:gap-12">
-        {/* On mobile the photo follows the steps and is shorter, to keep the chapter near one screen. */}
-        <div className="order-last md:order-none md:col-span-5 md:col-start-2">
-          <Placeholder ratio="" shot={answer.shot} className="aspect-[5/2] short:hidden md:aspect-[4/5] md:max-h-[64svh]" />
-        </div>
-
-        <div className="md:col-span-5 md:col-start-8">
-          <Reveal stagger={0.18}>
-            <RevealItem as="h2" className="text-h1">{answer.term}</RevealItem>
-            <RevealItem as="p" className="mt-2 text-h3 opacity-75">{answer.definition}</RevealItem>
+    <Split
+      tone="navy"
+      photo={<Placeholder ratio="" shot={answer.shot} className="aspect-[5/2] short:hidden md:aspect-[4/5] md:max-h-[72svh]" />}
+      blocks={[
+        <Reveal key="term" stagger={0.18}>
+          <RevealItem as="h2" className="text-h1">{answer.term}</RevealItem>
+          <RevealItem as="p" className="mt-2 text-h3 opacity-75 md:mt-4">{answer.definition}</RevealItem>
+        </Reveal>,
+        ...answer.steps.map((s) => (
+          <Reveal key={s.id} stagger={0.15} className="border-t border-current/15 pt-4 md:border-0 md:pt-0">
+            {"meta" in s && <RevealItem as="p" className="text-label uppercase opacity-75">{s.meta}</RevealItem>}
+            <RevealItem as="h3" className="mt-1 text-h3 md:mt-3 md:text-h1">{s.title}</RevealItem>
+            <RevealItem as="p" className="mt-4 hidden text-body-lg opacity-75 md:block">{s.body}</RevealItem>
           </Reveal>
-
-          <Reveal as="ul" className="mt-5 border-t border-current/15" stagger={0.18} delay={0.2}>
-            {answer.steps.map((s, i) => (
-              <RevealItem as="li" key={s.id} className="border-b border-current/15 py-3.5 md:py-4">
-                <p className="text-label uppercase opacity-75">
-                  {String(i + 1).padStart(2, "0")}
-                  {"meta" in s && <span className="ml-4">{s.meta}</span>}
-                </p>
-                <h3 className="mt-1 text-h3">{s.title}</h3>
-                <p className="mt-1 hidden text-body opacity-75 md:block">{s.body}</p>
-              </RevealItem>
-            ))}
-          </Reveal>
-        </div>
-      </div>
-    </Section>
+        )),
+      ]}
+    />
   );
 }

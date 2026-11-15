@@ -8,7 +8,7 @@ import { promise } from "@/content/home";
  */
 export function OurPromise() {
   return (
-    <Section chapter>
+    <Section chapter tone="navy">
       <div className="mx-auto grid max-w-wide gap-12 px-gutter md:grid-cols-12">
         <Reveal className="md:col-span-6 md:col-start-2">
           <RevealItem as="h2" className="text-h1">

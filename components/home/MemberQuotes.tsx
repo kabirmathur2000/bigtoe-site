@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
+import { useRef, useState, type TouchEvent } from "react";
 import { Section } from "@/components/motion/SectionTone";
 import { memberQuotes } from "@/content/testimonials";
 
@@ -12,128 +12,87 @@ function Arrow({ dir }: { dir: "left" | "right" }) {
   );
 }
 
-/** Runs the row out to the screen's right edge, past the gutter (and the container on wide screens). */
-const EDGE = "calc(var(--gutter) + max(0px, (100vw - 90rem) / 2))";
-
-const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/** Horizontal distance (px) a swipe must travel to change the quote. */
+const SWIPE = 40;
 
 /**
- * Member quotes, after the word cloud (modelled on 10 Squared's "What Our
- * Members Say"). A row of cards: swiped on touch, scrolled with the arrows,
- * arrow keys or a drag on desktop, settling one card at a time. The next
- * card always shows in part. No autoplay.
+ * Member quotes (on navy): one quote at a time, centred, with first name and
+ * age. Swipe on phones, small arrows (and arrow keys) on desktop; quotes
+ * cross-fade slowly. No autoplay. Nothing else on the screen.
  */
 export function MemberQuotes() {
-  const row = useRef<HTMLUListElement>(null);
-  const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
-  const [ends, setEnds] = useState({ start: true, end: false });
+  const { items } = memberQuotes;
+  const [active, setActive] = useState(0);
+  const start = useRef<{ x: number; y: number } | null>(null);
 
-  const step = () => {
-    const el = row.current;
-    const card = el?.querySelector("li");
-    if (!el || !card) return 0;
-    return card.offsetWidth + parseFloat(getComputedStyle(el).columnGap || "0");
-  };
+  const go = (dir: 1 | -1) => setActive((i) => (i + dir + items.length) % items.length);
 
-  const go = (dir: 1 | -1) => {
-    row.current?.scrollBy({ left: dir * step(), behavior: reducedMotion() ? "auto" : "smooth" });
+  const onStart = (e: TouchEvent) => {
+    const t = e.touches[0];
+    start.current = { x: t.clientX, y: t.clientY };
   };
-
-  useEffect(() => {
-    const el = row.current;
-    if (!el) return;
-    const update = () =>
-      setEnds({ start: el.scrollLeft <= 2, end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 2 });
-    update();
-    el.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      el.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, []);
-
-  const onKey = (e: KeyboardEvent) => {
-    if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
-    if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
-  };
-
-  // Mouse drag (touch scrolls natively). Snap is paused while dragging,
-  // then the row settles on the nearest card.
-  const onDown = (e: PointerEvent<HTMLUListElement>) => {
-    if (e.pointerType !== "mouse" || !row.current) return;
-    drag.current = { x: e.clientX, left: row.current.scrollLeft, moved: false };
-  };
-  const onMove = (e: PointerEvent<HTMLUListElement>) => {
-    const d = drag.current;
-    const el = row.current;
-    if (!d || !el) return;
-    const dx = e.clientX - d.x;
-    if (!d.moved && Math.abs(dx) > 4) {
-      d.moved = true;
-      el.setPointerCapture(e.pointerId);
-      el.style.scrollSnapType = "none";
-    }
-    if (d.moved) el.scrollLeft = d.left - dx;
-  };
-  const onUp = () => {
-    const d = drag.current;
-    const el = row.current;
-    drag.current = null;
-    if (!d?.moved || !el) return;
-    const s = step();
-    const target = Math.round(el.scrollLeft / s) * s;
-    el.scrollTo({ left: target, behavior: reducedMotion() ? "auto" : "smooth" });
-    window.setTimeout(() => el.style.removeProperty("scroll-snap-type"), 600);
+  const onEnd = (e: TouchEvent) => {
+    const s = start.current;
+    start.current = null;
+    const t = e.changedTouches[0];
+    if (!s || !t) return;
+    const dx = t.clientX - s.x;
+    if (Math.abs(dx) > SWIPE && Math.abs(dx) > Math.abs(t.clientY - s.y)) go(dx < 0 ? 1 : -1);
   };
 
   const arrow =
-    "flex h-12 w-12 items-center justify-center border border-current/25 transition-colors duration-700 ease-soft hover:border-current disabled:opacity-30 disabled:hover:border-current/25";
+    "hidden h-11 w-11 shrink-0 items-center justify-center opacity-60 transition-opacity duration-700 ease-soft hover:opacity-100 md:flex";
 
   return (
-    // The row runs to the screen edge; the chapter clips it so the page never widens.
-    <Section chapter className="overflow-x-clip">
-      <div className="mx-auto w-full max-w-wide px-gutter pt-6 md:pt-12">
-        <div className="md:ml-[8.333%]">
-          {/* The region takes focus and arrow keys; the list inside scrolls. */}
-          <div role="region" tabIndex={0} aria-label={memberQuotes.regionLabel} onKeyDown={onKey} className="focus-visible:outline-offset-4">
-          <ul
-            ref={row}
-            onPointerDown={onDown}
-            onPointerMove={onMove}
-            onPointerUp={onUp}
-            onPointerCancel={onUp}
-            style={{ marginRight: `calc(-1 * ${EDGE})`, paddingRight: EDGE }}
-            className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain [scrollbar-width:none] select-none md:cursor-grab md:gap-6 [&::-webkit-scrollbar]:hidden"
-          >
-            {memberQuotes.items.map((q, i) => (
-              <li
+    <Section chapter tone="navy">
+      <div
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={memberQuotes.regionLabel}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowRight") go(1);
+          if (e.key === "ArrowLeft") go(-1);
+        }}
+        onTouchStart={onStart}
+        onTouchEnd={onEnd}
+        onTouchCancel={() => (start.current = null)}
+        data-swipe
+        className="mx-auto flex w-full max-w-wide touch-pan-y items-center gap-4 px-gutter focus-visible:outline-offset-4 md:gap-10"
+      >
+        <button type="button" className={arrow} onClick={() => go(-1)} aria-label={memberQuotes.previous}>
+          <Arrow dir="left" />
+        </button>
+
+        {/* All quotes share one cell; only the active one is visible. */}
+        <div className="grid flex-1" aria-live="polite">
+          {items.map((q, i) => {
+            const on = i === active;
+            return (
+              <figure
                 key={i}
-                className="flex w-[84%] shrink-0 snap-start flex-col justify-start border border-current/15 bg-offwhite p-6 sm:w-[60%] md:w-[44%] md:p-10 lg:w-[38%]"
+                aria-hidden={!on}
+                className={`col-start-1 row-start-1 mx-auto max-w-3xl self-center text-center transition-opacity duration-[1200ms] ease-soft ${
+                  on ? "opacity-100" : "pointer-events-none opacity-0"
+                }`}
               >
-                <blockquote className="text-body-lg md:text-h3">
+                <blockquote className="text-h3 md:text-h2">
                   <span aria-hidden>“</span>
                   {q.quote}
                   <span aria-hidden>”</span>
                 </blockquote>
-                <div className="mt-6 border-t border-current/15 pt-4 md:mt-auto">
-                  <p className="text-caption text-terracotta">{q.name}, {q.age}</p>
-                  <p className="mt-1 text-caption text-terracotta">{memberQuotes.consent}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-          </div>
-
-          <div className="mt-8 hidden gap-3 md:flex">
-            <button type="button" className={arrow} onClick={() => go(-1)} disabled={ends.start} aria-label={memberQuotes.previous}>
-              <Arrow dir="left" />
-            </button>
-            <button type="button" className={arrow} onClick={() => go(1)} disabled={ends.end} aria-label={memberQuotes.next}>
-              <Arrow dir="right" />
-            </button>
-          </div>
+                <figcaption className="mt-8 text-caption">
+                  <span className="text-terracotta">{q.name}, {q.age}</span>
+                  <span className="mt-1 block text-terracotta">{memberQuotes.consent}</span>
+                </figcaption>
+              </figure>
+            );
+          })}
         </div>
+
+        <button type="button" className={arrow} onClick={() => go(1)} aria-label={memberQuotes.next}>
+          <Arrow dir="right" />
+        </button>
       </div>
     </Section>
   );

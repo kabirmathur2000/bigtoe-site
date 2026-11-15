@@ -14,7 +14,7 @@ export function MobileBookBar() {
     <div
       aria-hidden={hidden}
       inert={hidden}
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-navy/10 bg-offwhite px-gutter py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-[transform,opacity] duration-700 ease-soft md:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-current/15 bg-(--page-bg) px-gutter py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-[transform,opacity] duration-700 ease-soft md:hidden ${
         hidden ? "pointer-events-none translate-y-full opacity-0" : ""
       }`}
     >

@@ -14,7 +14,7 @@ export default function BookPage() {
   return (
     <>
       <Visit />
-      <BookingSection />
+      <BookingSection leadIn />
     </>
   );
 }

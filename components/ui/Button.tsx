@@ -2,21 +2,19 @@ import Link from "next/link";
 import type { ComponentProps } from "react";
 
 /**
- * Buttons. Navy fill with off-white text on light sections; off-white fill
- * with navy text on navy sections. Terracotta is never a button colour: it
- * is the one accent per screen. Hover darkens slowly.
+ * Buttons. The main button is terracotta with off-white text, label 19px
+ * Bold so it passes AA as large text, on light and navy alike. Hovers are a
+ * slow opacity change, never a darker or mixed shade.
  */
-type Variant = "primary" | "on-navy" | "outline" | "outline-light";
+type Variant = "primary" | "outline" | "outline-light";
 
 const base =
-  "inline-flex items-center justify-center gap-3 px-7 py-4 text-label uppercase tracking-[0.16em] font-bold whitespace-nowrap transition-[color,background-color,border-color,opacity] duration-700 ease-soft";
+  "inline-flex items-center justify-center gap-3 px-6 py-3.5 text-[1.1875rem] leading-tight font-bold uppercase tracking-[0.08em] whitespace-nowrap transition-opacity duration-700 ease-soft hover:opacity-80";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-navy text-offwhite hover:bg-[var(--navy-deep)]",
-  "on-navy": "bg-offwhite text-navy hover:bg-[var(--offwhite-deep)]",
-  outline: "border border-navy/30 text-navy hover:border-navy hover:bg-navy hover:text-offwhite",
-  "outline-light":
-    "border border-offwhite/40 text-offwhite hover:border-offwhite hover:bg-offwhite hover:text-navy",
+  primary: "bg-terracotta text-offwhite",
+  outline: "border border-navy/40 text-navy",
+  "outline-light": "border border-offwhite/40 text-offwhite",
 };
 
 export const buttonClass = (variant: Variant = "primary", className = "") =>

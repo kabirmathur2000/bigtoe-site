@@ -13,18 +13,21 @@ export type Tone = "light" | "navy";
 export function Section({
   tone = "light",
   chapter = false,
+  split = false,
   children,
   className = "",
   id,
 }: {
   tone?: Tone;
   chapter?: boolean;
+  /** A split layout: on desktop its blocks are the resting points, not the section. */
+  split?: boolean;
   children: ReactNode;
   className?: string;
   id?: string;
 }) {
   return (
-    <section id={id} data-tone={tone} data-chapter={chapter || undefined} className={chapter ? `chapter ${className}` : className}>
+    <section id={id} data-tone={tone} data-chapter={chapter || undefined} data-split={split || undefined} className={chapter ? `chapter ${className}` : className}>
       {children}
     </section>
   );
@@ -34,16 +37,14 @@ const clamp = (n: number) => Math.min(1, Math.max(0, n));
 
 /** Share of the viewport height a colour change is spread across. */
 const BAND = 0.6;
-/** Share of the screen the fade back to light takes after a release marker (see BookingSection). */
-const RELEASE = 0.45;
 
 /**
- * Scroll-linked section colour. The page background mixes from off-white to
- * navy as a navy section's top travels up through the middle 60% of the
- * screen, and back as its bottom does. Text switches colour at the halfway
- * point, where both read on the mid tone, and eases over 700ms.
- * The colour change is a fade, not movement, so it runs the same under
- * reduced motion: never a hard switch, on any setting.
+ * Scroll-linked page colour, one change per page. The page background
+ * mixes from off-white to navy as the first navy section's top travels up
+ * through the middle 60% of the screen, and then stays navy to the end,
+ * footer included; there is no fade back. Text switches colour at the
+ * halfway point and eases over 700ms. The change is a fade, not movement,
+ * so it runs the same under reduced motion: never a hard switch.
  */
 export function SectionToneController() {
   useEffect(() => {
@@ -58,30 +59,15 @@ export function SectionToneController() {
       const vh = window.innerHeight;
       const start = vh * (0.5 + BAND / 2);
       const end = vh * (0.5 - BAND / 2);
-      const maxScroll = root.scrollHeight - vh;
 
+      // Colour zones: the first navy section starts the one fade; from
+      // there the page stays navy to the end, footer included.
       let amount = 0;
-      document.querySelectorAll<HTMLElement>('[data-tone="navy"]').forEach((el) => {
-        const r = el.getBoundingClientRect();
-        const enter = clamp((start - r.top) / (start - end));
-        // A section with a release marker stays navy until the marker has
-        // passed under the header, then fades over RELEASE of the screen.
-        const release = el.querySelector<HTMLElement>("[data-tone-release]");
-        if (release) {
-          const header = document.querySelector("header")?.offsetHeight ?? 0;
-          const t = release.getBoundingClientRect().top;
-          const leave = clamp((t - (header - vh * RELEASE)) / (vh * RELEASE));
-          amount = Math.max(amount, Math.min(enter, leave));
-          return;
-        }
-        // Near the end of the page the bottom edge may never reach `end`;
-        // shorten the band so the change can always finish.
-        const bottomAtMax = r.bottom - (maxScroll - window.scrollY);
-        const leaveEnd = Math.max(end, bottomAtMax);
-        const leaveStart = Math.max(start, leaveEnd + vh * 0.25);
-        const leave = clamp((r.bottom - leaveEnd) / (leaveStart - leaveEnd));
-        amount = Math.max(amount, Math.min(enter, leave));
-      });
+      const first = document.querySelector<HTMLElement>('main [data-tone="navy"]');
+      if (first) {
+        const r = first.getBoundingClientRect();
+        amount = clamp((start - r.top) / (start - end));
+      }
 
       const pct = Math.round(amount * 1000) / 10;
       if (pct === lastAmount) return;

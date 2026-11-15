@@ -51,7 +51,7 @@ function Thanks({ firstName }: { firstName: string }) {
       {wa ? (
         <>
           <div className="mt-10">
-            <ButtonLink href={wa} variant="on-navy" target="_blank" rel="noopener noreferrer">
+            <ButtonLink href={wa} target="_blank" rel="noopener noreferrer">
               {t.whatsappLabel}
             </ButtonLink>
           </div>
@@ -185,7 +185,7 @@ export function BookingForm() {
       </div>
 
       <div>
-        <Button type="submit" variant="on-navy" disabled={pending} className="w-full disabled:opacity-60 md:w-auto">
+        <Button type="submit" disabled={pending} className="w-full disabled:opacity-60 md:w-auto">
           {booking.submit}
         </Button>
         <p aria-live="polite" className="mt-4 min-h-6 text-caption text-terracotta">

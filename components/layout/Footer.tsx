@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { facts, mailtoHref, todo, whatsappHref } from "@/content/facts";
 import { footer } from "@/content/site";
-import logoTag from "@/public/brand/logo-tag.png";
+import logoTag from "@/public/brand/logo-tag-light.png";
 
 function Label({ children }: { children: React.ReactNode }) {
   return <p className="mb-3 text-label uppercase opacity-75">{children}</p>;
@@ -11,11 +11,11 @@ function Todo({ children }: { children: string }) {
   return <span className="text-terracotta">{children}</span>;
 }
 
-/** Off-white footer with the LogoTag (logo plus "Practice Possibility"). */
+/** Navy footer (the end of every page's navy zone) with the light LogoTag (logo plus "Practice Possibility"). */
 export function Footer() {
   const wa = whatsappHref();
   return (
-    <footer data-tone="light" className="border-t border-current/15 pb-28 md:pb-0">
+    <footer data-tone="navy" className="border-t border-current/15 pb-28 md:pb-0">
       <div className="mx-auto grid max-w-wide gap-12 px-gutter py-20 md:grid-cols-12 md:py-28">
         <div className="md:col-span-5 md:col-start-2">
           <Image

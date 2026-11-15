@@ -20,11 +20,11 @@ export function Poem() {
     <Section chapter>
       <div className="mx-auto w-full max-w-wide px-gutter">
         {/* Shared left edge; wide enough at 1440 that every line sits on one line. */}
-        <div className="max-w-[20em] text-[1.625rem] leading-[1.2] md:ml-[8.333%] md:max-w-[24em] md:text-h2">
+        <div className="max-w-[20em] text-[1.625rem] leading-[1.2] md:ml-[8.333%] md:max-w-[24em] md:text-h2 lg:max-w-none lg:text-[clamp(2.75rem,3.75vw,3.75rem)] lg:whitespace-nowrap">
           {poem.stanzas.map((stanza, s) => (
             <div key={s} className={s > 0 ? "mt-[1.1em]" : undefined}>
               {stanza.map((line, i) => {
-                const className = `-indent-[1em] pl-[1em] md:indent-0 md:pl-0 ${s === last ? "" : "opacity-65"}`;
+                const className = `-indent-[1em] pl-[1em] lg:indent-0 lg:pl-0 ${s === last ? "" : "opacity-65"}`;
                 if (reduce) return <p key={line} className={className}>{line}</p>;
                 return (
                   <motion.p

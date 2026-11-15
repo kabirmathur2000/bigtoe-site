@@ -76,13 +76,37 @@ export const answer = {
 /** Chapter 5. */
 export const memberWords = {
   label: "IN OUR MEMBERS' WORDS",
-  /** Source: BigToe word cloud poster, from member testimonials. Largest first. */
+  /**
+   * The BigToe word cloud poster, from member testimonials, in the order the
+   * words appear: smallest first, largest last. `size` and `key` (terracotta)
+   * match the poster.
+   */
   words: [
-    "stronger", "motivated", "pushed", "care", "joy", "mobility",
-    "family", "noticed", "energy", "passion", "mindset", "honest",
-    "personal", "trust", "patient", "compassion", "grounding", "home",
-    "rare", "balance", "seen", "sacred", "no injuries", "a way of life",
-  ],
+    { word: "a way of life", size: "small" },
+    { word: "no injuries", size: "small" },
+    { word: "balance", size: "small" },
+    { word: "seen", size: "small" },
+    { word: "sacred", size: "small", key: true },
+    { word: "grounding", size: "small", key: true },
+    { word: "passion", size: "medium", key: true },
+    { word: "mindset", size: "medium" },
+    { word: "honest", size: "medium" },
+    { word: "trust", size: "medium" },
+    { word: "patient", size: "medium" },
+    { word: "rare", size: "medium" },
+    { word: "home", size: "medium" },
+    { word: "compassion", size: "medium" },
+    { word: "motivated", size: "large", key: true },
+    { word: "pushed", size: "large", key: true },
+    { word: "joy", size: "large", key: true },
+    { word: "care", size: "large", key: true },
+    { word: "family", size: "large" },
+    { word: "mobility", size: "large", key: true },
+    { word: "noticed", size: "large" },
+    { word: "energy", size: "large" },
+    { word: "personal", size: "large" },
+    { word: "stronger", size: "largest" },
+  ] as { word: string; size: "small" | "medium" | "large" | "largest"; key?: boolean }[],
   /** Deck 9 slide 13, Jay. Fades in once every word is in. */
   close: "No policy produces that. No manual teaches it.",
 } as const;

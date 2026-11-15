@@ -5,40 +5,39 @@ import { useEffect, useRef, useState } from "react";
 import { Section } from "@/components/motion/SectionTone";
 import { memberWords } from "@/content/home";
 
-/** Words added per step, largest first. */
-const GROUP = 3;
 /** Share of the pinned scroll by which every word is in; the close line follows. */
-const WORDS_BY = 0.75;
-
-/** Size tier by rank (the content list is largest first). */
-function tier(rank: number) {
-  if (rank === 0) return "text-[2.25rem] md:text-display";
-  if (rank < 4) return "text-[1.75rem] md:text-h1";
-  if (rank < 9) return "text-h3 md:text-h2";
-  if (rank < 16) return "text-body-lg md:text-h3";
-  return "text-body md:text-body-lg";
-}
+const WORDS_BY = 0.8;
 
 /**
- * Display order: the ranks interleaved so large and small words mix across
- * the band instead of the big ones stacking at the top.
+ * Poster sizes. Every word is at least 24px, so the terracotta key words
+ * pass contrast on navy as large text.
  */
-const ORDER = [13, 4, 19, 1, 8, 22, 15, 0, 10, 17, 5, 20, 2, 11, 23, 7, 14, 3, 18, 9, 21, 6, 16, 12];
+const SIZE = {
+  small: "text-[1.5rem]",
+  medium: "text-[1.625rem] md:text-[2.25rem]",
+  large: "text-[1.75rem] font-light md:text-[3.5rem]",
+  largest: "text-[2.5rem] font-light md:text-display",
+} as const;
+
+/**
+ * Where each word sits (indexes into the appearance order), mixing sizes
+ * across the band so the large words do not stack together.
+ */
+const DISPLAY = [14, 0, 6, 15, 7, 1, 16, 23, 17, 8, 2, 18, 9, 3, 19, 10, 20, 4, 11, 21, 12, 5, 22, 13];
 
 const clamp = (n: number) => Math.min(1, Math.max(0, n));
 
 /**
- * Chapter 5, IN OUR MEMBERS' WORDS. The chapter pins while the visitor
- * scrolls about 0.8 of a screen. Words fade in a small group at a
- * time, largest first, and stay; scrolling back never removes them. Once
- * all are in, the Deck 9 line fades in and the chapter releases. Hover or
- * tap turns a word terracotta. Reduced motion: every word at once, no pin.
+ * Chapter 5, IN OUR MEMBERS' WORDS (on navy). The chapter pins while the
+ * visitor scrolls; words appear one at a time in order of size, smallest
+ * first and "stronger" last, and stay (scrolling back never removes them).
+ * Key words are terracotta, the rest off-white, as on the poster. Then the
+ * Deck 9 line fades in. Reduced motion: every word at once, no pin.
  */
 export function MemberWords() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(0);
-  const [picked, setPicked] = useState<number | null>(null);
   const { words } = memberWords;
   const total = words.length;
 
@@ -53,8 +52,7 @@ export function MemberWords() {
       const r = el.getBoundingClientRect();
       const travel = r.height - (window.innerHeight - header);
       const p = travel > 0 ? clamp((header - r.top) / travel) : 1;
-      const groups = Math.ceil(total / GROUP);
-      const count = p <= 0 ? 0 : Math.min(total, Math.ceil((p / WORDS_BY) * groups) * GROUP);
+      const count = p <= 0 ? 0 : Math.min(total, Math.ceil((p / WORDS_BY) * total));
       // Words only ever arrive; scrolling back up keeps them.
       setShown((s) => Math.max(s, count));
     };
@@ -76,38 +74,37 @@ export function MemberWords() {
 
   const content = (
     <div className="mx-auto w-full max-w-wide px-gutter">
-      <p className="text-label uppercase opacity-70 md:ml-[8.333%]">{memberWords.label}</p>
+      <div className="md:ml-[8.333%]">
+        <p className="text-label uppercase opacity-75">{memberWords.label}</p>
 
-      <ul className="mt-6 flex max-w-content flex-wrap items-baseline gap-x-5 gap-y-1 md:mt-12 md:ml-[8.333%] md:gap-x-12 md:gap-y-3">
-        {ORDER.map((rank) => (
-          <li
-            key={rank}
-            data-picked={picked === rank || undefined}
-            onClick={() => setPicked(picked === rank ? null : rank)}
-            className={`member-word cursor-default whitespace-nowrap leading-[1.25] ${tier(rank)} ${rank < 9 ? "font-light" : ""} ${
-              rank < visible ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            {words[rank]}
-          </li>
-        ))}
-      </ul>
+        <ul className="mt-6 flex max-w-content flex-wrap items-baseline gap-x-4 gap-y-0 md:mt-10 md:gap-x-10 md:gap-y-2">
+          {DISPLAY.map((i) => {
+            const w = words[i];
+            return (
+              <li
+                key={w.word}
+                className={`member-word whitespace-nowrap leading-[1.2] ${SIZE[w.size]} ${w.key ? "text-terracotta" : ""} ${
+                  i < visible ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                {w.word}
+              </li>
+            );
+          })}
+        </ul>
 
-      <p
-        className={`mt-8 max-w-3xl text-h3 transition-opacity duration-[1200ms] ease-soft md:mt-14 md:ml-[8.333%] ${
-          done ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {memberWords.close}
-      </p>
+        <p className={`mt-8 max-w-3xl text-h3 transition-opacity duration-[1200ms] ease-soft md:mt-12 ${done ? "opacity-100" : "opacity-0"}`}>
+          {memberWords.close}
+        </p>
+      </div>
     </div>
   );
 
-  if (reduce) return <Section chapter>{content}</Section>;
+  if (reduce) return <Section tone="navy" chapter>{content}</Section>;
 
   return (
     // One screen plus about 0.8 of a screen of pinned scroll.
-    <Section chapter className="block h-[calc(180svh-var(--header-h))] p-0">
+    <Section tone="navy" chapter className="block h-[calc(180svh-var(--header-h))] p-0">
       <div
         ref={ref}
         className="sticky top-(--header-h) flex h-[calc(100svh-var(--header-h))] flex-col justify-center pt-(--chapter-pad) pb-[calc(var(--chapter-pad)+var(--bar-h))]"
