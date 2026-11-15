@@ -262,7 +262,8 @@ The decks are training material for Sherpas, so some lines must not reach the si
 - `content/facts.ts`: every reusable fact, including `ctaLabel`. `content/<page>.ts`: that page's copy.
 - `components/`: layout, motion primitives and UI. No copy inside.
 - Motion: `lenis` for smooth scroll, `motion` for reveals. Every primitive checks reduced motion.
-- Env vars: `RESEND_API_KEY`, `CONTACT_EMAIL`, `NEXT_PUBLIC_WHATSAPP_NUMBER`.
+- Env vars: `RESEND_API_KEY`, `CONTACT_EMAIL` (comma-separated for several), `RESEND_FROM` (a sender on a domain verified in Resend; defaults to Resend's test sender), `NEXT_PUBLIC_WHATSAPP_NUMBER`.
+- The form sends through the server action `app/actions/waitlist.ts`: honeypot, server-side validation (`lib/waitlist.ts`, shared with the browser), then Resend with every field. Without keys in development it logs instead of sending; in production it shows the failure message with the email address.
 
 ---
 
@@ -277,6 +278,12 @@ The decks are training material for Sherpas, so some lines must not reach the si
 - [ ] Names, ages and written consent for the four testimonials.
 - [ ] Jay's son has seen the founder story before it goes public.
 - [ ] What the free first visit includes and what to call it. Confirmed: the Reserve Audit itself happens in sessions 2 to 4.
+- [ ] Resend: API key, verified sending domain (`RESEND_FROM`) and `CONTACT_EMAIL` set in Vercel.
+- [ ] Thank-you wording and the pre-filled WhatsApp message (written for the site, not from a deck).
+- [ ] Sherpa name spellings, and each Sherpa's OK to publish their Deck 1 line.
+- [ ] Founder one-line stories (`docs/copy/founder-lines.md`), all awaiting approval; none shown yet.
+- [ ] "Kilimanjaro at 80" in the founders' note, for Jay to confirm.
+- [ ] Map link for the address.
 - [ ] Founders' comments: one round per preview link, by page and block name.
 - [ ] Anderson Grotesk licence covers web use.
 - [ ] Logo SVG needed. `docs/logo/` has PNGs only.

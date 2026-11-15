@@ -1,0 +1,15 @@
+/**
+ * Book page (/book-now) copy. Facts are imported, never retyped.
+ */
+import { facts, todo } from "./facts";
+
+export const book = {
+  /** Deck 5 slide 17 label. */
+  label: "TRAINING ANYWHERE",
+  /** Deck 5 slide 17. */
+  headline: facts.where,
+  addressLabel: "Address",
+  hoursLabel: "Hours",
+  mapLabel: "Open in Maps",
+  mapMissing: todo("map link"),
+} as const;

@@ -10,7 +10,7 @@ import { anderson } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: meta.title,
+  title: { default: meta.title, template: `%s · ${meta.title}` },
   description: meta.description,
 };
 

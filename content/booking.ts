@@ -35,9 +35,28 @@ export const booking = {
     contactInvalid: "That doesn't look like a WhatsApp number or an email address.",
     day120: "Please choose one.",
     heardFrom: "Please choose one.",
+
+    failed: `Something went wrong and your details weren't sent. Please try again, or email ${facts.email}.`,
   },
 
   submit: facts.ctaLabel,
-  /** Sending is built in a later step. */
-  notSentYet: todo("sending is built in a later step"),
+  /** Hidden spam trap; real visitors never see it. */
+  honeypotLabel: "Company",
+
+  /**
+   * Thank-you state after sending. Interface wording written for the site,
+   * not from a deck: to confirm with Jay.
+   */
+  thanks: {
+    heading: (firstName: string) => `Thank you, ${firstName}.`,
+    reply: facts.replyTime ?? todo("how fast a Sherpa replies"),
+    whatsappLabel: "Message us on WhatsApp",
+    /** Pre-filled WhatsApp message, by facts.ctaMode. */
+    whatsappMessage: (firstName: string) =>
+      facts.ctaMode === "waitlist"
+        ? `Hi BigToe, this is ${firstName}. I've just joined the waitlist.`
+        : `Hi BigToe, this is ${firstName}. I'd like to book my free first visit.`,
+    emailLead: "Or write to us at",
+    emailOnlyLead: "Write to us at",
+  },
 } as const;

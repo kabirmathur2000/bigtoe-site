@@ -1,35 +1,16 @@
 "use client";
 
-import { useId, useRef, useState, type FormEvent } from "react";
-import { Button } from "@/components/ui/Button";
+import { useId, useRef, useState, useTransition, type FormEvent } from "react";
+import { submitWaitlist } from "@/app/actions/waitlist";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { booking } from "@/content/booking";
+import { facts, mailtoHref, whatsappHref } from "@/content/facts";
+import { EMPTY, HONEYPOT, MAX_LENGTH, validate, type Field, type Values } from "@/lib/waitlist";
 
-type Values = {
-  firstName: string;
-  lastName: string;
-  contact: string;
-  day120: string;
-  heardFrom: string;
-  note: string;
-};
-const EMPTY: Values = { firstName: "", lastName: "", contact: "", day120: "", heardFrom: "", note: "" };
-type Errors = Partial<Record<keyof Values, string>>;
+type Errors = Partial<Record<Field, string>>;
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const PHONE = /^\+?[\d\s()-]{10,20}$/;
-
-function validate(v: Values): Errors {
-  const e: Errors = {};
-  if (!v.firstName.trim()) e.firstName = booking.errors.firstName;
-  if (!v.lastName.trim()) e.lastName = booking.errors.lastName;
-  const c = v.contact.trim();
-  if (!c) e.contact = booking.errors.contactMissing;
-  else if (!EMAIL.test(c) && !(PHONE.test(c) && c.replace(/\D/g, "").length >= 10))
-    e.contact = booking.errors.contactInvalid;
-  if (!v.day120) e.day120 = booking.errors.day120;
-  if (!v.heardFrom) e.heardFrom = booking.errors.heardFrom;
-  return e;
-}
+const messages = (v: Values): Errors =>
+  Object.fromEntries(Object.entries(validate(v)).map(([k, key]) => [k, booking.errors[key]]));
 
 const field =
   "block w-full border-0 border-b border-current/30 bg-transparent px-0 py-3 text-body-lg placeholder:opacity-40 transition-colors duration-500 focus:border-terracotta focus:outline-none focus:ring-0 aria-[invalid=true]:border-terracotta";
@@ -54,9 +35,37 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   return message ? <p id={id} className="mt-2 text-caption text-terracotta">{message}</p> : null;
 }
 
+/** After sending: thanks, then WhatsApp with a pre-filled message, or the email address. */
+function Thanks({ firstName }: { firstName: string }) {
+  const t = booking.thanks;
+  const wa = whatsappHref(t.whatsappMessage(firstName));
+  const email = (
+    <a href={mailtoHref} className="underline underline-offset-4">{facts.email}</a>
+  );
+  return (
+    <div role="status" className="fade-up">
+      <p className="text-h2">{t.heading(firstName)}</p>
+      <p className="mt-4 text-caption text-terracotta">{t.reply}</p>
+      {wa ? (
+        <>
+          <div className="mt-10">
+            <ButtonLink href={wa} variant="outline-light" target="_blank" rel="noopener noreferrer">
+              {t.whatsappLabel}
+            </ButtonLink>
+          </div>
+          <p className="mt-6 text-body opacity-75">{t.emailLead} {email}</p>
+        </>
+      ) : (
+        <p className="mt-10 text-body-lg">{t.emailOnlyLead} {email}</p>
+      )}
+    </div>
+  );
+}
+
 /**
- * The waitlist / booking form. Layout and validation only for now; it does
- * not send. Reused at the end of Home and on /book-now.
+ * The waitlist / booking form, reused at the end of Home and on /book-now.
+ * Checks in the browser for instant feedback, then sends through the
+ * server action (which checks again and emails CONTACT_EMAIL via Resend).
  */
 export function BookingForm() {
   const id = useId();
@@ -64,31 +73,51 @@ export function BookingForm() {
   const [values, setValues] = useState<Values>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
   const [tried, setTried] = useState(false);
-  const [status, setStatus] = useState<string | null>(null);
+  const [failed, setFailed] = useState(false);
+  const [sentTo, setSentTo] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
 
-  const set = (k: keyof Values) => (ev: { target: { value: string } }) => {
+  const set = (k: Field) => (ev: { target: { value: string } }) => {
     const next = { ...values, [k]: ev.target.value };
     setValues(next);
-    setStatus(null);
-    if (tried) setErrors(validate(next));
+    setFailed(false);
+    if (tried) setErrors(messages(next));
   };
 
-  const onSubmit = (ev: FormEvent) => {
+  const onSubmit = (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     setTried(true);
-    const e = validate(values);
+    const e = messages(values);
     setErrors(e);
-    const first = (Object.keys(e) as (keyof Values)[])[0];
+    const first = (Object.keys(e) as Field[])[0];
     if (first) {
       formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
     }
-    setStatus(booking.notSentYet);
+    const data = new FormData(ev.currentTarget);
+    startTransition(async () => {
+      const res = await submitWaitlist(data);
+      if (res.ok) setSentTo(values.firstName.trim());
+      else setFailed(true);
+    });
   };
 
-  const describe = (k: keyof Values) => (errors[k] ? `${id}-${k}-error` : undefined);
+  if (sentTo !== null) return <Thanks firstName={sentTo} />;
 
+  const describe = (k: Field) => (errors[k] ? `${id}-${k}-error` : undefined);
   const f = booking.fields;
+
+  const text = (k: "firstName" | "lastName", autoComplete: string) => (
+    <div>
+      <FieldLabel htmlFor={`${id}-${k}`}>{f[k].label}</FieldLabel>
+      <input
+        id={`${id}-${k}`} name={k} type="text" autoComplete={autoComplete} maxLength={MAX_LENGTH[k]}
+        value={values[k]} onChange={set(k)}
+        aria-invalid={!!errors[k]} aria-describedby={describe(k)} className={field}
+      />
+      <FieldError id={`${id}-${k}-error`} message={errors[k]} />
+    </div>
+  );
 
   const select = (k: "day120" | "heardFrom") => (
     <div>
@@ -110,20 +139,14 @@ export function BookingForm() {
     </div>
   );
 
-  const text = (k: "firstName" | "lastName", autoComplete: string) => (
-    <div>
-      <FieldLabel htmlFor={`${id}-${k}`}>{f[k].label}</FieldLabel>
-      <input
-        id={`${id}-${k}`} name={k} type="text" autoComplete={autoComplete}
-        value={values[k]} onChange={set(k)}
-        aria-invalid={!!errors[k]} aria-describedby={describe(k)} className={field}
-      />
-      <FieldError id={`${id}-${k}-error`} message={errors[k]} />
-    </div>
-  );
-
   return (
-    <form ref={formRef} noValidate onSubmit={onSubmit} className="space-y-10">
+    <form ref={formRef} noValidate onSubmit={onSubmit} aria-busy={pending} className="space-y-10">
+      {/* Spam trap: off-screen, skipped by keyboard and screen readers. */}
+      <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label htmlFor={`${id}-${HONEYPOT}`}>{booking.honeypotLabel}</label>
+        <input id={`${id}-${HONEYPOT}`} name={HONEYPOT} type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
+      </div>
+
       <div className="grid gap-10 md:grid-cols-2 md:gap-8">
         {text("firstName", "given-name")}
         {text("lastName", "family-name")}
@@ -132,7 +155,7 @@ export function BookingForm() {
       <div>
         <FieldLabel htmlFor={`${id}-contact`}>{f.contact.label}</FieldLabel>
         <input
-          id={`${id}-contact`} name="contact" type="text" inputMode="email" autoComplete="email"
+          id={`${id}-contact`} name="contact" type="text" inputMode="email" autoComplete="email" maxLength={MAX_LENGTH.contact}
           value={values.contact} onChange={set("contact")}
           aria-invalid={!!errors.contact} aria-describedby={describe("contact")} className={field}
         />
@@ -148,14 +171,18 @@ export function BookingForm() {
           {f.note.label} <span className="ml-2 font-normal normal-case tracking-normal opacity-70">({f.note.optional})</span>
         </FieldLabel>
         <textarea
-          id={`${id}-note`} name="note" rows={3} value={values.note} onChange={set("note")}
+          id={`${id}-note`} name="note" rows={3} maxLength={MAX_LENGTH.note} value={values.note} onChange={set("note")}
           className={`${field} resize-y`}
         />
       </div>
 
       <div className="pt-2">
-        <Button type="submit" className="w-full md:w-auto">{booking.submit}</Button>
-        <p aria-live="polite" className="mt-4 min-h-6 text-caption text-terracotta">{status}</p>
+        <Button type="submit" disabled={pending} className="w-full disabled:opacity-60 md:w-auto">
+          {booking.submit}
+        </Button>
+        <p aria-live="polite" className="mt-4 min-h-6 text-caption text-terracotta">
+          {failed ? booking.errors.failed : null}
+        </p>
       </div>
     </form>
   );

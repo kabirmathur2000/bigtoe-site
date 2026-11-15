@@ -19,5 +19,7 @@ export const footer = {
 
 export const meta = {
   title: "BigToe",
+  /** Page titles, shown as "Team · BigToe". */
+  pages: { team: "Team", method: "Method" },
   description: "The second half of life should be the stronger half.",
 } as const;

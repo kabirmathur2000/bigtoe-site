@@ -61,7 +61,8 @@ export const facts = {
     perWeek: "2 to 4 a week by goal",
   },
 
-  where: "Studio, home or online at no extra charge",
+  /** Deck 5 slide 17, word for word. */
+  where: "Studio, home or online, at no extra charge.",
 
   reserveAudit: {
     first: "Sessions 2 to 4",
