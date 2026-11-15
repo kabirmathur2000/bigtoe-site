@@ -1,0 +1,88 @@
+"use client";
+
+import { useState } from "react";
+import { Reveal, RevealItem } from "@/components/motion/Reveal";
+import { Section } from "@/components/motion/SectionTone";
+import { patterns } from "@/content/home";
+
+/**
+ * Home block 3. Four tall photo cards; tapping one widens it (desktop) or
+ * opens it (mobile) and shows what BigToe does for that person.
+ */
+export function Patterns() {
+  const [open, setOpen] = useState<string | null>(null);
+
+  return (
+    <Section className="py-section">
+      <div className="mx-auto max-w-wide px-gutter">
+        <Reveal>
+          <RevealItem as="p" className="text-label uppercase opacity-70">{patterns.label}</RevealItem>
+          <RevealItem as="h2" className="mt-6 text-h1">{patterns.headline}</RevealItem>
+        </Reveal>
+
+        <ul className="mt-16 flex flex-col gap-3 md:mt-20 md:h-[640px] md:flex-row md:gap-4">
+          {patterns.items.map((p) => {
+            const isOpen = open === p.id;
+            return (
+              <li
+                key={p.id}
+                className={`group relative min-w-0 md:overflow-hidden transition-[flex-grow] duration-700 ease-soft md:flex md:flex-col ${
+                  isOpen ? "md:grow-[2.6]" : "md:grow"
+                } md:basis-0`}
+              >
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={`pattern-${p.id}`}
+                  onClick={() => setOpen(isOpen ? null : p.id)}
+                  className="flex w-full flex-col text-left md:h-full"
+                >
+                  <div
+                    className={`relative w-full overflow-hidden transition-[height] duration-700 ease-soft md:h-auto md:flex-1 ${
+                      isOpen ? "h-[420px]" : "h-[180px]"
+                    }`}
+                  >
+                    <div
+                      role="img"
+                      aria-label={p.shot}
+                      className="absolute inset-0 flex items-end bg-navy/15 p-4 transition-transform duration-[1200ms] ease-soft group-hover:scale-[1.03]"
+                    >
+                      <span className="text-caption text-navy/50">{p.shot}</span>
+                    </div>
+                  </div>
+                  <span className="mt-4 flex items-baseline justify-between gap-4 border-t border-current/15 pt-4 md:h-24">
+                    <span className="text-h3">{p.title}</span>
+                    <span aria-hidden className={`text-h3 transition-transform duration-500 ${isOpen ? "rotate-45" : ""}`}>+</span>
+                  </span>
+                </button>
+
+                <div
+                  id={`pattern-${p.id}`}
+                  className={`grid transition-[grid-template-rows,opacity] duration-700 ease-soft md:block md:h-40 md:overflow-hidden ${
+                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                  }`}
+                >
+                  <div className="overflow-hidden md:w-[min(32rem,40vw)]">
+                    <p className="pt-3 text-body-lg">{p.need}</p>
+                    <p className="max-w-text pt-2 pb-2 text-body opacity-70">{p.how}</p>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+
+        <Reveal className="mx-auto mt-24 max-w-4xl md:mt-32">
+          <RevealItem as="p" className="text-h2">
+            <span aria-hidden>“</span>
+            {patterns.testimonial.quote}
+            <span aria-hidden>”</span>
+          </RevealItem>
+          <RevealItem as="p" className="mt-6 text-caption text-terracotta">
+            {patterns.testimonial.name}, {patterns.testimonial.age}
+          </RevealItem>
+        </Reveal>
+      </div>
+    </Section>
+  );
+}
