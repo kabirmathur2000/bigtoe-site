@@ -48,10 +48,10 @@ export function MemberWords() {
     let frame = 0;
     const update = () => {
       frame = 0;
-      const header = document.querySelector("header")?.offsetHeight ?? 0;
       const r = el.getBoundingClientRect();
-      const travel = r.height - (window.innerHeight - header);
-      const p = travel > 0 ? clamp((header - r.top) / travel) : 1;
+      const offset = r.height > 0 ? window.innerHeight - (ref.current?.offsetHeight ?? window.innerHeight) : 0;
+      const travel = r.height - (window.innerHeight - offset);
+      const p = travel > 0 ? clamp((offset - r.top) / travel) : 1;
       const count = p <= 0 ? 0 : Math.min(total, Math.ceil((p / WORDS_BY) * total));
       // Words only ever arrive; scrolling back up keeps them.
       setShown((s) => Math.max(s, count));
@@ -104,10 +104,10 @@ export function MemberWords() {
 
   return (
     // One screen plus about 0.8 of a screen of pinned scroll.
-    <Section tone="navy" chapter className="block h-[calc(180svh-var(--header-h))] p-0">
+    <Section tone="navy" chapter className="block h-[calc(180svh-var(--chapter-offset))] p-0">
       <div
         ref={ref}
-        className="sticky top-(--header-h) flex h-[calc(100svh-var(--header-h))] flex-col justify-center pt-(--chapter-pad) pb-[calc(var(--chapter-pad)+var(--bar-h))]"
+        className="sticky top-(--chapter-offset) flex h-[calc(100svh-var(--chapter-offset))] flex-col justify-center pt-(--chapter-pad) pb-[calc(var(--chapter-pad)+var(--bar-h))]"
       >
         {content}
       </div>

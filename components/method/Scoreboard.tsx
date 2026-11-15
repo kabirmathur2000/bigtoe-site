@@ -101,7 +101,6 @@ export function Scoreboard() {
             </div>
             <Reveal className="md:col-span-7" stagger={0.2}>
               <RevealItem as="p" className="text-body-lg leading-snug md:text-h3">{scoreboard.weakest}</RevealItem>
-              <RevealItem as="p" className="mt-2 text-body-lg opacity-75">{scoreboard.loop}</RevealItem>
             </Reveal>
           </div>
         </div>

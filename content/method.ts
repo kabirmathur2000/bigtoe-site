@@ -25,7 +25,6 @@ export const training = {
   lines: [
     "Your foot is built to feel the ground.",
     "No machines.",
-    "Every session trains everything, with one Sherpa watching all of it.",
   ],
   paths: ["Mobility & Conditioning", "Strength & Conditioning"],
   /** Deck 4 slide 13, "say it to a member". */
@@ -52,8 +51,6 @@ export const scoreboard = {
   scoreNote: "the average of the four dials",
   /** Deck 7 slide 12, "say it to a member". */
   weakest: "Your Strength Reserve is only as good as your weakest dial. That is where we start.",
-  /** Deck 5 cut line and Deck 7 slide 1. */
-  loop: "Test, train, retest. Every 16 sessions.",
 } as const;
 
 /** Chapter 5. Approved list: Deck 4 slide 21, Deck 1 slides 18 and 22, Deck 2, Deck 5 slide 17. */
@@ -106,24 +103,20 @@ export const patterns = {
   headline: "Find your pattern.",
   /**
    * The four personas (Deck 1 slide 19; Deck 3 slide 8 calls them
-   * "Pattern"). `need` is the deck's "what they need from us";
-   * `how` is a deck line on what BigToe does about it.
+   * "Pattern"). `need` is the deck's "what they need from us", the
+   * only line on each card.
    */
   items: [
     {
       id: "never-trained",
       title: "Never trained",
       need: "To feel safe, and win early.",
-      /** Deck 4 slide 15. */
-      how: "Every member starts where they are today.",
       shot: "Member for the pattern 'Never trained', with their Sherpa",
     },
     {
       id: "life-got-in-the-way",
       title: "Life got in the way",
       need: "Easy timing changes, home or online sessions.",
-      /** Deck 5 slide 17, "say it to a member". */
-      how: "Can't make it? We'll make it 30 minutes at home or online. The week still counts.",
       shot: "Member for the pattern 'Life got in the way', with their Sherpa",
     },
     {
@@ -131,14 +124,12 @@ export const patterns = {
       title: "Train but don't progress",
       /** Deck 1 slide 28 wording. */
       need: "Progress you can see.",
-      /** Deck 5 slide 3. */
-      how: "A plan built from test results, and tested again every 16 sessions. Nothing random.",
       shot: "Member for the pattern 'Train but don't progress', with their Sherpa",
     },
     {
       id: "start-and-stop",
       title: "Start and stop",
-      /** Deck 1 slide 19. No second line: Deck 1 has only this one. */
+      /** Deck 1 slide 19. */
       need: "An easy restart, with no blame.",
       shot: "Member for the pattern 'Start and stop', with their Sherpa",
     },

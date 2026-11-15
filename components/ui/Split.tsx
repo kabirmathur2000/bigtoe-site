@@ -13,7 +13,7 @@ export function Split({ tone = "light", photo, blocks }: { tone?: Tone; photo: R
     <Section chapter tone={tone} split className="md:block md:py-0">
       <div className="mx-auto grid w-full max-w-wide gap-6 px-gutter md:grid-cols-12 md:gap-12">
         <div className="order-last md:order-none md:col-span-5 md:col-start-2">
-          <div className="md:sticky md:top-(--header-h) md:flex md:h-[calc(100svh-var(--header-h))] md:items-center">
+          <div className="md:sticky md:top-(--chapter-offset) md:flex md:h-[calc(100svh-var(--chapter-offset))] md:items-center">
             {photo}
           </div>
         </div>
@@ -22,7 +22,7 @@ export function Split({ tone = "light", photo, blocks }: { tone?: Tone; photo: R
             <div
               key={i}
               data-rest
-              className="not-first:mt-5 md:flex md:min-h-[calc(100svh-var(--header-h))] md:flex-col md:justify-center md:not-first:mt-0"
+              className="not-first:mt-5 md:flex md:min-h-[calc(100svh-var(--chapter-offset))] md:flex-col md:justify-center md:not-first:mt-0"
             >
               {b}
             </div>

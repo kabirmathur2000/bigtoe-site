@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { facts, mailtoHref, todo, whatsappHref } from "@/content/facts";
 import { footer } from "@/content/site";
+import { NotOnBook } from "./NotOnBook";
 import logoTag from "@/public/brand/logo-tag-light.png";
 
 function Label({ children }: { children: React.ReactNode }) {
@@ -24,6 +25,8 @@ export function Footer() {
             className="h-[72px] w-auto md:h-[88px]"
             sizes="(min-width: 768px) 260px, 210px"
           />
+          {/* The Book page shows the address and hours already. */}
+          <NotOnBook>
           <address className="mt-10 not-italic">
             {facts.address.lines.map((l) => (
               <span key={l} className="block">{l}</span>
@@ -33,12 +36,15 @@ export function Footer() {
           {!facts.address.mapUrl && (
             <p className="mt-2 text-caption"><Todo>{todo(footer.missingMap)}</Todo></p>
           )}
+          </NotOnBook>
         </div>
 
-        <div className="md:col-span-3 md:col-start-7">
-          <Label>{footer.hoursLabel}</Label>
-          <p>{facts.hours}</p>
-        </div>
+        <NotOnBook>
+          <div className="md:col-span-3 md:col-start-7">
+            <Label>{footer.hoursLabel}</Label>
+            <p>{facts.hours}</p>
+          </div>
+        </NotOnBook>
 
         <div className="md:col-span-3">
           <Label>{footer.contactLabel}</Label>

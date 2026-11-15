@@ -69,6 +69,8 @@ export function SectionToneController() {
         amount = clamp((start - r.top) / (start - end));
       }
 
+      // Any navy at all counts as the navy zone (the header keeps out of it).
+      root.dataset.zone = amount > 0 ? "navy" : "light";
       const pct = Math.round(amount * 1000) / 10;
       if (pct === lastAmount) return;
       lastAmount = pct;
@@ -96,6 +98,7 @@ export function SectionToneController() {
       root.classList.remove("tones-managed");
       root.style.removeProperty("--page-bg");
       root.style.removeProperty("--page-fg");
+      delete root.dataset.zone;
     };
   }, []);
 

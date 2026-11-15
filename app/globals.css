@@ -134,6 +134,14 @@ html.tones-managed [data-tone] {
   }
 }
 
+/* Chapters sit below the header. In the navy zone the header keeps out of
+   sight (HeaderShell), so navy chapters take the full screen, except under
+   reduced motion, where the header always stays visible. */
+:root { --chapter-offset: var(--header-h); }
+@media (prefers-reduced-motion: no-preference) {
+  [data-tone="navy"] { --chapter-offset: 0px; }
+}
+
 /* Short phones also get a little less breathing room above and below each chapter. */
 @media (max-width: 767px) and (max-height: 719px) {
   :root { --chapter-pad: 1rem; }
@@ -144,10 +152,10 @@ html.tones-managed [data-tone] {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: calc(100svh - var(--header-h));
+    min-height: calc(100svh - var(--chapter-offset));
     padding-top: var(--chapter-pad);
     padding-bottom: calc(var(--chapter-pad) + var(--bar-h));
-    scroll-margin-top: var(--header-h);
+    scroll-margin-top: var(--chapter-offset);
   }
   /* Auto side margins would otherwise shrink a centred container to its content. */
   .chapter > * { width: 100%; }

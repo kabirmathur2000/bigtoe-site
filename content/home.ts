@@ -20,7 +20,7 @@ export const hero = {
 export const belief = {
   /** Deck label, not shown (it shapes the page order): THE CORE BELIEF. */
   headline: facts.heroLine,
-  lines: ["The problem isn't your age.", "Capability is built at any age, not spent."],
+  lines: ["The problem isn't your age."],
 } as const;
 
 /**
@@ -61,13 +61,11 @@ export const answer = {
       /** Guide, Home block 4, cut. */
       title: "Then the Reserve Audit.",
       meta: facts.reserveAudit.first,
-      body: "About 60 minutes. Four dials. You leave with your Strength Reserve Score.",
     },
     {
       id: "loop",
       /** Guide, Method ("Test, train, retest"); Deck 5 slide 3, cut. */
       title: "Test, train, retest.",
-      body: "A plan built from test results, and tested again every 16 sessions.",
     },
   ],
   shot: "The audit: the body scan, a Sherpa beside the member",

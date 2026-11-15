@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HeaderCta } from "./HeaderCta";
+import { HeaderShell } from "./HeaderShell";
 import { nav } from "@/content/site";
 import logo from "@/public/brand/logo.png";
 
 export function Header() {
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-navy/10 bg-offwhite text-navy">
+    <HeaderShell>
       <div className="mx-auto flex h-16 max-w-wide items-center justify-between px-gutter md:h-20">
         <Link href="/" aria-label={nav.homeLabel} className="flex min-h-11 shrink-0 items-center">
           <Image src={logo} alt="" priority className="h-9 w-auto md:h-11" sizes="(min-width: 768px) 170px, 140px" />
@@ -24,7 +25,7 @@ export function Header() {
           <HeaderCta />
         </nav>
       </div>
-    </header>
+    </HeaderShell>
   );
 }
 

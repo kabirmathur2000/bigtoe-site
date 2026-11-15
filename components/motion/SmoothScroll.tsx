@@ -22,14 +22,16 @@ const headerHeight = () => document.querySelector("header")?.offsetHeight ?? 0;
  */
 function chapters() {
   const header = headerHeight();
-  const visible = window.innerHeight - header;
   // Desktop: a split layout's blocks are the resting points. Phones: the chapter is.
   const desktop = window.matchMedia("(min-width: 768px)").matches;
   const els = Array.from(document.querySelectorAll<HTMLElement>("[data-chapter], [data-rest]")).filter((el) =>
     desktop ? !el.hasAttribute("data-split") : !el.hasAttribute("data-rest"),
   );
   return els.map((el) => {
-    const start = Math.round(el.getBoundingClientRect().top + window.scrollY - header);
+    // In the navy zone the header is hidden, so chapters there start at the very top.
+    const offset = el.closest('[data-tone="navy"]') ? 0 : header;
+    const visible = window.innerHeight - offset;
+    const start = Math.round(el.getBoundingClientRect().top + window.scrollY - offset);
     const tall = el.offsetHeight > visible + 2;
     return { start, end: tall ? Math.round(start + el.offsetHeight - visible) : start, tall };
   });

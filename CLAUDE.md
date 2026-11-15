@@ -88,9 +88,9 @@ Four pages, one job: get the visitor to book the free first visit.
 Each chapter fills one screen, in Deck 1's order (the labels are not shown).
 
 1. **THE MAIN POINT** (the hero). "We train for a sport called life." and "Most people play it untrained. We train for it." (Deck 1 slide 3). One button. Full-bleed video placeholder: a member with a Sherpa beside them.
-2. **THE CORE BELIEF.** "The second half of life should be the stronger half." Then "The problem isn't your age." and "Capability is built at any age, not spent." (Deck 1 slide 4, cut, never reworded).
+2. **THE CORE BELIEF.** "The second half of life should be the stronger half." Then "The problem isn't your age." (Deck 1 slide 4, cut, never reworded).
 3. **OUR MISSION.** The studio-wall poem, unchanged (see "Fixed wording"). Left-aligned on the shared edge; on desktop wide and large, still one line per poem line (hanging indent only where a line must wrap, on phones and tablets). Each line revealed on its own, a longer pause between stanzas, only the last line at full strength. Last light chapter on Home.
-4. **OUR ANSWER** (navy from here to the footer). Strength Reserve: "The capacity you build above what daily life asks of you." (Deck 1 slide 15). Then three short steps: the free first visit; the Reserve Audit in sessions 2 to 4; test, train, retest. **Split layout:** on desktop one photo stays pinned on one half while the text moves past on the other; stacked on phones.
+4. **OUR ANSWER** (navy from here to the footer). Strength Reserve: "The capacity you build above what daily life asks of you." (Deck 1 slide 15). Then three short steps: the free first visit ("An hour with a Sherpa."); the Reserve Audit, sessions 2 to 4; test, train, retest (titles only). **Split layout:** on desktop one photo stays pinned on one half while the text moves past on the other; stacked on phones.
 5. **IN OUR MEMBERS' WORDS** (the one label shown). The word cloud pins while the visitor scrolls; words appear in order of size, **smallest first, largest last**, and stay. Sizes and colours match the BigToe word cloud poster (`content/home.ts`):
    - Small: a way of life, no injuries, balance, seen, sacred, grounding
    - Medium: passion, mindset, honest, trust, patient, rare, home, compassion
@@ -110,9 +110,9 @@ Each chapter fills one screen, in Deck 1's order (the labels are not shown).
 All light, no navy. Every line is a deck line, cut, never reworded ("they" may become "you"). Copy in `content/method.ts`; components in `components/method/`.
 
 1. **WHAT FADES.** "Three things fade with age. We train all three." Three line-drawn bulbs: Muscle, "The size of the bulb."; Strength, "How bright the bulb burns."; Power, "How fast the switch works." (Deck 1 slides 10 to 11). Close: "Power goes first, long before size." No medical terms.
-2. **HOW WE TRAIN.** "Barefoot, free weights, one supervised hour." Then "Your foot is built to feel the ground." / "No machines." / "Every session trains everything, with one Sherpa watching all of it." The two paths, Mobility & Conditioning and Strength & Conditioning, and "Neither path is better. We start where you are today." (Deck 4). Photo: bare feet on the floor.
-3. **THE SCOREBOARD.** "Every sport has a score. This is ours." Four dials (InBody, Balance & Mobility, Functional Strength, Conditioning; names only, no descriptions) count up once to Deck 7's example 78, 42, 90 and 66; the weakest turns terracotta. The score, 69, is "the average of the four dials". **Always labelled "Example"** so it never reads as a real member's results. Then "Your Strength Reserve is only as good as your weakest dial. That is where we start." and "Test, train, retest. Every 16 sessions." Reduced motion shows the final numbers.
-4. **WHO WE SERVE.** "Find your pattern." The four persona cards (Deck 1 slide 19, Deck 3 slide 8), `components/method/Patterns.tsx`.
+2. **HOW WE TRAIN.** "Barefoot, free weights, one supervised hour." Then "Your foot is built to feel the ground." / "No machines." The two paths, Mobility & Conditioning and Strength & Conditioning, and "Neither path is better. We start where you are today." (Deck 4). Photo: bare feet on the floor.
+3. **THE SCOREBOARD.** "Every sport has a score. This is ours." Four dials (InBody, Balance & Mobility, Functional Strength, Conditioning; names only, no descriptions) count up once to Deck 7's example 78, 42, 90 and 66; the weakest turns terracotta. The score, 69, is "the average of the four dials". **Always labelled "Example"** so it never reads as a real member's results. Then "Your Strength Reserve is only as good as your weakest dial. That is where we start." Reduced motion shows the final numbers.
+4. **WHO WE SERVE.** "Find your pattern." The four persona cards (Deck 1 slide 19, Deck 3 slide 8), one "what you need" line each, `components/method/Patterns.tsx`.
 5. **QUESTIONS.** Six collapsed, approved:
    - "Only twice a week? Will I see results?" (Deck 4 slide 21)
    - "Isn't heavy lifting risky?" (Deck 4 slide 21; source Watson et al, J Bone Miner Res 2018, doi 10.1002/jbmr.3284, confirmed as the 101-woman trial)
@@ -136,7 +136,7 @@ Held back for now: "Same score, different person" (Deck 7 slide 12) and the tap-
 ### Book (`/book-now`)
 
 - **The same form as Home** (`BookingSection`), so it can be shared as a link on WhatsApp. Heading and button follow `facts.ctaMode`.
-- **Address, hours, map,** and "There's no parking at the studio. Come by cab or get dropped off."
+- **Address, hours, map,** and "There's no parking at the studio. Come by cab or get dropped off." The footer leaves out its own address and hours on this page.
 
 ### Redirects
 
@@ -164,7 +164,7 @@ Held back for now: "Same score, different person" (Deck 7 slide 12) and the tap-
   - Book: where we train on light; the form and the footer, navy.
   - Mark zone sections `tone="navy"`; the first one starts the fade (`SectionToneController`). On navy, text is #F0EEEB.
 - **The fade is gradual,** over about 60% of the screen height, so the page never jumps. Our members are over 40; nothing on the page should startle.
-- **The header stays off-white** with the navy logo (chrome), over both zones.
+- **The header keeps out of the navy zone.** It stays off-white with the navy logo, slides away while the visitor scrolls down and slides back slowly when they scroll up, but only while the page is still light; in the navy zone it stays away, and navy chapters take the full screen (`HeaderShell`, `--chapter-offset`). It returns at the top of the page and when a keyboard user tabs into it. Under reduced motion it simply stays visible.
 - **Never switch colour all at once, on any setting.** Under `prefers-reduced-motion`, movement goes (no rising, sliding or zooming), but colour changes keep the same slow fade.
 - **No gradients, no drop shadows, no glossy effects.** Thin hairline rules instead.
 
@@ -327,5 +327,6 @@ The decks are training material for Sherpas, so some lines must not reach the si
 - [ ] Founders' comments: one round per preview link, by page and block name.
 - [ ] Anderson Grotesk licence covers web use.
 - [ ] Logo SVG needed. `docs/logo/` has PNGs only.
+- [ ] TODO: a light (off-white) version of the plain logo, without the tagline, so the header can turn navy over the navy zone later. Until then the header hides there.
 - [ ] Button wording BOOK YOUR FREE FIRST VISIT confirmed with Jay.
 - [x] Home and online sessions: studio, home or online at no extra charge (Deck 5). Goes in the FAQs.
