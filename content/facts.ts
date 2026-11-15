@@ -26,6 +26,8 @@ const cta = {
 export const facts = {
   brand: "BigToe",
   tagline: "Practice Possibility",
+  /** The live domain (email is @bigtoe.in). Override with NEXT_PUBLIC_SITE_URL for previews. */
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://bigtoe.in",
 
   ctaMode,
   /** The form heading for the current mode. */
@@ -72,9 +74,17 @@ export const facts = {
   /** Address and hours still to confirm as current. */
   address: {
     lines: ["43 Basant Lok, 3rd Floor", "Vasant Vihar, New Delhi 110057"],
+    /** The same address in parts, for search engines (JSON-LD). */
+    street: "43 Basant Lok, 3rd Floor",
+    area: "Vasant Vihar",
+    city: "New Delhi",
+    postalCode: "110057",
+    country: "IN",
     mapUrl: null as string | null,
   },
   hours: "6 am to 10 pm, Monday to Sunday",
+  /** The same hours for search engines (schema.org openingHours). */
+  hoursSchema: "Mo-Su 06:00-22:00",
   parking: "There's no parking at the studio. Come by cab or get dropped off.",
 
   email: "hello@bigtoe.in",

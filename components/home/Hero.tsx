@@ -20,7 +20,7 @@ export function Hero() {
             {hero.subline}
           </p>
           <div data-cta className="fade-up mt-8 hidden md:block" style={{ animationDelay: "500ms" }}>
-            <BookButton />
+            <BookButton placement="hero" />
           </div>
         </div>
       </div>

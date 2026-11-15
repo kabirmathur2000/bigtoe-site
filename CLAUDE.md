@@ -129,7 +129,7 @@ Held back for now: "Same score, different person" (Deck 7 slide 12) and the tap-
 
 ### Redirects
 
-- `/membership` → `/` and `/faqs` → `/method`, permanent.
+- `/membership` → `/` and `/faqs` → `/method`, permanent (308), in `next.config.ts`.
 
 ---
 
@@ -282,7 +282,9 @@ The decks are training material for Sherpas, so some lines must not reach the si
 - `content/facts.ts`: every reusable fact, including `ctaLabel`. `content/<page>.ts`: that page's copy.
 - `components/`: layout, motion primitives and UI. No copy inside.
 - Motion: `lenis` for smooth scroll, `motion` for reveals. Every primitive checks reduced motion.
-- Env vars: `RESEND_API_KEY`, `CONTACT_EMAIL` (comma-separated for several), `RESEND_FROM` (a sender on a domain verified in Resend; defaults to Resend's test sender), `NEXT_PUBLIC_WHATSAPP_NUMBER`.
+- Env vars: `RESEND_API_KEY`, `CONTACT_EMAIL` (comma-separated for several), `RESEND_FROM` (a sender on a domain verified in Resend; defaults to Resend's test sender), `NEXT_PUBLIC_WHATSAPP_NUMBER`, `NEXT_PUBLIC_SITE_URL` (defaults to https://bigtoe.in).
+- SEO: titles and descriptions in `content/site.ts` (`meta`); descriptions are deck lines. Home's title is "BigToe · Personal training for adults over 40 · Vasant Vihar, New Delhi". LocalBusiness JSON-LD in `app/layout.tsx`, built only from `facts`. `app/opengraph-image.tsx` (off-white, LogoTag, the core belief, Anderson Grotesk from `docs/fonts/*.otf`), `app/sitemap.ts`, `app/robots.ts`. Redirects in `next.config.ts`.
+- Analytics: Vercel Analytics. Events: "Booking button" (placement, page, mode) on every `BookButton` tap; "Form submit" (page, result: invalid, sent or failed, mode) on every submit. Never send personal details.
 - The form sends through the server action `app/actions/waitlist.ts`: honeypot, server-side validation (`lib/waitlist.ts`, shared with the browser), then Resend with every field. Without keys in development it logs instead of sending; in production it shows the failure message with the email address.
 
 ---

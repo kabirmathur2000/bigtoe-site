@@ -1,8 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   cacheComponents: true,
+  /** Old Framer URLs (CLAUDE.md, Redirects). Permanent (308). */
+  async redirects() {
+    return [
+      { source: "/membership", destination: "/", permanent: true },
+      { source: "/faqs", destination: "/method", permanent: true },
+    ];
+  },
   partialPrefetching: true,
   turbopack: {
     rules: {

@@ -18,7 +18,7 @@ export function MobileBookBar() {
         hidden ? "pointer-events-none translate-y-full opacity-0" : ""
       }`}
     >
-      <BookButton className="w-full" />
+      <BookButton placement="mobile-bar" className="w-full" />
     </div>
   );
 }

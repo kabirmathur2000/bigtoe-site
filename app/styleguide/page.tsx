@@ -94,7 +94,7 @@ export default function StyleguidePage() {
         <Wrap>
           <Heading>{sg.sections.buttons}</Heading>
           <div className="flex flex-wrap items-center gap-4">
-            <BookButton />
+            <BookButton placement="styleguide" />
             <ButtonLink href="/method" variant="outline">{sg.buttons.outline}</ButtonLink>
           </div>
           <p className="mt-6 text-caption opacity-70">{sg.buttons.note}</p>
@@ -154,7 +154,7 @@ export default function StyleguidePage() {
           <Reveal className="space-y-10">
             <RevealItem as="p" className="text-display">{sg.motion.tone.navyLine}</RevealItem>
             <RevealItem>
-              <BookButton />
+              <BookButton placement="styleguide" />
             </RevealItem>
           </Reveal>
         </Wrap>

@@ -1,5 +1,7 @@
 "use client";
 
+import { track } from "@vercel/analytics";
+import { usePathname } from "next/navigation";
 import { useId, useRef, useState, useTransition, type FormEvent } from "react";
 import { submitWaitlist } from "@/app/actions/waitlist";
 import { Button, ButtonLink } from "@/components/ui/Button";
@@ -76,6 +78,7 @@ export function BookingForm() {
   const [failed, setFailed] = useState(false);
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const page = usePathname();
 
   const set = (k: Field) => (ev: { target: { value: string } }) => {
     const next = { ...values, [k]: ev.target.value };
@@ -90,13 +93,17 @@ export function BookingForm() {
     const e = messages(values);
     setErrors(e);
     const first = (Object.keys(e) as Field[])[0];
+    // Every submit is an analytics event (no personal details): invalid, sent or failed.
+    const event = (result: string) => track("Form submit", { page, result, mode: facts.ctaMode });
     if (first) {
+      event("invalid");
       formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
     }
     const data = new FormData(ev.currentTarget);
     startTransition(async () => {
       const res = await submitWaitlist(data);
+      event(res.ok ? "sent" : "failed");
       if (res.ok) setSentTo(values.firstName.trim());
       else setFailed(true);
     });

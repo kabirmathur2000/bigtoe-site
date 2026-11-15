@@ -12,7 +12,7 @@ export function HeaderCta() {
       inert={hidden}
       className={`hidden transition-opacity duration-700 ease-soft md:block ${hidden ? "pointer-events-none opacity-0" : ""}`}
     >
-      <BookButton />
+      <BookButton placement="header" />
     </div>
   );
 }

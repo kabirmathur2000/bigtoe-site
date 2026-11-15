@@ -130,7 +130,7 @@ export function Social() {
           <RevealItem as="p" className="mt-4 text-h3 md:mt-6">{social.close}</RevealItem>
         </Reveal>
         <div data-cta className="order-last md:order-none md:col-span-5 md:col-start-2 md:row-start-2">
-          <BookButton />
+          <BookButton placement="team-end" />
         </div>
         <div className="grid grid-cols-2 gap-3 short:hidden md:col-span-5 md:col-start-8 md:row-span-2 md:row-start-1 md:self-center md:gap-6">
           <Placeholder ratio="" shot={social.shots[0]} className="col-span-2 aspect-[5/2] md:aspect-[3/2]" />

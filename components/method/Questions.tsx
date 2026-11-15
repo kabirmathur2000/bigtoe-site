@@ -69,7 +69,7 @@ export function Questions() {
           </Reveal>
 
           <div data-cta className="mt-10">
-            <BookButton />
+            <BookButton placement="method-end" />
           </div>
         </div>
       </div>
