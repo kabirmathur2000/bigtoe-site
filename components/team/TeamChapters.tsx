@@ -11,20 +11,39 @@ const Todo = ({ children }: { children: string }) => (
   <RevealItem as="p" className="mt-4 text-caption text-terracotta">{children}</RevealItem>
 );
 
+/**
+ * Jay's story and the founders' note are quoted word for word, so they are
+ * exempt from the 40-word rule. They sit in a narrow column with generous
+ * line spacing, and each paragraph fades in on its own as it is reached.
+ */
+const reading = "max-w-[34rem] md:ml-[8.333%]";
+
+function Paragraph({ children, className }: { children: string; className?: string }) {
+  return (
+    <Reveal>
+      <RevealItem as="p" className={`mt-10 ${className ?? "text-body-lg leading-[1.8] opacity-85"}`}>{children}</RevealItem>
+    </Reveal>
+  );
+}
+
 /** Chapter 1: Jay's story, word for word. Text only; his portrait signs the note below. */
 export function Story() {
   return (
     <Section className="py-section">
       <div className="mx-auto max-w-wide px-gutter">
-        <Reveal className="max-w-text md:ml-[8.333%]" stagger={0.2}>
-          <Label>{story.label}</Label>
-          <RevealItem as="h1" className="mt-6 text-h1">{story.headline}</RevealItem>
+        <div className={reading}>
+          <Reveal stagger={0.2}>
+            <Label>{story.label}</Label>
+            <RevealItem as="h1" className="mt-6 text-h1">{story.headline}</RevealItem>
+          </Reveal>
           {story.paragraphs.map((p, i) => (
-            <RevealItem key={i} as="p" className={`mt-8 text-body-lg ${i === 2 ? "text-h3" : "opacity-85"}`}>{p}</RevealItem>
+            <Paragraph key={i} className={i === 2 ? "text-h3 leading-[1.5]" : undefined}>{p}</Paragraph>
           ))}
-          <RevealItem as="p" className="mt-10 text-label uppercase opacity-70">{story.signature}</RevealItem>
-          <Todo>{story.todo}</Todo>
-        </Reveal>
+          <Reveal>
+            <RevealItem as="p" className="mt-12 text-label uppercase opacity-70">{story.signature}</RevealItem>
+            <Todo>{story.todo}</Todo>
+          </Reveal>
+        </div>
       </div>
     </Section>
   );
@@ -45,7 +64,8 @@ export function Sherpas() {
             <RevealItem as="li" key={p.name}>
               <Placeholder ratio="4 / 5" shot={p.shot} />
               <p className="mt-4 text-h3">{p.name}</p>
-              <p className="mt-1 text-caption opacity-75 md:text-body">{p.line}</p>
+              {p.line && <p className="mt-1 text-caption opacity-75 md:text-body">{p.line}</p>}
+              {p.todo && <p className="mt-1 text-caption text-terracotta">{p.todo}</p>}
             </RevealItem>
           ))}
         </Reveal>
@@ -60,25 +80,31 @@ export function FoundersNote() {
   return (
     <Section className="py-section">
       <div className="mx-auto max-w-wide px-gutter">
-        <Reveal className="max-w-text md:ml-[8.333%]" stagger={0.15}>
-          <Label>{n.label}</Label>
-          <RevealItem as="h2" className="mt-6 text-h1">{n.headline}</RevealItem>
+        <div className={reading}>
+          <Reveal stagger={0.15}>
+            <Label>{n.label}</Label>
+            <RevealItem as="h2" className="mt-6 text-h1">{n.headline}</RevealItem>
+          </Reveal>
           {n.intro.map((p, i) => (
-            <RevealItem key={i} as="p" className="mt-8 text-body-lg opacity-85">{p}</RevealItem>
+            <Paragraph key={i}>{p}</Paragraph>
           ))}
-          <RevealItem as="p" className="mt-8 text-body-lg opacity-85">{n.pillarsIntro}</RevealItem>
-          <ul className="mt-6 border-t border-current/15">
+          <Paragraph>{n.pillarsIntro}</Paragraph>
+          <div className="mt-6 border-t border-current/15">
             {n.pillars.map((p) => (
-              <RevealItem as="li" key={p.name} className="border-b border-current/15 py-5">
-                <span className="block text-h3">{p.name}</span>
-                <span className="mt-1 block text-body opacity-80">{p.line}</span>
-              </RevealItem>
+              <Reveal as="div" key={p.name}>
+                <RevealItem as="div" className="border-b border-current/15 py-5">
+                  <span className="block text-h3">{p.name}</span>
+                  <span className="mt-1 block text-body leading-[1.75] opacity-80">{p.line}</span>
+                </RevealItem>
+              </Reveal>
             ))}
-          </ul>
-          <RevealItem as="p" className="mt-8 text-body-lg opacity-85">{n.reserve}</RevealItem>
-          <Todo>{n.reserveTodo}</Todo>
-          <RevealItem as="p" className="mt-10 text-h3">{n.close}</RevealItem>
-        </Reveal>
+          </div>
+          <Paragraph>{n.reserve}</Paragraph>
+          <Reveal>
+            <Todo>{n.reserveTodo}</Todo>
+          </Reveal>
+          <Paragraph className="text-h3 leading-[1.5]">{n.close}</Paragraph>
+        </div>
 
         <Reveal as="ul" className="mt-14 grid grid-cols-2 gap-x-4 gap-y-8 md:mt-20 md:ml-[8.333%] md:max-w-4xl md:grid-cols-4 md:gap-x-8" stagger={0.15}>
           {n.founders.map((f) => (

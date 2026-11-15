@@ -24,12 +24,22 @@ export const sherpas = {
   label: "WHO CARRIES IT FORWARD",
   headline: "Behind each face is a real person.",
   todo: todo("confirm Sherpa name spellings"),
+  /**
+   * Saurav's Deck 1 line ("Quit drinking at 22 and rebuilt his life through
+   * training.") is held until he agrees to it going public: name and
+   * portrait only, with a TODO.
+   */
   people: [
-    { name: "Himanshu", line: "Obese and bullied as a kid. Fitness gave him his confidence." },
-    { name: "Saurav", line: "Quit drinking at 22 and rebuilt his life through training." },
-    { name: "Sumit", line: "Cycled 140 km in about 8 hours. Fitness became his lifestyle." },
-    { name: "Tanuj", line: "A frail 47 kg kid who fought his way to a muscular 76 kg." },
-  ].map((p) => ({ ...p, shot: `Portrait of ${p.name}, Sherpa, on the training floor` })),
+    { name: "Himanshu", line: "Obese and bullied as a kid. Fitness gave him his confidence.", todo: null },
+    { name: "Saurav", line: null, todo: todo("Saurav to agree to his line going public") },
+    { name: "Sumit", line: "Cycled 140 km in about 8 hours. Fitness became his lifestyle.", todo: null },
+    { name: "Tanuj", line: "A frail 47 kg kid who fought his way to a muscular 76 kg.", todo: null },
+  ].map((p) => ({
+    ...p,
+    line: p.line as string | null,
+    todo: p.todo as string | null,
+    shot: `Portrait of ${p.name}, Sherpa, on the training floor`,
+  })),
 } as const;
 
 /**

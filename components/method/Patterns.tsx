@@ -15,12 +15,12 @@ export function Patterns() {
   return (
     <Section className="py-section">
       <div className="mx-auto max-w-wide px-gutter">
-        <Reveal>
+        <Reveal className="md:ml-[8.333%]">
           <RevealItem as="p" className="text-label uppercase opacity-70">{patterns.label}</RevealItem>
           <RevealItem as="h2" className="mt-6 text-h1">{patterns.headline}</RevealItem>
         </Reveal>
 
-        <ul className="mt-16 flex flex-col gap-3 md:mt-20 md:h-[640px] md:flex-row md:gap-4">
+        <ul className="mt-16 flex flex-col gap-3 md:mt-20 md:ml-[8.333%] md:h-[min(640px,64svh)] md:flex-row md:gap-4">
           {patterns.items.map((p) => {
             const isOpen = open === p.id;
             return (

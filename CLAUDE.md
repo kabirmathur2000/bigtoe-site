@@ -5,6 +5,7 @@
 ## First rules
 
 - **Clean, and less is more.** Every chapter fits one screen, with about 40 words of body text at most. When in doubt, cut.
+  - **Exempt: Jay's story and the founders' note,** because they are quoted word for word. They sit in a narrow column (about 34rem) with generous line spacing (about 1.8), and each paragraph fades in on its own as it is reached.
 - **American spelling throughout** (aging, realizing), matching the studio wall. Deck lines with British spelling (programme, pretence, ageing, practise) are quoted in American spelling; that is the only change allowed to a quoted line.
 - **Story first.** Each page is a short story in chapters. Each chapter opens with a small spaced-out label in Anderson Grotesk Bold, in the style of Deck 1's slide labels (THE MAIN POINT, THE CORE BELIEF, OUR MISSION, OUR ANSWER, OUR PROMISE).
 - **References.** 10 Squared (10squared.com) for absolute simplicity: single column, few words, one ask, no decoration. Apple (apple.com) for a few luxurious transitions: full-bleed chapters, large type, one image pinned while text moves past.
@@ -92,23 +93,25 @@ Each chapter fits one screen and opens with its Deck 1 label.
 
 **Not on Home:** the four pattern cards (Method), testimonial 1 (kept in `content/testimonials.ts` for Team or Book), Jay's story (Team only). The header link to Team is enough.
 
-### Method: five short blocks and eight questions
+### Method: five chapters and six questions (built)
 
-Every line comes from Decks 1, 4, 5 and 7, using the decks' own "say it to a member" wording.
+All light, no navy. Every line is a deck line, cut, never reworded ("they" may become "you"). Copy in `content/method.ts`; components in `components/method/`.
 
-- **Strength Reserve.** "Every sport has a score. This is ours." The gap between what you can do and what life asks, scored out of 100.
-- **What fades.** Muscle, strength and power, told with the house and light-bulb picture (Deck 1 slides 10 to 11). Power goes first.
-- **How we train.** Barefoot, because it all starts with the big toe. Free weights, no machines. Mobility, strength and cardio in one supervised hour. Seven movement patterns, each tied to an ordinary day: squat is getting out of a car, hinge is lifting a bag off the floor (Deck 4 slide 14).
-- **Two paths.** Mobility & Conditioning or Strength & Conditioning. "Neither path is better. We start where you are today."
-- **Test, train, retest.** The six-step loop: test, sort, set goals, pledge, train, review, every 16 sessions. "We sell outcomes, not sessions." May use the pinned-photo scroll (one image pinned while text moves past).
-- **Find Your Pattern** (moved from Home). The four personas as tappable cards with a member photo each (Deck 1 slide 19, Deck 3 slide 8): Never trained (feel safe, win early); Life got in the way (easy timing changes, home or online sessions); Train but don't progress (progress you can see); Start and stop (an easy restart, with no blame). Copy in `content/method.ts`, component `components/method/Patterns.tsx`.
-- **Eight collapsed questions,** grouped as fit, money, logistics and trust. Deck 4 slide 21 answers four (twice a week, why strength, heavy lifting at my age, stretching). One confirms studio, home or online sessions at no extra charge (Deck 5). One is "I've never enjoyed exercise. Is this for me?", answered only with deck lines on fun, the clap, the coffee and people beside you (Deck 1 slide 18: "Fun is how people stay in the game.", the table, seat and coffee, "Every hour ends in a clap.", "You don't climb alone."; Deck 2 The Show: "Every hour is a show." and members clap at the end and want more; Deck 2 The Road Trip: "There is no finish line. So the journey has to be fun."). Draft the list and get approval before building.
+1. **WHAT FADES.** "Three things fade with age. We train all three." Three line-drawn bulbs: Muscle, "The size of the bulb."; Strength, "How bright the bulb burns."; Power, "How fast the switch works." (Deck 1 slides 10 to 11). Close: "Power goes first, long before size." No medical terms.
+2. **HOW WE TRAIN.** "Barefoot, free weights, one supervised hour." Then "Your foot is built to feel the ground." / "No machines." / "Every session trains everything, with one Sherpa watching all of it." The two paths, Mobility & Conditioning and Strength & Conditioning, and "Neither path is better. We start where you are today." (Deck 4). Photo: bare feet on the floor.
+3. **THE SCOREBOARD.** "Every sport has a score. This is ours." Four dials (InBody, Balance & Mobility, Functional Strength, Conditioning, with Deck 7's one-line descriptions) count up once to Deck 7's example 78, 42, 90 and 66; the weakest turns terracotta. The score, 69, is "the average of the four dials". **Always labelled "Example"** so it never reads as a real member's results. Then "Your Strength Reserve is only as good as your weakest dial. That is where we start." and "Test, train, retest. Every 16 sessions." Reduced motion shows the final numbers.
+4. **WHO WE SERVE.** "Find your pattern." The four persona cards (Deck 1 slide 19, Deck 3 slide 8), `components/method/Patterns.tsx`.
+5. **QUESTIONS.** Six collapsed, approved:
+   - "Only twice a week? Will I see results?" (Deck 4 slide 21)
+   - "Isn't heavy lifting risky?" (Deck 4 slide 21; source Watson et al, J Bone Miner Res 2018, doi 10.1002/jbmr.3284, confirmed as the 101-woman trial)
+   - "Why so much strength, not cardio?": "Most members already walk or do cardio. Strength is what most of us lack."
+   - "Will I feel out of place?" (Deck 1 slide 22)
+   - "I've never enjoyed exercise. Is this for me?": four deck sentences, not joined: "Fun is how people stay in the game." "There is no finish line. So the journey has to be fun." "Every hour ends in a clap." "You don't climb alone."
+   - "Can I train at home or online?" (Deck 5 slide 17)
 
-**Three interactive pieces, all from Deck 7:**
+The page ends with one button (`facts.ctaLabel`).
 
-- **The four dials.** Body composition (InBody), Balance & Mobility, Functional Strength and Conditioning, each out of 100, animating to an example score. "Your Strength Reserve is only as good as your weakest dial. That is where we start."
-- **Same score, different person.** Two example members both score 69; one has dials of 78, 42, 90 and 66, the other 69, 69, 69, 69. Tap to see why the dials matter more than the total.
-- **Every test is a job your body does in daily life.** Tap a test to see its job: floor rise is getting up off the floor on your own; dead hang is holding on to a handrail or a heavy bag; farmer's carry is carrying the shopping in from the car. Use the Deck 7 slide 7 to 10 wording for the others.
+Held back for now: "Same score, different person" (Deck 7 slide 12) and the tap-a-test piece (Deck 7 slides 7 to 10); the Deck 1 slide 22 percentages (sources not mapped to figures).
 
 ### Team
 
@@ -281,6 +284,7 @@ The decks are training material for Sherpas, so some lines must not reach the si
 - [ ] Resend: API key, verified sending domain (`RESEND_FROM`) and `CONTACT_EMAIL` set in Vercel.
 - [ ] Thank-you wording and the pre-filled WhatsApp message (written for the site, not from a deck).
 - [ ] Sherpa name spellings, and each Sherpa's OK to publish their Deck 1 line.
+- [ ] Saurav's line ("Quit drinking at 22…") held off Team until he agrees to it going public; name and portrait only.
 - [ ] Founder one-line stories (`docs/copy/founder-lines.md`), all awaiting approval; none shown yet.
 - [ ] "Kilimanjaro at 80" in the founders' note, for Jay to confirm.
 - [ ] Map link for the address.
