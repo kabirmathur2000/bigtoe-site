@@ -29,9 +29,8 @@ export function Story() {
     <Section chapter className="pt-12 md:pt-16">
       <div className="mx-auto max-w-wide px-gutter">
         <div className={reading}>
-          <Reveal stagger={0.2}>
-            <RevealItem as="h1" className="text-h1">{story.headline}</RevealItem>
-          </Reveal>
+          {/* First screen: a CSS fade that starts at first paint, not after scripts load. */}
+          <h1 className="fade-up text-h1">{story.headline}</h1>
           {story.paragraphs.map((p, i) => (
             <Paragraph key={i} className={i === 2 ? "text-h3 leading-[1.5]" : undefined}>{p}</Paragraph>
           ))}

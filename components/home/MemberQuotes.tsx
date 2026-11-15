@@ -95,18 +95,16 @@ export function MemberQuotes() {
     <Section chapter className="overflow-x-clip">
       <div className="mx-auto w-full max-w-wide px-gutter pt-6 md:pt-12">
         <div className="md:ml-[8.333%]">
+          {/* The region takes focus and arrow keys; the list inside scrolls. */}
+          <div role="region" tabIndex={0} aria-label={memberQuotes.regionLabel} onKeyDown={onKey} className="focus-visible:outline-offset-4">
           <ul
             ref={row}
-            tabIndex={0}
-            role="region"
-            aria-label={memberQuotes.regionLabel}
-            onKeyDown={onKey}
             onPointerDown={onDown}
             onPointerMove={onMove}
             onPointerUp={onUp}
             onPointerCancel={onUp}
             style={{ marginRight: `calc(-1 * ${EDGE})`, paddingRight: EDGE }}
-            className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain [scrollbar-width:none] select-none focus-visible:outline-offset-4 md:cursor-grab md:gap-6 [&::-webkit-scrollbar]:hidden"
+            className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain [scrollbar-width:none] select-none md:cursor-grab md:gap-6 [&::-webkit-scrollbar]:hidden"
           >
             {memberQuotes.items.map((q, i) => (
               <li
@@ -125,6 +123,7 @@ export function MemberQuotes() {
               </li>
             ))}
           </ul>
+          </div>
 
           <div className="mt-8 hidden gap-3 md:flex">
             <button type="button" className={arrow} onClick={() => go(-1)} disabled={ends.start} aria-label={memberQuotes.previous}>

@@ -9,7 +9,7 @@ import type { ComponentProps } from "react";
 type Variant = "primary" | "on-navy" | "outline" | "outline-light";
 
 const base =
-  "inline-flex items-center justify-center gap-3 px-7 py-4 text-label uppercase tracking-[0.16em] font-bold whitespace-nowrap transition-colors duration-700 ease-soft";
+  "inline-flex items-center justify-center gap-3 px-7 py-4 text-label uppercase tracking-[0.16em] font-bold whitespace-nowrap transition-[color,background-color,border-color,opacity] duration-700 ease-soft";
 
 const variants: Record<Variant, string> = {
   primary: "bg-navy text-offwhite hover:bg-[var(--navy-deep)]",

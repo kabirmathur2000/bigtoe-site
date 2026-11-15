@@ -9,7 +9,7 @@ export function Visit() {
     <Section chapter>
       <div className="mx-auto grid max-w-wide gap-12 px-gutter md:grid-cols-12">
         <Reveal className="md:col-span-6 md:col-start-2">
-          <RevealItem as="h1" className="text-[2.125rem] leading-[1.05] font-light tracking-[-0.015em] md:text-h1">{book.headline}</RevealItem>
+          <h1 className="fade-up text-[2.125rem] leading-[1.05] font-light tracking-[-0.015em] md:text-h1">{book.headline}</h1>
         </Reveal>
 
         <Reveal className="border-t border-current/15 md:col-span-4 md:col-start-8 md:self-end" stagger={0.15}>

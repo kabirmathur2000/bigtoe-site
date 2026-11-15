@@ -26,9 +26,10 @@ export function Fades() {
   return (
     <Section chapter>
       <div className="mx-auto max-w-wide px-gutter">
-        <Reveal className="max-w-3xl md:ml-[8.333%]" stagger={0.18}>
-          <RevealItem as="h1" className="text-[2.125rem] leading-[1.05] font-light tracking-[-0.015em] md:text-h1">{fades.headline}</RevealItem>
-        </Reveal>
+        {/* First screen: a CSS fade that starts at first paint, not after scripts load. */}
+        <div className="max-w-3xl md:ml-[8.333%]">
+          <h1 className="fade-up text-[2.125rem] leading-[1.05] font-light tracking-[-0.015em] md:text-h1">{fades.headline}</h1>
+        </div>
 
         <Reveal as="ul" className="mt-8 grid gap-0 md:mt-14 md:ml-[8.333%] md:max-w-5xl md:grid-cols-3 md:gap-10" stagger={0.2} delay={0.2}>
           {fades.bulbs.map((b, i) => (

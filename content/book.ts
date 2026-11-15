@@ -4,9 +4,7 @@
 import { facts, todo } from "./facts";
 
 export const book = {
-  /** Deck 5 slide 17 label. */
-  /** Deck label, not shown (it shapes the page order): TRAINING ANYWHERE. */
-  /** Deck 5 slide 17. */
+  /** Deck label, not shown (it shapes the page order): TRAINING ANYWHERE. Headline: Deck 5 slide 17. */
   headline: facts.where,
   addressLabel: "Address",
   hoursLabel: "Hours",

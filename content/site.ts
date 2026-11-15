@@ -20,11 +20,11 @@ export const footer = {
 
 /**
  * Page titles and descriptions. Titles show as "Team · BigToe"; Home's is
- * absolute (set by Kabir). Descriptions are deck lines, never new claims.
+ * absolute (as specified for launch). Descriptions are deck lines, never new claims.
  */
 export const meta = {
   title: "BigToe",
-  homeTitle: "BigToe · Personal training for adults over 40 · Vasant Vihar, New Delhi",
+  homeTitle: `${facts.brand} · Personal training for adults over 40 · ${facts.address.area}, ${facts.address.city}`,
   /** Core belief (Deck 1), then Deck 1 slide 3. */
   description: `${facts.heroLine} We train for a sport called life.`,
   pages: {

@@ -46,14 +46,14 @@ export function Footer() {
             <li>
               <span className="sr-only">{footer.whatsappLabel}: </span>
               {wa ? (
-                <a href={wa} className="inline-flex min-h-11 items-center underline-offset-4 hover:underline">{footer.whatsappLabel}</a>
+                <a href={wa} className="inline-flex min-h-11 items-center transition-opacity duration-500 hover:opacity-75">{footer.whatsappLabel}</a>
               ) : (
                 <Todo>{todo(footer.missingWhatsapp)}</Todo>
               )}
             </li>
             <li>
               <span className="sr-only">{footer.emailLabel}: </span>
-              <a href={mailtoHref} className="inline-flex min-h-11 items-center underline-offset-4 hover:underline">{facts.email}</a>
+              <a href={mailtoHref} className="inline-flex min-h-11 items-center transition-opacity duration-500 hover:opacity-75">{facts.email}</a>
             </li>
           </ul>
         </div>
