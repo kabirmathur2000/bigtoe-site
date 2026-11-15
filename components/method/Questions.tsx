@@ -12,7 +12,7 @@ export function Questions() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <Section chapter tone="navy" className="pt-12 md:pt-16">
+    <Section chapter free tone="navy" className="pt-12 md:pt-16">
       <div className="mx-auto max-w-wide px-gutter">
         <div className="md:ml-[8.333%] md:max-w-3xl">
           <Reveal as="ul" className="border-t border-current/15" stagger={0.1}>

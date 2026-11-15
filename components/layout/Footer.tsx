@@ -2,6 +2,7 @@ import Image from "next/image";
 import { facts, mailtoHref, todo, whatsappHref } from "@/content/facts";
 import Link from "next/link";
 import { footer, nav } from "@/content/site";
+import { FooterPoem } from "./FooterPoem";
 import { NotOnBook } from "./NotOnBook";
 import logoTag from "@/public/brand/logo-tag-light.png";
 
@@ -64,6 +65,8 @@ export function Footer() {
             </li>
           </ul>
         </div>
+
+        <FooterPoem className="md:col-span-10 md:col-start-2" />
 
         {/* Method and Team, reachable from the navy zone, where the header stays away. */}
         <nav aria-label={footer.navLabel} className="flex gap-8 border-t border-current/15 pt-6 md:col-span-10 md:col-start-2">

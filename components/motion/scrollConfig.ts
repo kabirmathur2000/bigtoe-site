@@ -1,14 +1,10 @@
 /**
- * Magnetic scrolling: the one setting to adjust.
+ * Guided scrolling: one gesture, one screen. Any wheel tick, swipe, or
+ * arrow or page key glides to the next screen straight away; further input
+ * is ignored until the glide has settled.
  *
- * strength  1    = the page glides to the next chapter on the first movement.
- *           0.75 = the page scrolls normally for the first tenth of a screen,
- *                  then glides the rest of the way (25% gentler).
- *           0.5  = normal scrolling for a fifth of a screen, then the glide.
- *           0    = off: plain smooth scrolling, no glide.
  * duration  seconds the glide takes (about one second feels calm).
  */
-export const MAGNET = {
-  strength: 0.75,
+export const GLIDE = {
   duration: 1.0,
 } as const;

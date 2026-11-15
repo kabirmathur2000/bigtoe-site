@@ -3,7 +3,7 @@
 import Lenis from "lenis";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { MAGNET } from "./scrollConfig";
+import { GLIDE } from "./scrollConfig";
 
 type VirtualScroll = { deltaX: number; deltaY: number; event: WheelEvent | TouchEvent };
 
@@ -17,12 +17,13 @@ const GESTURE_GAP = 180;
 const headerHeight = () => document.querySelector("header")?.offsetHeight ?? 0;
 
 /**
- * Resting points: each chapter's start (just below the header) and, for a
- * chapter taller than the screen, its end too; plus the very bottom (footer).
+ * Screens: each chapter's start (just below the header). A chapter taller
+ * than the screen also has its end as a stop; only `data-free` chapters
+ * (the form, Questions) scroll freely between the two.
  */
 function chapters() {
   const header = headerHeight();
-  // Desktop: a split layout's blocks are the resting points. Phones: the chapter is.
+  // Desktop: a split layout's blocks are the stops. Phones: the chapter is.
   const desktop = window.matchMedia("(min-width: 768px)").matches;
   const els = Array.from(document.querySelectorAll<HTMLElement>("[data-chapter], [data-rest]")).filter((el) =>
     desktop ? !el.hasAttribute("data-split") : !el.hasAttribute("data-rest"),
@@ -33,7 +34,7 @@ function chapters() {
     const visible = window.innerHeight - offset;
     const start = Math.round(el.getBoundingClientRect().top + window.scrollY - offset);
     const tall = el.offsetHeight > visible + 2;
-    return { start, end: tall ? Math.round(start + el.offsetHeight - visible) : start, tall };
+    return { start, end: tall ? Math.round(start + el.offsetHeight - visible) : start, tall, free: tall && el.hasAttribute("data-free") };
   });
 }
 
@@ -45,13 +46,18 @@ function points() {
 
 const isTyping = (t: EventTarget | null) =>
   t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName));
+const isControl = (t: EventTarget | null) => t instanceof HTMLElement && !!t.closest("button, a, summary, [role='button']");
+/** The founders' note overlay is open: it scrolls natively and the page stays still. */
+const overlayOpen = () => document.documentElement.hasAttribute("data-overlay");
 
 /**
- * Weighted smooth scrolling (Lenis) with magnetic chapters. When the visitor
- * starts scrolling, the page glides a full screen to the next chapter in the
- * direction they began, in about one second (MAGNET in scrollConfig.ts).
- * Chapters taller than the screen scroll freely inside, stop at their edge,
- * then glide on with the next movement. Wheel, trackpad, keys and touch.
+ * Guided scrolling (Lenis): one gesture, one screen. The first wheel tick,
+ * swipe, or arrow or page key starts the glide to the next screen, up or
+ * down, in about one second (GLIDE in scrollConfig.ts). Until the glide has
+ * settled and the gesture has ended, every further input is ignored,
+ * trackpad momentum included, so one swipe never skips two screens. Only
+ * the form and Questions, where taller than the screen, scroll freely
+ * inside, stop at their edge, then glide on with the next gesture.
  * Off entirely under reduced motion.
  */
 export function SmoothScroll() {
@@ -62,11 +68,12 @@ export function SmoothScroll() {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
     let gliding = false;
-    // After a glide (or reaching a tall chapter's edge), ignore the rest of
-    // that gesture: trackpads keep sending inertia for a second or more.
+    // The current wheel gesture is used up (a glide ran, or a free chapter's
+    // edge was reached): ignore it, momentum included, until it goes quiet.
     let held = false;
     let last = 0;
-    let travelled = 0;
+    // The current touch has been used; the next touch is a new gesture.
+    let touchSpent = false;
 
     const glide = (lenis: Lenis, dir: number) => {
       const at = lenis.targetScroll;
@@ -75,7 +82,7 @@ export function SmoothScroll() {
       if (target === undefined) return;
       gliding = true;
       lenis.scrollTo(target, {
-        duration: MAGNET.duration,
+        duration: GLIDE.duration,
         easing: glideEase,
         lock: true,
         force: true,
@@ -87,64 +94,79 @@ export function SmoothScroll() {
       });
     };
 
-    /** The tall chapter whose free zone the page is in, moving in `dir`. */
+    /** The free chapter whose inside the page is in, moving in `dir`. */
     const freeZone = (at: number, dir: number) =>
-      chapters().find((c) => c.tall && at >= c.start - 1 && at <= c.end + 1 && (dir > 0 ? at < c.end - 1 : at > c.start + 1));
+      chapters().find((c) => c.free && at >= c.start - 1 && at <= c.end + 1 && (dir > 0 ? at < c.end - 1 : at > c.start + 1));
 
     const onVirtual = (data: VirtualScroll): boolean => {
       const lenis = lenisRef.current;
       const ev = data.event;
-      if (!lenis || MAGNET.strength <= 0 || ("ctrlKey" in ev && ev.ctrlKey)) return true;
+      if (!lenis || overlayOpen()) return false; // native scrolling (the overlay)
+      if ("ctrlKey" in ev && ev.ctrlKey) return true; // pinch zoom
       const touch = ev.type.startsWith("touch");
-      if (touch && ev.type !== "touchmove") return !gliding;
+      if (touch && ev.type !== "touchmove") {
+        // A touch that starts mid-glide is used up too.
+        if (ev.type === "touchstart") touchSpent = gliding;
+        return false; // no touch inertia: each swipe is one gesture
+      }
       const block = () => {
         if (ev.cancelable) ev.preventDefault();
         return false;
       };
       // Sideways gestures (the quotes swipe) are not page scrolling.
-      if (Math.abs(data.deltaX) > Math.abs(data.deltaY) || data.deltaY === 0) return touch ? block() : true;
+      if (Math.abs(data.deltaX) > Math.abs(data.deltaY) || data.deltaY === 0) return block();
+
       const now = performance.now();
       const gap = now - last;
-      last = now;
+      if (!touch) last = now;
       if (gliding) return block();
-      if (held) {
+      if (touch) {
+        if (touchSpent) return block();
+      } else if (held) {
         if (gap < GESTURE_GAP) return block();
         held = false;
-        travelled = 0;
       }
-      if (gap >= GESTURE_GAP) travelled = 0;
 
       const dir = Math.sign(data.deltaY);
       const at = lenis.targetScroll;
       const zone = freeZone(at, dir);
       if (zone) {
-        // Free scrolling inside a tall chapter, stopping at its edge.
+        // Free scrolling inside the form or Questions, stopping at the edge.
         const to = Math.max(zone.start, Math.min(zone.end, at + data.deltaY));
         lenis.scrollTo(to, touch ? { immediate: true } : { duration: 0.8, easing: easeOut });
-        if (to === zone.start || to === zone.end) held = true;
+        if (to === zone.start || to === zone.end) {
+          if (touch) touchSpent = true;
+          else held = true;
+        }
         return block();
       }
 
-      // Below full strength the page first scrolls normally for a short
-      // stretch, then the glide takes over. Same rule in both directions.
-      travelled += Math.abs(data.deltaY);
-      const needed = (1 - MAGNET.strength) * 0.4 * window.innerHeight;
-      if (travelled >= needed) glide(lenis, dir);
-      else lenis.scrollTo(at + data.deltaY, touch ? { immediate: true } : { duration: 0.8, easing: easeOut });
+      if (touch) touchSpent = true;
+      glide(lenis, dir);
       return block();
     };
 
     const onKey = (e: KeyboardEvent) => {
       const lenis = lenisRef.current;
-      if (!lenis || MAGNET.strength <= 0 || e.defaultPrevented || e.altKey || e.metaKey || e.ctrlKey) return;
+      if (!lenis || overlayOpen() || e.defaultPrevented || e.altKey || e.metaKey || e.ctrlKey) return;
       if (isTyping(e.target) || (e.target as HTMLElement)?.closest?.("[data-swipe]")) return;
-      const down = e.key === "ArrowDown" || e.key === "PageDown" || (e.key === " " && !e.shiftKey);
-      const up = e.key === "ArrowUp" || e.key === "PageUp" || (e.key === " " && e.shiftKey);
+      const space = e.key === " ";
+      if (space && isControl(e.target)) return; // Space presses the focused button
+      const down = e.key === "ArrowDown" || e.key === "PageDown" || (space && !e.shiftKey);
+      const up = e.key === "ArrowUp" || e.key === "PageUp" || (space && e.shiftKey);
       if (!down && !up) return;
-      const dir = down ? 1 : -1;
-      if (freeZone(lenis.targetScroll, dir)) return; // native key scrolling inside tall chapters
       e.preventDefault();
-      if (!gliding) glide(lenis, dir);
+      // Holding a key is one gesture: repeats never glide on.
+      if (gliding || e.repeat) return;
+      const dir = down ? 1 : -1;
+      const at = lenis.targetScroll;
+      const zone = freeZone(at, dir);
+      if (zone) {
+        const step = e.key.startsWith("Arrow") ? 120 : window.innerHeight * 0.85;
+        lenis.scrollTo(Math.max(zone.start, Math.min(zone.end, at + dir * step)), { duration: 0.6, easing: easeOut });
+        return;
+      }
+      glide(lenis, dir);
     };
 
     const start = () => {

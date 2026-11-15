@@ -11,11 +11,11 @@
 ## First rules
 
 - **Clean, and less is more.** Every chapter fits one screen, with about 40 words of body text at most. When in doubt, cut.
-  - **Exempt: Jay's story and the founders' note,** because they are quoted word for word. Jay's story opens Team as a large centred quote (wider column and larger type on desktop). The founders' note sits in a narrow, centred column (about 34rem) with generous line spacing (about 1.8). Each paragraph fades in on its own as it is reached.
+  - **Exempt: Jay's story and the founders' note,** because they are quoted word for word. Jay's story opens Team as a large centred quote (wider column and larger type on desktop). The founders' note opens in a full-screen overlay (brand light colour), centred and large in a reading column of about 38rem; its paragraphs fade in one at a time, then the four founders' names.
 - **American spelling throughout** (aging, realizing), matching the studio wall. Deck lines with British spelling (programme, pretence, ageing, practise) are quoted in American spelling; that is the only change allowed to a quoted line.
 - **Story first.** Each page is a short story in chapters. **Deck labels shape the order of each page but are not shown** (THE MAIN POINT, THE CORE BELIEF, OUR MISSION, OUR ANSWER, OUR PROMISE, and their equivalents on Method, Team and Book live as comments in `content/*.ts`). The one label shown on the site is "IN OUR MEMBERS' WORDS".
 - **References.** 10 Squared (10squared.com) for absolute simplicity: single column, few words, one ask, no decoration. Apple (apple.com) for a few luxurious transitions: full-bleed chapters, large type, one image pinned while text moves past.
-- **Home has at most four signature motions:** the hero video, the poem's line-by-line reveal, the word cloud building as you scroll, and the one slow fade from light to navy. Everything else only fades in quietly. All motion obeys the soft-fade and reduced-motion rules below, and only the three brand colors are used.
+- **Home has at most four signature motions:** the hero video, the poem's line-by-line reveal, the word cloud building once its chapter arrives, and the one slow fade from light to navy. Everything else only fades in quietly. All motion obeys the soft-fade and reduced-motion rules below, and only the three brand colors are used.
 
 A four-page site in Next.js on Vercel: **Home (`/`), Method (`/method`), Team (`/team`), Book (`/book-now`).** One job: get the visitor to book the free first visit. The look is quiet luxury in the deck colours: large photographs of real members, generous space, editorial type and slow, smooth scroll transitions.
 
@@ -92,13 +92,13 @@ Each chapter fills one screen, in Deck 1's order (the labels are not shown).
 2. **THE CORE BELIEF.** "The second half of life should be the stronger half." Then "The problem isn't your age." (Deck 1 slide 4, cut, never reworded).
 3. **OUR MISSION.** The studio-wall poem, unchanged (see "Fixed wording"). Left-aligned on the shared edge; on desktop wide and large, still one line per poem line (hanging indent only where a line must wrap, on phones and tablets). Each line revealed on its own, a longer pause between stanzas, only the last line at full strength. Last light chapter on Home.
 4. **OUR ANSWER** (navy from here to the footer). Strength Reserve: "The capacity you build above what daily life asks of you." (Deck 1 slide 15). Then three short steps: the free first visit ("An hour with a Sherpa."); the Reserve Audit, sessions 2 to 4; test, train, retest (titles only). **Split layout:** on desktop one photo stays pinned on one half while the text moves past on the other; stacked on phones.
-5. **IN OUR MEMBERS' WORDS** (the one label shown). The word cloud pins while the visitor scrolls; words appear in order of size, **smallest first, largest last**, and stay. Sizes and colours match the BigToe word cloud poster (`content/home.ts`):
+5. **IN OUR MEMBERS' WORDS** (the one label shown). Not pinned: when the chapter arrives, the words build on their own over about three seconds in order of size, **smallest first, largest last**, and stay; the next gesture moves on. Sizes and colours match the BigToe word cloud poster (`content/home.ts`):
    - Small: a way of life, no injuries, balance, seen, sacred, grounding
    - Medium: passion, mindset, honest, trust, patient, rare, home, compassion
    - Large: motivated, pushed, joy, care, family, mobility, noticed, energy, personal
    - Largest, last: stronger
    - **Terracotta key words:** mobility, care, pushed, joy, motivated, passion, sacred, grounding. All others off-white on navy. Every word is at least 24px so terracotta passes contrast on navy.
-   - When all are in, "No policy produces that. No manual teaches it." (Deck 9 slide 13) fades in. Reduced motion: all words at once, no pin.
+   - When all are in, "No policy produces that. No manual teaches it." (Deck 9 slide 13) fades in. Reduced motion: all words at once.
    - **Member quotes,** straight after: one quote at a time, centred, verbatim from `docs/copy/testimonials.md`, with first name and age (visible TODOs while missing, plus a consent TODO). Swipe on phones, small arrows on desktop, a slow cross-fade between quotes, no autoplay and **no loop**: the next arrow fades out at the last quote, the previous arrow at the first. Nothing else on that screen. **No quote goes live without recorded written consent.**
 6. **OUR PROMISE.** "Look better. Move better. Feel better." (Deck 1 slide 24). The price range. The guarantee. Then the slow fade to navy and the waitlist.
 
@@ -130,11 +130,10 @@ Held back for now: "Same score, different person" (Deck 7 slide 12) and the tap-
 
 - **Order:** Jay's words, the founders, the Sherpas (light); the social space, its button and the footer (navy).
 - **Jay's words** (no heading). Jay's story from `docs/copy/jay-story.md`, verbatim, as a large centred quote signed "Jay, 59. Co-founder." On desktop a wider column and larger type, filling the screen comfortably. "at a gym", "if he had to look after me" and "Stronger is what you build." are in Bold (`story.bold`), the one exception to Bold-for-labels.
-- **The founders,** three screens, each a glide stop:
-  - a. The founders' note's opening, word for word, as far as "the work of staying capable.", centred and large. (Awaiting approval of the exact text.)
-  - b. "Rooted. Real. Rebellious." Each word large with its Deck 1 definition, revealed one at a time.
-  - c. "At BigToe, we Practice Possibility." (the poem's last line) above the four founder portraits with name and age. Below, a quiet "Read the founders' note" link expands the full approved note in place, 10 Squared style, and collapses again.
-- **The full founders' note** (`docs/copy/founders-note.md`, approved) lives behind the "Read the founders' note" link on screen c.
+- **The founders,** two screens, each a glide stop:
+  - "Rooted. Real. Rebellious." Each word large with its Deck 1 slide 7 definition, revealed one at a time.
+  - "At BigToe, we Practice Possibility." (the poem's last line) above the four founder portraits with name and age, then a "Read the founders' note" button (outline).
+- **The founders' note** (`docs/copy/founders-note.md`, approved, three paragraphs) opens from that button in a full-screen overlay in the brand light colour that rises and fades in slowly; paragraphs reveal one at a time, centred and large, then the four founders' names. Close button, Escape or a tap outside the text closes it with a slow fade. The page behind does not scroll; focus stays inside and returns to the button. Reduced motion: a slow fade, no movement. The "Kilimanjaro at 80" TODO stays in `content/team.ts` and is not shown.
 - **Sherpas.** Portrait, first name and one-line story each, from Deck 1 slide 25 (Himanshu, Saurav, Sumit, Tanuj).
 - **Founder one-liners** (Deck 1 slide 8, `docs/copy/founder-lines.md`) are not shown until approved.
 - **The social space.** Coffee table, the clap, the Bell, Pizza & Beer, in photos.
@@ -171,6 +170,7 @@ Held back for now: "Same score, different person" (Deck 7 slide 12) and the tap-
   - Mark zone sections `tone="navy"`; the first one starts the fade (`SectionToneController`). On navy, text is #F0EEEB.
 - **The fade is gradual,** over about 60% of the screen height, so the page never jumps. Our members are over 40; nothing on the page should startle.
 - **Footer links:** Method and Team in the navy footer on every page.
+- **Footer poem:** the full Practice Possibility poem, word for word, in small type at 75% opacity below hours and contact. On Home (which shows the poem) only its last line, "At BigToe, we Practice Possibility." (`components/layout/FooterPoem.tsx`).
 - **The header keeps out of the navy zone.** It stays off-white with the navy logo, slides away while the visitor scrolls down and slides back slowly when they scroll up, but only while the page is still light; in the navy zone it stays away, and navy chapters take the full screen (`HeaderShell`, `--chapter-offset`). It returns at the top of the page and when a keyboard user tabs into it. Under reduced motion it simply stays visible.
 - **Never switch colour all at once, on any setting.** Under `prefers-reduced-motion`, movement goes (no rising, sliding or zooming), but colour changes keep the same slow fade.
 - **No gradients, no drop shadows, no glossy effects.** Thin hairline rules instead.
@@ -254,12 +254,12 @@ Type scale (fluid, mobile → desktop):
 
 - **Every chapter fills the screen** (100svh below the header) and its text and images are fully visible, never cut off, clear of the mobile bottom bar. Use `<Section chapter>`; the `.chapter` style in `globals.css` sets the height, centring and padding.
 - **Check at 375x667, 390x844, 768x1024, 1280x720 and 1440x900.** Where a chapter does not fit, tighten spacing or image size. Never cut copy without asking.
-- **Exempt, scrolling freely:** the founders' note, the questions, the waitlist form, the word cloud (pinned) and, on desktop, the two split layouts (one block per screen, each a resting point).
+- **Exempt, scrolling freely:** only the waitlist form and the questions (`<Section free>`), where taller than the screen. On desktop the two split layouts are one stop per block. The founders' note scrolls inside its own overlay.
 - **One left edge.** Chapter content starts at the second column of the 12-column grid (`md:ml-[8.333%]` or `md:col-start-2`), including the poem, the word cloud and the footer. Exceptions: Jay's story and the founders' note are centred; the header logo sits at the gutter.
-- **Room below the header.** Chapters taller than the screen (Jay's story, the founders' note, the questions) start at least 48px below the header.
+- **Room below the header.** Chapters taller than the screen (Jay's story, the questions) start at least 48px below the header.
 - **Tap targets** are at least 44px tall, including header and footer links.
 - **Phones.** On short phones (phone layout and under about 720px tall; the `short:` variant), photos in Our answer and How we train step aside and chapter padding tightens; taller phones keep their photos. On all phones: Our answer shows step titles only; the What fades, Scoreboard and Book headlines are 34px; the Scoreboard dials sit 2x2 with each name beside a small dial; Who we serve shows the four titles only until a card is opened; the Sherpas are a list with a small portrait beside name and line; the social space shows one photo.
-- **Magnetic scrolling** (Lenis, `components/motion/SmoothScroll.tsx`): when the visitor starts scrolling, the page glides a full screen to the next chapter in about one second with a soft ease, in the direction they began, on wheel, trackpad, keys and touch. One listener on the whole window: no element (pinned photos, the word cloud, the quotes) catches scrolling first, so it starts the same wherever the cursor is, and scrolling up behaves exactly like scrolling down. Strength is set to 0.75: the page scrolls normally for the first tenth of a screen, then glides. Chapters taller than the screen (the form, Questions, the founders' note, the split layouts, the word cloud) scroll freely inside, then glide on. **One setting controls the strength:** `MAGNET` in `components/motion/scrollConfig.ts` (1 = glide on the first movement, 0 = off; in between, the visitor scrolls further before the glide takes over; plus the glide duration).
+- **Guided scrolling: one gesture, one screen** (Lenis, `components/motion/SmoothScroll.tsx`). Any wheel tick, swipe, or arrow, page or space key starts the glide to the next screen straight away, up or down, in about one second with a soft ease. No partial scrolling first. While the glide runs and until the gesture has gone quiet, every further input is ignored, trackpad momentum included, so one swipe never skips two screens; holding a key is one gesture. One listener on the whole window: no element catches scrolling first, and up behaves exactly like down. Only the form and Questions (`data-free`), where taller than the screen, scroll freely inside, stop at their edge, then glide on. Any other chapter taller than the screen gets a second stop at its end, so keep chapters within one screen. **The one setting:** `GLIDE.duration` in `components/motion/scrollConfig.ts`.
 - **Reduced motion: magnetic scrolling is off completely** (Lenis is off).
 
 ### Tone on the page

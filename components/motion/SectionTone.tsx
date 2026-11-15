@@ -14,6 +14,7 @@ export function Section({
   tone = "light",
   chapter = false,
   split = false,
+  free = false,
   children,
   className = "",
   id,
@@ -22,12 +23,14 @@ export function Section({
   chapter?: boolean;
   /** A split layout: on desktop its blocks are the resting points, not the section. */
   split?: boolean;
+  /** Where taller than the screen, scrolls freely inside before the glide moves on (the form, Questions). */
+  free?: boolean;
   children: ReactNode;
   className?: string;
   id?: string;
 }) {
   return (
-    <section id={id} data-tone={tone} data-chapter={chapter || undefined} data-split={split || undefined} className={chapter ? `chapter ${className}` : className}>
+    <section id={id} data-tone={tone} data-chapter={chapter || undefined} data-split={split || undefined} data-free={free || undefined} className={chapter ? `chapter ${className}` : className}>
       {children}
     </section>
   );

@@ -5,8 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import { Section } from "@/components/motion/SectionTone";
 import { memberWords } from "@/content/home";
 
-/** Share of the pinned scroll by which every word is in; the close line follows. */
-const WORDS_BY = 0.8;
+/** The words build over about three seconds once the chapter has arrived. */
+const BUILD_MS = 3000;
+/** Pause after the last word before the close line fades in. */
+const CLOSE_AFTER_MS = 400;
 
 /**
  * Poster sizes. Every word is at least 24px, so the terracotta key words
@@ -25,52 +27,46 @@ const SIZE = {
  */
 const DISPLAY = [14, 0, 6, 15, 7, 1, 16, 23, 17, 8, 2, 18, 9, 3, 19, 10, 20, 4, 11, 21, 12, 5, 22, 13];
 
-const clamp = (n: number) => Math.min(1, Math.max(0, n));
-
 /**
- * Chapter 5, IN OUR MEMBERS' WORDS (on navy). The chapter pins while the
- * visitor scrolls; words appear one at a time in order of size, smallest
- * first and "stronger" last, and stay (scrolling back never removes them).
- * Key words are terracotta, the rest off-white, as on the poster. Then the
- * Deck 9 line fades in. Reduced motion: every word at once, no pin.
+ * Chapter 5, IN OUR MEMBERS' WORDS (on navy). Not pinned: when the chapter
+ * has arrived (most of it on screen), the words appear on their own, one at
+ * a time over about three seconds, smallest first and "stronger" last, and
+ * stay. Key words are terracotta, the rest off-white, as on the poster.
+ * Then the Deck 9 line fades in. The next gesture moves on. Reduced
+ * motion: every word at once.
  */
 export function MemberWords() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(0);
+  const [closed, setClosed] = useState(false);
   const { words } = memberWords;
   const total = words.length;
 
   useEffect(() => {
     if (reduce) return;
-    const el = ref.current?.closest("section");
+    const el = ref.current;
     if (!el) return;
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const r = el.getBoundingClientRect();
-      const offset = r.height > 0 ? window.innerHeight - (ref.current?.offsetHeight ?? window.innerHeight) : 0;
-      const travel = r.height - (window.innerHeight - offset);
-      const p = travel > 0 ? clamp((offset - r.top) / travel) : 1;
-      const count = p <= 0 ? 0 : Math.min(total, Math.ceil((p / WORDS_BY) * total));
-      // Words only ever arrive; scrolling back up keeps them.
-      setShown((s) => Math.max(s, count));
-    };
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
+    const timers: number[] = [];
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        const step = BUILD_MS / total;
+        for (let i = 1; i <= total; i++) timers.push(window.setTimeout(() => setShown(i), (i - 1) * step));
+        timers.push(window.setTimeout(() => setClosed(true), BUILD_MS + CLOSE_AFTER_MS));
+      },
+      { threshold: 0.85 },
+    );
+    io.observe(el);
     return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
+      io.disconnect();
+      timers.forEach(clearTimeout);
     };
   }, [reduce, total]);
 
   const visible = reduce ? total : shown;
-  const done = visible >= total;
+  const done = reduce || closed;
 
   const content = (
     <div className="mx-auto w-full max-w-wide px-gutter">
@@ -100,17 +96,9 @@ export function MemberWords() {
     </div>
   );
 
-  if (reduce) return <Section tone="navy" chapter>{content}</Section>;
-
   return (
-    // One screen plus about 0.8 of a screen of pinned scroll.
-    <Section tone="navy" chapter className="block h-[calc(180svh-var(--chapter-offset))] p-0">
-      <div
-        ref={ref}
-        className="sticky top-(--chapter-offset) flex h-[calc(100svh-var(--chapter-offset))] flex-col justify-center pt-(--chapter-pad) pb-[calc(var(--chapter-pad)+var(--bar-h))]"
-      >
-        {content}
-      </div>
+    <Section tone="navy" chapter>
+      <div ref={ref} className="w-full">{content}</div>
     </Section>
   );
 }

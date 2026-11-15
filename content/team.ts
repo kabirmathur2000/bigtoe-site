@@ -46,20 +46,37 @@ export const sherpas = {
 } as const;
 
 /**
- * Chapter 3. docs/copy/founders-note.md, approved text, word for word.
- * Signed with the four founders (Deck 1 slide 8). One-line stories come
- * from docs/copy/founder-lines.md only once marked approved: none yet.
+ * The founders' note: docs/copy/founders-note.md, approved text, word for
+ * word, shown in a full-screen overlay opened from the founders screen.
+ * Signed with the four founders' names (Deck 1 slide 8). One-line stories
+ * come from docs/copy/founder-lines.md only once marked approved: none yet.
  */
 export const foundersNote = {
   /** Deck label, not shown (it shapes the page order): NOTE FROM THE FOUNDERS. */
-  headline: "Practice Possibility",
-  intro: [
+  paragraphs: [
     "We are four founders, aged 41 to 59. At this age, society expects you to start \"slowing down\", accepting the nagging back, the fading energy, or the shrinking horizon as a natural tax on aging. We chose a different path: the work of staying capable.",
-    "Whether you are navigating a wake-up call or protecting the high-functioning life you love, the goal is the same. You don’t wait for a fire to buy insurance; you build the foundation now so your future remains open.",
+    "Whether you are navigating a wake-up call or protecting the high-functioning life you love, the goal is the same. You don\u2019t wait for a fire to buy insurance; you build the foundation now so your future remains open. We build a Strength Reserve. That extra \"gas in the tank\" ensures you can lift a heavy suitcase, play three hours of pickleball, or climb Kilimanjaro at 80.",
+    "Stop surviving your schedule. Start practicing possibility.",
   ],
-  pillarsIntro: "Our philosophy is built on three pillars:",
-  /** Deck 1 slide 7, approved. */
-  pillars: [
+  /** Kept here for Jay; not shown on the page. */
+  reserveTodo: todo("Jay to confirm \"Kilimanjaro at 80\""),
+  /** Deck 1 slide 8. `line` only when founder-lines.md marks it approved. */
+  founders: [
+    { name: "Jay Singh", age: 59, line: null },
+    { name: "Jeevan Aujla", age: 41, line: null },
+    { name: "Seema Jindal", age: 58, line: null },
+    { name: "Rodrigo P\u00e9rez", age: 51, line: null },
+  ].map((f) => ({ ...f, line: f.line as string | null, shot: `Portrait of ${f.name.split(" ")[0]}, co-founder, on the training floor` })),
+} as const;
+
+/**
+ * The founders, two screens after Jay's words (each a glide stop):
+ * Rooted. Real. Rebellious., then the four founders under the poem's last
+ * line, with a button that opens the founders' note in an overlay.
+ */
+export const founders = {
+  /** "Rooted. Real. Rebellious." with Deck 1 slide 7's definitions, approved. */
+  values: [
     { name: "Rooted", line: "Fitness is built on fundamentals, not trends." },
     { name: "Real", line: "How we show up: honest, present, without pretense." },
     {
@@ -67,31 +84,12 @@ export const foundersNote = {
       line: "We refuse to accept that decline is inevitable, or that people in their 40s, 50s and 60s have had their moment.",
     },
   ],
-  reserve:
-    "We build a Strength Reserve. That extra \"gas in the tank\" ensures you can lift a heavy suitcase, play three hours of pickleball, or climb Kilimanjaro at 80.",
-  reserveTodo: todo("Jay to confirm \"Kilimanjaro at 80\""),
-  close: "Stop surviving your schedule. Start practicing possibility.",
-  /** Deck 1 slide 8. `line` only when founder-lines.md marks it approved. */
-  founders: [
-    { name: "Jay Singh", age: 59, line: null },
-    { name: "Jeevan Aujla", age: 41, line: null },
-    { name: "Seema Jindal", age: 58, line: null },
-    { name: "Rodrigo Pérez", age: 51, line: null },
-  ].map((f) => ({ ...f, line: f.line as string | null, shot: `Portrait of ${f.name.split(" ")[0]}, co-founder, on the training floor` })),
-} as const;
-
-/**
- * The founders, three screens after Jay's words (each a glide stop):
- * the note's opening, Rooted. Real. Rebellious., then the four founders under
- * the poem's last line, with the full approved note expandable in place.
- */
-export const founders = {
-  /** "Rooted. Real. Rebellious." from the pillar names (Deck 1 slide 7). */
-  values: foundersNote.pillars,
   /** The poem's last line (studio wall), never retyped. */
   line: poem.stanzas[poem.stanzas.length - 1][0],
   readNote: "Read the founders\u2019 note",
-  closeNote: "Close the founders\u2019 note",
+  /** Interface wording: the overlay's accessible name and its close button. */
+  noteLabel: "The founders\u2019 note",
+  close: "Close",
 } as const;
 
 /** Chapter 4. Deck 1 slide 18, cut, never reworded. */
