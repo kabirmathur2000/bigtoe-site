@@ -34,6 +34,24 @@ export const problem = {
   },
 } as const;
 
+/**
+ * The Practice Possibility poem: the text on the studio wall.
+ * FIXED WORDING. Never edit a character: spelling, capitals and
+ * punctuation stay exactly as on the wall. See CLAUDE.md.
+ */
+export const poem = {
+  stanzas: [
+    ["We get better at what we practice."],
+    [
+      "If we practice hesitation, we get better at it.",
+      "If we practice fear, we get better at it.",
+      "If we practice movement, we get better at it.",
+      "People practice decline without realizing it.",
+    ],
+    ["At BigToe, we Practice Possibility."],
+  ],
+} as const;
+
 export const patterns = {
   /** Guide, Home block 3. */
   label: "FIND YOUR PATTERN",
@@ -139,6 +157,19 @@ export const firstHour = {
     name: todo("first name"),
     age: todo("age"),
   },
+} as const;
+
+/** Word cloud band after block 4. Words supplied by Kabir, largest first. */
+export const memberWords = {
+  label: "IN OUR MEMBERS' WORDS",
+  words: [
+    "stronger", "motivated", "pushed", "care", "joy", "mobility",
+    "family", "noticed", "energy", "passion", "mindset", "honest",
+    "personal", "trust", "patient", "compassion", "grounding", "home",
+    "rare", "balance", "seen", "sacred", "no injuries", "a way of life",
+  ],
+  /** Deck 9 slide 13, Jay. */
+  close: "No policy produces that. No manual teaches it.",
 } as const;
 
 export const investment = {

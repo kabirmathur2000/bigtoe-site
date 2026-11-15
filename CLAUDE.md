@@ -73,8 +73,10 @@ Four pages, one job: get the visitor to book the free first visit.
 
 1. **Hero.** "The second half of life should be the stronger half." Full-width photo or silent video of a real member with a Sherpa beside them. One button.
 2. **The problem.** "The problem isn't your age. It's the narrative." Then: "We train for a sport called life." Then one line: muscle, strength and power fade quietly; they can be built at any age.
+   - **Interlude: the Practice Possibility poem** (between blocks 2 and 3). Fixed wording; see "Fixed wording" below. Off-white, no label or heading, left-aligned narrow column, Regular at sub-headline size. Each line reveals on its own as you scroll, with a longer pause between stanzas. Only the last line is at full strength.
 3. **Find Your Pattern.** The four patterns as tappable cards with a member photo each, followed by one testimonial. The four patterns are the four personas (Deck 1 slide 19, Deck 3 slide 8): Never trained (feel safe, win early); Life got in the way (easy timing changes, home or online sessions); Train but don't progress (progress they can see); Start and stop (an easy restart, with no blame). Testimonial 1 from `docs/copy/testimonials.md` follows.
 4. **Your first hour.** The first visit is free: an hour with a Sherpa. Then, in sessions 2 to 4, the Reserve Audit: about 60 minutes, four dials (body composition, balance and mobility, functional strength, conditioning), you leave with your Strength Reserve Score, then coffee. Then "Seen. Belong. Progress." with testimonial 2 (the Sherpa who noticed).
+   - **Band: In our members' words** (after testimonial 2, before Investment). Label "IN OUR MEMBERS' WORDS". The word list lives in `content/home.ts`. The words are live text drifting in a few at a time over a 40-second loop; hover or tap shows terracotta; they are static under reduced motion. Closes with "No policy produces that. No manual teaches it." (Deck 9 slide 13).
 5. **Investment.** First step is free. The price range. The guarantee.
 6. **Form.** First name; WhatsApp number or email; "By day 120, I want to be able to…"; anything we should know. A WhatsApp button beside it.
 
@@ -87,7 +89,7 @@ Every line comes from Decks 1, 4, 5 and 7, using the decks' own "say it to a mem
 - **How we train.** Barefoot, because it all starts with the big toe. Free weights, no machines. Mobility, strength and cardio in one supervised hour. Seven movement patterns, each tied to an ordinary day: squat is getting out of a car, hinge is lifting a bag off the floor (Deck 4 slide 14).
 - **Two paths.** Mobility & Conditioning or Strength & Conditioning. "Neither path is better. We start where you are today."
 - **Test, train, retest.** The six-step loop: test, sort, set goals, pledge, train, review, every 16 sessions. "We sell outcomes, not sessions." Reuses the pinned-scroll pattern from Home block 4.
-- **Eight collapsed questions,** grouped as fit, money, logistics and trust. Deck 4 slide 21 answers four (twice a week, why strength, heavy lifting at my age, stretching). One confirms studio, home or online sessions at no extra charge (Deck 5). Draft the list and get approval before building.
+- **Eight collapsed questions,** grouped as fit, money, logistics and trust. Deck 4 slide 21 answers four (twice a week, why strength, heavy lifting at my age, stretching). One confirms studio, home or online sessions at no extra charge (Deck 5). One is "I've never enjoyed exercise. Is this for me?", answered only with deck lines on fun, the clap, the coffee and people beside you (Deck 1 slide 18: "Fun is how people stay in the game.", the table, seat and coffee, "Every hour ends in a clap.", "You don't climb alone."; Deck 2 The Show: "Every hour is a show." and members clap at the end and want more; Deck 2 The Road Trip: "There is no finish line. So the journey has to be fun."). Draft the list and get approval before building.
 
 **Three interactive pieces, all from Deck 7:**
 
@@ -98,6 +100,7 @@ Every line comes from Decks 1, 4, 5 and 7, using the decks' own "say it to a mem
 ### Team
 
 - **Why we built this.** Jay's story from `docs/copy/jay-story.md`, verbatim.
+- **Note from the Founders,** under Jay's story: `docs/copy/founders-note.md`, saved word for word from the live site. Two edits await approval (ages 41 to 59; Deck 1 slide 7's Rooted, Real and Rebellious definitions). Built in prompt 5.
 - **Sherpas.** Portrait, first name and one-line story each, from Deck 1 slide 25 (Himanshu, Saurav, Sumit, Tanuj).
 - **Founders.** Jeevan, Seema and Rodrigo at one line each (Deck 1 slide 8).
 - **The social space.** Coffee table, the clap, the Bell, Pizza & Beer, in photos.
@@ -129,6 +132,19 @@ Every line comes from Decks 1, 4, 5 and 7, using the decks' own "say it to a mem
 ### Core beliefs
 
 The two core beliefs, quoted from Deck 1, are "We train for a sport called life." and "The second half of life should be the stronger half." Use them exactly.
+
+### Fixed wording: the Practice Possibility poem
+
+The text on the studio wall. It lives in `content/home.ts` (`poem`) and **must never be edited**: not a word, capital, comma or spelling (including "realizing"). Three stanzas, a blank line between each:
+
+> We get better at what we practice.
+>
+> If we practice hesitation, we get better at it.
+> If we practice fear, we get better at it.
+> If we practice movement, we get better at it.
+> People practice decline without realizing it.
+>
+> At BigToe, we Practice Possibility.
 
 ### Logo
 
@@ -206,6 +222,7 @@ Type scale (fluid, mobile → desktop):
 - **One idea per block, explainable in 20 seconds.**
 - **Fun is allowed.** Coffee, pizza, the clap and the Bell belong on the page.
 - **Borrow the decks' "say it to a member" lines.** They are written for a nervous first-timer, who is who reads the site.
+- **"They" becomes "you".** Where a deck line speaks about members to Sherpas ("they"), the site may turn it to address the member as "you", changing nothing else. Examples: "Progress you can see." (Deck 1: "Progress they can see."), "You can see yourself getting better." (Deck 2: "They can see themselves getting better.").
 - **Plain words, not gym jargon.** If a beginner can't picture it, rewrite it.
 - **Never "this will make you live longer".** The deck line is "This is a capability worth protecting, and it is improving."
 - **Health statistics carry their source,** as the decks do.

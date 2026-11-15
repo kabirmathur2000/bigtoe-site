@@ -133,6 +133,26 @@ html.tones-managed [data-tone] {
 .settle { animation: settle 2400ms var(--ease-soft) both; }
 
 /* ------------------------------------------------------------------ */
+/* Member words band: a few words at a time, a 40s loop.              */
+/* ------------------------------------------------------------------ */
+@keyframes member-word {
+  0% { opacity: 0; transform: translateY(12px); }
+  5%, 18% { opacity: 1; transform: none; }
+  23%, 100% { opacity: 0; transform: none; }
+}
+/* Each group of words arrives (1/6 of the loop apart) before the last leaves. */
+.member-word {
+  animation: member-word 40s ease-in-out var(--delay, 0s) infinite both;
+  transition: color 700ms var(--ease-soft);
+}
+.member-word:hover,
+.member-word[data-picked] {
+  color: var(--color-terracotta);
+  opacity: 1 !important;
+  animation-play-state: paused;
+}
+
+/* ------------------------------------------------------------------ */
 /* Page cross-fade (React <ViewTransition> around <main>).            */
 /* ------------------------------------------------------------------ */
 ::view-transition-old(*),
@@ -153,6 +173,10 @@ html.tones-managed [data-tone] {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
     animation-delay: 0ms !important;
+  }
+  .member-word {
+    animation: none !important;
+    opacity: 1;
   }
   ::view-transition-group(*),
   ::view-transition-old(*),
