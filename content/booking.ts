@@ -43,6 +43,9 @@ export const booking = {
   thanks: {
     heading: (firstName: string) => `Thank you, ${firstName}.`,
     reply: facts.replyTime ?? todo("how fast a Sherpa replies"),
+    /** Interface wording given for the site; links to facts.preVisitFormUrl. */
+    formLead: "Before you walk in, tell us a little about yourself.",
+    formLabel: "Fill in the short form",
     whatsappLabel: "Message us on WhatsApp",
     /** Pre-filled WhatsApp message, by facts.ctaMode. */
     whatsappMessage: (firstName: string) =>

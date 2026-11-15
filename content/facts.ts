@@ -102,6 +102,9 @@ export const facts = {
   /** Open: how fast a Sherpa replies after a booking. */
   replyTime: null as string | null,
 
+  /** The short form a visitor fills in before the first visit (linked from the thank-you step). */
+  preVisitFormUrl: "https://forms.gle/7GWfSvARWfdz4hkE9",
+
   /** Open: the six options from the pre-trial form. */
   day120Options: null as string[] | null,
 } as const;

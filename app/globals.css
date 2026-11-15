@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "lenis/dist/lenis.css";
 
 /* ------------------------------------------------------------------ */
 /* Brand tokens. Deck colours only; tints are opacity, never new hues. */
@@ -92,6 +91,11 @@ html {
   color: var(--page-fg);
   -webkit-text-size-adjust: 100%;
 }
+/* Native scrolling, always at the visitor's pace. Only in-page links
+   (a button to the form on /book-now) glide, unless motion is reduced. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 body {
   background: var(--page-bg);
   color: var(--page-fg);
@@ -137,18 +141,11 @@ html.tones-managed [data-tone] {
   }
 }
 
-/* Every chapter takes the full screen and each stop is a chapter's very
-   top, so nothing of the previous screen ever shows, whether the header is
-   hidden or not. Light chapters keep a band the height of the header at
-   their top (--chapter-band): when the header slides back on the way up it
-   covers only that band. Navy chapters need none (the header keeps out of
-   the navy zone). Under reduced motion the header always stays visible, so
-   chapters sit below it instead. */
-:root { --chapter-offset: var(--header-h); --chapter-band: 0px; }
-@media (prefers-reduced-motion: no-preference) {
-  :root { --chapter-offset: 0px; --chapter-band: var(--header-h); }
-  [data-tone="navy"] { --chapter-band: 0px; }
-}
+/* Every chapter takes the full screen. The floating navigation can slide
+   back over any chapter (light or navy), so each chapter keeps a band the
+   height of the navigation at its top (--chapter-band) and its content
+   never sits under it. */
+:root { --chapter-band: var(--header-h); }
 
 /* Short phones also get a little less breathing room above and below each chapter. */
 @media (max-width: 767px) and (max-height: 719px) {
@@ -160,12 +157,11 @@ html.tones-managed [data-tone] {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: calc(100svh - var(--chapter-offset));
+    min-height: 100svh;
     padding-top: calc(var(--chapter-band) + var(--chapter-pad));
     padding-bottom: calc(var(--chapter-pad) + var(--bar-h));
-    scroll-margin-top: var(--chapter-offset);
   }
-  /* The first chapter sits below the header at the top of the page (stop 0). */
+  /* The first chapter sits below the navigation at the top of the page. */
   main > .chapter:first-child {
     min-height: calc(100svh - var(--header-h));
     padding-top: var(--chapter-pad);

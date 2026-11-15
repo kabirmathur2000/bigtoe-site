@@ -3,6 +3,10 @@ import { facts } from "./facts";
 
 export const nav = {
   homeLabel: "BigToe home",
+  /** Screen-reader name for the top navigation. */
+  label: "Main",
+  /** The first link in the top navigation (not in the footer, which lists Method and Team). */
+  home: { href: "/", label: "Home" },
   links: [
     { href: "/method", label: "Method" },
     { href: "/team", label: "Team" },

@@ -5,11 +5,11 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 
 /**
- * The fixed off-white header. It slides away while the visitor scrolls down
- * and slides back slowly when they scroll up, but only while the page is
- * still light: in the navy zone it stays away, so the off-white bar never
- * sits over navy. It comes back at the top of the page and whenever a
- * keyboard user tabs into it. Reduced motion: it simply stays visible.
+ * The floating navigation bar: inset from the screen edges, 8px corners,
+ * off-white with a hairline border. It slides away while the visitor
+ * scrolls down and slides back as soon as they scroll up, in the light and
+ * navy zones alike. Always visible at the very top of the page and whenever
+ * a keyboard user tabs into it. Reduced motion: it simply stays visible.
  */
 export function HeaderShell({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion();
@@ -26,11 +26,10 @@ export function HeaderShell({ children }: { children: ReactNode }) {
       const y = window.scrollY;
       const dy = y - last;
       last = y;
-      const navy = document.documentElement.dataset.zone === "navy";
       setState((s) => {
         let next = s.path === pathname ? s.hidden : false;
         if (y < 8) next = false;
-        else if (navy || dy > 2) next = true;
+        else if (dy > 2) next = true;
         else if (dy < -2) next = false;
         return next === s.hidden && s.path === pathname ? s : { path: pathname, hidden: next };
       });
@@ -48,8 +47,8 @@ export function HeaderShell({ children }: { children: ReactNode }) {
   return (
     <header
       onFocusCapture={() => setState({ path: pathname, hidden: false })}
-      className={`fixed inset-x-0 top-0 z-40 border-b border-navy/10 bg-offwhite text-navy transition-transform duration-[900ms] ease-soft ${
-        hidden ? "-translate-y-full" : ""
+      className={`fixed inset-x-3 top-2 z-40 mx-auto max-w-wide rounded-lg border border-navy/15 bg-offwhite text-navy transition-[translate,opacity] duration-500 ease-soft md:inset-x-6 md:top-3 ${
+        hidden ? "pointer-events-none -translate-y-[calc(100%+1rem)] opacity-0" : ""
       }`}
     >
       {children}

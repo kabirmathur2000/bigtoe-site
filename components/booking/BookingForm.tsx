@@ -48,17 +48,27 @@ function Thanks({ firstName }: { firstName: string }) {
     <div role="status" className="fade-up">
       <p className="text-h2">{t.heading(firstName)}</p>
       <p className="mt-4 text-caption text-terracotta">{t.reply}</p>
+
+      {/* Before the first visit: the short form, in a new tab. */}
+      <p className="mt-10 text-body-lg">{t.formLead}</p>
+      <div className="mt-5">
+        <ButtonLink href={facts.preVisitFormUrl} target="_blank" rel="noopener noreferrer">
+          {t.formLabel}
+        </ButtonLink>
+      </div>
+
+      {/* Then WhatsApp (a quieter outline button, so one main button shows) or the email address. */}
       {wa ? (
         <>
-          <div className="mt-10">
-            <ButtonLink href={wa} target="_blank" rel="noopener noreferrer">
+          <div className="mt-10 border-t border-current/15 pt-8">
+            <ButtonLink href={wa} target="_blank" rel="noopener noreferrer" variant="outline-light">
               {t.whatsappLabel}
             </ButtonLink>
           </div>
           <p className="mt-6 text-body opacity-75">{t.emailLead} {email}</p>
         </>
       ) : (
-        <p className="mt-10 text-body-lg">{t.emailOnlyLead} {email}</p>
+        <p className="mt-10 border-t border-current/15 pt-8 text-body-lg">{t.emailOnlyLead} {email}</p>
       )}
     </div>
   );

@@ -5,7 +5,6 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { MobileBookBar } from "@/components/layout/MobileBookBar";
 import { SectionToneController } from "@/components/motion/SectionTone";
-import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { facts } from "@/content/facts";
 import { meta } from "@/content/site";
 import { anderson } from "./fonts";
@@ -45,7 +44,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${anderson.variable} antialiased`}>
       <body className="flex min-h-svh flex-col">
-        <SmoothScroll />
         <SectionToneController />
         <Header />
         {/* Page cross-fade: route changes are transitions, so this animates. */}
