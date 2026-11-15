@@ -92,9 +92,8 @@ body {
   font-family: var(--font-sans);
   font-size: var(--text-body);
   line-height: var(--text-body--line-height);
-  transition:
-    background-color 900ms var(--ease-soft),
-    color 900ms var(--ease-soft);
+  /* Background is scroll-linked (SectionToneController); text eases. */
+  transition: color 700ms var(--ease-soft);
 }
 h1, h2, h3, .text-display { text-wrap: balance; }
 p { text-wrap: pretty; }
@@ -138,7 +137,7 @@ html.tones-managed [data-tone] {
 /* ------------------------------------------------------------------ */
 ::view-transition-old(*),
 ::view-transition-new(*) {
-  animation-duration: 600ms;
+  animation-duration: 1000ms;
   animation-timing-function: var(--ease-soft);
 }
 

@@ -10,6 +10,8 @@ export function BookingSection({ id = "book" }: { id?: string }) {
   const wa = whatsappHref();
   return (
     <Section id={id} tone="navy" className="py-section">
+      {/* Marks the form so the mobile bottom bar hides while it is on screen. */}
+      <div data-booking-form />
       <div className="mx-auto grid max-w-wide gap-16 px-gutter md:grid-cols-12 md:gap-12">
         <div className="md:col-span-5">
           <Reveal>

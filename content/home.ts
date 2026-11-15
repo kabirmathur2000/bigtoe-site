@@ -19,14 +19,16 @@ export const problem = {
   label: "THE PROBLEM",
   /** Guide, Home block 2. */
   headline: "The problem isn't your age. It's the narrative.",
-  /** Deck 1 slide 3. */
-  sport: {
-    title: "We train for a sport called life.",
-    body: "You play it every day, for decades. No off-season. No retirement. No substitute to send in when you're tired.",
-    close: "Most people play it untrained. We train for it.",
+  /** The two core beliefs, exactly as Deck 1 has them (slides 3 and 4). */
+  beliefs: {
+    sport: "We train for a sport called life.",
+    /** Deck 1 slide 3. */
+    sportBody: "You play it every day, for decades. No off-season. No retirement. No substitute to send in when you're tired.",
+    sportClose: "Most people play it untrained. We train for it.",
+    secondHalf: facts.heroLine,
   },
-  /** Guide, Home block 2 (what fades: muscle, strength and power). */
-  fades: "Muscle, strength and power fade quietly. They can be built at any age.",
+  /** Guide, Home block 2, word for word. */
+  fades: "Muscle, strength and power fade quietly; they can be built at any age.",
   photo: {
     shot: "Bare feet on the training floor",
   },
@@ -70,9 +72,8 @@ export const patterns = {
     {
       id: "start-and-stop",
       title: "Start and stop",
+      /** Deck 1 slide 19. No second line: Deck 1 has only this one. */
       need: "An easy restart, with no blame.",
-      /** Deck 1 slide 17: a gym notices when you quit; BigToe when you miss a session. */
-      how: "We notice when you miss a session, not when you quit.",
       shot: "Member for the pattern 'Start and stop', with their Sherpa",
     },
   ],

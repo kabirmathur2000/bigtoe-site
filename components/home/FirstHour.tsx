@@ -30,7 +30,7 @@ function StepText({ step, index }: { step: Step; index: number }) {
 }
 
 /**
- * Home block 4, on navy. Desktop: the photograph stays pinned while the
+ * Home block 4. Desktop: the photograph stays pinned while the
  * steps change beside it; the active step's photo cross-fades in.
  * Mobile: each step carries its own photo.
  */
@@ -52,7 +52,7 @@ export function FirstHour() {
   }, []);
 
   return (
-    <Section tone="navy" className="py-section">
+    <Section className="py-section">
       <div className="mx-auto max-w-wide px-gutter">
         <Reveal>
           <RevealItem as="p" className="text-label uppercase opacity-70">{firstHour.label}</RevealItem>

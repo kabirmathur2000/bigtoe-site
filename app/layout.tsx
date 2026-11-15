@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { ViewTransition } from "react";
 import { Footer } from "@/components/layout/Footer";
-import { Header, MobileBookBar } from "@/components/layout/Header";
+import { Header } from "@/components/layout/Header";
+import { MobileBookBar } from "@/components/layout/MobileBookBar";
 import { SectionToneController } from "@/components/motion/SectionTone";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { meta } from "@/content/site";

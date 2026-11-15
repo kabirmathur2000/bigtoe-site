@@ -4,11 +4,6 @@ import { useEffect, type ReactNode } from "react";
 
 export type Tone = "light" | "navy";
 
-const COLORS: Record<Tone, { bg: string; fg: string }> = {
-  light: { bg: "var(--offwhite)", fg: "var(--navy)" },
-  navy: { bg: "var(--navy)", fg: "var(--offwhite)" },
-};
-
 /** A full-width block with a tone. Paints itself until the controller takes over. */
 export function Section({
   tone = "light",
@@ -28,47 +23,73 @@ export function Section({
   );
 }
 
+const clamp = (n: number) => Math.min(1, Math.max(0, n));
+
+/** Share of the viewport height a colour change is spread across. */
+const BAND = 0.6;
+
 /**
- * Watches every [data-tone] element. Whichever one crosses the middle of the
- * screen sets the page colour, and the body's CSS transition cross-fades it.
- * Under reduced motion the change is instant (the global CSS rule).
+ * Scroll-linked section colour. The page background mixes from off-white to
+ * navy as a navy section's top travels up through the middle 60% of the
+ * screen, and back as its bottom does. Text switches colour at the halfway
+ * point, where both read on the mid tone. Under reduced motion the colour
+ * snaps at the halfway point instead of blending.
  */
 export function SectionToneController() {
   useEffect(() => {
     const root = document.documentElement;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     root.classList.add("tones-managed");
 
-    const apply = (tone: Tone) => {
-      root.style.setProperty("--page-bg", COLORS[tone].bg);
-      root.style.setProperty("--page-fg", COLORS[tone].fg);
+    let frame = 0;
+    let lastAmount = -1;
+
+    const update = () => {
+      frame = 0;
+      const vh = window.innerHeight;
+      const start = vh * (0.5 + BAND / 2);
+      const end = vh * (0.5 - BAND / 2);
+      const maxScroll = root.scrollHeight - vh;
+
+      let amount = 0;
+      document.querySelectorAll<HTMLElement>('[data-tone="navy"]').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        const enter = clamp((start - r.top) / (start - end));
+        // Near the end of the page the bottom edge may never reach `end`;
+        // shorten the band so the change can always finish.
+        const bottomAtMax = r.bottom - (maxScroll - window.scrollY);
+        const leaveEnd = Math.max(end, bottomAtMax);
+        const leaveStart = Math.max(start, leaveEnd + vh * 0.25);
+        const leave = clamp((r.bottom - leaveEnd) / (leaveStart - leaveEnd));
+        amount = Math.max(amount, Math.min(enter, leave));
+      });
+
+      if (mq.matches) amount = amount >= 0.5 ? 1 : 0;
+      const pct = Math.round(amount * 1000) / 10;
+      if (pct === lastAmount) return;
+      lastAmount = pct;
+
+      root.style.setProperty("--page-bg", `color-mix(in srgb, var(--navy) ${pct}%, var(--offwhite))`);
+      root.style.setProperty("--page-fg", amount >= 0.5 ? "var(--offwhite)" : "var(--navy)");
     };
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) apply((e.target as HTMLElement).dataset.tone as Tone);
-        }
-      },
-      { rootMargin: "-50% 0px -50% 0px" },
-    );
-
-    const observeAll = () => {
-      io.disconnect();
-      document.querySelectorAll<HTMLElement>("[data-tone]").forEach((el) => io.observe(el));
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
     };
-    observeAll();
 
-    // Pages change under the layout; re-scan when the DOM changes.
-    let pending = 0;
-    const mo = new MutationObserver(() => {
-      cancelAnimationFrame(pending);
-      pending = requestAnimationFrame(observeAll);
-    });
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    mq.addEventListener("change", schedule);
+    // Pages change under the layout; recompute when the DOM changes.
+    const mo = new MutationObserver(schedule);
     mo.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      cancelAnimationFrame(pending);
-      io.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      mq.removeEventListener("change", schedule);
       mo.disconnect();
       root.classList.remove("tones-managed");
       root.style.removeProperty("--page-bg");

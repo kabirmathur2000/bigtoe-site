@@ -64,7 +64,7 @@ export function Patterns() {
                 >
                   <div className="overflow-hidden md:w-[min(32rem,40vw)]">
                     <p className="pt-3 text-body-lg">{p.need}</p>
-                    <p className="max-w-text pt-2 pb-2 text-body opacity-70">{p.how}</p>
+                    {"how" in p && <p className="max-w-text pt-2 pb-2 text-body opacity-70">{p.how}</p>}
                   </div>
                 </div>
               </li>

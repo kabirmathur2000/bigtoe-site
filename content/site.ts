@@ -9,7 +9,6 @@ export const nav = {
 } as const;
 
 export const footer = {
-  visitLabel: "Visit",
   hoursLabel: "Hours",
   contactLabel: "Contact",
   whatsappLabel: "WhatsApp",

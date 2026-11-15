@@ -122,8 +122,19 @@ Every line comes from Decks 1, 4, 5 and 7, using the decks' own "say it to a mem
 - **Deck colours only.** No new colours. Tokens: `--color-navy #0A212D`, `--color-terracotta #D4644D`, `--color-offwhite #F0EEEB`. Tints for hairlines and secondary text are made from these with opacity, not new hues.
 - **Proportions:** roughly 70% off-white, 20% navy, 10% terracotta.
 - **Terracotta is for the button and one accent per screen.**
-- **One or two full navy sections,** for the testimonial and the form, like stepping into an evening lounge.
+- **Navy sections are rare, like stepping into an evening lounge.** At most two navy sections on any page, never adjacent, with at least two off-white sections between them. Home has one: the form (block 6). The footer is off-white.
+- **Colour changes between sections are rare and gentle.** The cross-fade runs over about 60% of the viewport height so the page never jumps. Our members are over 40; nothing on the page should startle.
 - **No gradients, no drop shadows, no glossy effects.** Thin hairline rules instead.
+
+### Core beliefs
+
+The two core beliefs, quoted from Deck 1, are "We train for a sport called life." and "The second half of life should be the stronger half." Use them exactly.
+
+### Logo
+
+- The logo appears with the tagline "Practice Possibility" at least once per page (the LogoTag file, `docs/logo/B&O BT Logo+Tag.png`, served as `public/brand/logo-tag.png`). It sits in the footer.
+- Sizes: 44px tall in the header on desktop, 36px on mobile, larger in the footer (about twice the header size).
+- Both logo files are navy, so they go on off-white only. A light (off-white) version is needed before the logo can sit on navy.
 
 ### Typography
 
@@ -173,8 +184,8 @@ Type scale (fluid, mobile → desktop):
 - **Find Your Pattern:** four tall photo cards; the chosen card widens and its text appears.
 - **Your first hour:** the photograph stays pinned while the audit steps change beside it as you scroll.
 - **Strength Reserve score:** the number counts up once when it enters the screen.
-- **Section colour changes cross-fade** instead of cutting hard from off-white to navy.
-- **Pages cross-fade** between Home, Method and Team.
+- **Section colour changes cross-fade with the scroll,** over about 60% of the viewport height, instead of cutting hard from off-white to navy.
+- **Pages cross-fade slowly** (about one second) between Home, Method and Team.
 - **Hover:** photographs zoom about 3%; buttons darken slowly.
 - **Limits:** nothing bounces, spins or delays reading; all motion off under `prefers-reduced-motion`; smooth on a mid-range phone.
 
