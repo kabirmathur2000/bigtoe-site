@@ -6,10 +6,10 @@ import { facts } from "./facts";
 
 export const styleguide = {
   title: "Styleguide",
-  intro: "Foundation only: colours, type, buttons, photographs and motion. Grey boxes stand in for the shoot.",
+  intro: "Foundation only: colors, type, buttons, photographs and motion. Grey boxes stand in for the shoot.",
 
   sections: {
-    colour: "Colour",
+    colour: "Color",
     type: "Typography",
     buttons: "Buttons",
     photo: "Photograph with caption",
@@ -65,8 +65,8 @@ export const styleguide = {
       shotHalf: "Coffee being poured at the social table",
     },
     tone: {
-      title: "Section colour cross-fade",
-      note: "Scroll into the navy section: the page colour cross-fades instead of cutting hard.",
+      title: "Section color cross-fade",
+      note: "Scroll into the navy section: the page color cross-fades instead of cutting hard.",
       navyLine: "Seen. Belong. Progress.",
     },
     page: {

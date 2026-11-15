@@ -1,19 +1,15 @@
 /**
- * Booking form copy, shared by Home block 6 and /book-now.
+ * Waitlist / booking form copy, shared by the end of Home and /book-now.
  */
 import { facts, todo } from "./facts";
 
 export const booking = {
-  label: "YOUR FIRST VISIT",
-  /** Deck 2 slide 16, "say it in 20 seconds". */
-  headline: "From the moment you walk in, you're our guest.",
-  subline: facts.firstStep.summary,
-  replyTime: facts.replyTime ?? todo("how fast a Sherpa replies after a booking"),
-  whatsappLabel: "WhatsApp",
-  whatsappMissing: todo("WhatsApp number to publish"),
+  /** The only words above the form (10 Squared model). From facts.ctaMode. */
+  heading: facts.ctaHeading,
 
   fields: {
     firstName: { label: "First name" },
+    lastName: { label: "Last name" },
     contact: { label: "WhatsApp number or email" },
     day120: {
       /** Guide, Home block 6. */
@@ -24,14 +20,21 @@ export const booking = {
         facts.day120Options ??
         Array.from({ length: 6 }, (_, i) => todo(`day-120 option ${i + 1}`)),
     },
+    heardFrom: {
+      label: "How did you hear about us?",
+      placeholder: "Choose one",
+      options: ["Member referral", "Instagram", "Google", "Other"],
+    },
     note: { label: "Anything we should know", optional: "Optional" },
   },
 
   errors: {
     firstName: "Please add your first name.",
+    lastName: "Please add your last name.",
     contactMissing: "Please add a WhatsApp number or an email address.",
     contactInvalid: "That doesn't look like a WhatsApp number or an email address.",
     day120: "Please choose one.",
+    heardFrom: "Please choose one.",
   },
 
   submit: facts.ctaLabel,

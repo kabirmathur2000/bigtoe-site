@@ -4,7 +4,15 @@ import { useId, useRef, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { booking } from "@/content/booking";
 
-type Values = { firstName: string; contact: string; day120: string; note: string };
+type Values = {
+  firstName: string;
+  lastName: string;
+  contact: string;
+  day120: string;
+  heardFrom: string;
+  note: string;
+};
+const EMPTY: Values = { firstName: "", lastName: "", contact: "", day120: "", heardFrom: "", note: "" };
 type Errors = Partial<Record<keyof Values, string>>;
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -13,11 +21,13 @@ const PHONE = /^\+?[\d\s()-]{10,20}$/;
 function validate(v: Values): Errors {
   const e: Errors = {};
   if (!v.firstName.trim()) e.firstName = booking.errors.firstName;
+  if (!v.lastName.trim()) e.lastName = booking.errors.lastName;
   const c = v.contact.trim();
   if (!c) e.contact = booking.errors.contactMissing;
   else if (!EMAIL.test(c) && !(PHONE.test(c) && c.replace(/\D/g, "").length >= 10))
     e.contact = booking.errors.contactInvalid;
   if (!v.day120) e.day120 = booking.errors.day120;
+  if (!v.heardFrom) e.heardFrom = booking.errors.heardFrom;
   return e;
 }
 
@@ -32,18 +42,26 @@ function FieldLabel({ htmlFor, children }: { htmlFor: string; children: React.Re
   );
 }
 
+function Chevron() {
+  return (
+    <svg aria-hidden viewBox="0 0 12 8" className="pointer-events-none absolute top-1/2 right-1 h-2 w-3 -translate-y-1/2" fill="none" stroke="currentColor" strokeWidth="1">
+      <path d="M1 1.5 6 6.5l5-5" />
+    </svg>
+  );
+}
+
 function FieldError({ id, message }: { id: string; message?: string }) {
   return message ? <p id={id} className="mt-2 text-caption text-terracotta">{message}</p> : null;
 }
 
 /**
- * The booking form. Layout and validation only for now; it does not send.
- * Reused by Home block 6 and /book-now.
+ * The waitlist / booking form. Layout and validation only for now; it does
+ * not send. Reused at the end of Home and on /book-now.
  */
 export function BookingForm() {
   const id = useId();
   const formRef = useRef<HTMLFormElement>(null);
-  const [values, setValues] = useState<Values>({ firstName: "", contact: "", day120: "", note: "" });
+  const [values, setValues] = useState<Values>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
   const [tried, setTried] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
@@ -72,16 +90,43 @@ export function BookingForm() {
 
   const f = booking.fields;
 
+  const select = (k: "day120" | "heardFrom") => (
+    <div>
+      <FieldLabel htmlFor={`${id}-${k}`}>{f[k].label}</FieldLabel>
+      <div className="relative">
+        <select
+          id={`${id}-${k}`} name={k} value={values[k]} onChange={set(k)}
+          aria-invalid={!!errors[k]} aria-describedby={describe(k)}
+          className={`${field} cursor-pointer appearance-none pr-8 [&>option]:bg-navy [&>option]:text-offwhite ${values[k] ? "" : "text-current/50"}`}
+        >
+          <option value="" disabled>{f[k].placeholder}</option>
+          {f[k].options.map((o) => (
+            <option key={o} value={o}>{o}</option>
+          ))}
+        </select>
+        <Chevron />
+      </div>
+      <FieldError id={`${id}-${k}-error`} message={errors[k]} />
+    </div>
+  );
+
+  const text = (k: "firstName" | "lastName", autoComplete: string) => (
+    <div>
+      <FieldLabel htmlFor={`${id}-${k}`}>{f[k].label}</FieldLabel>
+      <input
+        id={`${id}-${k}`} name={k} type="text" autoComplete={autoComplete}
+        value={values[k]} onChange={set(k)}
+        aria-invalid={!!errors[k]} aria-describedby={describe(k)} className={field}
+      />
+      <FieldError id={`${id}-${k}-error`} message={errors[k]} />
+    </div>
+  );
+
   return (
     <form ref={formRef} noValidate onSubmit={onSubmit} className="space-y-10">
-      <div>
-        <FieldLabel htmlFor={`${id}-firstName`}>{f.firstName.label}</FieldLabel>
-        <input
-          id={`${id}-firstName`} name="firstName" type="text" autoComplete="given-name"
-          value={values.firstName} onChange={set("firstName")}
-          aria-invalid={!!errors.firstName} aria-describedby={describe("firstName")} className={field}
-        />
-        <FieldError id={`${id}-firstName-error`} message={errors.firstName} />
+      <div className="grid gap-10 md:grid-cols-2 md:gap-8">
+        {text("firstName", "given-name")}
+        {text("lastName", "family-name")}
       </div>
 
       <div>
@@ -94,25 +139,9 @@ export function BookingForm() {
         <FieldError id={`${id}-contact-error`} message={errors.contact} />
       </div>
 
-      <div>
-        <FieldLabel htmlFor={`${id}-day120`}>{f.day120.label}</FieldLabel>
-        <div className="relative">
-          <select
-            id={`${id}-day120`} name="day120" value={values.day120} onChange={set("day120")}
-            aria-invalid={!!errors.day120} aria-describedby={describe("day120")}
-            className={`${field} cursor-pointer appearance-none pr-8 [&>option]:bg-navy [&>option]:text-offwhite ${values.day120 ? "" : "text-current/50"}`}
-          >
-            <option value="" disabled>{f.day120.placeholder}</option>
-            {f.day120.options.map((o) => (
-              <option key={o} value={o}>{o}</option>
-            ))}
-          </select>
-          <svg aria-hidden viewBox="0 0 12 8" className="pointer-events-none absolute top-1/2 right-1 h-2 w-3 -translate-y-1/2" fill="none" stroke="currentColor" strokeWidth="1">
-            <path d="M1 1.5 6 6.5l5-5" />
-          </svg>
-        </div>
-        <FieldError id={`${id}-day120-error`} message={errors.day120} />
-      </div>
+      {select("day120")}
+
+      {select("heardFrom")}
 
       <div>
         <FieldLabel htmlFor={`${id}-note`}>

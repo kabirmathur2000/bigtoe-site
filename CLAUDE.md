@@ -2,6 +2,14 @@
 
 # BigToe website: rulebook
 
+## First rules
+
+- **Clean, and less is more.** Every chapter fits one screen, with about 40 words of body text at most. When in doubt, cut.
+- **American spelling throughout** (aging, realizing), matching the studio wall. Deck lines with British spelling (programme, pretence, ageing, practise) are quoted in American spelling; that is the only change allowed to a quoted line.
+- **Story first.** Each page is a short story in chapters. Each chapter opens with a small spaced-out label in Anderson Grotesk Bold, in the style of Deck 1's slide labels (THE MAIN POINT, THE CORE BELIEF, OUR MISSION, OUR ANSWER, OUR PROMISE).
+- **References.** 10 Squared (10squared.com) for absolute simplicity: single column, few words, one ask, no decoration. Apple (apple.com) for a few luxurious transitions: full-bleed chapters, large type, one image pinned while text moves past.
+- **Home has at most four signature motions:** the hero video, the poem's line-by-line reveal, the word loop, and the slow fade into the waitlist. Everything else only fades in quietly. All motion obeys the soft-fade and reduced-motion rules below, and only the three brand colors are used.
+
 A four-page site in Next.js on Vercel: **Home (`/`), Method (`/method`), Team (`/team`), Book (`/book-now`).** One job: get the visitor to book the free first visit. The look is quiet luxury in the deck colours: large photographs of real members, generous space, editorial type and slow, smooth scroll transitions.
 
 Sources, in order of authority:
@@ -19,7 +27,7 @@ Where the live Framer site disagrees with these, the live site is out of date. W
 2. **Every reusable fact lives in `content/facts.ts` and is imported.** Price, guarantee, address, hours, email, WhatsApp, button label, session length, frequency and the like are never typed twice.
 3. **All page copy lives in `content/*.ts`, never inside components.** Components take copy as props or import it from `content/`. No sentences of copy in `.tsx` files.
 4. **No health promises.** Nothing that says prevent, reverse, cure or live longer; nothing "inevitable" (one exception: the Rooted, Real, Rebellious refusal, below); no medical or diagnostic language.
-5. **One button label everywhere:** `facts.ctaLabel` (BOOK YOUR FREE FIRST VISIT). Never a variant.
+5. **One button label everywhere:** `facts.ctaLabel`, set by `facts.ctaMode`. `"waitlist"` gives the heading "Join the waitlist" and the button JOIN THE WAITLIST; `"book"` gives "Book your free first visit" and BOOK YOUR FREE FIRST VISIT. Currently `"waitlist"`. Never a variant.
 6. **Member quotes are verbatim,** with first name, age and written consent. No consent recorded in `docs/copy/testimonials.md`, no quote on the page.
 7. **No real photos of people we don't have consent for.** Mood-board images (film stills, public figures) never go on the site. Until the shoot, use grey placeholders sized for the final photo, with alt text describing the shot the shot list calls for.
 8. **Work one piece per prompt,** check at 375px and 1440px, and stop to show the result.
@@ -42,10 +50,10 @@ From Jay's conversation and the decks. The site is built on these.
 
 | Topic | Decision |
 | --- | --- |
-| Hero line | "The second half of life should be the stronger half." "Design Your Future Self" is dropped. |
+| Hero line | Home opens with "We train for a sport called life." (THE MAIN POINT); "The second half of life should be the stronger half." follows as THE CORE BELIEF. "Design Your Future Self" is dropped. |
 | Scarcity | None. No opening date, Founding 30, member cap or "prices will rise". |
 | First step | A free 60-minute first visit, then coffee. The full Reserve Audit follows in sessions 2 to 4. |
-| Button | BOOK YOUR FREE FIRST VISIT, the same label everywhere. Wording assumed; see open items. |
+| Button | One setting, `facts.ctaMode`: JOIN THE WAITLIST now, BOOK YOUR FREE FIRST VISIT once bookings open. The same label everywhere. Book wording assumed; see open items. |
 | Price | ₹25,000 to ₹45,000 a month, set after the audit, given in writing before commitment. |
 | Guarantee | 30 days, money back. Exact wording still to confirm. |
 | Frequency | 2, 3 or 4 sessions a week by goal; set with the Sherpa, not listed as a menu. |
@@ -69,16 +77,20 @@ From Jay's conversation and the decks. The site is built on these.
 
 Four pages, one job: get the visitor to book the free first visit.
 
-### Home: five blocks and a form
+### Home: six chapters and the waitlist
 
-1. **Hero.** "The second half of life should be the stronger half." Full-width photo or silent video of a real member with a Sherpa beside them. One button.
-2. **The problem.** "The problem isn't your age. It's the narrative." Then: "We train for a sport called life." Then one line: muscle, strength and power fade quietly; they can be built at any age.
-   - **Interlude: the Practice Possibility poem** (between blocks 2 and 3). Fixed wording; see "Fixed wording" below. Off-white, no label or heading, left-aligned narrow column, Regular at sub-headline size. Each line reveals on its own as you scroll, with a longer pause between stanzas. Only the last line is at full strength.
-3. **Find Your Pattern.** The four patterns as tappable cards with a member photo each, followed by one testimonial. The four patterns are the four personas (Deck 1 slide 19, Deck 3 slide 8): Never trained (feel safe, win early); Life got in the way (easy timing changes, home or online sessions); Train but don't progress (progress they can see); Start and stop (an easy restart, with no blame). Testimonial 1 from `docs/copy/testimonials.md` follows.
-4. **Your first hour.** The first visit is free: an hour with a Sherpa. Then, in sessions 2 to 4, the Reserve Audit: about 60 minutes, four dials (body composition, balance and mobility, functional strength, conditioning), you leave with your Strength Reserve Score, then coffee. Then "Seen. Belong. Progress." with testimonial 2 (the Sherpa who noticed).
-   - **Band: In our members' words** (after testimonial 2, before Investment). Label "IN OUR MEMBERS' WORDS". The word list lives in `content/home.ts`. The words are live text drifting in a few at a time over a 40-second loop; hover or tap shows terracotta; they are static under reduced motion. Closes with "No policy produces that. No manual teaches it." (Deck 9 slide 13).
-5. **Investment.** First step is free. The price range. The guarantee.
-6. **Form.** First name; WhatsApp number or email; "By day 120, I want to be able to…"; anything we should know. A WhatsApp button beside it.
+Each chapter fits one screen and opens with its Deck 1 label.
+
+1. **THE MAIN POINT** (the hero). "We train for a sport called life." and "Most people play it untrained. We train for it." (Deck 1 slide 3). One button. Full-bleed video placeholder: a member with a Sherpa beside them.
+2. **THE CORE BELIEF.** "The second half of life should be the stronger half." Then "The problem isn't your age." and "Capability is built at any age, not spent." (Deck 1 slide 4, cut, never reworded).
+3. **OUR MISSION.** The studio-wall poem, unchanged (see "Fixed wording"). Left-aligned narrow column, Regular at sub-headline size, each line revealed on its own, a longer pause between stanzas, only the last line at full strength.
+4. **OUR ANSWER.** Strength Reserve: "The capacity you build above what daily life asks of you." (Deck 1 slide 15). Then three short steps beside one photograph: the free first visit; the Reserve Audit in sessions 2 to 4; test, train, retest. One screen, so no pinned scroll: a simple fade.
+5. **IN OUR MEMBERS' WORDS.** The word loop (words in `content/home.ts`, from the BigToe word cloud poster; a few at a time over 40 seconds; hover or tap for terracotta; static under reduced motion). Then testimonial 2 (the Sherpa who noticed) and "No policy produces that. No manual teaches it." (Deck 9 slide 13).
+6. **OUR PROMISE.** "Look better. Move better. Feel better." (Deck 1 slide 24). The price range. The guarantee. Then the slow fade to navy and the waitlist.
+
+**The waitlist** (end of chapter 6, on navy, the page's only navy section). Modelled on 10 Squared: a heading (`facts.ctaHeading`), the form, nothing else. Fields: first name; last name; WhatsApp number or email; "By day 120, I want to be able to…" (select, options still open); "How did you hear about us?" (Member referral, Instagram, Google, Other); anything we should know (optional). The same component serves `/book-now`.
+
+**Not on Home:** the four pattern cards (Method), testimonial 1 (kept in `content/testimonials.ts` for Team or Book), Jay's story (Team only). The header link to Team is enough.
 
 ### Method: five short blocks and eight questions
 
@@ -88,7 +100,8 @@ Every line comes from Decks 1, 4, 5 and 7, using the decks' own "say it to a mem
 - **What fades.** Muscle, strength and power, told with the house and light-bulb picture (Deck 1 slides 10 to 11). Power goes first.
 - **How we train.** Barefoot, because it all starts with the big toe. Free weights, no machines. Mobility, strength and cardio in one supervised hour. Seven movement patterns, each tied to an ordinary day: squat is getting out of a car, hinge is lifting a bag off the floor (Deck 4 slide 14).
 - **Two paths.** Mobility & Conditioning or Strength & Conditioning. "Neither path is better. We start where you are today."
-- **Test, train, retest.** The six-step loop: test, sort, set goals, pledge, train, review, every 16 sessions. "We sell outcomes, not sessions." Reuses the pinned-scroll pattern from Home block 4.
+- **Test, train, retest.** The six-step loop: test, sort, set goals, pledge, train, review, every 16 sessions. "We sell outcomes, not sessions." May use the pinned-photo scroll (one image pinned while text moves past).
+- **Find Your Pattern** (moved from Home). The four personas as tappable cards with a member photo each (Deck 1 slide 19, Deck 3 slide 8): Never trained (feel safe, win early); Life got in the way (easy timing changes, home or online sessions); Train but don't progress (progress you can see); Start and stop (an easy restart, with no blame). Copy in `content/method.ts`, component `components/method/Patterns.tsx`.
 - **Eight collapsed questions,** grouped as fit, money, logistics and trust. Deck 4 slide 21 answers four (twice a week, why strength, heavy lifting at my age, stretching). One confirms studio, home or online sessions at no extra charge (Deck 5). One is "I've never enjoyed exercise. Is this for me?", answered only with deck lines on fun, the clap, the coffee and people beside you (Deck 1 slide 18: "Fun is how people stay in the game.", the table, seat and coffee, "Every hour ends in a clap.", "You don't climb alone."; Deck 2 The Show: "Every hour is a show." and members clap at the end and want more; Deck 2 The Road Trip: "There is no finish line. So the journey has to be fun."). Draft the list and get approval before building.
 
 **Three interactive pieces, all from Deck 7:**
@@ -107,7 +120,7 @@ Every line comes from Decks 1, 4, 5 and 7, using the decks' own "say it to a mem
 
 ### Book (`/book-now`)
 
-- **The same form as Home,** so it can be shared as a link on WhatsApp.
+- **The same form as Home** (`BookingSection`), so it can be shared as a link on WhatsApp. Heading and button follow `facts.ctaMode`.
 - **Address, hours, map,** and "There's no parking at the studio. Come by cab or get dropped off."
 
 ### Redirects
@@ -126,7 +139,7 @@ Every line comes from Decks 1, 4, 5 and 7, using the decks' own "say it to a mem
 - **"Off-white" always means the brand light colour `#F0EEEB`,** anywhere in this project. Never introduce another light shade. Only the three brand colours are used.
 - **Proportions:** roughly 70% off-white, 20% navy, 10% terracotta.
 - **Terracotta is for the button and one accent per screen.**
-- **Navy sections are rare, like stepping into an evening lounge.** At most two navy sections on any page, never adjacent, with at least two off-white sections between them. Home has one: the form (block 6). The footer is off-white.
+- **Navy sections are rare, like stepping into an evening lounge.** At most two navy sections on any page, never adjacent, with at least two off-white sections between them. Home has one: the waitlist at the end of chapter 6. The footer is off-white.
 - **Colour changes between sections are rare and gentle.** Every change between light and navy is a slow, gradual fade over about 60% of the screen height, so the page never jumps. Our members are over 40; nothing on the page should startle.
 - **Never switch colour all at once, on any setting.** Under `prefers-reduced-motion`, movement goes (no rising, sliding or zooming), but colour changes keep the same slow fade.
 - **No gradients, no drop shadows, no glossy effects.** Thin hairline rules instead.
@@ -196,12 +209,9 @@ Type scale (fluid, mobile → desktop):
 ### Motion and flow
 
 - **Smooth, weighted scrolling** across the site (Lenis).
-- **Hero:** slow silent video loop; headline readable immediately, then subline and button fade up.
-- **Reveal:** text rises about 20px and fades in over 0.7s, one line after another.
-- **ImageReveal:** soft wipe, settling with a very slight zoom.
-- **Find Your Pattern:** four tall photo cards; the chosen card widens and its text appears.
-- **Your first hour:** the photograph stays pinned while the audit steps change beside it as you scroll.
-- **Strength Reserve score:** the number counts up once when it enters the screen.
+- **Home's four signature motions, and no others:** the hero video (slow silent loop; headline readable immediately), the poem's line-by-line reveal, the word loop, and the slow fade into the navy waitlist.
+- **Reveal (everything else):** a quiet fade in over about 0.9s, one line after another. No rising.
+- **Method and Team** may use, sparingly: Find Your Pattern cards that widen when chosen; one pinned photograph while text moves past (Apple style); the Strength Reserve score counting up once; ImageReveal (soft wipe with a very slight settle).
 - **Section colour changes cross-fade with the scroll,** over about 60% of the viewport height, instead of cutting hard from off-white to navy.
 - **Pages cross-fade slowly** (about one second) between Home, Method and Team.
 - **Hover:** photographs zoom about 3%; buttons darken slowly.

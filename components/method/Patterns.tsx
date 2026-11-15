@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { Section } from "@/components/motion/SectionTone";
-import { patterns } from "@/content/home";
+import { patterns } from "@/content/method";
 
 /**
- * Home block 3. Four tall photo cards; tapping one widens it (desktop) or
+ * Find Your Pattern (Method). Four tall photo cards; tapping one widens it (desktop) or
  * opens it (mobile) and shows what BigToe does for that person.
  */
 export function Patterns() {
@@ -72,16 +72,6 @@ export function Patterns() {
           })}
         </ul>
 
-        <Reveal className="mx-auto mt-24 max-w-4xl md:mt-32">
-          <RevealItem as="p" className="text-h2">
-            <span aria-hidden>“</span>
-            {patterns.testimonial.quote}
-            <span aria-hidden>”</span>
-          </RevealItem>
-          <RevealItem as="p" className="mt-6 text-caption text-terracotta">
-            {patterns.testimonial.name}, {patterns.testimonial.age}
-          </RevealItem>
-        </Reveal>
       </div>
     </Section>
   );

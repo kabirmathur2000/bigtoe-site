@@ -1,22 +1,21 @@
 import { BookingSection } from "@/components/booking/BookingSection";
-import { FirstHour } from "@/components/home/FirstHour";
+import { Answer } from "@/components/home/Answer";
+import { Belief } from "@/components/home/Belief";
 import { Hero } from "@/components/home/Hero";
-import { Investment } from "@/components/home/Investment";
 import { MemberWords } from "@/components/home/MemberWords";
-import { Patterns } from "@/components/home/Patterns";
 import { Poem } from "@/components/home/Poem";
-import { Problem } from "@/components/home/Problem";
+import { OurPromise } from "@/components/home/OurPromise";
 
+/** Home: six chapters, then the form on navy. See CLAUDE.md. */
 export default function Home() {
   return (
     <>
       <Hero />
-      <Problem />
+      <Belief />
       <Poem />
-      <Patterns />
-      <FirstHour />
+      <Answer />
       <MemberWords />
-      <Investment />
+      <OurPromise />
       <BookingSection />
     </>
   );

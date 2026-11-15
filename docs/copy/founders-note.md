@@ -20,7 +20,7 @@ Rooted:
 Fitness is built on fundamentals, not trends.
 
 Real:
-How we show up: honest, present, without pretence.
+How we show up: honest, present, without pretense.
 
 Rebellious:
 We refuse to accept that decline is inevitable, or that people in their 40s, 50s and 60s have had their moment.
@@ -45,6 +45,6 @@ Stop surviving your schedule. Start practicing possibility.
 
 On the live site, "We build a Strength Reserve…" was the Rebellious definition. Now that Deck 1's Rebellious line replaces it, that sentence would be lost. I kept it as its own paragraph after the three pillars, so the Kilimanjaro line survives for Jay to confirm. If it should go entirely, delete that paragraph.
 
-### Still to check
+### Spelling
 
-- "aging" uses US spelling. The decks use "ageing".
+The site uses American spelling (CLAUDE.md). "aging" stays. Deck 1's "pretence" is quoted as "pretense".

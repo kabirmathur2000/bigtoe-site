@@ -10,12 +10,28 @@
 export const TODO_PREFIX = "TODO:";
 export const todo = (what: string) => `${TODO_PREFIX} ${what}`;
 
+/**
+ * The one call-to-action setting. Every button and the form heading read
+ * from it. "waitlist" before opening; switch to "book" once bookings start.
+ */
+type CtaMode = "waitlist" | "book";
+const ctaMode: CtaMode = "waitlist";
+
+const cta = {
+  waitlist: { heading: "Join the waitlist", label: "JOIN THE WAITLIST" },
+  /** Book wording to confirm with Jay. */
+  book: { heading: "Book your free first visit", label: "BOOK YOUR FREE FIRST VISIT" },
+} as const satisfies Record<CtaMode, { heading: string; label: string }>;
+
 export const facts = {
   brand: "BigToe",
   tagline: "Practice Possibility",
 
-  /** The one button label used everywhere. Wording to confirm with Jay. */
-  ctaLabel: "BOOK YOUR FREE FIRST VISIT",
+  ctaMode,
+  /** The form heading for the current mode. */
+  ctaHeading: cta[ctaMode].heading,
+  /** The one button label used everywhere, from ctaMode. Never a variant. */
+  ctaLabel: cta[ctaMode].label,
   /** Book page route (decisions table). */
   bookHref: "/book-now",
 

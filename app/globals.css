@@ -122,8 +122,8 @@ html.tones-managed [data-tone] {
 /* Load-time motion that needs no JS (hero subline, button, media).   */
 /* ------------------------------------------------------------------ */
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: none; }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 @keyframes settle {
   from { transform: scale(1.04); }
