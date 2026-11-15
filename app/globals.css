@@ -96,6 +96,8 @@ body {
     background-color 900ms var(--ease-soft),
     color 900ms var(--ease-soft);
 }
+h1, h2, h3, .text-display { text-wrap: balance; }
+p { text-wrap: pretty; }
 ::selection {
   background: var(--terracotta);
   color: var(--offwhite);
@@ -118,6 +120,20 @@ html.tones-managed [data-tone] {
 }
 
 /* ------------------------------------------------------------------ */
+/* Load-time motion that needs no JS (hero subline, button, media).   */
+/* ------------------------------------------------------------------ */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes settle {
+  from { transform: scale(1.04); }
+  to { transform: none; }
+}
+.fade-up { animation: fade-up 700ms var(--ease-soft) both; }
+.settle { animation: settle 2400ms var(--ease-soft) both; }
+
+/* ------------------------------------------------------------------ */
 /* Page cross-fade (React <ViewTransition> around <main>).            */
 /* ------------------------------------------------------------------ */
 ::view-transition-old(*),
@@ -137,6 +153,7 @@ html.tones-managed [data-tone] {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    animation-delay: 0ms !important;
   }
   ::view-transition-group(*),
   ::view-transition-old(*),

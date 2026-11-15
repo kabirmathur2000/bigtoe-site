@@ -21,10 +21,12 @@ export const facts = {
 
   heroLine: "The second half of life should be the stronger half.",
 
+  /** Decisions table, "First step". */
   firstStep: {
     price: "Free",
     length: "60 minutes",
     then: "coffee",
+    summary: "A free 60-minute first visit, then coffee.",
   },
 
   price: {

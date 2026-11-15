@@ -5,7 +5,7 @@ import { facts } from "@/content/facts";
 type Variant = "primary" | "outline" | "outline-light";
 
 const base =
-  "inline-flex items-center justify-center gap-3 rounded-full px-7 py-4 text-label uppercase tracking-[0.16em] font-bold whitespace-nowrap transition-colors duration-700 ease-soft";
+  "inline-flex items-center justify-center gap-3 px-7 py-4 text-label uppercase tracking-[0.16em] font-bold whitespace-nowrap transition-colors duration-700 ease-soft";
 
 const variants: Record<Variant, string> = {
   primary: "bg-terracotta text-offwhite hover:bg-[var(--terracotta-deep)]",
