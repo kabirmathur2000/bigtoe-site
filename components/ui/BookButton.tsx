@@ -1,33 +1,19 @@
 "use client";
 
-import { track } from "@vercel/analytics";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useBooking } from "@/components/booking/BookingPanel";
 import { facts } from "@/content/facts";
 import { buttonClass } from "./Button";
 
 /**
- * The one call to action. Label and destination always come from facts.
- * On the Book page itself it scrolls to the form (#waitlist) instead of
- * reloading the page. Every tap is a Vercel Analytics event, with where
- * the button sits and on which page.
+ * The one call to action, "Book your first hour", on every page. It opens
+ * the booking panel; the panel records the tap (with where the button sits
+ * and on which page) as a Vercel Analytics event.
  */
-export function BookButton({
-  placement,
-  className = "",
-  variant = "primary",
-}: {
-  /** Where the button sits, for analytics: "header", "hero", "mobile-bar"… */
-  placement: string;
-  className?: string;
-  variant?: "primary";
-}) {
-  const page = usePathname();
-  const onBookPage = page === facts.bookHref;
-  const cls = buttonClass(variant, className);
-  const onClick = () => track("Booking button", { placement, page, mode: facts.ctaMode });
-  if (onBookPage) {
-    return <a href="#waitlist" className={cls} onClick={onClick}>{facts.ctaLabel}</a>;
-  }
-  return <Link href={facts.bookHref} className={cls} onClick={onClick}>{facts.ctaLabel}</Link>;
+export function BookButton({ placement, className = "" }: { placement: string; className?: string }) {
+  const { open } = useBooking();
+  return (
+    <button type="button" aria-haspopup="dialog" className={buttonClass("primary", className)} onClick={() => open(placement)}>
+      {facts.ctaLabel}
+    </button>
+  );
 }

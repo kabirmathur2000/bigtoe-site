@@ -4,9 +4,9 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 /**
- * True while an in-page button ([data-cta]) or the booking form's section
- * ([data-booking-form]) is on screen, so the header and mobile-bar buttons
- * step aside and only one button shows at a time.
+ * True while an in-page button ([data-cta]) is on screen, so the
+ * navigation and mobile-bar buttons step aside and only one button shows
+ * at a time.
  */
 export function useCtaHidden(rootMargin = "0px") {
   const pathname = usePathname();
@@ -14,12 +14,7 @@ export function useCtaHidden(rootMargin = "0px") {
   const [state, setState] = useState({ path: pathname, hidden: false });
 
   useEffect(() => {
-    const targets = [
-      ...Array.from(document.querySelectorAll<HTMLElement>("[data-cta]")),
-      ...Array.from(document.querySelectorAll<HTMLElement>("[data-booking-form]"))
-        .map((m) => m.closest("section"))
-        .filter((s): s is HTMLElement => !!s),
-    ];
+    const targets = Array.from(document.querySelectorAll<HTMLElement>("[data-cta]"));
     if (!targets.length) return;
     const visible = new Set<Element>();
     const io = new IntersectionObserver(

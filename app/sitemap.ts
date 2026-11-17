@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
 import { facts } from "@/content/facts";
 
-/** The four public pages. The style guide is internal and left out. */
+/** The public pages. */
 export default function sitemap(): MetadataRoute.Sitemap {
-  return ["/", "/method", "/team", facts.bookHref].map((path) => ({
+  return ["/", "/method", "/team", "/terms", "/privacy"].map((path) => ({
     url: new URL(path, facts.siteUrl).toString(),
     changeFrequency: "monthly",
     priority: path === "/" ? 1 : 0.8,

@@ -1,4 +1,4 @@
-import { poem } from "@/content/home";
+import { poem } from "@/content/poem";
 
 /**
  * The Practice Possibility poem in the footer on every page, word for

@@ -1,53 +1,43 @@
 /** Site-wide interface wording: navigation and footer labels, page metadata. */
-import { facts } from "./facts";
+import { facts, todo } from "./facts";
 
 export const nav = {
   homeLabel: "BigToe home",
   /** Screen-reader name for the top navigation. */
   label: "Main",
-  /** The first link in the top navigation (not in the footer, which lists Method and Team). */
-  home: { href: "/", label: "Home" },
   links: [
-    { href: "/method", label: "Method" },
+    { href: "/", label: "Home" },
+    { href: "/method", label: "The Method" },
     { href: "/team", label: "Team" },
   ],
 } as const;
 
 export const footer = {
-  /** Screen-reader name for the footer's page links. */
-  navLabel: "Footer",
-  hoursLabel: "Hours",
-  contactLabel: "Contact",
+  /** Screen-reader name for the footer's links. */
+  navLabel: "Legal",
+  links: [
+    { href: "/terms", label: "Terms & Conditions" },
+    { href: "/privacy", label: "Privacy Policy" },
+  ],
+  mapLabel: "Map",
+  missingMap: todo("map link"),
   whatsappLabel: "WhatsApp",
-  emailLabel: "Email",
-  missingWhatsapp: "WhatsApp number to publish",
-  missingMap: "map link",
+  missingWhatsapp: todo("WhatsApp number"),
 } as const;
 
 /**
  * Page titles and descriptions. Titles show as "Team · BigToe"; Home's is
- * absolute (as specified for launch). Descriptions are deck lines, never new claims.
+ * absolute. Descriptions are approved site lines.
  */
 export const meta = {
   title: "BigToe",
   homeTitle: `${facts.brand} · Personal training for adults over 40 · ${facts.address.area}, ${facts.address.city}`,
-  /** Core belief (Deck 1), then Deck 1 slide 3. */
-  description: `${facts.heroLine} We train for a sport called life.`,
+  description: `${facts.heroLine} A strength studio for life after 40.`,
   pages: {
-    method: {
-      title: "Method",
-      /** Deck 1 slide 11, then Deck 4. */
-      description: "Three things fade with age. We train all three. Barefoot, free weights, one supervised hour.",
-    },
-    team: {
-      title: "Team",
-      /** Deck 1 slide 25, then Deck 1 slide 18. */
-      description: "Behind each face is a real person. You don’t climb alone.",
-    },
-    book: {
-      /** Deck 5 slide 17. */
-      description: facts.where,
-    },
+    method: { title: "The Method", description: "The Strength Reserve. More strength than your day demands." },
+    team: { title: "Team", description: "Why we built this. The four of us, and your Sherpas." },
+    terms: { title: "Terms & Conditions", description: `${facts.brand} terms and conditions.` },
+    privacy: { title: "Privacy Policy", description: `${facts.brand} privacy policy.` },
   },
   /** Alt text for the shared Open Graph image. */
   ogAlt: `${facts.brand}, ${facts.tagline}. ${facts.heroLine}`,

@@ -1,7 +1,6 @@
 /**
- * Every reusable BigToe fact. Source: docs/copy/facts.md and the guide's
- * decisions table. Import from here; never retype a fact in a component or
- * another content file.
+ * Every reusable BigToe fact. Import from here; never retype a fact in a
+ * component or another content file.
  *
  * A value of `null` means the fact is still open (see CLAUDE.md, "Still open").
  * Components render `todo(...)` text in its place so the gap stays visible.
@@ -10,79 +9,37 @@
 export const TODO_PREFIX = "TODO:";
 export const todo = (what: string) => `${TODO_PREFIX} ${what}`;
 
-/**
- * The one call-to-action setting. Every button and the form heading read
- * from it. "waitlist" before opening; switch to "book" once bookings start.
- */
-type CtaMode = "waitlist" | "book";
-const ctaMode: CtaMode = "waitlist";
-
-const cta = {
-  waitlist: { heading: "Join the waitlist", label: "JOIN THE WAITLIST" },
-  /** Book wording to confirm with Jay. */
-  book: { heading: "Book your free first visit", label: "BOOK YOUR FREE FIRST VISIT" },
-} as const satisfies Record<CtaMode, { heading: string; label: string }>;
-
 export const facts = {
   brand: "BigToe",
   tagline: "Practice Possibility",
   /** The live domain (email is @bigtoe.in). Override with NEXT_PUBLIC_SITE_URL for previews. */
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://bigtoe.in",
 
-  ctaMode,
-  /** The form heading for the current mode. */
-  ctaHeading: cta[ctaMode].heading,
-  /** The one button label used everywhere, from ctaMode. Never a variant. */
-  ctaLabel: cta[ctaMode].label,
-  /** Book page route (decisions table). */
-  bookHref: "/book-now",
+  /** The one button label, everywhere, and the booking panel's heading. Never a variant. */
+  ctaLabel: "Book your first hour",
 
-  heroLine: "The second half of life should be the stronger half.",
-
-  /** Decisions table, "First step". */
-  firstStep: {
-    price: "Free",
-    length: "60 minutes",
-    then: "coffee",
-    summary: "A free 60-minute first visit, then coffee.",
-  },
+  /** The core belief, as Home opens with it (also the share image and search description). */
+  heroLine: "The second half should be the stronger half.",
 
   price: {
-    /** Decisions table: ₹25,000 to ₹45,000 a month. */
     from: "₹25,000",
     to: "₹45,000",
     get range() {
-      return `${this.from} to ${this.to} a month`;
+      return `${this.from} to ${this.to} a month.`;
     },
-    /** Home's promise screen: the lowest price only. */
-    get fromLine() {
-      return `Memberships from ${this.from} a month.`;
-    },
-    note: "set after your Reserve Audit, and given in writing before you commit",
+    note: "Set with you in your first hour. In writing, before you commit.",
   },
 
-  /** Exact wording still to confirm ("no argument" or "refund with interest"). */
-  guarantee: "30 days, money back",
+  /** Exact wording approved for launch. */
+  guarantee: "Not seeing progress in your functional scores after 30 days? Your money back.",
 
-  /** Open: monthly or four-month blocks. */
-  billing: null as string | null,
-
-  session: {
-    length: "60 minutes",
-    perWeek: "2 to 4 a week by goal",
-  },
-
-  /** Deck 5 slide 17, word for word. */
-  where: "Studio, home or online, at no extra charge.",
-
-  reserveAudit: {
-    first: "Sessions 2 to 4",
-    repeat: "Every 16 sessions",
-  },
+  /** Training frequency (FAQ). */
+  frequency: "Two, three or four times a week.",
 
   /** Address and hours still to confirm as current. */
   address: {
-    lines: ["43 Basant Lok, 3rd Floor", "Vasant Vihar, New Delhi 110057"],
+    /** As the footer says it, in one line. */
+    line: "43 Basant Lok, 3rd Floor, Vasant Vihar, New Delhi 110057.",
     /** The same address in parts, for search engines (JSON-LD). */
     street: "43 Basant Lok, 3rd Floor",
     area: "Vasant Vihar",
@@ -91,7 +48,7 @@ export const facts = {
     country: "IN",
     mapUrl: null as string | null,
   },
-  hours: "6 am to 10 pm, Monday to Sunday",
+  hours: "6 am to 10 pm, every day.",
   /** The same hours for search engines (schema.org openingHours). */
   hoursSchema: "Mo-Su 06:00-22:00",
   parking: "There's no parking at the studio. Come by cab or get dropped off.",
@@ -99,14 +56,9 @@ export const facts = {
   email: "hello@bigtoe.in",
   /** Digits only with country code, e.g. 919800000000. Open item. */
   whatsappNumber: (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || null) as string | null,
-  /** Open: how fast a Sherpa replies after a booking. */
-  replyTime: null as string | null,
 
-  /** The short form a visitor fills in before the first visit (linked from the thank-you step). */
+  /** The short form a visitor fills in before the first hour (linked from the thank-you step). */
   preVisitFormUrl: "https://forms.gle/7GWfSvARWfdz4hkE9",
-
-  /** Open: the six options from the pre-trial form. */
-  day120Options: null as string[] | null,
 } as const;
 
 export const whatsappHref = (message?: string) =>

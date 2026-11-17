@@ -1,60 +1,32 @@
 /**
- * Waitlist / booking form copy, shared by the end of Home and /book-now.
+ * The booking panel: opens from every button, anywhere on the site.
+ * Wording as approved in the final plan (17 Nov 2026).
  */
-import { facts, todo } from "./facts";
+import { facts } from "./facts";
 
 export const booking = {
-  /** The only words above the form (10 Squared model). From facts.ctaMode. */
-  heading: facts.ctaHeading,
-
+  heading: facts.ctaLabel,
   fields: {
     firstName: { label: "First name" },
-    lastName: { label: "Last name" },
-    contact: { label: "WhatsApp number or email" },
-    day120: {
-      /** Guide, Home block 6. */
-      label: "By day 120, I want to be able to…",
-      placeholder: "Choose one",
-      /** facts.day120Options is open; placeholders until the six options arrive. */
-      options:
-        facts.day120Options ??
-        Array.from({ length: 6 }, (_, i) => todo(`day-120 option ${i + 1}`)),
-    },
+    whatsapp: { label: "WhatsApp number" },
   },
-
   errors: {
     firstName: "Please add your first name.",
-    lastName: "Please add your last name.",
-    contactMissing: "Please add a WhatsApp number or an email address.",
-    contactInvalid: "That doesn't look like a WhatsApp number or an email address.",
-    day120: "Please choose one.",
-
+    whatsappMissing: "Please add your WhatsApp number.",
+    whatsappInvalid: "That doesn't look like a WhatsApp number.",
     failed: `Something went wrong and your details weren't sent. Please try again, or email ${facts.email}.`,
   },
-
   submit: facts.ctaLabel,
-  /** One short line above the button (approved wording; the guide says "The first visit is free."). */
-  freeVisit: "A free first visit.",
+  close: "Close",
   /** Hidden spam trap; real visitors never see it. */
   honeypotLabel: "Company",
 
-  /**
-   * Thank-you state after sending. Interface wording written for the site,
-   * not from a deck: to confirm with Jay.
-   */
   thanks: {
-    heading: (firstName: string) => `Thank you, ${firstName}.`,
-    reply: facts.replyTime ?? todo("how fast a Sherpa replies"),
-    /** Interface wording given for the site; links to facts.preVisitFormUrl. */
-    formLead: "Before you walk in, tell us a little about yourself.",
+    heading: (firstName: string) => `Thank you, ${firstName}. We'll message you on WhatsApp to set your first hour.`,
+    formLead: "Before you come, tell us a little about yourself.",
     formLabel: "Fill in the short form",
-    whatsappLabel: "Message us on WhatsApp",
-    /** Pre-filled WhatsApp message, by facts.ctaMode. */
-    whatsappMessage: (firstName: string) =>
-      facts.ctaMode === "waitlist"
-        ? `Hi BigToe, this is ${firstName}. I've just joined the waitlist.`
-        : `Hi BigToe, this is ${firstName}. I'd like to book my free first visit.`,
-    emailLead: "Or write to us at",
-    emailOnlyLead: "Write to us at",
+    whatsappLabel: "Message us now",
+    /** Pre-filled WhatsApp message (interface wording). */
+    whatsappMessage: (firstName: string) => `Hi BigToe, this is ${firstName}. I'd like to book my first hour.`,
   },
 } as const;

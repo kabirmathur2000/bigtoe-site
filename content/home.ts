@@ -1,134 +1,86 @@
 /**
- * Home page copy: six chapters in Deck 1 order (the poem moved to the footer, the Scoreboard in from Method). The deck labels shape the order but are not shown.
- * Every line comes from CLAUDE.md, the guide or the decks, cut but never
- * reworded; facts are imported, never retyped. American spelling.
+ * Home: five screens and the FAQs. Wording as approved in the final plan
+ * (17 Nov 2026); facts are imported, never retyped. American spelling.
  */
 import { facts, todo } from "./facts";
 
-/** Chapter 1, the hero. Deck 1 slide 3. */
+/** Screen 1 (light, photo). */
 export const hero = {
-  /** Deck label, not shown (it shapes the page order): THE MAIN POINT. */
-  headline: "We train for a sport called life.",
-  media: {
-    shot: "Silent video loop: a member mid-lift with a Sherpa beside them",
-    caption: todo("member first name, age. Mid-lift, with their Sherpa."),
-  },
-} as const;
-
-/** Chapter 2. Deck 1 slide 4, cut. */
-export const belief = {
-  /** Deck label, not shown (it shapes the page order): THE CORE BELIEF. */
-  /** Shown as a small label: one of the two labels on the site (with IN OUR MEMBERS' WORDS). */
-  label: "Our belief",
   headline: facts.heroLine,
+  line: "A strength studio for life after 40. Post-physio to lifelong athletes.",
+  shot: "The studio floor in warm morning light",
 } as const;
 
-/** Chapter 3 (moved from Method, unchanged). Deck 7 slides 1, 5 and 12; the score as a sport (Deck 7 cover). */
-export const scoreboard = {
-  /** Deck label, not shown (it shapes the page order): THE SCOREBOARD. */
-  headline: "Every sport has a score. This is ours.",
-  /** Always shown above the dials, so they never read as a member's results. */
-  example: "Example",
-  /** Deck 7 slide 5: the four dials, each out of 100. */
-  dials: [
-    { name: "InBody", value: 78 },
-    { name: "Balance & Mobility", value: 42 },
-    { name: "Functional Strength", value: 90 },
-    { name: "Conditioning", value: 66 },
-  ],
-  outOf: "out of 100",
-  scoreName: "Strength Reserve",
-  /** Deck 7 slide 12, "say it to a member". */
-  weakest: "Your Strength Reserve is only as good as your weakest dial. That is where we start.",
+/** Screen 2 (light, no visual). Deck 1 slide 3 and slide 4 (cut). */
+export const sport = {
+  headline: "We train for a sport called life.",
+  line: "No off-season. No substitutes. Most people play it untrained.",
+  link: { label: "Why we built this", href: "/team" },
+} as const;
+
+/** Screen 3 (light, photo). The free first hour. */
+export const firstHour = {
+  headline: "Looking fit isn't being fit.",
+  line: "Start with one free hour. A body scan. A session at your pace. Coffee, and a straight talk about what's next.",
+  shot: "The coffee corner after a session",
 } as const;
 
 /**
- * The Practice Possibility poem: the text on the studio wall, shown in the footer.
- * FIXED WORDING. Never edit a character: spelling, capitals and
- * punctuation stay exactly as on the wall. See CLAUDE.md.
+ * Screen 4 (navy, photo). Member quotes, one at a time. Placeholders until
+ * written consent: first name, age and consent show as TODOs. Quotes 1 to 3
+ * and 5 are cut from docs/copy/testimonials.md; quote 4 is not in that file yet.
  */
-export const poem = {
-  /** Deck 1 slide 5 label. */
-  /** Deck label OUR MISSION; the poem now lives in the footer on every page. */
-  stanzas: [
-    ["We get better at what we practice."],
-    [
-      "If we practice hesitation, we get better at it.",
-      "If we practice fear, we get better at it.",
-      "If we practice movement, we get better at it.",
-      "People practice decline without realizing it.",
-    ],
-    ["At BigToe, we Practice Possibility."],
+export const members = {
+  headline: "Seen. Belong. Progress.",
+  line: "In our members' words.",
+  shot: "Sherpas at work on the training floor",
+  quotes: [
+    { quote: "I look forward to every session, something I never imagined would happen!", todo: null },
+    { quote: "It’s that level of attention that makes you feel seen.", todo: null },
+    { quote: "Today, I wake up without an alarm, looking forward to coming in.", todo: null },
+    {
+      quote: "He can absolutely kick your butt during a workout, yet somehow you leave standing tall instead of crawling home!",
+      todo: todo("source: this quote is not in docs/copy/testimonials.md"),
+    },
+    /** testimonials.md has "In fact I've now enrolled my daughter too."; "which says it all!" is not in the member's words. */
+    { quote: "I’ve now enrolled my daughter too.", todo: null },
+  ].map((q) => ({ ...q, todo: q.todo as string | null })),
+  name: todo("first name"),
+  age: todo("age"),
+  consent: todo("written consent"),
+  regionLabel: "Member quotes",
+  previous: "Previous quote",
+  next: "Next quote",
+} as const;
+
+/** Screen 5 (navy, no visual). Price, how it is set, the guarantee. */
+export const price = {
+  headline: facts.price.range,
+  line: facts.price.note,
+  guarantee: facts.guarantee,
+} as const;
+
+/** FAQs, collapsed, under screen 5 (navy). */
+export const faqs = {
+  label: "Questions",
+  items: [
+    {
+      q: "Who is BigToe for?",
+      /** Deck 1: youngest 40, oldest 69, average 54, 65% women. */
+      a: "Our youngest member is 40. Our oldest is 69, so far. Average age 54. About two thirds women. All you need is an open mind.",
+    },
+    {
+      q: "I have an old injury. Is it safe?",
+      a: "You fill in a health-history form first. Where it matters, we check with your doctor. Hard is okay. Painful never is.",
+    },
+    {
+      q: "How often will I train?",
+      a: `${facts.frequency} Your goal decides. Your Sherpa sets it with you.`,
+    },
+    {
+      q: "What is the Reserve Audit?",
+      /** "Strength Reserve Score" (Deck 7); the plan's "Reserve Score" is on the banned-words list. */
+      a: "Your first session as a member. We assess mobility and balance, strength, conditioning and body composition. It gives your Strength Reserve Score: our own measure of what your body can do. It tracks capability. It doesn't diagnose.",
+    },
   ],
-} as const;
-
-/**
- * Chapter 4, the loop (Deck 5's closed loop, in four steps). Lines as
- * approved: Deck 7 / Deck 0 ("We don't guess. We test."), Deck 5 slide 10
- * (goals agreed, "Signed by both"; "16 targeted sessions"), Deck 1 ("one
- * Sherpa beside you"; "If a client's numbers don't move, the failure is
- * ours", turned to "you").
- */
-export const loop = {
-  /** Deck label, not shown (it shapes the page order): THE LOOP. */
-  steps: [
-    { word: "Test", line: "We don\u2019t guess. We test." },
-    { word: "Pledge", line: "A goal you chose, signed by both of us." },
-    { word: "Train", line: "16 targeted sessions, one Sherpa beside you." },
-    { word: "Retest", line: "If your numbers don\u2019t move, the failure is ours." },
-  ],
-  /** Deck 5 slide 23 ("A client never finishes a programme. They complete a loop."), turned to "you". */
-  close: "You never finish a program. You complete a loop.",
-  /** Screen-reader name for the diagram. */
-  label: "The loop: test, pledge, train, retest",
-} as const;
-
-/** The photo break between the light and navy halves; the colour fade happens across it. */
-export const photoBreak = {
-  shot: "Members and Sherpas at the coffee table after a session",
-} as const;
-
-/** Chapter 5. */
-export const memberWords = {
-  label: "IN OUR MEMBERS' WORDS",
-  /**
-   * The BigToe word cloud poster, from member testimonials, in the order the
-   * words appear: smallest first, largest last. `size` and `key` (terracotta)
-   * match the poster.
-   */
-  words: [
-    { word: "a way of life", size: "small" },
-    { word: "no injuries", size: "small" },
-    { word: "balance", size: "small" },
-    { word: "seen", size: "small" },
-    { word: "sacred", size: "small", key: true },
-    { word: "grounding", size: "small", key: true },
-    { word: "passion", size: "medium", key: true },
-    { word: "mindset", size: "medium" },
-    { word: "honest", size: "medium" },
-    { word: "trust", size: "medium" },
-    { word: "patient", size: "medium" },
-    { word: "rare", size: "medium" },
-    { word: "home", size: "medium" },
-    { word: "compassion", size: "medium" },
-    { word: "motivated", size: "large", key: true },
-    { word: "pushed", size: "large", key: true },
-    { word: "joy", size: "large", key: true },
-    { word: "care", size: "large", key: true },
-    { word: "family", size: "large" },
-    { word: "mobility", size: "large", key: true },
-    { word: "noticed", size: "large" },
-    { word: "energy", size: "large" },
-    { word: "personal", size: "large" },
-    { word: "stronger", size: "largest" },
-  ] as { word: string; size: "small" | "medium" | "large" | "largest"; key?: boolean }[],
-} as const;
-
-/** Chapter 6. Deck 1 slide 24, then the price and guarantee, then the form. */
-export const promise = {
-  /** Deck label, not shown (it shapes the page order): OUR PROMISE. */
-  headline: "Look better. Move better. Feel better.",
-  /** One small line each: the lowest price, then the guarantee. The range is a Method question. */
-  price: facts.price.fromLine,
-  guarantee: `Guarantee: ${facts.guarantee}.`,
 } as const;

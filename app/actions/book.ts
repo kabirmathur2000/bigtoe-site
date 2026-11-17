@@ -2,7 +2,7 @@
 
 import { booking } from "@/content/booking";
 import { facts } from "@/content/facts";
-import { FIELDS, HONEYPOT, MAX_LENGTH, isEmail, validate, type Values } from "@/lib/waitlist";
+import { FIELDS, HONEYPOT, MAX_LENGTH, validate, type Values } from "@/lib/booking";
 
 export type SubmitResult = { ok: true } | { ok: false; reason: "invalid" | "failed" };
 
@@ -10,11 +10,11 @@ export type SubmitResult = { ok: true } | { ok: false; reason: "invalid" | "fail
 const oneLine = (s: string) => s.replace(/[\r\n\t]+/g, " ").trim();
 
 /**
- * Sends the waitlist / booking form to CONTACT_EMAIL through Resend, with
- * every field. Public form, so no auth; validation and the honeypot run here
- * regardless of what the browser did.
+ * Sends a booking request (first name and WhatsApp number) to CONTACT_EMAIL
+ * through Resend. Public form, so no auth; validation and the honeypot run
+ * here regardless of what the browser did.
  */
-export async function submitWaitlist(formData: FormData): Promise<SubmitResult> {
+export async function submitBooking(formData: FormData): Promise<SubmitResult> {
   // Honeypot filled: a bot. Pretend it worked and send nothing.
   if (String(formData.get(HONEYPOT) ?? "").trim()) return { ok: true };
 
@@ -24,26 +24,24 @@ export async function submitWaitlist(formData: FormData): Promise<SubmitResult> 
   if (Object.keys(validate(values)).length) return { ok: false, reason: "invalid" };
 
   const f = booking.fields;
-  const name = oneLine(`${values.firstName} ${values.lastName}`);
+  const name = oneLine(values.firstName);
   const text = [
     `${f.firstName.label}: ${values.firstName.trim()}`,
-    `${f.lastName.label}: ${values.lastName.trim()}`,
-    `${f.contact.label}: ${values.contact.trim()}`,
-    `${f.day120.label} ${values.day120}`,
+    `${f.whatsapp.label}: ${values.whatsapp.trim()}`,
     "",
-    `Form: ${facts.ctaHeading}`,
+    `Form: ${booking.heading}`,
   ].join("\n");
 
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_EMAIL;
   if (!apiKey || !to) {
     // Local development without keys: log instead of sending, so the
-    // thank-you state can be tried. In production this is a failure.
+    // thank-you step can be tried. In production this is a failure.
     if (process.env.NODE_ENV !== "production") {
-      console.info(`[waitlist] Not sent (RESEND_API_KEY or CONTACT_EMAIL missing):\n${text}`);
+      console.info(`[booking] Not sent (RESEND_API_KEY or CONTACT_EMAIL missing):\n${text}`);
       return { ok: true };
     }
-    console.error("[waitlist] RESEND_API_KEY or CONTACT_EMAIL is not set");
+    console.error("[booking] RESEND_API_KEY or CONTACT_EMAIL is not set");
     return { ok: false, reason: "failed" };
   }
 
@@ -53,20 +51,19 @@ export async function submitWaitlist(formData: FormData): Promise<SubmitResult> 
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         // A sender on a domain verified in Resend; Resend's test sender until then.
-        from: process.env.RESEND_FROM || "BigToe website <onboarding@resend.dev>",
+        from: process.env.RESEND_FROM || `${facts.brand} website <onboarding@resend.dev>`,
         to: to.split(",").map((s) => s.trim()).filter(Boolean),
-        subject: oneLine(`${facts.ctaHeading}: ${name}`),
+        subject: oneLine(`${booking.heading}: ${name}`),
         text,
-        ...(isEmail(values.contact) ? { reply_to: values.contact.trim() } : {}),
       }),
     });
     if (!res.ok) {
-      console.error(`[waitlist] Resend responded ${res.status}: ${await res.text()}`);
+      console.error(`[booking] Resend responded ${res.status}: ${await res.text()}`);
       return { ok: false, reason: "failed" };
     }
     return { ok: true };
   } catch (err) {
-    console.error("[waitlist] Resend request failed", err);
+    console.error("[booking] Resend request failed", err);
     return { ok: false, reason: "failed" };
   }
 }

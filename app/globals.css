@@ -131,6 +131,8 @@ html.tones-managed [data-tone] {
 }
 html.tones-managed main [data-tone="light"] { color: var(--navy); }
 html.tones-managed main [data-tone="navy"] { color: var(--offwhite); }
+/* The footer is always navy, also on pages with no navy section (the legal pages). */
+html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: var(--offwhite); }
 
 /* ------------------------------------------------------------------ */
 /* Chapters: each fills the screen, content centred,                  */
