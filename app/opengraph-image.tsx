@@ -16,8 +16,8 @@ const NAVY = "#0A212D";
 const OFFWHITE = "#F0EEEB";
 
 // Read at build time, so the image is generated once and served static.
-const [regular, logo] = await Promise.all([
-  readFile(join(process.cwd(), "docs/fonts/AndersonGrotesk.otf")),
+const [light, logo] = await Promise.all([
+  readFile(join(process.cwd(), "docs/fonts/AndersonGrotesk-Light.otf")),
   readFile(join(process.cwd(), "public/brand/logo-tag.png")),
 ]);
 
@@ -41,11 +41,11 @@ export default async function Image() {
       >
         {/* LogoTag is 800x277. */}
         <img src={logoSrc} width={320} height={111} alt="" />
-        <div style={{ display: "flex", fontSize: 72, fontWeight: 400, lineHeight: 1.05, letterSpacing: "-0.015em", maxWidth: 940 }}>
+        <div style={{ display: "flex", fontSize: 72, fontWeight: 300, lineHeight: 1.05, letterSpacing: "-0.015em", maxWidth: 940 }}>
           {facts.heroLine}
         </div>
       </div>
     ),
-    { ...size, fonts: [{ name: "Anderson Grotesk", data: regular, style: "normal", weight: 400 }] },
+    { ...size, fonts: [{ name: "Anderson Grotesk", data: light, style: "normal", weight: 300 }] },
   );
 }

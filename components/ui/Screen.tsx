@@ -91,10 +91,13 @@ export function PhotoScreen({
       <Placeholder ratio="" shot={shot} className={`flex-1 md:p-6 ${strip ? "pb-14 md:pb-16" : ""}`} />
       {strip && (
         <p className="absolute inset-x-0 bottom-0 bg-navy px-gutter py-2 text-[0.8125rem] text-offwhite md:py-2.5 md:pl-[calc(var(--gutter)+8.333%)] md:text-caption">
+          {/* Each item stays whole, with its dot; the strip wraps between items. */}
           {strip.map((s, i) => (
-            <span key={s} className="whitespace-nowrap">
-              {i > 0 && <span aria-hidden className="mx-2 opacity-75">·</span>}
-              {s}
+            <span key={s}>
+              <span className="whitespace-nowrap">
+                {s}
+                {i < strip.length - 1 && <span aria-hidden className="ml-2 opacity-75">·</span>}
+              </span>{" "}
             </span>
           ))}
         </p>

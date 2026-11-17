@@ -16,7 +16,7 @@
 - **All page copy lives in `content/*.ts`,** never inside components. Missing facts become visible TODOs (rendered as `TODO: …`), listed in "Still open".
 - **No health promises.** Nothing that says prevent, reverse, cure or live longer; no diagnosis. Medical questions defer to the member's doctor. "Inevitable" only in the Rebellious refusal.
 - **American spelling throughout.**
-- **Brand colours only:** off-white #F0EEEB, navy #0A212D, terracotta #D4644D. Typeface Anderson Grotesk, Regular and Bold only.
+- **Brand colours only:** off-white #F0EEEB, navy #0A212D, terracotta #D4644D. Typeface Anderson Grotesk: Light for large headlines, Regular for text, Bold for the button and labels.
 
 Sources: the Version C plan (above), then `docs/website-guide.md`, the decks in `docs/decks/`, and `docs/copy/`. Photos: `docs/shot-list.md`.
 
@@ -102,9 +102,9 @@ A floating bar on every page: inset from the screen edges, 8px corners, off-whit
 ### Typography
 
 - **Anderson Grotesk throughout,** from the files in `docs/fonts` (served as `.woff2` copies in `public/fonts`; the share image reads the `.otf` directly). Licence for web use still to confirm.
-- **Weight rule: two weights only, Regular and Bold.** Every headline is **Regular**, to match the logo, the decks and the studio wall. **Bold** is only for the button label and small spaced-out labels (form labels). **Never Light** (it reads thinner than the brand): it is not loaded, and its files are removed. Ultrabold and the obliques are not used.
+- **Weight rule: three weights, Light, Regular and Bold.** Large headlines (`display`, `h1`) are **Light** (Regular read too bold, 17 Nov 2026). Smaller headings (`h2`, `h3`) and body text are **Regular**. **Bold** is only for the button label and small spaced-out labels (form labels). Ultrabold and the obliques are not used.
 - Headlines large, sentence case, tight line spacing.
-- Type scale (fluid, mobile → desktop), all Regular unless noted: `display` 48 → 88px; `h1` 40 → 64px; `h2` 32 → 44px; `h3` 22 → 26px; `body-lg` 20px; `body` 18px; `caption` 14px; `label` 12 → 13px Bold uppercase 0.16em.
+- Type scale (fluid, mobile → desktop), Regular unless noted: `display` 48 → 88px Light; `h1` 40 → 64px Light; `h2` 32 → 44px; `h3` 22 → 26px; `body-lg` 20px; `body` 18px; `caption` 14px; `label` 12 → 13px Bold uppercase 0.16em.
 
 ### Screens and layout
 
