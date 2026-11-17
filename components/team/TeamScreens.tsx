@@ -79,7 +79,7 @@ export function Founders() {
 export function Sherpas() {
   const q = sherpas.quote;
   return (
-    <Section chapter tone="navy" className="pb-[calc(var(--chapter-pad)+var(--bar-h)+2rem)] md:pb-16">
+    <Section chapter tone="navy" className="md:pb-16">
       <div className="mx-auto w-full max-w-wide px-gutter">
         <div className="md:ml-[8.333%] md:max-w-6xl">
           <Reveal stagger={0.2}>

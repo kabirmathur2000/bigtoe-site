@@ -1,15 +1,13 @@
 /**
- * The Method (Version C, 17 Nov 2026): four screens. 1 to 2 light;
+ * Method (Version C, 17 Nov 2026): four screens. 1 to 2 light;
  * 3 to 4 navy.
  */
-import { hero } from "./home";
-
 /** Screen 1 (light, photo: the studio floor, reused from Home). */
 export const reserve = {
   headline: "The Reserve Score.",
   line: "Most gyms train in the dark. We turn the lights on.",
   note: "Mobility and balance. Strength. Conditioning. Body composition. One number, out of 100.",
-  shot: hero.shot,
+  shot: "The studio floor, wide: a Sherpa coaching, bare feet, free weights",
 } as const;
 
 /** Screen 2 (light, no photo). Three lines, one per thing that fades. */

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import coffeeBar from "@/public/photos/studio-coffee-bar.jpg";
 import { Members } from "@/components/home/Members";
 import { BookButton } from "@/components/ui/BookButton";
 import { Faqs } from "@/components/ui/Faqs";
@@ -13,8 +14,8 @@ import { faqs, hero, price, score, social, sport } from "@/content/home";
 export default function Home() {
   return (
     <>
-      <PhotoScreen first as="h1" shot={hero.shot} strip={hero.strip} headline={hero.headline} line={hero.line}>
-        <div data-cta className="hidden md:block">
+      <PhotoScreen first as="h1" photo={{ src: coffeeBar, ...hero.photo }} caption={hero.caption} headline={hero.headline} line={hero.line} childrenDesktopOnly>
+        <div data-cta>
           <BookButton placement="home-hero" />
         </div>
       </PhotoScreen>
@@ -28,8 +29,8 @@ export default function Home() {
         </Link>
       </TextScreen>
 
-      <PhotoScreen shot={score.shot} headline={score.headline} line={score.line}>
-        <div data-cta className="hidden md:block">
+      <PhotoScreen shot={score.shot} headline={score.headline} line={score.line} childrenDesktopOnly>
+        <div data-cta>
           <BookButton placement="home-score" />
         </div>
       </PhotoScreen>

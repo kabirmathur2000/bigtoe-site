@@ -15,8 +15,8 @@ const inline = "underline decoration-current/40 underline-offset-4 transition-op
 export function Footer() {
   const wa = whatsappHref();
   return (
-    <footer data-tone="navy" className="border-t border-current/15 pb-28 md:pb-0">
-      <div className="mx-auto grid max-w-wide gap-10 px-gutter py-20 md:grid-cols-12 md:py-28">
+    <footer data-tone="navy" className="border-t border-current/15 pb-(--bar-h) md:pb-0">
+      <div className="mx-auto grid max-w-wide gap-10 px-gutter py-(--phone-gap) md:grid-cols-12 md:py-28">
         <div className="md:col-span-4 md:col-start-2">
           <Image
             src={logoTag}

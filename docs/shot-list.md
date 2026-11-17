@@ -8,13 +8,13 @@ Orientation note: "landscape" photos run across the full width of the screen wit
 
 | # | Page | Screen | What the shot shows | Orientation | Notes |
 |---|---|---|---|---|---|
-| 1 | Home | 1 (opening) | The studio floor, wide: a Sherpa coaching, bare feet, free weights | Landscape, wide | Also used on The Method, screen 1. A thin navy strip sits along the bottom edge ("Vasant Vihar, New Delhi · 20,000+ coaching hours · Five members an hour"), so keep the bottom 60px clear of faces. |
+| 1 | Method | 1 (opening) | The studio floor, wide: a Sherpa coaching, bare feet, free weights | Landscape, wide | (Home 1 now uses the real photo `docs/photos/studio-coffee-bar.jpg`.) |
 | 2 | Home | 3 | A member at the coffee corner, real cups and chairs | Landscape | Member: consent needed. |
 | 3 | Home | 4, "Seen." | Member portrait: plain wall, chest up | Portrait (4:5) | Same wall, same distance and same light as 4 and 5. Shown small. Member: consent needed. |
 | 4 | Home | 4, "Belong." | Member portrait: plain wall, chest up | Portrait (4:5) | As 3. |
 | 5 | Home | 4, "Progress." | Member portrait: plain wall, chest up | Portrait (4:5) | As 3. |
 | 6 | Home | 5 | A member laughing mid-session | Landscape | Real laughter, mid-movement. Member: consent needed. |
-| 7 | The Method | 3 | A Sherpa's bare feet on the training floor | Portrait, tight vertical crop | Shown tall beside the words on desktop (about a third of the screen width), across the top on phones. |
+| 7 | Method | 3 | A Sherpa's bare feet on the training floor | Portrait, tight vertical crop | Shown tall beside the words on desktop (about a third of the screen width), across the top on phones. |
 | 8 | Team | 2 | Jay Singh, portrait on the training floor | Landscape on desktop (4:3), small portrait on phones (4:5) | Same crop and light for all four founders (8 to 11); frame loosely so both crops work. |
 | 9 | Team | 2 | Jeevan Aujla, portrait on the training floor | As 8 | |
 | 10 | Team | 2 | Seema Jindal, portrait on the training floor | As 8 | |
@@ -26,4 +26,4 @@ Orientation note: "landscape" photos run across the full width of the screen wit
 | 16 | Team | 3 | Kabir, Sherpa | Portrait (4:5) | As 12. |
 | 17 | Team | 3 | Member portrait beside the quote about Jeevan | Portrait (4:5) | Plain wall, same distance as the Home portraits (3 to 5). Shown small. Member: consent needed. |
 
-16 shots in all (number 1 is used twice).
+16 shots still to take. Done: Home 1, the coffee bar (`docs/photos/studio-coffee-bar.jpg`).

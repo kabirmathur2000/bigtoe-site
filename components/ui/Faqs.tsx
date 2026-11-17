@@ -11,7 +11,7 @@ export function Faqs({ label, items }: { label: string; items: readonly { q: str
   const id = useId();
   const [open, setOpen] = useState<number | null>(null);
   return (
-    <Section tone="navy" className="pb-[calc(5rem+var(--bar-h))] md:pb-36">
+    <Section tone="navy" className="pt-(--phone-gap) pb-(--phone-gap) md:pt-0 md:pb-36">
       <div className="mx-auto max-w-wide px-gutter">
         <div className="md:ml-[8.333%] md:max-w-3xl">
           <h2 className="sr-only">{label}</h2>

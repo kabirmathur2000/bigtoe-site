@@ -10,7 +10,7 @@ import { meta } from "@/content/site";
 export const metadata: Metadata = meta.pages.method;
 
 /**
- * The Method: the Reserve Score and what fades (light); the big toe (the
+ * Method: the Reserve Score and what fades (light); the big toe (the
  * fade runs across its photo) and how it works, with the loop (navy).
  */
 export default function MethodPage() {

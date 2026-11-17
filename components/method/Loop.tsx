@@ -32,7 +32,7 @@ function paths({ w, h, vertical }: Size) {
 }
 
 /**
- * The loop diagram (The Method, "What we promise"), after Love.Life's
+ * The loop diagram (Method, "What we promise"), after Love.Life's
  * panel, in BigToe's words and colours. One panel (hairline border, 8px
  * corners) in four columns: Measure, Train the weakest, Retest,
  * Recalibrate, divided by three smooth arcs; a thin terracotta line rises

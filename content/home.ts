@@ -9,9 +9,15 @@ import { facts, todo } from "./facts";
 export const hero = {
   headline: facts.heroLine,
   line: "Not a gym. A strength studio for life after 40.",
-  /** The thin strip along the photo's bottom edge. */
-  strip: [facts.address.short, `${facts.coachingHours} coaching hours`, facts.membersPerHour],
-  shot: "The studio floor, wide: a Sherpa coaching, bare feet, free weights",
+  /** Small caption on the photo, bottom left. */
+  caption: `${facts.address.short}.`,
+  /** docs/photos/studio-coffee-bar.jpg, compressed into public/photos. Alt text describes the photo. */
+  photo: {
+    alt: "The BigToe coffee bar: a long wooden table and stools under pendant lamps, the BigToe logo on the wall, the training floor behind",
+    /** Crop per screen (object-position): phones keep the logo wall and table; wide screens centre on the table and logo, with the floor in view. */
+    phone: "14% 52%",
+    wide: "50% 52%",
+  },
 } as const;
 
 /** Screen 2 (light, no photo). */

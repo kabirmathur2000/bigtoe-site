@@ -24,7 +24,7 @@ Sources: the Version C plan (above), then `docs/website-guide.md`, the decks in 
 
 ## Site structure
 
-Pages: **Home (`/`), The Method (`/method`), Team (`/team`),** plus **`/terms`** and **`/privacy`**. There is no booking page: the panel opens anywhere.
+Pages: **Home (`/`), Method (`/method`), Team (`/team`),** plus **`/terms`** and **`/privacy`**. There is no booking page: the panel opens anywhere.
 
 Redirects (permanent, `next.config.ts`): `/membership`, `/faqs` and `/book-now` go to Home.
 
@@ -39,7 +39,7 @@ Redirects (permanent, `next.config.ts`): `/membership`, `/faqs` and `/book-now` 
 
 Screens 1 to 3 light; 4 to 6, the FAQs and the footer navy.
 
-1. **Photo: the studio floor, wide** (a Sherpa coaching, bare feet, free weights), with a thin navy strip along its bottom edge: "Vasant Vihar, New Delhi · 20,000+ coaching hours · Five members an hour". "The second half should be the stronger half." / "Not a gym. A strength studio for life after 40." / the button (desktop; phones use the bottom bar).
+1. **Photo: the studio's coffee bar** (`docs/photos/studio-coffee-bar.jpg`, compressed to 2000px in `public/photos/`, served through `next/image`, loaded eagerly at high priority). The square photo is cropped with `object-fit: cover` per screen (`content/home.ts`, `hero.photo`): phones `14% 52%` (the crop shifts left so the BigToe logo wall is never cut off, with the table); wide screens `50% 52%` (the logo wall, the front of the table and the training floor). Small caption on the photo, bottom left: "Vasant Vihar, New Delhi." No facts strip. Text: "The second half should be the stronger half." / "Not a gym. A strength studio for life after 40." / the button (desktop; phones use the bottom bar).
 2. **No photo.** "We train for a sport called life." / "Decline is the default. Not a destiny." / text link "Why we built this →" to /team.
 3. **Photo: a member at the coffee corner.** "Looking fit isn't being fit." / "Your Reserve Score, out of 100. Measured, trained, retested every sixteen sessions." / the button (desktop).
 4. **Navy; the one colour fade happens as this screen arrives.** "Seen. Belong. Progress." / "Don't believe us? Ask them." Three quotes, side by side on desktop, stacked on phones, each under its word (Seen. / Belong. / Progress.) with a member portrait placeholder (same plain wall, same distance), first name and age (`components/home/Members.tsx`).
@@ -47,7 +47,7 @@ Screens 1 to 3 light; 4 to 6, the FAQs and the footer navy.
 6. **No photo.** "₹25,000 to ₹45,000 a month, by how often you train." Two lines: the free first hour, and the guarantee. The button.
 - **FAQs** under screen 6, collapsed (`components/ui/Faqs.tsx`): Can someone like me actually do this?; I have an old injury. Is it safe?; What if I can't make it?; I'm on a GLP-1 medication. Is this for me?; Do you offer nutrition and blood tests?; What is the Reserve Audit?
 
-### The Method (`app/method/page.tsx`, `content/method.ts`)
+### Method (`app/method/page.tsx`, `content/method.ts`)
 
 Screens 1 to 2 light; 3 to 4 navy.
 
@@ -87,12 +87,12 @@ Fetched from bigtoe.in on 17 Nov 2026 and published **word for word**, plain tex
 - **Terracotta beyond the button** is one accent per screen (the rising line in the loop). Terracotta text must be large (24px+, or 19px+ bold); the temporary TODO text is the only exception and goes at launch.
 - **Contrast:** all text passes WCAG AA. Secondary text uses navy or off-white at 75% opacity or more.
 - **One button visible at a time.** The navigation button (desktop) and the bottom bar (phones) step aside while an in-page button (`data-cta`) is on screen.
-- **Colour zones: each page changes colour once,** light first, then one slow fade to navy, then navy to the footer. No fade back. The Method: the fade runs across the bare-feet photo and is complete when it reaches the top. Home ("Seen. Belong. Progress.") and Team ("Your Sherpas."): over about 60% of the screen height as that screen arrives. The legal pages stay light. **Each section keeps its own text colour** (navy on light, off-white on navy), so text never flips mid-fade. Never a hard colour switch, on any setting.
+- **Colour zones: each page changes colour once,** light first, then one slow fade to navy, then navy to the footer. No fade back. Method: the fade runs across the bare-feet photo and is complete when it reaches the top. Home ("Seen. Belong. Progress.") and Team ("Your Sherpas."): over about 60% of the screen height as that screen arrives. The legal pages stay light. **Each section keeps its own text colour** (navy on light, off-white on navy), so text never flips mid-fade. Never a hard colour switch, on any setting.
 - **No gradients, no drop shadows, no glossy effects.** Hairline rules only.
 
 ### Navigation (`components/layout/Header.tsx`, `HeaderShell`)
 
-A floating bar on every page: inset from the screen edges, 8px corners, off-white with a hairline border; the navy logo, then Home, The Method, Team and the button (desktop). Phones: the logo and the three links; the button is fixed to the bottom of the screen (`MobileBookBar`). The current page is underlined. 44px tap targets. It hides while scrolling down and slides back as soon as the visitor scrolls up, in both zones; always visible at the very top and when a keyboard user tabs into it. Under reduced motion it stays visible.
+A floating bar on every page: inset from the screen edges, 8px corners, off-white with a hairline border; the navy logo, then Home, Method, Team and the button (desktop). Phones: the logo and the three links; the button is fixed to the bottom of the screen (`MobileBookBar`). The current page is underlined. 44px tap targets. It hides while scrolling down and slides back as soon as the visitor scrolls up, in both zones; always visible at the very top and when a keyboard user tabs into it. Under reduced motion it stays visible.
 
 ### Logo
 
@@ -108,7 +108,8 @@ A floating bar on every page: inset from the screen edges, 8px corners, off-whit
 
 ### Screens and layout
 
-- **Every screen fills the window** (100svh; the first screen of a page 100svh below the navigation) and its content is fully visible, clear of the mobile bottom bar. Text screens: `TextScreen`; photo screens: `PhotoScreen` (`layout="top"`: photo across the top, words below; `layout="side"`: a tall photo beside the words on desktop; optional `strip` along the photo's bottom edge), in `components/ui/Screen.tsx`. Every screen keeps a band the height of the navigation at its top (`--chapter-band`), except photo screens, whose photo runs to the top edge.
+- **Desktop: every screen fills the window** (100svh; the first screen of a page 100svh below the navigation) and its content is fully visible.
+- **Phones: no empty stretches.** Every screen appears in the same order as desktop. The first photo screen of a page fills the window down to the bottom bar; every other screen sizes to its content with the same space above and below (`--phone-gap`, 3.5rem), so the gap between any two screens is an even 112px. Photos keep a fixed shape on phones (4:3 across, 4:5 for the tall bare-feet photo). The bottom bar's room is reserved once, under the footer, not under every screen. In-page buttons that only show on desktop use `childrenDesktopOnly`, so they leave no gap on phones. Text screens: `TextScreen`; photo screens: `PhotoScreen` (`layout="top"`: photo across the top, words below; `layout="side"`: a tall photo beside the words on desktop; `photo` for a real photograph with its phone and wide crops; `caption` small on the photo, bottom left), in `components/ui/Screen.tsx`. Every screen keeps a band the height of the navigation at its top (`--chapter-band`), except photo screens, whose photo runs to the top edge.
 - **Allowed to run longer:** the FAQs, the legal pages, and "Your Sherpas" on phones.
 - **Check at 375x667, 390x844 and 1440x900.** On short phones (the `short:` variant: phone layout under about 720px tall) photos shrink and spacing tightens. Never cut copy without asking.
 - **One left edge:** content starts at the second column of the 12-column grid (`md:ml-[8.333%]`).
@@ -152,7 +153,7 @@ A floating bar on every page: inset from the screen edges, 8px corners, off-whit
 - `components/`: layout, motion primitives and UI. No copy inside.
 - Motion: `motion` for reveals; scrolling is native. Every primitive checks reduced motion.
 - Env vars: `RESEND_API_KEY`, `CONTACT_EMAIL` (comma-separated for several), `RESEND_FROM` (a sender on a domain verified in Resend), `NEXT_PUBLIC_WHATSAPP_NUMBER`, `NEXT_PUBLIC_SITE_URL` (defaults to https://bigtoe.in). Without Resend keys in development the booking logs instead of sending; in production it shows the failure message with the email address.
-- SEO: titles and descriptions in `content/site.ts` (`meta`). LocalBusiness JSON-LD in `app/layout.tsx`, built only from `facts`. `app/opengraph-image.tsx` (the core belief, Anderson Grotesk from `docs/fonts/*.otf`), `app/sitemap.ts` (Home, The Method, Team, terms, privacy), `app/robots.ts`.
+- SEO: titles and descriptions in `content/site.ts` (`meta`). LocalBusiness JSON-LD in `app/layout.tsx`, built only from `facts`. `app/opengraph-image.tsx` (the core belief, Anderson Grotesk from `docs/fonts/*.otf`), `app/sitemap.ts` (Home, Method, Team, terms, privacy), `app/robots.ts`.
 
 ---
 

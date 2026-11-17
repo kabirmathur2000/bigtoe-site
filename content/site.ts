@@ -7,7 +7,7 @@ export const nav = {
   label: "Main",
   links: [
     { href: "/", label: "Home" },
-    { href: "/method", label: "The Method" },
+    { href: "/method", label: "Method" },
     { href: "/team", label: "Team" },
   ],
 } as const;
@@ -35,7 +35,7 @@ export const meta = {
   homeTitle: `${facts.brand} · Personal training for adults over 40 · ${facts.address.area}, ${facts.address.city}`,
   description: `${facts.heroLine} Not a gym. A strength studio for life after 40.`,
   pages: {
-    method: { title: "The Method", description: "The Reserve Score. Most gyms train in the dark. We turn the lights on." },
+    method: { title: "Method", description: "The Reserve Score. Most gyms train in the dark. We turn the lights on." },
     team: { title: "Team", description: "Why we built this. The four of us, and your Sherpas." },
     terms: { title: "Terms & Conditions", description: `${facts.brand} terms and conditions.` },
     privacy: { title: "Privacy Policy", description: `${facts.brand} privacy policy.` },

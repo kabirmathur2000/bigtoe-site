@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { nav } from "@/content/site";
 
-/** Home, The Method and Team; the current page is underlined. 44px tap targets. */
+/** Home, Method and Team; the current page is underlined. 44px tap targets. */
 export function NavLinks() {
   const pathname = usePathname();
   return (

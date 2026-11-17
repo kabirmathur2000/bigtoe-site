@@ -17,6 +17,8 @@
   --header-h: 4rem;
   --bar-h: 4.5rem;
   --chapter-pad: clamp(1.25rem, 4.5svh, 4rem);
+  /* Phones: the even space above and below each screen. */
+  --phone-gap: 3.5rem;
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 @media (min-width: 768px) {
@@ -172,6 +174,25 @@ html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: va
   }
   /* Auto side margins would otherwise shrink a centred container to its content. */
   .chapter > * { width: 100%; }
+
+  /* Phones: after the first, screens size to their content with the same
+     padding above and below, so there are no empty stretches between them.
+     The bottom bar's room is reserved once, at the foot of the page (the
+     footer), not under every screen. */
+  @media (max-width: 767px) {
+    .chapter {
+      min-height: 0;
+      padding-top: var(--phone-gap);
+      padding-bottom: var(--phone-gap);
+    }
+    /* A first screen of words only sizes to its content too; a first photo
+       screen sets its own full height (PhotoScreen). */
+    main > .chapter:first-child {
+      min-height: 0;
+      padding-top: var(--phone-gap);
+      padding-bottom: var(--phone-gap);
+    }
+  }
 }
 
 /* ------------------------------------------------------------------ */
