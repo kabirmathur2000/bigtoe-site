@@ -118,7 +118,7 @@ export function LoopDiagram({ steps, label }: { steps: readonly string[]; label:
                 on ? "opacity-100" : "opacity-0"
               }`}
             >
-              <p className="text-h3 md:text-[2.5rem] md:leading-[1.05] md:font-light">{s}</p>
+              <p className="text-h3 md:text-[2.5rem] md:leading-[1.05]">{s}</p>
             </li>
           ))}
         </ol>

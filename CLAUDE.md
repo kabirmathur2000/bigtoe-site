@@ -78,7 +78,7 @@ Fetched from bigtoe.in on 17 Nov 2026 and published **word for word**, plain tex
 
 ### Colour
 
-- **Brand colours only.** Tokens: `--color-navy #0A212D`, `--color-terracotta #D4644D`, `--color-offwhite #F0EEEB`. Tints for hairlines and secondary text are made from these with opacity, never new hues. "Off-white" always means #F0EEEB.
+- **Brand colours only.** Tokens: `--color-navy #0A212D`, `--color-terracotta #D4644D`, `--color-offwhite #F0EEEB`. Tailwind's default palette is switched off (`--color-*: initial`), so no other colour class exists. No exceptions (the dials' green is gone with the Scoreboard). Tints for hairlines and secondary text are made from these with opacity, never new hues. "Off-white" always means #F0EEEB.
 - **Main button:** terracotta fill with off-white text, label 19px Bold uppercase so it passes AA as large text. The same on light and navy. Hover: a slow opacity change. Square corners, no shadows.
 - **Terracotta beyond the button** is one accent per screen (the rising line in the loop). Terracotta text must be large (24px+, or 19px+ bold); the temporary TODO text is the only exception and goes at launch.
 - **Contrast:** all text passes WCAG AA. Secondary text uses navy or off-white at 75% opacity or more.
@@ -97,9 +97,10 @@ A floating bar on every page: inset from the screen edges, 8px corners, off-whit
 
 ### Typography
 
-- **Anderson Grotesk throughout,** self-hosted (licence for web use still to confirm). Light, Regular and Bold are loaded.
-- **Headlines Light or Regular, large,** sentence case, tight line spacing. **Bold only for small spaced-out labels** (form labels) and the button label.
-- Type scale (fluid, mobile → desktop): `display` 48 → 88px Light; `h1` 40 → 64px Light; `h2` 32 → 44px; `h3` 22 → 26px; `body-lg` 20px; `body` 18px; `caption` 14px; `label` 12 → 13px Bold uppercase 0.16em.
+- **Anderson Grotesk throughout,** from the files in `docs/fonts` (served as `.woff2` copies in `public/fonts`; the share image reads the `.otf` directly). Licence for web use still to confirm.
+- **Weight rule: two weights only, Regular and Bold.** Every headline is **Regular**, to match the logo, the decks and the studio wall. **Bold** is only for the button label and small spaced-out labels (form labels). **Never Light** (it reads thinner than the brand): it is not loaded, and its files are removed. Ultrabold and the obliques are not used.
+- Headlines large, sentence case, tight line spacing.
+- Type scale (fluid, mobile → desktop), all Regular unless noted: `display` 48 → 88px; `h1` 40 → 64px; `h2` 32 → 44px; `h3` 22 → 26px; `body-lg` 20px; `body` 18px; `caption` 14px; `label` 12 → 13px Bold uppercase 0.16em.
 
 ### Screens and layout
 

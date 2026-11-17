@@ -7,9 +7,6 @@
   --navy: #0a212d;
   --terracotta: #d4644d;
   --offwhite: #f0eeeb;
-  /* The one exception to the three brand colours: the strongest dial on the Scoreboard only. */
-  --dial-green: #4a7458;
-  /* Button hover: terracotta darkened toward navy, not a new colour. */
 
   /* Page background, driven by SectionToneController for cross-fades. */
   --page-bg: var(--offwhite);
@@ -30,21 +27,22 @@
 }
 
 @theme {
+  /* Only the three brand colours exist: Tailwind's default palette is switched off. */
+  --color-*: initial;
   --color-navy: #0a212d;
   --color-terracotta: #d4644d;
   --color-offwhite: #f0eeeb;
-  --color-dial-green: #4a7458;
 
   /* Type scale (fluid 375px → 1440px). See CLAUDE.md. */
   --text-display: clamp(3rem, 2.12rem + 3.756vw, 5.5rem);
   --text-display--line-height: 1.02;
   --text-display--letter-spacing: -0.02em;
-  --text-display--font-weight: 300;
+  --text-display--font-weight: 400;
 
   --text-h1: clamp(2.5rem, 1.97rem + 2.254vw, 4rem);
   --text-h1--line-height: 1.05;
   --text-h1--letter-spacing: -0.015em;
-  --text-h1--font-weight: 300;
+  --text-h1--font-weight: 400;
 
   --text-h2: clamp(2rem, 1.736rem + 1.127vw, 2.75rem);
   --text-h2--line-height: 1.1;
