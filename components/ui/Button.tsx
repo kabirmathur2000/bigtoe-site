@@ -9,7 +9,7 @@ import type { ComponentProps } from "react";
 type Variant = "primary" | "outline" | "outline-light";
 
 const base =
-  "inline-flex items-center justify-center gap-3 px-6 py-3.5 text-[1.1875rem] leading-tight font-bold uppercase tracking-[0.08em] whitespace-nowrap transition-opacity duration-700 ease-soft hover:opacity-80";
+  "inline-flex items-center justify-center gap-3 px-4 py-3.5 md:px-6 text-[1.1875rem] leading-tight font-bold uppercase tracking-[0.04em] md:tracking-[0.08em] whitespace-nowrap transition-opacity duration-700 ease-soft hover:opacity-80";
 
 const variants: Record<Variant, string> = {
   primary: "bg-terracotta text-offwhite",

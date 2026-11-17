@@ -1,5 +1,5 @@
 /** Site-wide interface wording: navigation and footer labels, page metadata. */
-import { facts, todo } from "./facts";
+import { facts, mailtoHref, todo } from "./facts";
 
 export const nav = {
   homeLabel: "BigToe home",
@@ -13,14 +13,15 @@ export const nav = {
 } as const;
 
 export const footer = {
+  tagline: "Practice Possibility.",
   /** Screen-reader name for the footer's links. */
-  navLabel: "Legal",
+  navLabel: "More",
+  careers: { label: "Careers", href: mailtoHref },
+  map: { label: "Location on Maps", missing: todo("map link") },
   links: [
     { href: "/terms", label: "Terms & Conditions" },
     { href: "/privacy", label: "Privacy Policy" },
   ],
-  mapLabel: "Map",
-  missingMap: todo("map link"),
   whatsappLabel: "WhatsApp",
   missingWhatsapp: todo("WhatsApp number"),
 } as const;
@@ -32,9 +33,9 @@ export const footer = {
 export const meta = {
   title: "BigToe",
   homeTitle: `${facts.brand} · Personal training for adults over 40 · ${facts.address.area}, ${facts.address.city}`,
-  description: `${facts.heroLine} A strength studio for life after 40.`,
+  description: `${facts.heroLine} Not a gym. A strength studio for life after 40.`,
   pages: {
-    method: { title: "The Method", description: "The Strength Reserve. More strength than your day demands." },
+    method: { title: "The Method", description: "The Reserve Score. Most gyms train in the dark. We turn the lights on." },
     team: { title: "Team", description: "Why we built this. The four of us, and your Sherpas." },
     terms: { title: "Terms & Conditions", description: `${facts.brand} terms and conditions.` },
     privacy: { title: "Privacy Policy", description: `${facts.brand} privacy policy.` },

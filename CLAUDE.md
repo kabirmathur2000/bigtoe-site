@@ -4,21 +4,21 @@
 
 ## North star
 
-**One job: get the right person to book a free first hour.** Less is 20x more. If a screen does not serve that, cut it. The whole site, all pages, takes about two minutes to scroll. Reference: 10squared.com for flow, where each screen is its own setting.
+**One job: get the right person to book a free first hour.** Less is 20x more. If a screen does not serve that, cut it. The three pages together take about two and a half minutes to scroll. Reference: 10squared.com for flow, where each screen is its own setting.
 
-## Rules
+## Copy rules (Version C, 17 Nov 2026)
 
-- **One idea per screen:** a short headline, one supporting line, at most one button.
-- **One button label everywhere:** "Book your first hour" (`facts.ctaLabel`), shown in the button style (19px Bold uppercase). Never a variant. Every button opens the booking panel.
-- **Visuals only:** the space, the Sherpas, the founders, plus the one loop diagram on The Method. Grey placeholders named for the shot until the shoot. No member photos.
-- **Member quotes are placeholders until written consent:** first name, age and consent show as visible TODOs. A quote is a member's own words, cut but never reworded or added to.
-- **Every reusable fact lives in `content/facts.ts`** and is imported (price, guarantee, address, hours, email, WhatsApp, button label, frequency). **All page copy lives in `content/*.ts`,** never inside components.
-- **Wording:** the approved final plan (17 Nov 2026) for the site; the decks for anything new. Never invent claims, statistics, prices or member quotes. If something is missing, put a visible TODO in the content file (rendered as `TODO: …`) and list it.
-- **No health promises.** Nothing that says prevent, reverse, cure or live longer; no medical or diagnostic language. "Inevitable" only in the Rebellious refusal.
-- **American spelling throughout** (aging, realizing, pretense).
-- **Brand colours only:** off-white #F0EEEB, navy #0A212D, terracotta #D4644D. No mixed or darkened shades; hovers are a slow opacity change. Typeface Anderson Grotesk.
+- **One idea per screen:** a short headline, one supporting line (two or three only where the plan marks them), at most one button.
+- **One button label everywhere:** "Book your free first hour" (`facts.ctaLabel`), shown in the button style (19px Bold uppercase). Never a variant. Every button opens the booking panel.
+- **Facts are used everywhere from `content/facts.ts`, never retyped:** 20,000+ coaching hours; five Sherpas; five members an hour; hours Monday to Saturday, 6 am to 8 pm, Sunday, 8 am to 1 pm; price ₹25,000 to ₹45,000 a month, by how often you train; the guarantee "Come to your first eight sessions. Not for you? Your money back." (only studio sessions count toward the eight); the free first hour: a body scan, a light session, and a straight talk over coffee; founders Jay Singh 59, Jeevan Aujla 41, Seema Jindal 58, Rodrigo Pérez 51.
+- **Member quotes and member photos are placeholders until written consent:** first name and age show as visible TODOs; portraits are grey placeholders named after the shot. A quote is a member's own words, never reworded or added to; a quote not found in `docs/copy/testimonials.md` carries a source TODO.
+- **"Reserve Score"** (out of 100) is now the site's name for the audit's score, approved in Version C.
+- **All page copy lives in `content/*.ts`,** never inside components. Missing facts become visible TODOs (rendered as `TODO: …`), listed in "Still open".
+- **No health promises.** Nothing that says prevent, reverse, cure or live longer; no diagnosis. Medical questions defer to the member's doctor. "Inevitable" only in the Rebellious refusal.
+- **American spelling throughout.**
+- **Brand colours only:** off-white #F0EEEB, navy #0A212D, terracotta #D4644D. Typeface Anderson Grotesk, Regular and Bold only.
 
-Sources: the final plan (above), then `docs/website-guide.md`, then the decks in `docs/decks/`, then `docs/copy/`.
+Sources: the Version C plan (above), then `docs/website-guide.md`, the decks in `docs/decks/`, and `docs/copy/`. Photos: `docs/shot-list.md`.
 
 ---
 
@@ -30,37 +30,41 @@ Redirects (permanent, `next.config.ts`): `/membership`, `/faqs` and `/book-now` 
 
 ### Booking panel (`components/booking/BookingPanel.tsx`)
 
-- Every button (`BookButton`) opens it. A calm panel in the brand light colour slides up from the bottom (a modal `<dialog>`; navy backdrop at 60%): heading "Book your first hour", fields first name and WhatsApp number, button "Book your first hour". Close, Escape or a tap outside closes it; focus stays inside and returns to the button; the page behind does not scroll. Reduced motion: a slow fade.
+- Every button (`BookButton`) opens it. A calm panel in the brand light colour slides up from the bottom (a modal `<dialog>`; navy backdrop at 60%): heading and button "Book your free first hour", fields first name and WhatsApp number. Close, Escape or a tap outside closes it; focus stays inside and returns to the button; the page behind does not scroll. Reduced motion: a slow fade.
 - On submit: server action `app/actions/book.ts` (honeypot, validation shared with the browser in `lib/booking.ts`), email via Resend to `CONTACT_EMAIL`. Then the thank-you: "Thank you, {name}. We'll message you on WhatsApp to set your first hour." Then "Before you come, tell us a little about yourself." and the button "Fill in the short form" (`facts.preVisitFormUrl`, new tab), and a smaller "Message us now" WhatsApp button (TODO until the number is set).
 - The spam trap ("Company") is off-screen, `aria-hidden` and out of the tab order.
 - Analytics (Vercel): "Booking panel" on open (placement, page); "Booking submit" on every submit (page, result: invalid, sent or failed). Never personal details.
 
 ### Home (`app/page.tsx`, `content/home.ts`)
 
-1. **Light, photo (the studio floor).** "The second half should be the stronger half." / "A strength studio for life after 40. Post-physio to lifelong athletes." / the button (desktop; phones use the bottom bar).
-2. **Light, no visual.** "We train for a sport called life." / "No off-season. No substitutes. Most people play it untrained." / text link "Why we built this" to /team.
-3. **Light, photo (the coffee corner).** "Looking fit isn't being fit." / "Start with one free hour. A body scan. A session at your pace. Coffee, and a straight talk about what's next."
-4. **Navy, photo (Sherpas at work); the colour fade runs across it.** "Seen. Belong. Progress." / "In our members' words." Five quotes, one at a time (`components/home/Quotes.tsx`): arrows below the quote on desktop, swipe on phones, never automatic, no loop, slow cross-fade, no member photos.
-5. **Navy, no visual.** "₹25,000 to ₹45,000 a month." / "Set with you in your first hour. In writing, before you commit." / "Not seeing progress in your functional scores after 30 days? Your money back." / the button.
-- **FAQs** under screen 5, collapsed (`components/ui/Faqs.tsx`): Who is BigToe for?; I have an old injury. Is it safe?; How often will I train?; What is the Reserve Audit? Not a full screen; it runs as long as it needs.
+Screens 1 to 3 light; 4 to 6, the FAQs and the footer navy.
+
+1. **Photo: the studio floor, wide** (a Sherpa coaching, bare feet, free weights), with a thin navy strip along its bottom edge: "Vasant Vihar, New Delhi · 20,000+ coaching hours · Five members an hour". "The second half should be the stronger half." / "Not a gym. A strength studio for life after 40." / the button (desktop; phones use the bottom bar).
+2. **No photo.** "We train for a sport called life." / "Decline is the default. Not a destiny." / text link "Why we built this →" to /team.
+3. **Photo: a member at the coffee corner.** "Looking fit isn't being fit." / "Your Reserve Score, out of 100. Measured, trained, retested every sixteen sessions." / the button (desktop).
+4. **Navy; the one colour fade happens as this screen arrives.** "Seen. Belong. Progress." / "Don't believe us? Ask them." Three quotes, side by side on desktop, stacked on phones, each under its word (Seen. / Belong. / Progress.) with a member portrait placeholder (same plain wall, same distance), first name and age (`components/home/Members.tsx`).
+5. **Photo: a member laughing mid-session.** "Get stronger. Keep the pizza." / "Coffee at the social table. Pizza and beer, once a quarter."
+6. **No photo.** "₹25,000 to ₹45,000 a month, by how often you train." Two lines: the free first hour, and the guarantee. The button.
+- **FAQs** under screen 6, collapsed (`components/ui/Faqs.tsx`): Can someone like me actually do this?; I have an old injury. Is it safe?; What if I can't make it?; I'm on a GLP-1 medication. Is this for me?; Do you offer nutrition and blood tests?; What is the Reserve Audit?
 
 ### The Method (`app/method/page.tsx`, `content/method.ts`)
 
-Photos of the space and the Sherpas only.
+Screens 1 to 2 light; 3 to 4 navy.
 
-1. **Light, photo (the training floor).** "The Strength Reserve." / "More strength than your day demands."
-2. **Light, no visual.** "What fades." / "Muscle. Strength. Power."
-3. **Navy, photo (a Sherpa coaching); the colour fade runs across it.** "What we train." / "Mobility and balance. Strength. Conditioning."
-4. **Navy.** "What we promise." Then the loop diagram (`components/method/Loop.tsx`), then "If your numbers don't move, the failure is ours." and the button.
+1. **Photo: the studio floor (Home 1's shot).** "The Reserve Score." / "Most gyms train in the dark. We turn the lights on." / small line: "Mobility and balance. Strength. Conditioning. Body composition. One number, out of 100."
+2. **No photo.** "Three things fade with age. We train all three." Three lines: Muscle, Strength, Power, each with what it means.
+3. **Photo: a Sherpa's bare feet, tight vertical crop** (tall beside the words on desktop; across the top on phones). The colour fade runs across it. "It all starts with the big toe." / "Bare feet. Free weights. No machine to hold you up."
+4. **No photo.** "How it works." / "It was never motivation. It was the missing scoreboard." The loop diagram (Measure / Train the weakest / Retest / Recalibrate). The button.
 
-**The loop diagram:** after Love.Life's "A smarter way to take care of you" panel, in BigToe's words and brand. One panel, hairline border in the current text colour, 8px corners, four columns divided by three smooth arcs of different curvature: **Measure / Train the weakest / Retest / Recalibrate**. A thin terracotta line rises gently left to right across all four (the Strength Reserve widening); it never slopes downward. As it arrives the arcs and the line draw together, then the words fade in left to right: about two seconds in all; static under reduced motion. Phones: stacked, arcs across (bowing upward, clear of the words), no line inside; a short terracotta line rises bottom-left to top-right above the panel. Drawn at the panel's real pixel size so hairlines stay crisp.
+**The loop diagram** (`components/method/Loop.tsx`): after Love.Life's "A smarter way to take care of you" panel. One panel, hairline border in the current text colour, 8px corners, four columns divided by three smooth arcs of different curvature. A thin terracotta line rises gently left to right across all four; it never slopes downward. The arcs and line draw together, then the words fade in left to right: about two seconds; static under reduced motion. Phones: stacked, arcs across (bowing upward), no line inside; a short terracotta line rises above the panel. Drawn at the panel's real pixel size.
 
 ### Team (`app/team/page.tsx`, `content/team.ts`, `components/team/TeamScreens.tsx`)
 
-1. **Light, no visual.** "Why we built this." Jay's story as cut for the final plan (three short paragraphs), signed "Jay".
-2. **Light, the four founder portraits.** "The four of us." The three values (Rooted, Real, Rebellious, from Deck 1 slide 7), then each founder: Jay Singh, 59. Co-founder.; Jeevan Aujla. Chief Training Officer. UK-certified. Over 20,000 hours coaching real people.; Seema Jindal and Rodrigo Pérez with role TODOs. Phones: a list with a small portrait; desktop: four portraits in a row.
-3. **Navy, four Sherpa portraits.** "Your Sherpas." First names only: Himanshu, Saurav, Sumit, Tanuj (spellings TODO).
-4. **Navy.** The button alone, on a shorter closing screen (60% of the screen height).
+Screens 1 to 2 light; 3 and the footer navy.
+
+1. **No photo.** "Why we built this." Jay's story (three short paragraphs), signed "Jay". The button.
+2. **Four founder portraits** (same crop and light, on the training floor). "The four of us." The three values, then each founder: name and age, role, one line of background. Phones: a list with a small portrait.
+3. **Navy.** "Your Sherpas." / "On Everest, a Sherpa walks the path with you, all the way up." Five portraits (same crop, light and kit): Himanshu, Saurav, Sumit, Tanuj, Kabir, each with "Sherpa" and their own line. Then "Every Sherpa trains under Jeevan, and every workout template is his." Then one member quote with a portrait placeholder. This screen runs longer than one window on phones.
 
 ### Terms and privacy (`content/legal.ts`, `components/legal/LegalText.tsx`)
 
@@ -68,7 +72,7 @@ Fetched from bigtoe.in on 17 Nov 2026 and published **word for word**, plain tex
 
 ### Footer (every page, navy, light LogoTag)
 
-"BigToe. 43 Basant Lok, 3rd Floor, Vasant Vihar, New Delhi 110057. 6 am to 10 pm, every day." with the map link (TODO); "WhatsApp [number TODO]. hello@bigtoe.in."; "There's no parking at the studio. Come by cab or get dropped off."; links Terms & Conditions and Privacy Policy; then the Practice Possibility poem, small (`content/poem.ts`, fixed wording). The footer paints navy even on pages with no navy section.
+"Practice Possibility." / the address / the hours / the parking line / "WhatsApp [number TODO]. hello@bigtoe.in." / links: Careers (mailto:hello@bigtoe.in), Location on Maps (TODO link), Terms & Conditions, Privacy Policy. No poem. The footer paints navy even on pages with no navy section.
 
 ---
 
@@ -83,7 +87,7 @@ Fetched from bigtoe.in on 17 Nov 2026 and published **word for word**, plain tex
 - **Terracotta beyond the button** is one accent per screen (the rising line in the loop). Terracotta text must be large (24px+, or 19px+ bold); the temporary TODO text is the only exception and goes at launch.
 - **Contrast:** all text passes WCAG AA. Secondary text uses navy or off-white at 75% opacity or more.
 - **One button visible at a time.** The navigation button (desktop) and the bottom bar (phones) step aside while an in-page button (`data-cta`) is on screen.
-- **Colour zones: each page changes colour once,** light first, then one slow fade to navy, then navy to the footer. No fade back. Home and The Method: the fade runs across the first navy photo screen and is complete when that screen reaches the top. Team: over about 60% of the screen height as "Your Sherpas" arrives. The legal pages stay light. **Each section keeps its own text colour** (navy on light, off-white on navy), so text never flips mid-fade. Never a hard colour switch, on any setting.
+- **Colour zones: each page changes colour once,** light first, then one slow fade to navy, then navy to the footer. No fade back. The Method: the fade runs across the bare-feet photo and is complete when it reaches the top. Home ("Seen. Belong. Progress.") and Team ("Your Sherpas."): over about 60% of the screen height as that screen arrives. The legal pages stay light. **Each section keeps its own text colour** (navy on light, off-white on navy), so text never flips mid-fade. Never a hard colour switch, on any setting.
 - **No gradients, no drop shadows, no glossy effects.** Hairline rules only.
 
 ### Navigation (`components/layout/Header.tsx`, `HeaderShell`)
@@ -104,8 +108,8 @@ A floating bar on every page: inset from the screen edges, 8px corners, off-whit
 
 ### Screens and layout
 
-- **Every screen fills the window** (100svh; the first screen of a page 100svh below the navigation) and its content is fully visible, clear of the mobile bottom bar. Text screens: `TextScreen`; photo screens: `PhotoScreen` (photo across the top, words below), in `components/ui/Screen.tsx`. Every screen keeps a band the height of the navigation at its top (`--chapter-band`), except photo screens, whose photo runs to the top edge.
-- **Allowed to run longer:** the FAQs, the legal pages, and the closing Team screen (shorter, 60%).
+- **Every screen fills the window** (100svh; the first screen of a page 100svh below the navigation) and its content is fully visible, clear of the mobile bottom bar. Text screens: `TextScreen`; photo screens: `PhotoScreen` (`layout="top"`: photo across the top, words below; `layout="side"`: a tall photo beside the words on desktop; optional `strip` along the photo's bottom edge), in `components/ui/Screen.tsx`. Every screen keeps a band the height of the navigation at its top (`--chapter-band`), except photo screens, whose photo runs to the top edge.
+- **Allowed to run longer:** the FAQs, the legal pages, and "Your Sherpas" on phones.
 - **Check at 375x667, 390x844 and 1440x900.** On short phones (the `short:` variant: phone layout under about 720px tall) photos shrink and spacing tightens. Never cut copy without asking.
 - **One left edge:** content starts at the second column of the 12-column grid (`md:ml-[8.333%]`).
 - **Side gutters:** 20px phones, 48px tablet, 64px desktop.
@@ -127,7 +131,7 @@ A floating bar on every page: inset from the screen edges, 8px corners, off-whit
 
 - **First names, both ways.** Never "sir", "ma'am" or "client". The site always says **member**.
 - **Never "at your age".**
-- **Member, Sherpa, Belong, Strength Reserve.** Never Performance Guide, Tribe, trainer, or "Reserve Score" alone (Deck 7's term is "Strength Reserve Score").
+- **Member, Sherpa, Belong, Reserve Score.** Never Performance Guide, Tribe or trainer.
 - **Calm and certain.** No exclamation marks in our own copy (members' quotes keep theirs), no urgency, no countdowns, no scarcity.
 - **Plain words, not gym jargon.** **Fun is allowed:** coffee, the clap, pizza.
 - **Health statistics carry their source.**
@@ -144,7 +148,7 @@ A floating bar on every page: inset from the screen edges, 8px corners, off-whit
 ## Code conventions
 
 - Next.js 16 App Router, TypeScript, Tailwind CSS v4 (CSS-first `@theme` in `app/globals.css`). Read `node_modules/next/dist/docs/` before using an API.
-- `content/facts.ts`: every reusable fact. `content/<page>.ts`: that page's copy. `content/site.ts`: navigation, footer labels, metadata. `content/booking.ts`: the panel. `content/legal.ts`: terms and privacy. `content/poem.ts`: the poem.
+- `content/facts.ts`: every reusable fact. `content/<page>.ts`: that page's copy. `content/site.ts`: navigation, footer labels, metadata. `content/booking.ts`: the panel. `content/legal.ts`: terms and privacy.
 - `components/`: layout, motion primitives and UI. No copy inside.
 - Motion: `motion` for reveals; scrolling is native. Every primitive checks reduced motion.
 - Env vars: `RESEND_API_KEY`, `CONTACT_EMAIL` (comma-separated for several), `RESEND_FROM` (a sender on a domain verified in Resend), `NEXT_PUBLIC_WHATSAPP_NUMBER`, `NEXT_PUBLIC_SITE_URL` (defaults to https://bigtoe.in). Without Resend keys in development the booking logs instead of sending; in production it shows the failure message with the email address.
@@ -155,16 +159,14 @@ A floating bar on every page: inset from the screen edges, 8px corners, off-whit
 ## Still open
 
 - [ ] WhatsApp number to publish (footer, thank-you "Message us now").
-- [ ] Map link for the address. Address and hours still current?
-- [ ] Member quotes: first name, age and written consent for all five. Quote 4 ("He can absolutely kick your butt…") is not in `docs/copy/testimonials.md`: add its source. Quote 5 is shown as the member wrote it ("I've now enrolled my daughter too."); the plan's "which says it all!" is not in their words.
-- [ ] Seema Jindal and Rodrigo Pérez: role and one line each.
-- [ ] Sherpa name spellings.
+- [ ] Map link ("Location on Maps").
+- [ ] Member quotes: first name, age and written consent for all four (three on Home, one on Team). Source needed for two not in `docs/copy/testimonials.md`: "It's more than a place. It's family." and "Jeevan can absolutely kick your butt…".
+- [ ] Sherpa name spellings (Himanshu, Saurav, Sumit, Tanuj, Kabir), and each Sherpa's OK to publish their line.
 - [ ] Jay's son has seen the story before it goes public.
-- [ ] FAQ facts to confirm: "health-history form", "we check with your doctor"; "About two thirds women" (Deck 1 says 65%).
-- [ ] Jeevan's line ("UK-certified. Over 20,000 hours coaching real people.") to confirm; not in the decks.
-- [ ] Guarantee: "functional scores" to match what the Reserve Audit measures.
+- [ ] Founder lines to confirm with each founder (Hard Rock; MSc, Middlesex University London; Nourish Organics; 20 years leading finance teams).
+- [ ] FAQ facts to confirm: health-history form and doctor check; online sessions and pausing; nutritionist and blood markers as a paid option.
 - [ ] Resend: API key, verified sending domain (`RESEND_FROM`) and `CONTACT_EMAIL` set in Vercel.
-- [ ] The 9 placeholder photos (studio floor, coffee corner, Sherpas at work, training floor, Sherpa coaching, four founders, four Sherpas).
+- [ ] The 16 photos in `docs/shot-list.md`; member photos need written consent.
 - [ ] Anderson Grotesk licence covers web use. Logo SVG needed (`docs/logo/` has PNGs only).
-- [ ] **Terms & Conditions conflicts (not edited):** "Wellness and Membership Services are non-refundable and non-transferable." contradicts the 30-day money-back guarantee; "memberships may be transferable subject to approval" contradicts "Memberships are strictly non-transferable."; "The primary objective of BigToe is to promote general wellbeing, injury prevention, and senior citizen welfare." is a health claim; the services listed (food, medical consultations, merchandise, an app, a Fitness Academy) are not offered; "By accessing or using the App" (no app).
-- [ ] **Privacy Policy conflicts (not edited):** it covers contact "via email, SMS, or phone calls" but the booking says "We'll message you on WhatsApp"; it does not mention that booking details are emailed through Resend; it describes an app, account settings, HealthKit and Google Fit, which the site does not have; the "Sharing of Personal Information" section does not say with whom data is shared.
+- [ ] **Terms & Conditions conflicts (not edited):** "Wellness and Membership Services are non-refundable and non-transferable." and "If misused, they will be promptly revoked without refund." contradict the eight-session money-back guarantee; "These charges and services may change at the discretion of the Company…" sits awkwardly with the published price range; "memberships may be transferable subject to approval" contradicts "Memberships are strictly non-transferable."; "The primary objective of BigToe is to promote general wellbeing, injury prevention, and senior citizen welfare." is a health claim; services listed that are not offered (food, medical consultations, merchandise, an app, a Fitness Academy); "Photographs or videos recorded during sessions may be accessible to other users." needs to match the member-photo consent. The terms do not state opening hours, so nothing conflicts with the new hours.
+- [ ] **Privacy Policy conflicts (not edited):** contact "via email, SMS, or phone calls" but the booking says WhatsApp; booking details are emailed through Resend (not mentioned); it describes an app, account settings, HealthKit and Google Fit.

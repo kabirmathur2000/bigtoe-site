@@ -1,9 +1,9 @@
 /**
- * Team: four screens. Wording as approved in the final plan (17 Nov 2026).
+ * Team (Version C, 17 Nov 2026): three screens. 1 to 2 light; 3 navy.
  */
-import { todo } from "./facts";
+import { facts, todo } from "./facts";
 
-/** Screen 1 (light, no visual). Jay's story, as cut for the final plan. */
+/** Screen 1 (light, no photo). Jay's story, signed "Jay". */
 export const story = {
   headline: "Why we built this.",
   paragraphs: [
@@ -16,34 +16,48 @@ export const story = {
   todo: todo("Jay's son to see this story before it goes public"),
 } as const;
 
-/** Screen 2 (light, the four founder portraits). Values from Deck 1 slide 7. */
+const founderLines: Record<string, string[]> = {
+  "Jay Singh": ["Co-founder and CEO.", "Three decades in hospitality, including Hard Rock."],
+  "Jeevan Aujla": ["Chief Training Officer.", `Coaching real people for ${facts.coachingHours} hours. MSc, Middlesex University London.`],
+  "Seema Jindal": ["Chief Community and Relationship Officer.", "Founder, Nourish Organics."],
+  "Rodrigo Pérez": ["Co-founder.", "20 years leading finance teams."],
+};
+
+/** Screen 2 (light, four founder portraits: same crop and light, on the training floor). */
 export const founders = {
   headline: "The four of us.",
-  /** "pretence" in the plan, in American spelling. */
   values: [
     "Rooted in fundamentals, not trends.",
-    "Real in how we show up: honest, present, without pretense.",
+    "Real in how we show up: honest and present.",
     "Rebellious in refusing to accept that decline is inevitable.",
   ],
-  people: [
-    { name: "Jay Singh, 59.", role: "Co-founder.", todo: null },
-    { name: "Jeevan Aujla.", role: "Chief Training Officer. UK-certified. Over 20,000 hours coaching real people.", todo: null },
-    { name: "Seema Jindal.", role: null, todo: todo("role, one line") },
-    { name: "Rodrigo Pérez.", role: null, todo: todo("role, one line") },
-  ].map((p) => ({
-    ...p,
-    role: p.role as string | null,
-    todo: p.todo as string | null,
-    shot: `Portrait of ${p.name.split(" ")[0]}, co-founder, on the training floor`,
+  people: facts.founders.map((f) => ({
+    name: `${f.name}, ${f.age}.`,
+    role: founderLines[f.name][0],
+    background: founderLines[f.name][1],
+    shot: `Portrait of ${f.name.split(" ")[0]}, co-founder, on the training floor (same crop and light as the others)`,
   })),
 } as const;
 
-/** Screen 3 (navy, four Sherpa portraits). First names only. */
+/** Screen 3 (navy): five Sherpa portraits (same crop, light and kit), then Jeevan, then one member quote. */
 export const sherpas = {
   headline: "Your Sherpas.",
+  line: "On Everest, a Sherpa walks the path with you, all the way up.",
+  role: "Sherpa",
   todo: todo("confirm Sherpa name spellings"),
-  people: ["Himanshu", "Saurav", "Sumit", "Tanuj"].map((name) => ({
-    name,
-    shot: `Portrait of ${name}, Sherpa, on the training floor`,
-  })),
+  people: [
+    { name: "Himanshu", line: "I help you break through your own limits and build genuine self-belief." },
+    { name: "Saurav", line: "I know what it feels like to believe life is stuck. I help you reclaim yours." },
+    { name: "Sumit", line: "Once cycled 140 km in 8 hours. Now I make fitness enjoyable enough to last." },
+    { name: "Tanuj", line: "I know the pain of feeling incapable. You can do far more than you think." },
+    { name: "Kabir", line: "Our health dictates the bounds of our life. Everyone deserves to be free." },
+  ].map((p) => ({ ...p, shot: `Portrait of ${p.name}, Sherpa (same crop, light and kit as the others)` })),
+  jeevan: "Every Sherpa trains under Jeevan, and every workout template is his.",
+  quote: {
+    text: "Jeevan can absolutely kick your butt during a workout, yet somehow you leave standing tall instead of crawling home!",
+    shot: "Member portrait: plain wall, same distance as the Home portraits",
+    name: todo("first name"),
+    age: todo("age"),
+    source: todo("source: not in docs/copy/testimonials.md"),
+  },
 } as const;

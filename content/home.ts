@@ -1,86 +1,106 @@
 /**
- * Home: five screens and the FAQs. Wording as approved in the final plan
- * (17 Nov 2026); facts are imported, never retyped. American spelling.
+ * Home (Version C, 17 Nov 2026): six screens and the FAQs. Screens 1 to 3
+ * light; 4 to 6, the FAQs and the footer navy. Facts are imported, never
+ * retyped. American spelling.
  */
 import { facts, todo } from "./facts";
 
 /** Screen 1 (light, photo). */
 export const hero = {
   headline: facts.heroLine,
-  line: "A strength studio for life after 40. Post-physio to lifelong athletes.",
-  shot: "The studio floor in warm morning light",
+  line: "Not a gym. A strength studio for life after 40.",
+  /** The thin strip along the photo's bottom edge. */
+  strip: [facts.address.short, `${facts.coachingHours} coaching hours`, facts.membersPerHour],
+  shot: "The studio floor, wide: a Sherpa coaching, bare feet, free weights",
 } as const;
 
-/** Screen 2 (light, no visual). Deck 1 slide 3 and slide 4 (cut). */
+/** Screen 2 (light, no photo). */
 export const sport = {
   headline: "We train for a sport called life.",
-  line: "No off-season. No substitutes. Most people play it untrained.",
-  link: { label: "Why we built this", href: "/team" },
+  line: "Decline is the default. Not a destiny.",
+  link: { label: "Why we built this →", href: "/team" },
 } as const;
 
-/** Screen 3 (light, photo). The free first hour. */
-export const firstHour = {
+/** Screen 3 (light, photo). */
+export const score = {
   headline: "Looking fit isn't being fit.",
-  line: "Start with one free hour. A body scan. A session at your pace. Coffee, and a straight talk about what's next.",
-  shot: "The coffee corner after a session",
+  line: "Your Reserve Score, out of 100. Measured, trained, retested every sixteen sessions.",
+  shot: "A member at the coffee corner, real cups and chairs",
 } as const;
 
 /**
- * Screen 4 (navy, photo). Member quotes, one at a time. Placeholders until
- * written consent: first name, age and consent show as TODOs. Quotes 1 to 3
- * and 5 are cut from docs/copy/testimonials.md; quote 4 is not in that file yet.
+ * Screen 4 (navy). Three quotes, each under its word, with a member
+ * portrait placeholder. Placeholders until written consent: first name and
+ * age show as TODOs.
  */
 export const members = {
   headline: "Seen. Belong. Progress.",
-  line: "In our members' words.",
-  shot: "Sherpas at work on the training floor",
+  line: "Don't believe us? Ask them.",
   quotes: [
-    { quote: "I look forward to every session, something I never imagined would happen!", todo: null },
-    { quote: "It’s that level of attention that makes you feel seen.", todo: null },
-    { quote: "Today, I wake up without an alarm, looking forward to coming in.", todo: null },
     {
-      quote: "He can absolutely kick your butt during a workout, yet somehow you leave standing tall instead of crawling home!",
-      todo: todo("source: this quote is not in docs/copy/testimonials.md"),
+      word: "Seen.",
+      /** docs/copy/testimonials.md, testimonial 2 (cut). */
+      quote: "It’s that level of attention that makes you feel seen.",
+      source: null,
     },
-    /** testimonials.md has "In fact I've now enrolled my daughter too."; "which says it all!" is not in the member's words. */
-    { quote: "I’ve now enrolled my daughter too.", todo: null },
-  ].map((q) => ({ ...q, todo: q.todo as string | null })),
+    {
+      word: "Belong.",
+      quote: "It’s more than a place. It’s family.",
+      source: todo("source: not in docs/copy/testimonials.md"),
+    },
+    {
+      word: "Progress.",
+      /** docs/copy/testimonials.md, testimonial 3 (cut). */
+      quote: "Today, I wake up without an alarm, looking forward to coming in.",
+      source: null,
+    },
+  ].map((q) => ({ ...q, source: q.source as string | null })),
+  /** Same plain wall, same distance, for all three. */
+  shot: (word: string) => `Member portrait for "${word.replace(".", "")}": plain wall, same distance as the others`,
   name: todo("first name"),
   age: todo("age"),
-  consent: todo("written consent"),
-  regionLabel: "Member quotes",
-  previous: "Previous quote",
-  next: "Next quote",
 } as const;
 
-/** Screen 5 (navy, no visual). Price, how it is set, the guarantee. */
+/** Screen 5 (navy, photo). */
+export const social = {
+  headline: "Get stronger. Keep the pizza.",
+  line: "Coffee at the social table. Pizza and beer, once a quarter.",
+  shot: "A member laughing mid-session",
+} as const;
+
+/** Screen 6 (navy, no photo). Two supporting lines. */
 export const price = {
   headline: facts.price.range,
-  line: facts.price.note,
-  guarantee: facts.guarantee,
+  lines: [facts.firstHour, facts.guarantee],
 } as const;
 
-/** FAQs, collapsed, under screen 5 (navy). */
+/** FAQs, collapsed, under screen 6 (navy). */
 export const faqs = {
   label: "Questions",
   items: [
     {
-      q: "Who is BigToe for?",
-      /** Deck 1: youngest 40, oldest 69, average 54, 65% women. */
-      a: "Our youngest member is 40. Our oldest is 69, so far. Average age 54. About two thirds women. All you need is an open mind.",
+      q: "Can someone like me actually do this?",
+      a: "Yes. Some of our members haven't trained in years. Some never have. Your Sherpa starts where you are, not where you think you should be.",
     },
     {
       q: "I have an old injury. Is it safe?",
       a: "You fill in a health-history form first. Where it matters, we check with your doctor. Hard is okay. Painful never is.",
     },
     {
-      q: "How often will I train?",
-      a: `${facts.frequency} Your goal decides. Your Sherpa sets it with you.`,
+      q: "What if I can't make it?",
+      a: `Life gets busy. Move a session to a time that works for you, train online, or pause when you travel. ${facts.guaranteeRule}`,
+    },
+    {
+      q: "I'm on a GLP-1 medication. Is this for me?",
+      a: "Your doctor decides what's right for you. What we do is measure and train. Your Reserve Audit tracks strength and body composition, so you can see what your body is keeping, not just what it's losing.",
+    },
+    {
+      q: "Do you offer nutrition and blood tests?",
+      a: "Yes, as an option, for an added fee. Add a functional nutritionist and blood markers, and your Sherpa builds them into your program.",
     },
     {
       q: "What is the Reserve Audit?",
-      /** "Strength Reserve Score" (Deck 7); the plan's "Reserve Score" is on the banned-words list. */
-      a: "Your first session as a member. We assess mobility and balance, strength, conditioning and body composition. It gives your Strength Reserve Score: our own measure of what your body can do. It tracks capability. It doesn't diagnose.",
+      a: "Your first session as a member, after your free hour, and deeper than its body scan. We assess mobility and balance, strength, conditioning and body composition. It gives your Reserve Score, out of 100: our own measure of what your body can do. It's your starting line, not a grade. It doesn't diagnose.",
     },
   ],
 } as const;
