@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { HeaderShell } from "@/components/layout/HeaderShell";
 import { nav } from "@/content/site";
 import { tile } from "@/content/style-tile";
-import logoLight from "@/public/brand/logo-tag-light.png";
+import logo from "@/public/brand/logo.png";
 import { BookPill } from "./VisitPanel";
 
 /** Three lines that become a cross when the menu is open. */
@@ -23,7 +23,7 @@ function MenuIcon() {
  * The floating header on every page: the logo on the left; on the right
  * the "Book your first visit" pill and a three-line menu icon (labelled
  * "Menu"). It hides on scroll down and returns on scroll up (HeaderShell).
- * The menu opens a full-screen navy overlay: Home, How we train, Team,
+ * The menu opens a full-screen off-white overlay: Home, How we train, Team,
  * Questions, with the book pill at the bottom. Close or Escape closes it;
  * focus returns to the icon. Reduced motion: a fade, no movement.
  */
@@ -62,9 +62,8 @@ export function TileHeader() {
     <>
       <HeaderShell glass>
         <div className="flex h-12 items-center justify-between gap-2 pr-1 pl-3 md:h-14 md:pr-2 md:pl-5">
-          {/* On the dark glass: the light LogoTag (a light plain logo is still needed). */}
           <Link href="/" aria-label={nav.homeLabel} className="flex min-h-11 shrink-0 items-center">
-            <Image src={logoLight} alt="" priority className="h-8 w-auto md:h-10" sizes="(min-width: 768px) 150px, 120px" />
+            <Image src={logo} alt="" priority className="h-6 w-auto md:h-7" sizes="(min-width: 768px) 140px, 120px" />
           </Link>
           {/* The pill opens the request panel; the icon opens the menu. Kept apart so a tap never lands on the wrong one. */}
           <div className="flex items-center gap-2 md:gap-3">
@@ -91,16 +90,16 @@ export function TileHeader() {
           e.preventDefault();
           setOpen(false);
         }}
-        className={`fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none bg-navy p-0 text-offwhite backdrop:bg-transparent transition-[opacity,translate] duration-500 ease-soft ${
+        className={`fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none bg-offwhite p-0 text-navy backdrop:bg-transparent transition-[opacity,translate] duration-500 ease-soft ${
           visible ? "translate-y-0 opacity-100" : `opacity-0 ${reduce ? "" : "-translate-y-3"}`
         }`}
       >
         <div className="flex h-full flex-col px-6 pt-5 pb-[max(2rem,env(safe-area-inset-bottom))] md:px-12 md:pt-8 md:pb-12">
           <div className="flex items-center justify-between">
             <Link href="/" aria-label={nav.homeLabel} onClick={() => setOpen(false)} className="flex min-h-11 items-center">
-              <Image src={logoLight} alt="" className="h-10 w-auto md:h-12" sizes="(min-width: 768px) 180px, 150px" />
+              <Image src={logo} alt="" className="h-7 w-auto md:h-8" sizes="(min-width: 768px) 160px, 140px" />
             </Link>
-            <button type="button" autoFocus onClick={() => setOpen(false)} className="inline-flex min-h-11 items-center px-3 t-body font-bold transition-opacity duration-500 hover:opacity-75">
+            <button type="button" autoFocus onClick={() => setOpen(false)} className="inline-flex min-h-11 items-center px-3 ty-body transition-opacity duration-500 hover:opacity-75">
               {m.close}
             </button>
           </div>
@@ -108,7 +107,7 @@ export function TileHeader() {
             <ul className="space-y-2 md:space-y-4">
               {m.links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} onClick={() => setOpen(false)} className="inline-flex min-h-11 items-center t-headline transition-opacity duration-500 hover:opacity-70">
+                  <Link href={l.href} onClick={() => setOpen(false)} className="inline-flex min-h-11 items-center ty-headline transition-opacity duration-500 hover:opacity-70">
                     {l.label}
                   </Link>
                 </li>

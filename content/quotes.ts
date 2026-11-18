@@ -17,6 +17,8 @@ export type MemberQuote = {
   shot: string;
   /** Where the words come from. */
   source: string;
+  /** The member's goal, shown as a small pill on the quote card. */
+  goal: string;
 };
 
 export const memberQuotes: MemberQuote[] = [
@@ -28,6 +30,7 @@ export const memberQuotes: MemberQuote[] = [
     draft: true,
     shot: "Member portrait, relaxed, in the studio (same crop and size for every member)",
     source: "Style tile brief, 18 Nov 2026 (not in docs/copy/testimonials.md)",
+    goal: "Strength",
   },
   {
     quote:
@@ -37,6 +40,7 @@ export const memberQuotes: MemberQuote[] = [
     draft: true,
     shot: "Member portrait, relaxed, in the studio (same crop and size for every member)",
     source: "docs/copy/testimonials.md 4, with \"which says it all!\" added in the brief (not in the member's words)",
+    goal: "Family",
   },
   {
     quote:
@@ -46,5 +50,6 @@ export const memberQuotes: MemberQuote[] = [
     draft: true,
     shot: "Member portrait, relaxed, in the studio (same crop and size for every member)",
     source: "Style tile brief, 18 Nov 2026 (not in docs/copy/testimonials.md)",
+    goal: "Travel",
   },
 ];

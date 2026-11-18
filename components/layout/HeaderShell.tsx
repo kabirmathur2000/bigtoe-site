@@ -47,9 +47,9 @@ export function HeaderShell({ children, glass = false }: { children: ReactNode; 
   return (
     <header
       onFocusCapture={() => setState({ path: pathname, hidden: false })}
-      // glass (the new design): frosted, slightly translucent navy, so content blurs as it passes beneath.
+      // glass (the new design): frosted, slightly translucent off-white, so content blurs as it passes beneath.
       className={`fixed inset-x-3 top-2 z-40 mx-auto max-w-wide rounded-lg border transition-[translate,opacity] duration-500 ease-soft md:inset-x-6 md:top-3 ${
-        glass ? "border-offwhite/15 bg-navy/70 text-offwhite backdrop-blur-md" : "border-navy/15 bg-offwhite text-navy"
+        glass ? "border-navy/10 bg-offwhite/75 text-navy backdrop-blur-xl" : "border-navy/15 bg-offwhite text-navy"
       } ${
         hidden ? "pointer-events-none -translate-y-[calc(100%+1rem)] opacity-0" : ""
       }`}

@@ -255,65 +255,67 @@ html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: va
 }
 
 /* ------------------------------------------------------------------ */
-/* Style tile, round two: the type hierarchy, one set used everywhere   */
-/* in the new patterns (Anderson Grotesk). Fluid from 375px to 1440px.  */
+/* The new design, round six (after ouraring.com and functionhealth.com):
+   a light page, Light headlines, Regular text, Bold only for small labels.
+   Fluid from 375px to 1440px. */
 /* ------------------------------------------------------------------ */
-@utility t-headline {
-  font-weight: 700;
-  font-size: clamp(2.625rem, 1.965rem + 2.817vw, 4.5rem);
+@utility ty-display {
+  font-weight: 300;
+  font-size: clamp(2.75rem, 1.76rem + 4.23vw, 5.5rem);
   line-height: 1.02;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
-@utility t-sub {
+@utility ty-headline {
   font-weight: 300;
-  font-size: clamp(1.375rem, 1.243rem + 0.563vw, 1.75rem);
-  line-height: 1.3;
+  font-size: clamp(2.25rem, 1.62rem + 2.68vw, 4rem);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
 }
-@utility t-body {
-  font-weight: 300;
-  font-size: clamp(1.125rem, 1.103rem + 0.094vw, 1.1875rem);
-  line-height: 1.6;
+@utility ty-sub {
+  font-weight: 400;
+  font-size: clamp(1.25rem, 1.16rem + 0.38vw, 1.5rem);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
 }
-/* One step smaller than body: the footer. */
-@utility t-small {
-  font-weight: 300;
-  font-size: clamp(0.9375rem, 0.915rem + 0.094vw, 1rem);
+@utility ty-body {
+  font-weight: 400;
+  font-size: clamp(1rem, 0.96rem + 0.19vw, 1.125rem);
   line-height: 1.55;
 }
-/* The big number (e.g. "20,000+"): Bold, very large, tight. */
-@utility t-number {
+@utility ty-small {
+  font-weight: 400;
+  font-size: clamp(0.875rem, 0.85rem + 0.09vw, 0.9375rem);
+  line-height: 1.5;
+}
+@utility ty-label {
   font-weight: 700;
-  font-size: clamp(4.75rem, 2.6rem + 9.3vw, 11rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-}
-@utility t-label {
-  font-weight: 700;
-  font-size: clamp(0.75rem, 0.728rem + 0.094vw, 0.8125rem);
-  line-height: 1.3;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
 }
 
-/* Panel settings. Warm: a soft vertical gradient from off-white to
-   off-white mixed with about 12% terracotta. */
-@utility panel-warm {
-  background: linear-gradient(180deg, var(--offwhite) 0%, color-mix(in srgb, var(--offwhite) 88%, var(--terracotta)) 100%);
+/* The tile's content column: up to 1280px, 20px gutters on phones, 40px on
+   tablets, 64px on desktop. tile-edge: a full-width row (a carousel) whose
+   first item lines up with that column. */
+@utility tile-wrap {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1280px;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) { padding-inline: 2.5rem; }
+  @media (width >= 64rem) { padding-inline: 4rem; }
 }
-/* The soft dark gradient that lets text read over a photograph. */
-@utility photo-scrim {
-  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--navy) 55%, transparent) 55%, color-mix(in srgb, var(--navy) 88%, transparent) 100%);
+@utility tile-edge {
+  --edge: 1.25rem;
+  @media (width >= 48rem) { --edge: 2.5rem; }
+  @media (width >= 64rem) { --edge: 4rem; }
+  padding-inline: max(var(--edge), calc((100% - 1280px) / 2 + var(--edge)));
+  scroll-padding-inline: max(var(--edge), calc((100% - 1280px) / 2 + var(--edge)));
 }
 
-/* The new design (round four): a navy page. Paint the whole page navy
-   while the tile is shown, so overscroll and the edges never flash light. */
-/* The new design's inset from the screen edges (cards and page content). */
-:root { --tile-inset: 16px; }
-@media (min-width: 768px) { :root { --tile-inset: 48px; } }
-@media (min-width: 1024px) { :root { --tile-inset: 64px; } }
-
+/* The style tile's page: off-white, navy text, edges and overscroll included. */
 html:has([data-tile]),
 html:has([data-tile]) body {
-  background: var(--navy);
-  color: var(--offwhite);
+  background: var(--offwhite);
+  color: var(--navy);
 }
