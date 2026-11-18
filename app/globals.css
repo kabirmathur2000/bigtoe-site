@@ -283,7 +283,7 @@ html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: va
 /* The big number (e.g. "20,000+"): Bold, very large, tight. */
 @utility t-number {
   font-weight: 700;
-  font-size: clamp(5.5rem, 3.4rem + 9vw, 11rem);
+  font-size: clamp(4.75rem, 2.6rem + 9.3vw, 11rem);
   line-height: 0.92;
   letter-spacing: -0.04em;
 }
@@ -303,4 +303,12 @@ html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: va
 /* The soft dark gradient that lets text read over a photograph. */
 @utility photo-scrim {
   background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--navy) 55%, transparent) 55%, color-mix(in srgb, var(--navy) 88%, transparent) 100%);
+}
+
+/* The new design (round four): a navy page. Paint the whole page navy
+   while the tile is shown, so overscroll and the edges never flash light. */
+html:has([data-tile]),
+html:has([data-tile]) body {
+  background: var(--navy);
+  color: var(--offwhite);
 }

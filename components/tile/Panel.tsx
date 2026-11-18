@@ -1,41 +1,37 @@
 import Image, { type StaticImageData } from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 import { shotLabel, type Accented, type Shot } from "@/content/style-tile";
-import { Settle } from "./Rise";
+import { CardRise, Settle } from "./Rise";
 
-export type Variant = "light" | "warm" | "navy" | "photo";
+export type CardVariant = "light" | "warm" | "photo";
 
-const VARIANT: Record<Variant, string> = {
-  // Light and Warm panels carry a hairline so their edge reads on the page background.
-  light: "bg-offwhite text-navy border border-navy/10",
-  warm: "panel-warm text-navy border border-navy/10",
-  navy: "bg-navy text-offwhite",
-  photo: "bg-navy text-offwhite",
+const CARD: Record<CardVariant, string> = {
+  light: "bg-offwhite text-navy",
+  warm: "panel-warm text-navy",
+  photo: "bg-offwhite/10 text-offwhite",
 };
 
 /**
- * A panel: every screen is its own, with softly rounded corners (24px),
- * inset from the screen edges (12px phones, 24px desktop, set by the
- * page) with a small gap between panels. Light, Warm, Navy or Photo,
- * rotated so neighbours differ. Buttons inside keep square corners.
+ * A card on the navy page: pronounced rounded corners (28px phones, 32px
+ * desktop). Light, Warm or Photo, alternating so neighbours differ. It
+ * rises about 40px, fades in and settles from 98% to full size over about
+ * 0.8s as it arrives (CardRise).
  */
-export function Panel({
+export function Card({
   variant,
   children,
   className = "",
-  id,
   label,
 }: {
-  variant: Variant;
+  variant: CardVariant;
   children: ReactNode;
   className?: string;
-  id?: string;
   label?: string;
 }) {
   return (
-    <section id={id} aria-label={label} className={`relative overflow-hidden rounded-[24px] ${VARIANT[variant]} ${className}`}>
+    <CardRise className={`relative overflow-hidden rounded-[28px] md:rounded-[32px] ${CARD[variant]} ${className}`} label={label}>
       {children}
-    </section>
+    </CardRise>
   );
 }
 

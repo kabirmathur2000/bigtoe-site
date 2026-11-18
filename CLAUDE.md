@@ -28,68 +28,68 @@ Sources: the Version C plan (above), then `docs/website-guide.md`, the decks in 
 
 ---
 
-## The new design (style tile, rounds two and three, 18 Nov 2026)
+## The new design (style tile, round four, 18 Nov 2026)
 
-`/style-tile` shows one working example of each screen type for approval; every page will be rebuilt from these patterns. Not linked, not in the sitemap, `noindex`. Its own layout (`app/(tile)/`), components in `components/tile/`, copy in `content/style-tile.ts`. **Source for all copy: `docs/copy/agreed-copy-2026-11-18.md`.** Facts from `agreed` in `content/facts.ts` (₹25,000 to ₹50,000 a month; the six-session guarantee; "Book your first visit"); the live pages keep the older facts until they are rebuilt. The live pages are otherwise unchanged. References: ouraring.com (type hierarchy, carousels), functionhealth.com (blocks, terracotta accents), nekohealth.com (colour blocks and gradients), equinox.com (large photo carousels).
+`/style-tile` shows the new design for approval; every page will be rebuilt from it. Not linked, not in the sitemap, `noindex`. Its own layout (`app/(tile)/`), components in `components/tile/`, copy in `content/style-tile.ts`. **Copy comes from `docs/copy/agreed-copy-2026-11-18.md` and the lines in each brief** (a line given in the brief wins). Facts from `agreed` in `content/facts.ts` (₹25,000 to ₹50,000 a month; the six-session guarantee; "Book your first visit"); the live pages keep the older facts and look until they are rebuilt.
 
-### Panels
+**Reference: soma-health.co for flow. One idea per scroll:** a short headline on the background, then one card holding one visual, then breathing room before the next idea. **Text is never on top of a photo,** except a member's name and age (and their quote) on member cards, and the ending. **Nothing needs a tap to read.**
 
-- **Every screen is its own panel:** softly rounded corners (24px), inset 12px from the screen edges on phones and 24px on desktop, with a small gap (12px / 24px) between panels on the page background (#F0EEEB). Light and Warm panels carry a hairline edge so they read on the page background.
-- **Panel settings, rotated so neighbours differ:** **Light** #F0EEEB; **Warm**, a soft vertical gradient from #F0EEEB to #F0EEEB mixed with about 12% terracotta (`panel-warm`); **Navy** #0A212D; **Photo**, a full-bleed photograph filling the panel, its text on a soft dark gradient (`photo-scrim`) over the lower part.
-- **This replaces the one-colour-change rule** in the new design: no hard cuts between full-width colours; the panels and gaps mark each new section. (The live pages keep the old fade until rebuilt.)
-- Desktop: a panel fills the window (less the inset) or takes its photo's shape; phones: panels size to their content.
+### Base style
 
-### The one button
+- **Page background: navy #0A212D; text on navy #F0EEEB.** (The whole page, edges and overscroll included, is navy while the tile is shown.)
+- **Cards, alternating so neighbours differ:** **Light** (#F0EEEB, navy text); **Warm** (a vertical gradient from #F0EEEB to #F0EEEB mixed with about 12% terracotta, navy text; `panel-warm`); **Photo** (the photograph fills the card).
+- **Pronounced rounded corners:** 28px on phones, 32px on desktop. Cards inset 16px from the screen edges on phones, 48px on tablets and 64px on wide desktops (content up to 1440px wide).
+- **Left-aligned throughout.**
+- **Spacing:** about 96px between sections on phones and 160px on desktop; 24px between a headline and its card. Generous, never empty stretches.
+- **Type:** the hierarchy below, with the invitation ("Come and meet us") as the reference. **One terracotta accent phrase per screen at most, headline size only.**
 
-- **"Book your first visit" lives only in one floating button,** fixed near the bottom centre of the screen on every device. Never inside a section.
-- Softer than the old square button: fully rounded ends, terracotta fill, **navy text in sentence case**, Bold 19px (navy on terracotta passes AA), a soft lift on hover (it rises 2px; no shadow).
-- It hides while the request panel is open or the footer is in view (`FloatingVisitButton` in `components/tile/VisitPanel.tsx`).
+### Header (floating, every page)
 
-### Navigation
+- The logo on the left; on the right the **"Book your first visit" pill** (soft rounded pill, terracotta, navy text, sentence case, Bold; 15px on phones, 17px on desktop, so the header fits on a 375px phone) and a **three-line menu icon** with the accessible label "Menu".
+- It hides on scroll down and returns on scroll up (`HeaderShell`).
+- The menu opens a **full-screen navy overlay** listing Home, How we train, Team, Questions, with the book pill at the bottom.
+- There is no floating bottom button. The pill (header, menu, ending) is the only way to open the request panel.
 
-- The logo on the left (to Home); the word **"Menu"** on the right, written out, not an icon. It opens a simple full-screen list: **Home, How we train, Team, Questions** (in the light colour, headline size; Close or Escape closes it).
-- **Inner pages** show a clear title at the top and "← Back to home" (`PageTitle`).
+### Type hierarchy
 
-### Type hierarchy (one set, used everywhere in the new design)
-
-**The invitation ("Come and meet us") is the reference.** Every section matches its headline, subheading, body and caption exactly. Named styles in `app/globals.css`; use only these:
-- **`t-headline`:** Anderson Grotesk Bold, about 72px desktop and 42px phones, tight line spacing (1.02), slightly negative letter spacing (-0.02em).
+Named styles in `app/globals.css`; use only these. The invitation is the reference: every section matches its headline, subheading, body and caption.
+- **`t-headline`:** Anderson Grotesk Bold, about 72px desktop and 42px phones, line height 1.02, letter spacing -0.02em.
 - **`t-sub`** (subheading): Light, about 28px desktop, 22px phones.
 - **`t-body`:** Light, 19px desktop, 18px phones, full-strength navy or #F0EEEB, never greyed.
 - **`t-small`:** Light, 16px desktop, 15px phones: one step smaller than body, for the footer.
 - **`t-label`** (caption and label): Bold, 12 to 13px, spaced capitals.
-- **`t-number`:** the big number only (e.g. "20,000+"): Bold, very large (about 176px desktop, 88px phones), tight.
-Light, Regular and Bold are loaded. (This supersedes the Light-headline rule for the new design; the live pages keep theirs until rebuilt.)
+- **`t-number`:** the big number only ("20,000+"): Bold, about 176px desktop, 76px phones, tight.
+Light, Regular and Bold are loaded.
 
-### Terracotta accents
+### Transitions (Soma-like, on native scroll, no snapping)
 
-At most one phrase per screen in #D4644D, only at headline or subheading size ("Keep the pizza." in "Get stronger. Keep the pizza."; "a sport called life." in "We train for a sport called life."). Set with `accent` in the content file.
+- **Cards** rise about 40px, fade in and settle from 98% to full size over about 0.8s as they arrive (`CardRise`).
+- Adapted to the content: **photos** ease from a very slight zoom; **dial arcs** fill and their numbers count up; **headline lines** fade up one after another; **a member's quote** fades in as its card reaches the middle of the screen.
+- **Reduced motion:** everything visible and still.
 
-### Headlines are never placed on photos
+### The tile, in order
 
-Every headline sits on a panel colour; photographs sit beside, below or inside the text, never under it. The tile shows these pairings, one per screen:
-- **Split:** the words on one half, the photo (4:5) on the other; phones, words then photo. ("Your Sherpa. Your plan." with "How we train →".) The A-lead (first screen of a page, the coffee bar photo with its caption) uses the same split.
-- **Inline photo chips:** small rounded photo chips (2:1) inside the text line, one after each phrase ("A suitcase to lift. ◯ Unexpected stairs. ◯ A trip to say yes to. ◯"). Each phrase and its chip stay together; lines break only between phrases.
-- **Offset pair** (Warm panel): the words, then two photos below at different sizes, slightly overlapping (large: members at the social table, 3:2 desktop, 4:3 phones; small: coffee cups on the bar, 4:5). On phones the small photo overlaps the large one's corner.
-- **Diagram beside text:** the words on one half, the example ring dials (2 x 2) on the other; phones, below.
-- **Big number:** "20,000+" (`facts.coachingHours`, `t-number`), then "coaching hours behind every workout template." and "Meet the team →".
+1. **Hero:** on navy, "The second half of life should be stronger than the first." ("stronger than the first" in terracotta) / "One-to-one coaching for life after 40." Then a photo card with the coffee bar (16:9 desktop, 4:5 phones); the caption "Vasant Vihar, New Delhi." sits below the card.
+2. **Pause,** no card: "We train for a sport called life." / "A suitcase to lift. Unexpected stairs. A trip to say yes to." / "Build the strength for what comes next."
+3. "Your Sherpa. Your plan." / its line / "How we train →". Then a **Light card** holding one photo (one Sherpa guiding one member; 3:2 desktop, 4:5 phones).
+4. "Know your starting point." / its line. Then a **Warm card** with the example ring dials (78, 42, 90, 66; weakest terracotta, strongest the muted green #4A7458; labelled "Example").
+5. "Get stronger. Keep the pizza." / its line. Then **one photo card**: members around the social table (16:9 desktop, 4:5 phones).
+6. "In our members' words." Then **one card per member, stacked** (no carousel): the photo fills the card (16:9 desktop, 4:5 phones), the first name and age at the bottom left over a soft gradient; the quote fades in below the name as the card reaches the middle of the screen. Quotes from `content/quotes.ts` (drafts until consent; the build check stays).
+7. "The four of us." / "We met at Decode, Jeevan's gym." Then a **Light card** with "20,000+", "coaching hours behind every workout template." and "Meet the team →".
+8. One line on navy: "Questions? All answers →".
+9. **Ending, curtain reveal** (`Ending`): the page content (rounded at the bottom) scrolls away to reveal a full-screen ending fixed beneath it: the coffee bar photo darkened (navy at 75%), and over it, left-aligned, "Come and meet us.", the visit, the price, the free first hour, the guarantee and the book pill; below, the footer in `t-small` (address, hours, WhatsApp, email, Careers, Location on Maps, Terms, Privacy, the light LogoTag). Where the ending is taller than the screen (phones), it sits in the normal flow and scrolls like the rest of the page.
 
-### Screen types (in the order shown on the tile)
+### Removed from the tile
 
-Inner-page title, then: **A-lead** (Light) · **chips** (Navy) · **offset pair** (Warm) · **split** (Light) · **diagram** (Warm) · **big number** (Light) · **member stories** (Navy) · **invitation** (Navy) · **footer** (navy panel).
-- **Member stories,** Oura's expandable style: each card is a full photo filling the card (4:5; phones, the card fills the panel's width; desktop, two to three visible, scrolling sideways). The only text on the photo is the first name and age at the bottom left, over a soft dark gradient, and a round plus at the top right. Tapping the plus turns it into a close (×) and reveals the full quote under the name, rising in gently over the lower part of the photo. Swipe, arrows (below the cards), drag on desktop; manual, no loop. Quotes from `content/quotes.ts` (drafts until consent; the build check stays).
-- **Invitation** (Navy, split): the visit, the price, the free first hour, the guarantee; the coffee bar photo on the other half. No button; one link under it: "All questions →". No questions preview on the page.
-- **Example ring dials:** 78, 42, 90, 66 with the number inside; weakest terracotta, strongest the muted green #4A7458, the others navy; labelled "Example"; they fill once on entry.
-- **Footer** (a navy panel): the light LogoTag, the address, the hours (Monday to Saturday, 6 am to 8 pm. Sunday, 8 am to 1 pm), WhatsApp, email, Careers, Location on Maps, Terms, Privacy, all in `t-small`. No sign-off poem, no parking line.
+The inline photo chips, the two-photo collage, the sideways member carousel, the questions preview and the floating bottom button.
 
 ### Images
 
-Art-directed: every photo has a desktop shape and a phone shape, and its panel or card holds that exact shape. Placeholders show the shot name and the pixel size per shape (small placeholders on phones show a short name and the phone shape). The coffee bar photo (`docs/photos/studio-coffee-bar.jpg`) stands in wherever the space is the subject.
+Art-directed: every photo has a desktop shape and a phone shape, and its card holds that exact shape. Placeholders show the shot name and the pixel size per shape (small placeholders on phones show a short name and the phone shape). The coffee bar photo (`docs/photos/studio-coffee-bar.jpg`) is the hero and the ending.
 
-### Motion and the request panel
+### Request panel
 
-- Text rises about 12px and fades in over 0.6s; photos settle from a very slight zoom; nothing moves on its own; reduced motion shows everything still.
-- **Request panel** (`VisitPanel`), opened only by the floating button: centred dialog on desktop, bottom sheet on phones. Name, mobile number, preferred time (weekday morning, weekday evening, weekend). Thank you: "Thank you, [name]. We'll confirm your visit on WhatsApp." with the intake form (`facts.intakeFormUrl`, new tab) and WhatsApp. A request, not a confirmed appointment; no health questions (that is what the intake form is for). Server action `app/actions/visit.ts`. Analytics: "Visit panel" on open, "Visit submit" on submit.
+`VisitPanel`: centred dialog on desktop, bottom sheet on phones. Name, mobile number, preferred time (weekday morning, weekday evening, weekend). Thank you: "Thank you, [name]. We'll confirm your visit on WhatsApp." with the intake form (`facts.intakeFormUrl`, new tab) and WhatsApp. A request, not a confirmed appointment; no health questions (that is the intake form's job). Server action `app/actions/visit.ts`. Analytics: "Visit panel" on open, "Visit submit" on submit.
 
 ---
 

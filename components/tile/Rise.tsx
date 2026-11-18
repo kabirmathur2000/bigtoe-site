@@ -64,3 +64,25 @@ export function Settle({ children, className }: { children: ReactNode; className
     </motion.div>
   );
 }
+
+/**
+ * A card's arrival: it rises about 40px, fades in and settles from 98% to
+ * full size over about 0.8s, once. Reduced motion: shown as is.
+ */
+export function CardRise({ children, className, label }: { children: ReactNode; className?: string; label?: string }) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className} aria-label={label} role={label ? "group" : undefined}>{children}</div>;
+  return (
+    <motion.div
+      className={className}
+      aria-label={label}
+      role={label ? "group" : undefined}
+      initial={{ opacity: 0, y: 40, scale: 0.98 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.8, ease: EASE }}
+    >
+      {children}
+    </motion.div>
+  );
+}

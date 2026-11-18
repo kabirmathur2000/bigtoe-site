@@ -8,13 +8,25 @@ import { HeaderShell } from "@/components/layout/HeaderShell";
 import { nav } from "@/content/site";
 import { tile } from "@/content/style-tile";
 import logo from "@/public/brand/logo.png";
+import logoLight from "@/public/brand/logo-tag-light.png";
+import { BookPill } from "./VisitPanel";
+
+/** Three lines that become a cross when the menu is open. */
+function MenuIcon() {
+  return (
+    <svg aria-hidden viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  );
+}
 
 /**
- * The navigation: the logo on the left (to Home), the word "Menu" on the
- * right, written out, opening a simple full-screen list: Home, How we
- * train, Team, Questions. A modal <dialog> in the brand light colour;
- * Close or Escape closes it; focus returns to "Menu". The page does not
- * scroll behind it. Reduced motion: a fade, no movement.
+ * The floating header on every page: the logo on the left; on the right
+ * the "Book your first visit" pill and a three-line menu icon (labelled
+ * "Menu"). It hides on scroll down and returns on scroll up (HeaderShell).
+ * The menu opens a full-screen navy overlay: Home, How we train, Team,
+ * Questions, with the book pill at the bottom. Close or Escape closes it;
+ * focus returns to the icon. Reduced motion: a fade, no movement.
  */
 export function TileHeader() {
   const reduce = useReducedMotion();
@@ -38,7 +50,8 @@ export function TileHeader() {
     const t = window.setTimeout(() => {
       setShown(false);
       d.close();
-      root.style.overflow = "";
+      // The request panel may have opened from the menu: keep the page still while it is open.
+      if (!document.querySelector("dialog[open]")) root.style.overflow = "";
       button.current?.focus({ preventScroll: true });
     }, 500);
     return () => window.clearTimeout(t);
@@ -49,20 +62,24 @@ export function TileHeader() {
   return (
     <>
       <HeaderShell>
-        <div className="flex h-12 items-center justify-between gap-2 pr-2 pl-3 md:h-14 md:pr-3 md:pl-5">
+        <div className="flex h-12 items-center justify-between gap-2 pr-1 pl-3 md:h-14 md:pr-2 md:pl-5">
           <Link href="/" aria-label={nav.homeLabel} className="flex min-h-11 shrink-0 items-center">
-            <Image src={logo} alt="" priority className="h-7 w-auto md:h-9" sizes="(min-width: 768px) 136px, 106px" />
+            <Image src={logo} alt="" priority className="h-6 w-auto md:h-9" sizes="(min-width: 768px) 136px, 92px" />
           </Link>
-          <button
-            ref={button}
-            type="button"
-            aria-haspopup="dialog"
-            aria-expanded={open}
-            onClick={() => setOpen(true)}
-            className="inline-flex min-h-11 items-center px-3 t-body font-bold transition-opacity duration-500 hover:opacity-75"
-          >
-            {m.open}
-          </button>
+          <div className="flex items-center gap-1 md:gap-3">
+            <BookPill placement="tile-header" size="small" />
+            <button
+              ref={button}
+              type="button"
+              aria-label={m.open}
+              aria-haspopup="dialog"
+              aria-expanded={open}
+              onClick={() => setOpen(true)}
+              className="flex h-11 w-11 items-center justify-center transition-opacity duration-500 hover:opacity-75"
+            >
+              <MenuIcon />
+            </button>
+          </div>
         </div>
       </HeaderShell>
 
@@ -73,14 +90,14 @@ export function TileHeader() {
           e.preventDefault();
           setOpen(false);
         }}
-        className={`fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none bg-offwhite p-0 text-navy backdrop:bg-transparent transition-[opacity,translate] duration-500 ease-soft ${
+        className={`fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none bg-navy p-0 text-offwhite backdrop:bg-transparent transition-[opacity,translate] duration-500 ease-soft ${
           visible ? "translate-y-0 opacity-100" : `opacity-0 ${reduce ? "" : "-translate-y-3"}`
         }`}
       >
-        <div className="flex h-full flex-col px-6 pt-5 pb-10 md:px-12 md:pt-8">
+        <div className="flex h-full flex-col px-6 pt-5 pb-[max(2rem,env(safe-area-inset-bottom))] md:px-12 md:pt-8 md:pb-12">
           <div className="flex items-center justify-between">
             <Link href="/" aria-label={nav.homeLabel} onClick={() => setOpen(false)} className="flex min-h-11 items-center">
-              <Image src={logo} alt="" className="h-7 w-auto md:h-9" sizes="(min-width: 768px) 136px, 106px" />
+              <Image src={logoLight} alt="" className="h-10 w-auto md:h-12" sizes="(min-width: 768px) 180px, 150px" />
             </Link>
             <button type="button" autoFocus onClick={() => setOpen(false)} className="inline-flex min-h-11 items-center px-3 t-body font-bold transition-opacity duration-500 hover:opacity-75">
               {m.close}
@@ -97,20 +114,11 @@ export function TileHeader() {
               ))}
             </ul>
           </nav>
+          <div>
+            <BookPill placement="tile-menu" onOpen={() => setOpen(false)} />
+          </div>
         </div>
       </dialog>
     </>
-  );
-}
-
-/** Inner pages: a clear title at the top and "← Back to home". */
-export function PageTitle({ title }: { title: string }) {
-  return (
-    <div className="px-3 pt-4 pb-2 md:px-6 md:pt-6 md:pb-4">
-      <Link href={tile.back.href} className="inline-flex min-h-11 items-center t-body transition-opacity duration-500 hover:opacity-75">
-        {tile.back.label}
-      </Link>
-      <h1 className="mt-2 t-headline">{title}</h1>
-    </div>
   );
 }

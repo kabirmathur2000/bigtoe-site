@@ -1,19 +1,23 @@
+import { Ending } from "@/components/tile/Ending";
 import { TileHeader } from "@/components/tile/TileChrome";
-import { TileFooter } from "@/components/tile/TileFooter";
-import { FloatingVisitButton, VisitProvider } from "@/components/tile/VisitPanel";
+import { VisitProvider } from "@/components/tile/VisitPanel";
 
 /**
- * The style tile's chrome: the navigation (logo, "Menu"), panels inset
- * from the screen edges with a small gap between them, the footer panel,
- * the one floating button and the request panel.
+ * The style tile's chrome (round four): a navy page; the floating header
+ * (logo, book pill, menu); the page content on top, inset from the screen
+ * edges, scrolling away at the end to reveal the ending beneath it.
  */
 export default function TileLayout({ children }: { children: React.ReactNode }) {
   return (
     <VisitProvider>
       <TileHeader />
-      <main className="flex flex-1 flex-col gap-3 px-3 pt-16 pb-3 md:gap-6 md:px-6 md:pt-20 md:pb-6">{children}</main>
-      <TileFooter />
-      <FloatingVisitButton />
+      <div data-tile className="relative bg-navy text-offwhite">
+        {/* Full width so the ending never shows at the sides; rounded at the bottom like a lifting curtain. */}
+        <main className="relative z-10 rounded-b-[28px] bg-navy md:rounded-b-[32px]">
+          <div className="mx-auto flex max-w-[1440px] flex-col gap-24 px-4 pt-28 pb-24 md:gap-40 md:px-12 md:pt-36 md:pb-40 lg:px-16">{children}</div>
+        </main>
+        <Ending />
+      </div>
     </VisitProvider>
   );
 }

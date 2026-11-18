@@ -22,7 +22,7 @@ const strongest = values.indexOf(Math.max(...values));
  * on phones; `compact` (beside text): 2 x 2 everywhere.
  * Reduced motion: the final numbers at once.
  */
-export function RingDials({ compact = false }: { compact?: boolean }) {
+export function RingDials({ compact = false, plain = false }: { compact?: boolean; plain?: boolean }) {
   const d = tile.dials;
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
@@ -58,7 +58,7 @@ export function RingDials({ compact = false }: { compact?: boolean }) {
   const done = t >= 1;
 
   return (
-    <div ref={ref} className={compact ? "" : "mt-10 border-t border-current/15 pt-5 md:mt-14 md:pt-6"}>
+    <div ref={ref} className={compact || plain ? "" : "mt-10 border-t border-current/15 pt-5 md:mt-14 md:pt-6"}>
       <p className="t-label">{d.example}</p>
       {/* Beside text (compact): 2 x 2 everywhere. Full width: four in a row on desktop. */}
       <ul className={`mt-6 grid grid-cols-2 gap-x-6 gap-y-8 md:mt-8 ${compact ? "md:gap-x-10 md:gap-y-10" : "md:grid-cols-4 md:gap-10"}`}>
