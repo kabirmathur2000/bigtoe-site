@@ -1,19 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { facts, mailtoHref, whatsappHref } from "@/content/facts";
-import { memberQuotes } from "@/content/quotes";
 import { footer } from "@/content/site";
 import { tile, type Accented } from "@/content/style-tile";
-import logoTag from "@/public/brand/logo-tag.png";
+import logoTag from "@/public/brand/logo-tag-light.png";
 import coffeeBar from "@/public/photos/studio-coffee-bar.jpg";
 import { Icon } from "./Icons";
-import { Faq, RangeChart, TrainRow } from "./Interactive";
+import { Faq, TrainRow } from "./Interactive";
+import { MemberStack, SherpaSplit, StartingPointSplit } from "./Scroll";
 import { FadeUp, Rise, RiseItem } from "./Rise";
 import { BookPill } from "./VisitPanel";
 
 /**
- * Round six: ten screens after ouraring.com and functionhealth.com, in
- * BigToe's brand. A light page (#F0EEEB), navy text, Light headlines,
+ * Rounds six and seven: screens after ouraring.com, functionhealth.com,
+ * soma-health.co and Neko, in BigToe's brand. A light page (#F0EEEB), navy text, Light headlines,
  * Regular text, Bold only for small labels; terracotta for the button and
  * at most one accent phrase per screen. Content fades up once as it
  * arrives. Every photo slot shows the coffee bar photo until the shoot,
@@ -47,8 +47,8 @@ export function Hero() {
       <div className="absolute inset-x-0 -top-[40%] bottom-0 md:top-0">
         <Image src={coffeeBar} alt={tile.photoAlt} fill preload sizes="100vw" quality={75} className="object-cover object-[16%_50%] md:object-[50%_55%]" />
       </div>
-      {/* A soft navy gradient behind the words only: strongest at the bottom, clear above about 60% of the height. */}
-      <div aria-hidden className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-navy/95 via-navy/60 to-transparent" />
+      {/* A soft navy gradient behind the words only: strongest at the bottom, clear above about 60% of the height (70% on desktop). */}
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-navy/95 via-navy/60 to-transparent md:h-[70%]" />
       <Rise
         className={`tile-wrap absolute inset-x-0 bottom-0 pb-[max(2.5rem,calc(env(safe-area-inset-bottom)+1.5rem))] text-offwhite md:pb-16 ${shadow}`}
         stagger={0.1}
@@ -122,59 +122,42 @@ export function FirstHour() {
   );
 }
 
-/** 5. Know your starting point, after Function's biomarker range card. */
+/** 5. Know your starting point: the Soma-style split with the dials diagram (Scroll.tsx). */
 export function StartingPoint() {
-  const s = tile.start;
+  return <StartingPointSplit />;
+}
+
+/** 6. Your Sherpa: the Soma-style split with the glass panel (Scroll.tsx). The navy zone starts here. */
+export function Sherpa() {
+  return <SherpaSplit />;
+}
+
+/** Your Sherpas: five round portrait placeholders with first names. */
+export function Sherpas() {
+  const s = tile.sherpas;
   return (
-    <section className={`tile-wrap grid items-center gap-10 md:grid-cols-12 md:gap-12 ${space}`}>
-      <Rise className="md:col-span-5">
-        <RiseItem as="h2" className="ty-headline">
+    <section className={`tile-wrap ${space}`}>
+      <Rise>
+        <RiseItem as="h2" className="max-w-3xl ty-headline">
           <Accent value={s.headline} />
         </RiseItem>
-        <RiseItem as="p" className="mt-5 max-w-md ty-sub text-navy/80 md:mt-6">{s.line}</RiseItem>
+        <RiseItem as="p" className="mt-5 max-w-xl ty-sub opacity-80 md:mt-6">{s.line}</RiseItem>
       </Rise>
-      <FadeUp className="md:col-span-7">
-        <RangeChart />
-      </FadeUp>
+      <Rise as="ul" className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-8 md:mt-14 md:grid md:grid-cols-5 md:gap-8" stagger={0.08}>
+        {s.names.map((n) => (
+          <RiseItem as="li" key={n} className="flex w-24 flex-col items-center text-center md:w-auto">
+            <span role="img" aria-label={`${n}: ${s.placeholder}`} className="flex aspect-square w-full items-center justify-center rounded-full border border-offwhite/20 bg-offwhite/10">
+              <Icon name="sherpa" className="h-8 w-8 opacity-60 md:h-10 md:w-10" />
+            </span>
+            <span className="mt-3 ty-body">{n}</span>
+          </RiseItem>
+        ))}
+      </Rise>
     </section>
   );
 }
 
-/** 6. Your Sherpa, after Function's "Next Steps": a full-bleed photo with a frosted glass panel of four rows. */
-export function Sherpa() {
-  const s = tile.sherpa;
-  return (
-    <section className={space}>
-      <FadeUp className="tile-wrap">
-        <h2 className="max-w-2xl ty-headline">
-          <Accent value={s.headline} />
-        </h2>
-      </FadeUp>
-      <div className="relative mt-10 h-[42rem] overflow-hidden bg-navy md:mt-14 md:h-[min(52rem,100svh)]">
-        <Image src={coffeeBar} alt="" fill sizes="100vw" quality={70} className="object-cover object-[30%_50%] md:object-[35%_55%]" />
-        <div className="tile-wrap absolute inset-x-0 bottom-4 md:top-0 md:bottom-0 md:flex md:items-center md:justify-end">
-          <FadeUp className="w-full md:w-[27rem]">
-            <ul className="rounded-2xl border border-offwhite/50 bg-offwhite/75 p-2 text-navy backdrop-blur-xl">
-              {s.rows.map((r) => (
-                <li key={r.label} className="flex items-center gap-4 border-b border-navy/10 p-4 last:border-b-0">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy/[0.07]">
-                    <Icon name={r.icon} />
-                  </span>
-                  <span>
-                    <span className="block ty-label">{r.label}</span>
-                    <span className="mt-1 block ty-body">{r.line}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </FadeUp>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/** 7. Members' words, after Oura's quote cards. Drafts until consent (the build check guards bigtoe.in). */
+/** In our members' words, after Neko's cards: they stack and slide over one another. Drafts until consent (the build check guards bigtoe.in). */
 export function Members() {
   const m = tile.members;
   return (
@@ -184,26 +167,25 @@ export function Members() {
           <Accent value={m.headline} />
         </h2>
       </FadeUp>
-      <Rise as="ul" className="mt-10 grid gap-4 md:mt-14 md:grid-cols-3" stagger={0.12}>
-        {memberQuotes.map((q) => (
-          <RiseItem as="li" key={q.quote} className="flex flex-col rounded-2xl bg-navy/[0.045] p-6 md:p-8">
-            <span className="self-start rounded-full bg-navy px-3 py-1.5 ty-label text-offwhite">{q.goal}</span>
-            <svg aria-hidden viewBox="0 0 32 24" className="mt-6 h-6 w-8" fill="currentColor">
-              <path d="M0 24V14.4C0 6.6 4.2 1.6 12.6 0l1.2 3.4C9.4 4.8 7.2 7.6 7 11.4h6.2V24H0Zm18 0V14.4C18 6.6 22.2 1.6 30.6 0l1.2 3.4c-4.4 1.4-6.6 4.2-6.8 8H31V24H18Z" />
-            </svg>
-            <blockquote className="mt-5 flex-1 ty-sub">{q.quote}</blockquote>
-            <div className="mt-8 flex items-center gap-3">
-              <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full">
-                <Image src={coffeeBar} alt="" fill sizes="44px" className="object-cover object-[50%_40%]" />
-              </span>
-              <span className="ty-small">
-                {q.name ?? m.name}, {q.age ?? m.age}
-                {q.draft && <span className="ml-2 rounded-full border border-terracotta px-2 py-0.5 ty-label text-terracotta">{m.draftLabel}</span>}
-              </span>
-            </div>
-          </RiseItem>
-        ))}
+      <MemberStack />
+    </section>
+  );
+}
+
+/** Beyond training: the headline and line, then one photo card (members at the social table). */
+export function Beyond() {
+  const b = tile.beyond;
+  return (
+    <section className={`tile-wrap ${space}`}>
+      <Rise>
+        <RiseItem as="h2" className="max-w-3xl ty-headline">
+          <Accent value={b.headline} />
+        </RiseItem>
+        <RiseItem as="p" className="mt-5 max-w-xl ty-sub opacity-80 md:mt-6">{b.line}</RiseItem>
       </Rise>
+      <FadeUp className="relative mt-10 aspect-[4/5] overflow-hidden rounded-2xl md:mt-14 md:aspect-video">
+        <Image src={coffeeBar} alt="" fill sizes="(min-width: 1280px) 1152px, 100vw" quality={70} className="object-cover object-[60%_60%]" />
+      </FadeUp>
     </section>
   );
 }
@@ -213,7 +195,7 @@ export function Included() {
   const n = tile.included;
   return (
     <section className={`tile-wrap flex justify-center ${space}`}>
-      <FadeUp className="w-full max-w-[34rem] rounded-2xl border border-navy/15 bg-navy/[0.025] p-7 text-center md:p-12">
+      <FadeUp className="w-full max-w-[34rem] rounded-2xl bg-offwhite p-7 text-center text-navy md:p-12">
         <h2 className="ty-headline">
           <Accent value={n.headline} />
         </h2>
@@ -250,9 +232,9 @@ export function Questions() {
 }
 
 const footLink = "inline-flex min-h-11 items-center ty-small transition-opacity duration-300 hover:opacity-70";
-const inline = "underline decoration-navy/30 underline-offset-4 transition-opacity duration-300 hover:opacity-70";
+const inline = "underline decoration-current/30 underline-offset-4 transition-opacity duration-300 hover:opacity-70";
 
-/** 10. Ending, after Function's closing: two lines centred, the button, then the footer with the navy LogoTag. */
+/** 10. Ending, after Function's closing: two lines centred, the button, then the footer with the light LogoTag (the footer is in the navy zone). */
 export function Ending() {
   const e = tile.ending;
   const wa = whatsappHref();
@@ -269,7 +251,7 @@ export function Ending() {
         </RiseItem>
       </Rise>
 
-      <footer className="mt-24 grid gap-8 border-t border-navy/15 pt-10 md:mt-36 md:grid-cols-12 md:gap-10">
+      <footer className="mt-24 grid gap-8 border-t border-current/20 pt-10 md:mt-36 md:grid-cols-12 md:gap-10">
         <div className="md:col-span-4">
           <Image src={logoTag} alt={`${facts.brand}. ${facts.tagline}`} className="h-16 w-auto md:h-20" sizes="(min-width: 768px) 200px, 160px" />
         </div>

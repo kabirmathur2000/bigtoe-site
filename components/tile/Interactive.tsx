@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
@@ -8,7 +8,6 @@ import { tile } from "@/content/style-tile";
 import coffeeBar from "@/public/photos/studio-coffee-bar.jpg";
 import { Icon } from "./Icons";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
 const frost = "bg-offwhite/85 text-navy backdrop-blur-md";
 
 /** One card of the row: a portrait photo, a pill label top left, a round plus top right, a short line low on the photo. */
@@ -110,90 +109,6 @@ export function TrainRow() {
   );
 }
 
-/**
- * 5. The range chart, after Function's biomarker card: two bands, "In
- * range" above "Below range", and two dots joined by a line, "First visit"
- * below range and "Retest" in range. Labelled "Example"; no scores. The
- * dots and line draw in once. Reduced motion: drawn, still.
- */
-export function RangeChart() {
-  const s = tile.start;
-  const reduce = useReducedMotion();
-  const area = useRef<HTMLDivElement>(null);
-  const [size, setSize] = useState({ w: 0, h: 0 });
-  useEffect(() => {
-    const el = area.current;
-    if (!el) return;
-    const ro = new ResizeObserver(([e]) => setSize({ w: e.contentRect.width, h: e.contentRect.height }));
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-  const first = { x: 26, y: 72 };
-  const retest = { x: 76, y: 28 };
-  const dot = (p: { x: number; y: number }, solid: boolean, delay: number) => (
-    <motion.span
-      aria-hidden
-      className={`absolute h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-navy ${solid ? "bg-navy" : "bg-offwhite"}`}
-      style={{ left: `${p.x}%`, top: `${p.y}%` }}
-      initial={reduce ? false : { opacity: 0, scale: 0.4 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, amount: 0.6 }}
-      transition={{ duration: 0.4, ease: EASE, delay }}
-    />
-  );
-  const label = (p: { x: number; y: number }, text: string, delay: number, side: "below" | "right") => (
-    <motion.span
-      aria-hidden
-      className={`absolute ty-small whitespace-nowrap ${side === "below" ? "-translate-x-1/2 pt-4" : "-translate-y-1/2 pl-5"}`}
-      style={{ left: `${p.x}%`, top: `${p.y}%` }}
-      initial={reduce ? false : { opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, amount: 0.6 }}
-      transition={{ duration: 0.4, delay }}
-    >
-      {text}
-    </motion.span>
-  );
-
-  return (
-    <div className="rounded-2xl border border-navy/15 bg-offwhite p-5 md:p-8">
-      <div className="flex items-center justify-between gap-4">
-        <p className="ty-sub">{s.dial}</p>
-        <span className="rounded-full bg-navy/[0.07] px-3 py-1.5 ty-label">{s.example}</span>
-      </div>
-      <div ref={area} role="img" aria-label={s.chartLabel} className="relative mt-6 aspect-[4/3] md:mt-8 md:aspect-[16/10]">
-        <div className="absolute inset-x-0 top-0 h-1/2 rounded-t-lg bg-navy/[0.05]">
-          <span className="absolute top-3 left-3 ty-small text-navy/75">{s.inRange}</span>
-        </div>
-        <div className="absolute inset-x-0 bottom-0 h-1/2 rounded-b-lg border-t border-dashed border-navy/25 bg-terracotta/[0.07]">
-          <span className="absolute bottom-3 left-3 ty-small text-navy/75">{s.belowRange}</span>
-        </div>
-        {/* Drawn at the chart's real pixel size, so the line keeps its weight. */}
-        {size.w > 0 && (
-          <svg aria-hidden viewBox={`0 0 ${size.w} ${size.h}`} className="absolute inset-0 h-full w-full overflow-visible">
-            <motion.line
-              x1={(first.x / 100) * size.w}
-              y1={(first.y / 100) * size.h}
-              x2={(retest.x / 100) * size.w}
-              y2={(retest.y / 100) * size.h}
-              stroke="currentColor"
-              strokeWidth="1.5"
-              initial={reduce ? false : { pathLength: 0 }}
-              whileInView={{ pathLength: 1 }}
-              viewport={{ once: true, amount: 0.6 }}
-              transition={{ duration: 1.1, ease: EASE, delay: 0.35 }}
-            />
-          </svg>
-        )}
-        {dot(first, false, 0.1)}
-        {dot(retest, true, 1.3)}
-        {label(first, s.first, 0.2, "right")}
-        {label(retest, s.retest, 1.4, "below")}
-      </div>
-    </div>
-  );
-}
-
 /** 9. Questions, after Function's FAQ: an accordion, one open at a time. */
 export function Faq() {
   const q = tile.questions;
@@ -201,11 +116,11 @@ export function Faq() {
   const base = useId();
   return (
     <div>
-      <ul className="border-t border-navy/15">
+      <ul className="border-t border-current/20">
         {q.items.map((item, i) => {
           const isOpen = open === i;
           return (
-            <li key={item.q} className="border-b border-navy/15">
+            <li key={item.q} className="border-b border-current/20">
               <h3>
                 <button
                   type="button"
@@ -227,14 +142,14 @@ export function Faq() {
                 className={`grid transition-[grid-template-rows,opacity] duration-300 ease-soft motion-reduce:transition-none ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
               >
                 <div className="overflow-hidden">
-                  <p className="max-w-2xl pb-7 ty-body text-navy/80">{item.a}</p>
+                  <p className="max-w-2xl pb-7 ty-body opacity-80">{item.a}</p>
                 </div>
               </div>
             </li>
           );
         })}
       </ul>
-      <Link href={q.all.href} className="mt-8 inline-flex min-h-11 items-center ty-body underline decoration-navy/30 underline-offset-[6px] transition-opacity duration-300 hover:opacity-70">
+      <Link href={q.all.href} className="mt-8 inline-flex min-h-11 items-center ty-body underline decoration-current/30 underline-offset-[6px] transition-opacity duration-300 hover:opacity-70">
         {q.all.label}
       </Link>
     </div>

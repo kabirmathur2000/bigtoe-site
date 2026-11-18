@@ -259,10 +259,10 @@ html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: va
    a light page, Light headlines, Regular text, Bold only for small labels.
    Fluid from 375px to 1440px. */
 /* ------------------------------------------------------------------ */
-/* The hero headline: about 15% larger than round six on desktop, a step larger on phones. */
+/* The hero headline: 40px on phones, 88px on desktop. */
 @utility ty-hero {
   font-weight: 300;
-  font-size: clamp(2.875rem, 1.62rem + 5.35vw, 6.25rem);
+  font-size: clamp(2.5rem, 1.444rem + 4.507vw, 5.5rem);
   line-height: 1.0;
   letter-spacing: -0.03em;
 }
@@ -314,9 +314,10 @@ html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: va
   scroll-padding-inline: max(var(--edge), calc((100% - 1280px) / 2 + var(--edge)));
 }
 
-/* The style tile's page: off-white, navy text, edges and overscroll included. */
+/* The style tile's page: off-white, navy text, edges and overscroll
+   included. --tile-bg is set by the navy switch (NavyZone). */
 html:has([data-tile]),
 html:has([data-tile]) body {
-  background: var(--offwhite);
+  background: var(--tile-bg, var(--offwhite));
   color: var(--navy);
 }

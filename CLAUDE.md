@@ -28,26 +28,31 @@ Sources: the Version C plan (above), then `docs/website-guide.md`, the decks in 
 
 ---
 
-## The new design (style tile, round six, 18 Nov 2026)
+## The new design (style tile, round seven, 18 Nov 2026)
 
 `/style-tile` shows the new design for approval; every page will be rebuilt from it. Not linked, not in the sitemap, `noindex`. Its own layout (`app/(tile)/`), components in `components/tile/`, copy in `content/style-tile.ts`. **Copy comes from `docs/copy/agreed-copy-2026-11-18.md` and the lines in each brief** (a line given in the brief wins); lines that are in neither are marked "proposed" in the content file or shown as TODOs. Facts from `agreed` in `content/facts.ts` (₹25,000 to ₹50,000 a month; the six-session guarantee; "Book your first visit"); the live pages keep the older facts and look until they are rebuilt.
 
-**Reference: ouraring.com and functionhealth.com.** The ten screens copy their layouts, spacing, card shapes, type scale and transitions as closely as possible, in BigToe's brand.
+**References:** ouraring.com and functionhealth.com for layouts, cards, type and spacing; soma-health.co for the scroll-linked splits; Neko for the stacking member cards. Keep the look: light page, Light headlines, 16px card corners, **one idea per screen**, quiet fade-ins.
 
 ### Base style
 
-- **Page background #F0EEEB, text navy #0A212D** (edges and overscroll included). No navy page.
+- **Page background #F0EEEB, text navy #0A212D** (edges and overscroll included) down to Your first hour and Know your starting point.
+- **The navy switch:** from "Your Sherpa. Your plan." to the footer the page is navy with #F0EEEB text; cards stay off-white with navy text. The change is a slow fade of the page colour over about half a screen as that section arrives (`NavyZone`). One change only, light above it, never back.
 - **Terracotta #D4644D** only for the button and at most one accent phrase per screen.
-- **Anderson Grotesk: Light for headlines, Regular for body, Bold only for small labels.** Named styles in `app/globals.css`, use only these: `ty-display` (hero, 44 to 88px Light), `ty-headline` (36 to 64px Light), `ty-sub` (20 to 24px Regular: lines under headlines, step titles, quotes, questions), `ty-body` (16 to 18px Regular), `ty-small` (14 to 15px Regular, the footer), `ty-label` (13px Bold, sentence case: pills and small labels).
-- **Cards:** 16px corners; off-white with a hairline navy border, or a faint navy tint. Pills are fully rounded.
-- **Layout:** content in a 1280px column (`tile-wrap`: 20px gutters on phones, 40px on tablets, 64px on desktop); the hero and the Sherpa photo run edge to edge; carousels run to the screen edge with the first card on the column (`tile-edge`). About 96px between screens on phones, 144px on desktop.
-- **Photos:** `docs/photos/studio-coffee-bar.jpg` fills every photo slot until the shoot, cropped per slot. Text sits on a photo only in the hero, on the training cards, and in frosted panels and pills.
+- **Anderson Grotesk: Light for headlines, Regular for body, Bold only for small labels.** Named styles in `app/globals.css`, use only these: `ty-hero` (the hero headline: 40px phones, 88px desktop, Light), `ty-headline` (36 to 64px Light), `ty-sub` (20 to 24px Regular: lines under headlines, step titles, quotes, questions), `ty-body` (16 to 18px Regular), `ty-small` (14 to 15px Regular, the footer), `ty-label` (13px Bold, sentence case: pills and small labels). The member card title is the one uppercase label (13px Bold, spaced).
+- **Cards:** 16px corners; off-white with a hairline navy border, or a faint navy tint on the light page; off-white in the navy zone. Pills are fully rounded.
+- **Layout:** content in a 1280px column (`tile-wrap`: 20px gutters on phones, 40px on tablets, 64px on desktop); the hero runs edge to edge; carousels run to the screen edge with the first card on the column (`tile-edge`). About 96px between screens on phones, 144px on desktop.
+- **Photos:** `docs/photos/studio-coffee-bar.jpg` fills every photo slot until the shoot, cropped per slot. Portraits of the Sherpas are round placeholders. Text sits on a photo only in the hero, on the training cards, and in frosted panels and pills.
 
-### Header (floating, every page)
+### Words used once
 
-- **Frosted off-white glass** (`bg-offwhite/75`, backdrop blur, hairline border) with the navy logo; it hides on scroll down and returns on scroll up (`HeaderShell glass`).
-- On the right the **book pill** (rounded, terracotta, navy text, sentence case, Bold) and a **three-line menu icon** labelled "Menu". **Below 380px screen width the pill reads "Book a visit"; at 380px and wider "Book your first visit".**
-- **The menu icon only ever opens the menu overlay;** only the book pills open the request panel. The menu is a full-screen off-white overlay: Home, How we train, Team, Questions, with the book pill at the bottom.
+Each of these appears once on the whole page, in one section only: **"Your first hour is free"** (Your first hour), **"one-to-one"** (What's included), **"Reserve Audit"** (Know your starting point). Every other line is written without them.
+
+### Header (after Function's, every page)
+
+- **Always visible, never hides on scroll.** A full-width frosted light bar (`bg-offwhite/80`, backdrop blur) with a hairline at the bottom, the navy logo on the left. 44px tap targets throughout.
+- **Desktop:** Method, Team, FAQ as text links on the right, then the terracotta pill "Book your first visit"; no menu icon.
+- **Phones:** the pill reading "Book a visit" and the three-line icon (labelled "Menu"); no text links in the bar. The icon only ever opens a full-screen list of Method, Team, FAQ (with the book pill at the bottom); only the pills open the request panel.
 
 ### Inner pages
 
@@ -55,24 +60,27 @@ Method, Team and FAQ start with a clear page title and "← Back to home" at the
 
 ### Motion
 
-- **Content fades up once as it arrives** (about 16px, 0.6s; lines one after another). Nothing is tied to scroll position: **no scroll-linked effects, no pinning, no stacking, no curtain ending, no parallax.** Native scrolling, no snapping of the page.
+- **Content fades up once as it arrives** (about 16px, 0.6s; lines one after another). Native scrolling, no page snapping, no scroll hijacking.
+- **Soma-style splits** (Know your starting point, Your Sherpa; `components/tile/Scroll.tsx`): on desktop (768px and wider) the section pins for about a screen; the text stays put while the visual evolves in step with scroll, forward on the way down and rewinding on the way up. On phones a pinned split does not fit the screen, so the dials diagram plays once as it arrives and the Sherpa rows each appear as they come up the screen.
+- **Stacking member cards** (Neko): each card sticks near the top and the next slides over it; a card taller than the screen sticks with its bottom in view.
 - **Carousels are manual** (swipe on phones, arrows on desktop; snap points inside the row only). Never autoplay.
-- **The chart draws once** (the dots, then the line).
-- Small interface transitions (the plus, the accordion) take about 0.3s.
-- **Reduced motion: everything still** and shown as is.
+- The navy switch is a colour fade tied to scroll. Small interface transitions (the plus, the accordion) take about 0.3s.
+- **Reduced motion: everything still** and shown in its final state (the colour fade still runs: it is not movement).
 
-### The ten screens
+### The screens, in order
 
-1. **Hero** (after Function's "Check your health."): a full-screen photo with a soft dark gradient over the lower half; a small frosted pill "Vasant Vihar, New Delhi"; the headline in Light, #F0EEEB, "The second half of life should be stronger than the first."; "One-to-one coaching for life after 40."; the button.
-2. **Why** (after Oura's "Understand your body. Own your health."): text only, centred: "We train for a sport called life." / "A suitcase to lift. Unexpected stairs. A trip to say yes to." Two soft navy pill links: "How we train", "Meet the team".
-3. **What we train** (after Oura's card row): portrait photo cards (4:5, 16px corners), a pill label with a line icon top left, a round plus top right, a short line low on the photo. Mobility and balance / Strength / Conditioning / Body composition. The plus reveals one sentence in a frosted panel. Phones swipe with the next card peeking; desktop has arrows.
-4. **Your first hour** (after Function's "Testing is easy"): "Your first hour is free." Three numbered steps, 01 to 03, in a row on desktop, stacked on phones: a small number, a short title, one sentence.
-5. **Know your starting point** (after Function's biomarker card): "Know your starting point." / "Your Reserve Audit measures four dials. Your plan starts with the one that needs the most attention." An off-white card, hairline border, 16px corners: "In range" and "Below range" bands, two dots joined by a line, "First visit" and "Retest". Labelled "Example"; no scores.
-6. **Your Sherpa** (after Function's "Next Steps"): "Your Sherpa. Your plan." above a full-bleed photo with a frosted glass panel of four rows (line icon, small label, one line): Your Sherpa / Your Reserve Audit / Your plan / Your progress.
-7. **Members' words** (after Oura's quote cards): cards with 16px corners, a small navy pill (the member's goal: Travel, Family, Strength), a large opening quote mark, the quote at `ty-sub`, a small round portrait with first name and age. Three across on desktop, stacked on phones. Quotes in `content/quotes.ts`, drafts with the build check.
-8. **What's included** (the shape of Function's pricing card, no price): one centred card, "Everything, one-to-one.", the button, a hairline, five checked bullets.
-9. **Questions** (after Function's FAQ): an accordion, one open at a time, then "See all questions →" (/faq).
-10. **Ending** (after Function's closing): "Come and meet us." / "Your first hour is free." centred, the button, then the footer: address, hours, WhatsApp, email, Careers, Maps, Terms, Privacy, and the navy LogoTag on the light background.
+1. **Hero** (after Function's "Check your health."): a full-screen photo; a soft navy gradient rising from the bottom to about 60% of the height on phones and 70% on desktop, strongest behind the words, clear at the top. A small frosted pill "Vasant Vihar, New Delhi"; the headline in Light, #F0EEEB, "The second half of life should be stronger than the first."; "Strength coaching for life after 40."; the button. Text with a very faint shadow. Phones: the photo is cropped higher so the logo wall clears the words; safe-area padding below.
+2. **Why** (after Oura): text only, centred: "We train for a sport called life." / "A suitcase to lift. Unexpected stairs. A trip to say yes to." Two soft navy pill links: "How we train", "Meet the team".
+3. **What we train** (after Oura's card row): portrait photo cards (4:5), a pill label with a line icon, a round plus that reveals one sentence, a short line on the photo. Mobility and balance / Strength / Conditioning / Body composition.
+4. **Your first hour** (after Function's steps): "Your first hour is free." Three numbered steps, 01 to 03.
+5. **Know your starting point** (Soma-style split): text on the left on desktop, above on phones: "Know your starting point." / "Four dials. One score. Your plan starts with the dial that needs the most attention." One off-white card, "Your Reserve Audit" and "Example": a large ring "Strength Reserve" counts up to 69, then four smaller rings rise out of it and settle in a row (2 x 2 on phones): Body composition 78, Balance and mobility 42, Functional strength 90, Conditioning 66; the weakest in terracotta, the rest navy.
+6. **Your Sherpa** (Soma-style split; the navy zone starts here): "Your Sherpa. Your plan." on the left (above on phones), the photo with a frosted glass panel on the right. Four rows appear one at a time: Your Sherpa, A dedicated coach for every session / Your starting point, Where your plan begins / Your plan, Built from your dials / Your progress, Shapes what comes next.
+7. **Your Sherpas:** "Five Sherpas. One standard." / "Every Sherpa trains under Jeevan, and every workout template is his." Five round portrait placeholders with first names: Himanshu, Saurav, Sumit, Tanuj, Kabir (a row on desktop; three and two on phones).
+8. **In our members' words** (after Neko): each card a large photo (4:5 phones, 3:2 desktop) with a small uppercase title (first name and age) and the quote below; the cards stack and slide over one another. Drafts with the build check. Each quote has a `video` slot for later (Function's "Real people" style), not used yet.
+9. **Beyond training:** "Get stronger. Keep the pizza." / "Quarterly lunches, community runs, book readings, lifestyle talks." One photo card: members at the social table.
+10. **What's included** (the shape of Function's pricing card, no price): "Everything, one-to-one.", the button, a hairline, four checked bullets.
+11. **Questions** (after Function's FAQ): an accordion, one open at a time, then "See all questions →".
+12. **Ending:** "Come and meet us." / "Stay for coffee." centred, the button, then the footer: address, hours, WhatsApp, email, Careers, Maps, Terms, Privacy, and the light LogoTag (the footer is in the navy zone).
 
 ### Request panel
 

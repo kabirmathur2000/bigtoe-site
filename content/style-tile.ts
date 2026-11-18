@@ -1,6 +1,6 @@
 /**
- * The style tile, round six (/style-tile, 18 Nov 2026): ten screens after
- * ouraring.com and functionhealth.com, in BigToe's brand. Copy from
+ * The style tile, round seven (/style-tile, 18 Nov 2026): screens after
+ * ouraring.com, functionhealth.com, soma-health.co and Neko, in BigToe's brand. Copy from
  * docs/copy/agreed-copy-2026-11-18.md and the round-six brief (where the
  * brief gives a line, it wins); facts from `agreed` in facts.ts. Lines
  * marked "proposed" are not in the agreed copy and need approval. Not
@@ -13,6 +13,9 @@ export type Accented = { text: string; accent?: string };
 
 export type TrainIcon = "balance" | "strength" | "conditioning" | "body";
 export type StepIcon = "sherpa" | "audit" | "plan" | "progress";
+
+/** Words that appear once on the whole page, each in one section only. */
+export const onceOnly = ["Your first hour is free", "one-to-one", "Reserve Audit"] as const;
 
 export const tile = {
   title: "Style tile",
@@ -41,7 +44,8 @@ export const tile = {
   hero: {
     place: facts.address.short,
     headline: { text: "The second half of life should be stronger than the first.", accent: "stronger than the first" } as Accented,
-    line: "One-to-one coaching for life after 40.",
+    /** "one-to-one" appears only in What's included. */
+    line: "Strength coaching for life after 40.",
   },
 
   /** 2. Why, after Oura's "Understand your body. Own your health.": text only, centred. */
@@ -68,7 +72,7 @@ export const tile = {
     ] as { name: string; icon: TrainIcon; line: string; more: string; pos: string }[],
   },
 
-  /** 4. Your first hour, after Function's "Testing is easy" steps. */
+  /** 4. Your first hour, after Function's "Testing is easy" steps. The only place "Your first hour is free" appears. */
   firstHour: {
     headline: { text: "Your first hour is free." } as Accented,
     steps: [
@@ -78,17 +82,21 @@ export const tile = {
     ],
   },
 
-  /** 5. Know your starting point, after Function's biomarker range card. */
+  /** 5. Know your starting point, Soma-style: the text stays put while the dials diagram evolves with scroll. */
   start: {
     headline: { text: "Know your starting point.", accent: "starting point." } as Accented,
-    line: "Your Reserve Audit measures four dials. Your plan starts with the one that needs the most attention.",
+    line: "Four dials. One score. Your plan starts with the dial that needs the most attention.",
+    /** The only place "Reserve Audit" appears. */
+    card: "Your Reserve Audit",
     example: "Example",
-    dial: "Balance and mobility",
-    inRange: "In range",
-    belowRange: "Below range",
-    first: "First visit",
-    retest: "Retest",
-    chartLabel: "Example chart: balance and mobility, below range at the first visit and in range at the retest.",
+    score: { name: "Strength Reserve", value: 69 },
+    dials: [
+      { name: "Body composition", value: 78 },
+      { name: "Balance and mobility", value: 42 },
+      { name: "Functional strength", value: 90 },
+      { name: "Conditioning", value: 66 },
+    ],
+    outOf: "out of 100",
   },
 
   /** 6. Your Sherpa, after Function's "Next Steps" glass panel. */
@@ -96,13 +104,21 @@ export const tile = {
     headline: { text: "Your Sherpa. Your plan.", accent: "Your plan." } as Accented,
     rows: [
       { icon: "sherpa", label: "Your Sherpa", line: "A dedicated coach for every session" },
-      { icon: "audit", label: "Your Reserve Audit", line: "Sets the starting point" },
+      { icon: "audit", label: "Your starting point", line: "Where your plan begins" },
       { icon: "plan", label: "Your plan", line: "Built from your dials" },
       { icon: "progress", label: "Your progress", line: "Shapes what comes next" },
     ] as { icon: StepIcon; label: string; line: string }[],
   },
 
-  /** 7. Members' words, after Oura's quote cards. Quotes in content/quotes.ts (drafts). */
+  /** Your Sherpas: five round portrait placeholders with first names. */
+  sherpas: {
+    headline: { text: "Five Sherpas. One standard.", accent: "One standard." } as Accented,
+    line: "Every Sherpa trains under Jeevan, and every workout template is his.",
+    names: ["Himanshu", "Saurav", "Sumit", "Tanuj", "Kabir"],
+    placeholder: "Portrait to come",
+  },
+
+  /** Members' words, after Neko's cards: a large photo, the name and age, the quote. Quotes in content/quotes.ts (drafts). */
   members: {
     headline: { text: "In our members' words." } as Accented,
     name: todo("first name"),
@@ -110,12 +126,18 @@ export const tile = {
     draftLabel: "Draft",
   },
 
+  /** Beyond training: one photo card. */
+  beyond: {
+    headline: { text: "Get stronger. Keep the pizza.", accent: "Keep the pizza." } as Accented,
+    line: "Quarterly lunches, community runs, book readings, lifestyle talks.",
+  },
+
   /** 8. What's included, the shape of Function's pricing card, no price. */
   included: {
     headline: { text: "Everything, one-to-one." } as Accented,
+    /** The only place "one-to-one" appears. */
     items: [
-      agreed.firstHourFree.replace(/\.$/, ""),
-      "60-minute sessions, one-to-one with your Sherpa",
+      "60-minute sessions with your own Sherpa",
       "Two to four sessions a week, by your goal",
       "Studio, home or online",
       "Six sessions in three weeks, or your money back",
@@ -134,14 +156,14 @@ export const tile = {
         q: "I have an old injury or a health condition. Can I train?",
         a: "Tell us in your intake form before your first visit, and check any exercise restrictions with your doctor. We already train members taking GLP-1 medication. We'll discuss what's appropriate for you before you begin.",
       },
-      { q: "What does it cost?", a: `${agreed.price} ${agreed.firstHourFree}` },
+      { q: "What does it cost?", a: agreed.price },
     ],
     all: { label: "See all questions →", href: "/faq" },
   },
 
   /** 10. Ending, after Function's closing: two lines, the button, the footer. */
   ending: {
-    headline: { text: "Come and meet us. Your first hour is free.", accent: "Your first hour is free." } as Accented,
+    headline: { text: "Come and meet us. Stay for coffee.", accent: "Stay for coffee." } as Accented,
     hours: agreed.hours,
   },
 
