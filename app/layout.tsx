@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import { ViewTransition } from "react";
-import { Footer } from "@/components/layout/Footer";
-import { BookingProvider } from "@/components/booking/BookingPanel";
-import { Header } from "@/components/layout/Header";
-import { MobileBookBar } from "@/components/layout/MobileBookBar";
 import { SectionToneController } from "@/components/motion/SectionTone";
 import { facts } from "@/content/facts";
 import { meta } from "@/content/site";
@@ -46,16 +41,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${anderson.variable} antialiased`}>
       <body className="flex min-h-svh flex-col">
         <SectionToneController />
-        {/* Every "Book your first hour" button opens the one booking panel. */}
-        <BookingProvider>
-          <Header />
-          {/* Page cross-fade: route changes are transitions, so this animates. */}
-          <ViewTransition>
-            <main className="flex-1 pt-16 md:pt-20">{children}</main>
-          </ViewTransition>
-          <Footer />
-          <MobileBookBar />
-        </BookingProvider>
+        {/* Navigation, main and footer come from each route group's layout: (site) and (tile). */}
+        {children}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness).replace(/</g, "\\u003c") }}

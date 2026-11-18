@@ -73,6 +73,9 @@ export const facts = {
 
   /** The short form a visitor fills in before the first hour (linked from the thank-you step). */
   preVisitFormUrl: "https://forms.gle/7GWfSvARWfdz4hkE9",
+  /** The intake form linked from the style tile's request panel (the new booking flow). */
+  intakeFormUrl:
+    "https://docs.google.com/forms/d/e/1FAIpQLSdtFRybz94zmLgkWQT9pnLRGVndA5rfe-K_NI1pd8Q72B8iHw/viewform",
 } as const;
 
 export const whatsappHref = (message?: string) =>

@@ -18,7 +18,31 @@
 - **American spelling throughout.**
 - **Brand colours only:** off-white #F0EEEB, navy #0A212D, terracotta #D4644D. Typeface Anderson Grotesk: Light for large headlines, Regular for text, Bold for the button and labels.
 
+### Words
+
+- **Never:** crush, shred, grind, push, transform, burn, beast, no excuses, limited, spots left, hurry.
+- **Prefer:** build, restore, calibrate, cultivate, steward, guide.
+- The tone is fitness meets high-end hospitality: calm, warm, unhurried.
+
 Sources: the Version C plan (above), then `docs/website-guide.md`, the decks in `docs/decks/`, and `docs/copy/`. Photos: `docs/shot-list.md`.
+
+---
+
+## Style tile (`/style-tile`, 18 Nov 2026)
+
+One working example of each screen type, for approval before every page is rebuilt from these patterns. Not linked, not in the sitemap, `noindex`. Its own layout (`app/(tile)/`): the navigation as it will be (logo to Home, Method, Team, FAQ, "Book your first visit"; phones: the button fixed to the bottom) and the request panel. Copy in `content/style-tile.ts` (its price, guarantee, first visit and button label are **proposed** and differ from `facts.ts`; move the approved ones into `facts.ts` when the pages are rebuilt). Components in `components/tile/`.
+
+- **Inspiration:** ouraring.com and functionhealth.com. Very few words, one action per block, a small set of repeated screen types, generous space, pictures and objects carrying the meaning.
+- **A. Photo screen** (light): desktop, the photo on one half running to the screen edge, the words on the other, sides alternating; phones, the photo on top at 4:5, the words below.
+- **B. Text screen** (light): a large headline, its lines, generous space.
+- **C. Member card** (navy): one card at a time, square portrait left and quote right on desktop, stacked on phones; arrows, swipe and a "1 / 3" counter; no autoplay, no loop.
+- **D. Diagram screen** (light): four labelled dials as hairline line drawings, no scores; four in a row on desktop, 2 x 2 on phones; the lines draw once on entry.
+- **E. Invitation** (navy, centred): the visit, the price, the free hour, the guarantee, the button. Then three questions (one open at a time) and "All questions".
+- **Sign-off** above the footer: "We get better at what we practice." / "At BigToe, we Practice Possibility."
+- **One colour change only:** light for A, B and D, then one slow fade to navy for C, E, the questions and the sign-off (so D comes before C on the tile).
+- **Images are art-directed:** every photo has a desktop shape and a phone shape (`ArtImage`); placeholders show the shot name, both shapes and the pixel size to supply (e.g. "Members around the social table · desktop 3:2, 2400x1600 · phone 4:5, 1600x2000"). The coffee bar photo stands in wherever the space is the subject.
+- **Motion on the tile:** text rises about 12px and fades in over 0.6s; photos settle from a very slight zoom; nothing moves on its own; reduced motion shows everything still.
+- **Request panel** (`VisitPanel`): centred dialog on desktop, bottom sheet on phones. Name, mobile number, preferred time (weekday morning, weekday evening, weekend). Thank you: "Thank you, [name]. We'll confirm your visit on WhatsApp." with the intake form (`facts.intakeFormUrl`, new tab) and WhatsApp. Server action `app/actions/visit.ts`. Analytics: "Visit panel" on open, "Visit submit" on submit.
 
 ---
 
@@ -149,6 +173,8 @@ A floating bar on every page: inset from the screen edges, 8px corners, off-whit
 ## Code conventions
 
 - Next.js 16 App Router, TypeScript, Tailwind CSS v4 (CSS-first `@theme` in `app/globals.css`). Read `node_modules/next/dist/docs/` before using an API.
+- **Route groups:** `app/(site)/` holds the live pages and their layout (navigation, footer, booking panel); `app/(tile)/` holds the style tile and its layout. The root layout holds only `<html>`, the colour fade, the JSON-LD and analytics.
+- **Draft quotes guard:** member quotes live in `content/quotes.ts` with `draft: true` until consent, name and age are recorded. `npm run build` runs `scripts/check-drafts.mjs` first: a production build for bigtoe.in (Vercel production whose domain is bigtoe.in) fails while any quote is a draft; other builds only warn. `npm run check:drafts` runs it alone.
 - `content/facts.ts`: every reusable fact. `content/<page>.ts`: that page's copy. `content/site.ts`: navigation, footer labels, metadata. `content/booking.ts`: the panel. `content/legal.ts`: terms and privacy.
 - `components/`: layout, motion primitives and UI. No copy inside.
 - Motion: `motion` for reveals; scrolling is native. Every primitive checks reduced motion.
@@ -159,7 +185,8 @@ A floating bar on every page: inset from the screen edges, 8px corners, off-whit
 
 ## Still open
 
-- [ ] WhatsApp number to publish (footer, thank-you "Message us now").
+- [ ] WhatsApp number to publish (footer, thank-you "Message us now", the tile's request panel).
+- [ ] Style tile: the proposed facts to approve (₹25,000 to ₹50,000; six sessions within three weeks; the first visit with a founder; "Book your first visit"); the answer to "What happens at my first visit?"; an "All questions" page (the tile links to /faq, which does not exist yet); the three tile quotes (two not in `docs/copy/testimonials.md`; the second adds "which says it all!").
 - [ ] Map link ("Location on Maps").
 - [ ] Member quotes: first name, age and written consent for all four (three on Home, one on Team). Source needed for two not in `docs/copy/testimonials.md`: "It's more than a place. It's family." and "Jeevan can absolutely kick your butt…".
 - [ ] Sherpa name spellings (Himanshu, Saurav, Sumit, Tanuj, Kabir), and each Sherpa's OK to publish their line.

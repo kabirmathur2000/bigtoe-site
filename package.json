@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-drafts.mjs && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:drafts": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-drafts.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
