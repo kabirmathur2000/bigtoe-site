@@ -1,32 +1,34 @@
 /**
- * The booking panel: opens from every button, anywhere on the site.
- * Wording as approved in the final plan (17 Nov 2026).
+ * The request panel: "Book your first visit" opens it from every button,
+ * anywhere on the site. A visit request, not a confirmed appointment; no
+ * health questions (the intake form's job). Agreed 18 Nov 2026.
  */
 import { facts } from "./facts";
 
 export const booking = {
-  heading: facts.ctaLabel,
+  heading: facts.cta,
   fields: {
-    firstName: { label: "First name" },
-    whatsapp: { label: "WhatsApp number" },
+    name: { label: "Name" },
+    mobile: { label: "Mobile number" },
+    time: {
+      label: "Preferred time",
+      options: ["Weekday morning", "Weekday evening", "Weekend"],
+    },
   },
   errors: {
-    firstName: "Please add your first name.",
-    whatsappMissing: "Please add your WhatsApp number.",
-    whatsappInvalid: "That doesn't look like a WhatsApp number.",
+    name: "Please add your name.",
+    mobileMissing: "Please add your mobile number.",
+    mobileInvalid: "That doesn't look like a mobile number.",
+    time: "Please choose a time.",
     failed: `Something went wrong and your details weren't sent. Please try again, or email ${facts.email}.`,
   },
-  submit: facts.ctaLabel,
+  submit: facts.cta,
   close: "Close",
-  /** Hidden spam trap; real visitors never see it. */
   honeypotLabel: "Company",
-
   thanks: {
-    heading: (firstName: string) => `Thank you, ${firstName}. We'll message you on WhatsApp to set your first hour.`,
-    formLead: "Before you come, tell us a little about yourself.",
-    formLabel: "Fill in the short form",
-    whatsappLabel: "Message us now",
-    /** Pre-filled WhatsApp message (interface wording). */
-    whatsappMessage: (firstName: string) => `Hi BigToe, this is ${firstName}. I'd like to book my first hour.`,
+    heading: (name: string) => `Thank you, ${name}. We'll confirm your visit on WhatsApp.`,
+    formLabel: "Fill in the intake form",
+    whatsappLabel: "Message us on WhatsApp",
+    whatsappMessage: (name: string) => `Hi BigToe, this is ${name}. I've just asked to book my first visit.`,
   },
 } as const;

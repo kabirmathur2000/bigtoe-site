@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import { SectionToneController } from "@/components/motion/SectionTone";
 import { facts } from "@/content/facts";
 import { meta } from "@/content/site";
 import { anderson } from "./fonts";
@@ -24,7 +23,7 @@ const localBusiness = {
   url: facts.siteUrl,
   email: facts.email,
   ...(facts.whatsappNumber ? { telephone: `+${facts.whatsappNumber}` } : {}),
-  priceRange: facts.price.range,
+  priceRange: facts.priceRange,
   openingHours: facts.hoursSchema,
   address: {
     "@type": "PostalAddress",
@@ -40,8 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${anderson.variable} antialiased`}>
       <body className="flex min-h-svh flex-col">
-        <SectionToneController />
-        {/* Navigation, main and footer come from each route group's layout: (site) and (tile). */}
+        {/* The header, main and request panel come from app/(site)/layout.tsx; each page ends with its footer. */}
         {children}
         <script
           type="application/ld+json"

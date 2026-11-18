@@ -1,15 +1,15 @@
 /**
  * The style tile, round seven (/style-tile, 18 Nov 2026): screens after
  * ouraring.com, functionhealth.com, soma-health.co and Neko, in BigToe's brand. Copy from
- * docs/copy/agreed-copy-2026-11-18.md and the round-six brief (where the
- * brief gives a line, it wins); facts from `agreed` in facts.ts. Lines
+ * docs/copy/agreed-copy-2026-11-18.md and the round-six brief; facts from facts.ts. Lines
  * marked "proposed" are not in the agreed copy and need approval. Not
- * linked, not in the sitemap, noindex. The live pages are unchanged.
+ * linked, not in the sitemap, noindex. Kept as approved; the live pages
+ * were built from it.
  */
-import { agreed, facts, todo } from "./facts";
+import { facts, todo } from "./facts";
+import { dials, members, type Accented } from "./site";
 
-/** A headline with at most one phrase in terracotta (`accent` must appear in `text`). */
-export type Accented = { text: string; accent?: string };
+export type { Accented };
 
 export type TrainIcon = "balance" | "strength" | "conditioning" | "body";
 export type StepIcon = "sherpa" | "audit" | "plan" | "progress";
@@ -19,30 +19,12 @@ export const onceOnly = ["Your first hour is free", "one-to-one", "Reserve Audit
 
 export const tile = {
   title: "Style tile",
-  /** The inner-page pattern (Method, Team, FAQ): a page title, then this link. */
-  back: { label: "← Back to home", href: "/" },
-  cta: agreed.cta,
-  /** The header pill on phones. */
-  ctaShort: "Book a visit",
-
-  /** The header: Method, Team, FAQ as text links on desktop; on phones the same list behind the menu icon. */
-  menu: {
-    open: "Menu",
-    close: "Close",
-    label: "Menu",
-    links: [
-      { href: "/method", label: "Method" },
-      { href: "/team", label: "Team" },
-      { href: "/faq", label: "FAQ" },
-    ],
-  },
-
   /** Every photo slot uses the coffee bar photo until the shoot, cropped per slot. */
   photoAlt: "The BigToe coffee bar: the long wooden table and stools under pendant lamps, the training floor behind",
 
   /** 1. Hero, after Function's "Check your health.": a full-screen photo. */
   hero: {
-    place: facts.address.short,
+    place: facts.address.short.replace(/\.$/, ""),
     headline: { text: "The second half of life should be stronger than the first.", accent: "stronger than the first" } as Accented,
     /** "one-to-one" appears only in What's included. */
     line: "Strength coaching for life after 40.",
@@ -87,16 +69,7 @@ export const tile = {
     headline: { text: "Know your starting point.", accent: "starting point." } as Accented,
     line: "Four dials. One score. Your plan starts with the dial that needs the most attention.",
     /** The only place "Reserve Audit" appears. */
-    card: "Your Reserve Audit",
-    example: "Example",
-    score: { name: "Strength Reserve", value: 69 },
-    dials: [
-      { name: "Body composition", value: 78 },
-      { name: "Balance and mobility", value: 42 },
-      { name: "Functional strength", value: 90 },
-      { name: "Conditioning", value: 66 },
-    ],
-    outOf: "out of 100",
+    ...dials,
   },
 
   /** 6. Your Sherpa, after Function's "Next Steps" glass panel. */
@@ -121,9 +94,7 @@ export const tile = {
   /** Members' words, after Neko's cards: a large photo, the name and age, the quote. Quotes in content/quotes.ts (drafts). */
   members: {
     headline: { text: "In our members' words." } as Accented,
-    name: todo("first name"),
-    age: todo("age"),
-    draftLabel: "Draft",
+    ...members,
   },
 
   /** Beyond training: one photo card. */
@@ -156,7 +127,7 @@ export const tile = {
         q: "I have an old injury or a health condition. Can I train?",
         a: "Tell us in your intake form before your first visit, and check any exercise restrictions with your doctor. We already train members taking GLP-1 medication. We'll discuss what's appropriate for you before you begin.",
       },
-      { q: "What does it cost?", a: agreed.price },
+      { q: "What does it cost?", a: facts.price },
     ],
     all: { label: "See all questions →", href: "/faq" },
   },
@@ -164,35 +135,7 @@ export const tile = {
   /** 10. Ending, after Function's closing: two lines, the button, the footer. */
   ending: {
     headline: { text: "Come and meet us. Stay for coffee.", accent: "Stay for coffee." } as Accented,
-    hours: agreed.hours,
+    hours: facts.hours,
   },
 
-  /** The request panel. */
-  panel: {
-    heading: agreed.cta,
-    fields: {
-      name: { label: "Name" },
-      mobile: { label: "Mobile number" },
-      time: {
-        label: "Preferred time",
-        options: ["Weekday morning", "Weekday evening", "Weekend"],
-      },
-    },
-    errors: {
-      name: "Please add your name.",
-      mobileMissing: "Please add your mobile number.",
-      mobileInvalid: "That doesn't look like a mobile number.",
-      time: "Please choose a time.",
-      failed: `Something went wrong and your details weren't sent. Please try again, or email ${facts.email}.`,
-    },
-    submit: agreed.cta,
-    close: "Close",
-    honeypotLabel: "Company",
-    thanks: {
-      heading: (name: string) => `Thank you, ${name}. We'll confirm your visit on WhatsApp.`,
-      formLabel: "Fill in the intake form",
-      whatsappLabel: "Message us on WhatsApp",
-      whatsappMessage: (name: string) => `Hi BigToe, this is ${name}. I've just asked to book my first visit.`,
-    },
-  },
 } as const;

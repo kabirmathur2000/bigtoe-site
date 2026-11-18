@@ -1,6 +1,5 @@
 /**
- * Member quotes for the member card (style tile now, the rebuilt pages
- * next). Every quote stays `draft: true` until the member's written
+ * Member quotes for the member cards (Home, and the style tile). Every quote stays `draft: true` until the member's written
  * consent, first name and age are recorded; then set `draft: false` and
  * fill in `name` and `age`.
  *
@@ -31,7 +30,7 @@ export const memberQuotes: MemberQuote[] = [
     age: null,
     draft: true,
     shot: "Member portrait, relaxed, in the studio (same crop and size for every member)",
-    source: "Style tile brief, 18 Nov 2026 (not in docs/copy/testimonials.md)",
+    source: "Agreed copy 18 Nov 2026, card 1: an illustrative draft, not a real member's words",
     goal: "Strength",
     video: null,
   },
@@ -42,7 +41,7 @@ export const memberQuotes: MemberQuote[] = [
     age: null,
     draft: true,
     shot: "Member portrait, relaxed, in the studio (same crop and size for every member)",
-    source: "docs/copy/testimonials.md 4, with \"which says it all!\" added in the brief (not in the member's words)",
+    source: "Agreed copy 18 Nov 2026, card 8 (Member Voices, June 2026; docs/copy/testimonials.md 4 ends before \"which says it all!\")",
     goal: "Family",
     video: null,
   },
@@ -53,7 +52,7 @@ export const memberQuotes: MemberQuote[] = [
     age: null,
     draft: true,
     shot: "Member portrait, relaxed, in the studio (same crop and size for every member)",
-    source: "Style tile brief, 18 Nov 2026 (not in docs/copy/testimonials.md)",
+    source: "Agreed copy 18 Nov 2026, card 4: proposed wording for the member's approval",
     goal: "Travel",
     video: null,
   },

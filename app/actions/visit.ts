@@ -1,7 +1,7 @@
 "use server";
 
 import { facts } from "@/content/facts";
-import { tile } from "@/content/style-tile";
+import { booking } from "@/content/booking";
 import { VISIT_FIELDS, VISIT_HONEYPOT, VISIT_MAX, validateVisit, type VisitValues } from "@/lib/visit";
 
 export type VisitResult = { ok: true } | { ok: false; reason: "invalid" | "failed" };
@@ -19,7 +19,7 @@ export async function submitVisit(formData: FormData): Promise<VisitResult> {
   const values = Object.fromEntries(
     VISIT_FIELDS.map((k) => [k, String(formData.get(k) ?? "").slice(0, VISIT_MAX[k])]),
   ) as VisitValues;
-  const f = tile.panel.fields;
+  const f = booking.fields;
   if (Object.keys(validateVisit(values, f.time.options)).length) return { ok: false, reason: "invalid" };
 
   const text = [
@@ -27,7 +27,7 @@ export async function submitVisit(formData: FormData): Promise<VisitResult> {
     `${f.mobile.label}: ${values.mobile.trim()}`,
     `${f.time.label}: ${values.time}`,
     "",
-    `Form: ${tile.panel.heading}`,
+    `Form: ${booking.heading}`,
   ].join("\n");
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -48,7 +48,7 @@ export async function submitVisit(formData: FormData): Promise<VisitResult> {
       body: JSON.stringify({
         from: process.env.RESEND_FROM || `${facts.brand} website <onboarding@resend.dev>`,
         to: to.split(",").map((s) => s.trim()).filter(Boolean),
-        subject: oneLine(`${tile.panel.heading}: ${values.name}`),
+        subject: oneLine(`${booking.heading}: ${values.name}`),
         text,
       }),
     });

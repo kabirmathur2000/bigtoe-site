@@ -1,37 +1,41 @@
-/**
- * Method (Version C, 17 Nov 2026): four screens. 1 to 2 light;
- * 3 to 4 navy.
- */
-/** Screen 1 (light, photo: the studio floor, reused from Home). */
-export const reserve = {
-  headline: "The Reserve Score.",
-  line: "Most gyms train in the dark. We turn the lights on.",
-  note: "Mobility and balance. Strength. Conditioning. Body composition. One number, out of 100.",
-  shot: "The studio floor, wide: a Sherpa coaching, bare feet, free weights",
-} as const;
+/** Method, "How we train" (agreed copy, 18 Nov 2026, with the 18 Nov build brief). */
+import type { Accented } from "./site";
 
-/** Screen 2 (light, no photo). Three lines, one per thing that fades. */
-export const fades = {
-  headline: "Three things fade with age. We train all three.",
-  lines: [
-    "Muscle. What you're made of.",
-    "Strength. What you can lift, push and carry.",
-    "Power. How fast you can move when it counts.",
-  ],
-} as const;
+export type MethodIcon = "muscle" | "strength" | "power";
 
-/** Screen 3 (navy, photo: tight vertical crop). */
-export const barefoot = {
-  headline: "It all starts with the big toe.",
-  line: "Bare feet. Free weights. No machine to hold you up.",
-  shot: "A Sherpa's bare feet on the training floor, tight vertical crop",
-} as const;
+export const method = {
+  title: "How we train",
 
-/** Screen 4 (navy): the loop diagram. */
-export const how = {
-  headline: "How it works.",
-  line: "It was never motivation. It was the missing scoreboard.",
-  steps: ["Measure", "Train the weakest", "Retest", "Recalibrate"],
-  /** Screen-reader name for the diagram. */
-  label: "The loop: measure, train the weakest, retest, recalibrate",
+  /** 1. The four dials, with the example numbers from Home. */
+  start: {
+    headline: { text: "Know your starting point.", accent: "starting point." } as Accented,
+    line: "The Reserve Audit measures four dials.",
+    after: "Your plan starts with the dial that needs the most attention.",
+  },
+
+  /** 2. Three icon-and-text blocks. */
+  build: {
+    headline: { text: "Build more than appearance." } as Accented,
+    blocks: [
+      { icon: "muscle", name: "Muscle.", line: "What you're made of." },
+      { icon: "strength", name: "Strength.", line: "What you can lift, push and carry." },
+      { icon: "power", name: "Power.", line: "How fast you can move when it counts." },
+    ] as { icon: MethodIcon; name: string; line: string }[],
+    after: "Capacity you can use outside the studio.",
+  },
+
+  /** 3. The photo, then the Big Seven as clean type. */
+  ground: {
+    headline: { text: "Train from the ground up.", accent: "ground up." } as Accented,
+    line: "Bare feet. Free weights. Attention to movement.",
+    shot: "bare feet on the training floor",
+    movements: ["Squat.", "Hinge.", "Lunge.", "Push.", "Pull.", "Rotate.", "Walk or run."],
+  },
+
+  /** 4. The pledge photo, then the button. */
+  goals: {
+    headline: { text: "Your goals. Our shared commitment." } as Accented,
+    line: "Set goals with your coach, whom we call a Sherpa. Train with their guidance. Review your progress together.",
+    shot: "the pledge partnership photo (not the poster; the signed card cropped out, both people's permission)",
+  },
 } as const;

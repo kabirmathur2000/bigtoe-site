@@ -1,20 +1,18 @@
-import { ViewTransition } from "react";
-import { BookingProvider } from "@/components/booking/BookingPanel";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
-import { MobileBookBar } from "@/components/layout/MobileBookBar";
+import { Header } from "@/components/site/Header";
+import { VisitProvider } from "@/components/site/VisitPanel";
 
-/** The live site: Home, Method, Team, terms and privacy. Every "Book your free first hour" button opens the booking panel. */
+/**
+ * Every page: the header (logo, book pill, menu) and the request panel
+ * that every "Book your first visit" button opens. A light page
+ * (#F0EEEB, navy text); Home turns navy from "Your coach. Your plan."
+ * (NavyZone). Each page ends with its own footer, so Home's sits in the
+ * navy zone.
+ */
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <BookingProvider>
+    <VisitProvider>
       <Header />
-      {/* Page cross-fade: route changes are transitions, so this animates. */}
-      <ViewTransition>
-        <main className="flex-1 pt-16 md:pt-20">{children}</main>
-      </ViewTransition>
-      <Footer />
-      <MobileBookBar />
-    </BookingProvider>
+      <main className="flex-1">{children}</main>
+    </VisitProvider>
   );
 }

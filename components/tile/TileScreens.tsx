@@ -1,15 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { facts, mailtoHref, whatsappHref } from "@/content/facts";
-import { footer } from "@/content/site";
-import { tile, type Accented } from "@/content/style-tile";
-import logoTag from "@/public/brand/logo-tag-light.png";
+import { Accent } from "@/components/site/Accent";
+import { Faq } from "@/components/site/Faq";
+import { Footer } from "@/components/site/Footer";
+import { Icon } from "@/components/site/Icons";
+import { MemberStack } from "@/components/site/Members";
+import { FadeUp, Rise, RiseItem } from "@/components/site/Rise";
+import { BookPill } from "@/components/site/VisitPanel";
+import { tile } from "@/content/style-tile";
 import coffeeBar from "@/public/photos/studio-coffee-bar.jpg";
-import { Icon } from "./Icons";
-import { Faq, TrainRow } from "./Interactive";
-import { MemberStack, SherpaSplit, StartingPointSplit } from "./Scroll";
-import { FadeUp, Rise, RiseItem } from "./Rise";
-import { BookPill } from "./VisitPanel";
+import { TrainRow } from "./Interactive";
+import { SherpaSplit, StartingPointSplit } from "./Scroll";
 
 /**
  * Rounds six and seven: screens after ouraring.com, functionhealth.com,
@@ -19,20 +20,6 @@ import { BookPill } from "./VisitPanel";
  * arrives. Every photo slot shows the coffee bar photo until the shoot,
  * cropped per slot.
  */
-
-/** A headline with at most one phrase in terracotta. */
-function Accent({ value }: { value: Accented }) {
-  const { text, accent } = value;
-  if (!accent || !text.includes(accent)) return <>{text}</>;
-  const i = text.indexOf(accent);
-  return (
-    <>
-      {text.slice(0, i)}
-      <span className="text-terracotta">{accent}</span>
-      {text.slice(i + accent.length)}
-    </>
-  );
-}
 
 const space = "py-24 md:py-36";
 const softPill = "inline-flex min-h-11 items-center rounded-full bg-navy/[0.07] px-5 ty-body transition-colors duration-300 hover:bg-navy/[0.12]";
@@ -184,7 +171,7 @@ export function Beyond() {
         <RiseItem as="p" className="mt-5 max-w-xl ty-sub opacity-80 md:mt-6">{b.line}</RiseItem>
       </Rise>
       <FadeUp className="relative mt-10 aspect-[4/5] overflow-hidden rounded-2xl md:mt-14 md:aspect-video">
-        <Image src={coffeeBar} alt="" fill sizes="(min-width: 1280px) 1152px, 100vw" quality={70} className="object-cover object-[60%_60%]" />
+        <Image src={coffeeBar} alt="" fill sizes="(min-width: 1280px) 1152px, 100vw" quality={75} className="object-cover object-[60%_60%]" />
       </FadeUp>
     </section>
   );
@@ -225,65 +212,30 @@ export function Questions() {
         </h2>
       </FadeUp>
       <FadeUp className="md:col-span-8">
-        <Faq />
+        <Faq items={[...q.items]} all={q.all} />
       </FadeUp>
     </section>
   );
 }
 
-const footLink = "inline-flex min-h-11 items-center ty-small transition-opacity duration-300 hover:opacity-70";
-const inline = "underline decoration-current/30 underline-offset-4 transition-opacity duration-300 hover:opacity-70";
-
-/** 10. Ending, after Function's closing: two lines centred, the button, then the footer with the light LogoTag (the footer is in the navy zone). */
+/** 10. Ending, after Function's closing: two lines centred, the button, then the footer (in the navy zone). */
 export function Ending() {
   const e = tile.ending;
-  const wa = whatsappHref();
   const [first, second] = [e.headline.text.replace(e.headline.accent ?? "", "").trim(), e.headline.accent];
   return (
-    <section className="tile-wrap pt-24 pb-10 md:pt-40 md:pb-12">
-      <Rise className="text-center">
-        <RiseItem as="h2" className="mx-auto max-w-3xl ty-headline">
-          <span className="block">{first}</span>
-          <span className="block text-terracotta">{second}</span>
-        </RiseItem>
-        <RiseItem className="mt-8 md:mt-10">
-          <BookPill placement="tile-ending" />
-        </RiseItem>
-      </Rise>
-
-      <footer className="mt-24 grid gap-8 border-t border-current/20 pt-10 md:mt-36 md:grid-cols-12 md:gap-10">
-        <div className="md:col-span-4">
-          <Image src={logoTag} alt={`${facts.brand}. ${facts.tagline}`} className="h-16 w-auto md:h-20" sizes="(min-width: 768px) 200px, 160px" />
-        </div>
-        <div className="space-y-1 md:col-span-5">
-          <p className="ty-small">{facts.address.line}</p>
-          <p className="ty-small">{e.hours}</p>
-          <p className="ty-small">
-            {wa ? (
-              <a href={wa} className={inline}>{footer.whatsappLabel}</a>
-            ) : (
-              <>
-                {footer.whatsappLabel} <span className="text-terracotta">{footer.missingWhatsapp}</span>
-              </>
-            )}
-            .{" "}
-            <a href={mailtoHref} className={inline}>{facts.email}</a>.
-          </p>
-        </div>
-        <nav aria-label={footer.navLabel} className="flex flex-col md:col-span-3">
-          <a href={footer.careers.href} className={footLink}>{footer.careers.label}</a>
-          {facts.address.mapUrl ? (
-            <a href={facts.address.mapUrl} target="_blank" rel="noopener noreferrer" className={footLink}>{footer.map.label}</a>
-          ) : (
-            <span className="inline-flex min-h-11 items-center gap-2 ty-small">
-              {footer.map.label} <span className="text-terracotta">{footer.map.missing}</span>
-            </span>
-          )}
-          {footer.links.map((l) => (
-            <Link key={l.href} href={l.href} className={footLink}>{l.label}</Link>
-          ))}
-        </nav>
-      </footer>
-    </section>
+    <>
+      <section className="tile-wrap pt-24 pb-24 md:pt-40 md:pb-36">
+        <Rise className="text-center">
+          <RiseItem as="h2" className="mx-auto max-w-3xl ty-headline">
+            <span className="block">{first}</span>
+            <span className="block text-terracotta">{second}</span>
+          </RiseItem>
+          <RiseItem className="mt-8 md:mt-10">
+            <BookPill placement="tile-ending" />
+          </RiseItem>
+        </Rise>
+      </section>
+      <Footer tone="navy" />
+    </>
   );
 }

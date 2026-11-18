@@ -16,10 +16,10 @@ import {
   type ReactNode,
 } from "react";
 import { submitVisit } from "@/app/actions/visit";
-import { Button, ButtonLink } from "@/components/ui/Button";
+import { booking } from "@/content/booking";
 import { facts, whatsappHref } from "@/content/facts";
 import { footer } from "@/content/site";
-import { tile } from "@/content/style-tile";
+import { Button, ButtonLink } from "./Button";
 import { VISIT_EMPTY, VISIT_HONEYPOT, VISIT_MAX, validateVisit, type VisitField, type VisitValues } from "@/lib/visit";
 
 const VisitContext = createContext<{ open: (placement: string) => void; isOpen: boolean }>({ open: () => {}, isOpen: false });
@@ -58,11 +58,11 @@ export function BookPill({
       {size === "small" ? (
         <>
           {/* On phones the header pill reads "Book a visit"; on desktop "Book your first visit". */}
-          <span className="md:hidden">{tile.ctaShort}</span>
-          <span className="hidden md:inline">{tile.cta}</span>
+          <span className="md:hidden">{facts.ctaShort}</span>
+          <span className="hidden md:inline">{facts.cta}</span>
         </>
       ) : (
-        tile.cta
+        facts.cta
       )}
     </button>
   );
@@ -70,12 +70,12 @@ export function BookPill({
 
 const FADE = 700;
 type Errors = Partial<Record<VisitField, string>>;
-const p = tile.panel;
+const p = booking;
 const messages = (v: VisitValues): Errors =>
   Object.fromEntries(Object.entries(validateVisit(v, p.fields.time.options)).map(([k, key]) => [k, p.errors[key]]));
 
 const field =
-  "block w-full border-0 border-b border-navy/30 bg-transparent px-0 py-3 text-body-lg transition-colors duration-500 focus:border-terracotta focus:outline-none focus:ring-0 aria-[invalid=true]:border-terracotta";
+  "block w-full border-0 border-b border-navy/30 bg-transparent px-0 py-3 ty-sub transition-colors duration-500 focus:border-terracotta focus:outline-none focus:ring-0 aria-[invalid=true]:border-terracotta";
 
 function Thanks({ name }: { name: string }) {
   const t = p.thanks;
@@ -84,7 +84,7 @@ function Thanks({ name }: { name: string }) {
   useEffect(() => heading.current?.focus(), []);
   return (
     <div role="status">
-      <p ref={heading} tabIndex={-1} className="text-h3 focus:outline-none md:text-h2">{t.heading(name)}</p>
+      <p ref={heading} tabIndex={-1} className="ty-headline focus:outline-none">{t.heading(name)}</p>
       <div className="mt-8 flex flex-col items-start gap-4">
         <ButtonLink href={facts.intakeFormUrl} target="_blank" rel="noopener noreferrer">
           {t.formLabel}
@@ -94,12 +94,12 @@ function Thanks({ name }: { name: string }) {
             href={wa}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center border border-navy/40 px-4 text-label uppercase transition-opacity duration-500 hover:opacity-75"
+            className="inline-flex min-h-11 items-center rounded-full border border-navy/30 px-5 ty-label transition-opacity duration-500 hover:opacity-75"
           >
             {t.whatsappLabel}
           </a>
         ) : (
-          <p className="text-caption text-terracotta">{footer.missingWhatsapp}</p>
+          <p className="ty-small text-terracotta">{footer.missingWhatsapp}</p>
         )}
       </div>
     </div>
@@ -107,7 +107,7 @@ function Thanks({ name }: { name: string }) {
 }
 
 /**
- * The request panel (style tile, new booking flow). A centred dialog on
+ * The request panel ("Book your first visit", every page). A centred dialog on
  * desktop, a bottom sheet that slides up on phones: name, mobile number,
  * preferred time, one button. On submit: email via Resend (server action),
  * then the thank-you with the intake form (new tab) and WhatsApp. Modal
@@ -210,22 +210,22 @@ export function VisitProvider({ children }: { children: ReactNode }) {
           if (e.target === e.currentTarget) setOpen(false);
         }}
         // Phones: a bottom sheet. Desktop: a centred dialog.
-        className={`fixed inset-x-0 top-auto bottom-0 m-0 mx-auto max-h-[92dvh] w-full max-w-xl overflow-y-auto overscroll-contain rounded-t-lg border border-b-0 border-navy/15 bg-offwhite p-0 text-navy transition-[opacity,translate] duration-700 ease-soft backdrop:bg-navy/60 md:inset-0 md:m-auto md:h-fit md:rounded-lg md:border-b ${
+        className={`fixed inset-x-0 top-auto bottom-0 m-0 mx-auto max-h-[92dvh] w-full max-w-xl overflow-y-auto overscroll-contain rounded-t-2xl border border-b-0 border-navy/15 bg-offwhite p-0 text-navy transition-[opacity,translate] duration-700 ease-soft backdrop:bg-navy/60 md:inset-0 md:m-auto md:h-fit md:rounded-2xl md:border-b ${
           visible ? "translate-y-0 opacity-100" : `opacity-0 ${reduce ? "" : "translate-y-12 md:translate-y-4"}`
         }`}
       >
-        <div className="px-gutter pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:px-10 md:pt-6 md:pb-10">
+        <div className="px-5 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:px-10 md:pt-6 md:pb-10">
           <div className="flex justify-end">
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="inline-flex min-h-11 items-center px-2 text-label uppercase opacity-80 transition-opacity duration-500 hover:opacity-100"
+              className="inline-flex min-h-11 items-center px-2 ty-body opacity-80 transition-opacity duration-500 hover:opacity-100"
             >
               {p.close}
             </button>
           </div>
 
-          <h2 id={`${id}-heading`} className={sentTo === null ? "text-h2 md:text-h1" : "sr-only"}>{p.heading}</h2>
+          <h2 id={`${id}-heading`} className={sentTo === null ? "ty-headline" : "sr-only"}>{p.heading}</h2>
 
           {sentTo !== null ? (
             <div className="mt-2">
@@ -239,46 +239,46 @@ export function VisitProvider({ children }: { children: ReactNode }) {
               </div>
 
               <div>
-                <label htmlFor={`${id}-name`} className="block text-label uppercase opacity-75">{f.name.label}</label>
+                <label htmlFor={`${id}-name`} className="block ty-label opacity-80">{f.name.label}</label>
                 <input
                   id={`${id}-name`} name="name" type="text" autoComplete="name" maxLength={VISIT_MAX.name}
                   value={values.name} onChange={set("name")}
                   aria-invalid={!!errors.name} aria-describedby={describe("name")} className={field}
                 />
-                {errors.name && <p id={`${id}-name-error`} className="mt-2 text-caption text-terracotta">{errors.name}</p>}
+                {errors.name && <p id={`${id}-name-error`} className="mt-2 ty-small text-terracotta">{errors.name}</p>}
               </div>
 
               <div>
-                <label htmlFor={`${id}-mobile`} className="block text-label uppercase opacity-75">{f.mobile.label}</label>
+                <label htmlFor={`${id}-mobile`} className="block ty-label opacity-80">{f.mobile.label}</label>
                 <input
                   id={`${id}-mobile`} name="mobile" type="tel" inputMode="tel" autoComplete="tel" maxLength={VISIT_MAX.mobile}
                   value={values.mobile} onChange={set("mobile")}
                   aria-invalid={!!errors.mobile} aria-describedby={describe("mobile")} className={field}
                 />
-                {errors.mobile && <p id={`${id}-mobile-error`} className="mt-2 text-caption text-terracotta">{errors.mobile}</p>}
+                {errors.mobile && <p id={`${id}-mobile-error`} className="mt-2 ty-small text-terracotta">{errors.mobile}</p>}
               </div>
 
               <fieldset aria-describedby={describe("time")}>
-                <legend className="text-label uppercase opacity-75">{f.time.label}</legend>
+                <legend className="ty-label opacity-80">{f.time.label}</legend>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {f.time.options.map((o) => (
                     <label
                       key={o}
-                      className="inline-flex min-h-11 cursor-pointer items-center border border-navy/30 px-4 text-body transition-colors duration-500 has-checked:border-navy has-checked:bg-navy has-checked:text-offwhite has-focus-visible:outline-2 has-focus-visible:outline-terracotta"
+                      className="inline-flex min-h-11 cursor-pointer items-center rounded-full border border-navy/30 px-4 ty-body transition-colors duration-500 has-checked:border-navy has-checked:bg-navy has-checked:text-offwhite has-focus-visible:outline-2 has-focus-visible:outline-terracotta"
                     >
                       <input type="radio" name="time" value={o} checked={values.time === o} onChange={set("time")} className="sr-only" />
                       {o}
                     </label>
                   ))}
                 </div>
-                {errors.time && <p id={`${id}-time-error`} className="mt-2 text-caption text-terracotta">{errors.time}</p>}
+                {errors.time && <p id={`${id}-time-error`} className="mt-2 ty-small text-terracotta">{errors.time}</p>}
               </fieldset>
 
               <div>
                 <Button type="submit" disabled={pending} className="w-full disabled:opacity-60">
                   {p.submit}
                 </Button>
-                <p aria-live="polite" className="mt-3 min-h-5 text-caption text-terracotta">{failed ? p.errors.failed : null}</p>
+                <p aria-live="polite" className="mt-3 min-h-5 ty-small text-terracotta">{failed ? p.errors.failed : null}</p>
               </div>
             </form>
           )}

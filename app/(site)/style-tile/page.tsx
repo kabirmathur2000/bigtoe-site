@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { NavyZone } from "@/components/tile/Scroll";
+import { NavyZone } from "@/components/site/NavyZone";
 import { Beyond, Ending, FirstHour, Hero, Included, Members, Questions, Sherpa, Sherpas, StartingPoint, Train, Why } from "@/components/tile/TileScreens";
 import { tile } from "@/content/style-tile";
 

@@ -2,11 +2,10 @@
 
 import { useReducedMotion } from "motion/react";
 import Image from "next/image";
-import Link from "next/link";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { tile } from "@/content/style-tile";
 import coffeeBar from "@/public/photos/studio-coffee-bar.jpg";
-import { Icon } from "./Icons";
+import { Icon } from "@/components/site/Icons";
 
 const frost = "bg-offwhite/85 text-navy backdrop-blur-md";
 
@@ -16,7 +15,7 @@ function TrainCard({ card }: { card: (typeof tile.train.cards)[number] }) {
   const id = useId();
   return (
     <li className="relative aspect-[4/5] w-[78%] max-w-[22rem] shrink-0 snap-start overflow-hidden rounded-2xl md:w-[20rem] lg:w-[22.5rem]">
-      <Image src={coffeeBar} alt="" fill sizes="(min-width: 1024px) 360px, 78vw" quality={70} className="object-cover" style={{ objectPosition: card.pos }} />
+      <Image src={coffeeBar} alt="" fill sizes="(min-width: 1024px) 360px, 78vw" quality={75} className="object-cover" style={{ objectPosition: card.pos }} />
       <div aria-hidden className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-navy/75 via-navy/25 to-transparent" />
 
       <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2">
@@ -105,53 +104,6 @@ export function TrainRow() {
           <TrainCard key={c.name} card={c} />
         ))}
       </ul>
-    </div>
-  );
-}
-
-/** 9. Questions, after Function's FAQ: an accordion, one open at a time. */
-export function Faq() {
-  const q = tile.questions;
-  const [open, setOpen] = useState<number | null>(0);
-  const base = useId();
-  return (
-    <div>
-      <ul className="border-t border-current/20">
-        {q.items.map((item, i) => {
-          const isOpen = open === i;
-          return (
-            <li key={item.q} className="border-b border-current/20">
-              <h3>
-                <button
-                  type="button"
-                  id={`${base}-q${i}`}
-                  aria-expanded={isOpen}
-                  aria-controls={`${base}-a${i}`}
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  className="flex min-h-11 w-full items-start justify-between gap-6 py-6 text-left ty-sub md:py-7"
-                >
-                  {item.q}
-                  <Icon name="plus" className={`mt-1 h-5 w-5 shrink-0 transition-transform duration-300 ease-soft motion-reduce:transition-none ${isOpen ? "rotate-45" : ""}`} />
-                </button>
-              </h3>
-              <div
-                id={`${base}-a${i}`}
-                role="region"
-                aria-labelledby={`${base}-q${i}`}
-                inert={!isOpen}
-                className={`grid transition-[grid-template-rows,opacity] duration-300 ease-soft motion-reduce:transition-none ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
-              >
-                <div className="overflow-hidden">
-                  <p className="max-w-2xl pb-7 ty-body opacity-80">{item.a}</p>
-                </div>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-      <Link href={q.all.href} className="mt-8 inline-flex min-h-11 items-center ty-body underline decoration-current/30 underline-offset-[6px] transition-opacity duration-300 hover:opacity-70">
-        {q.all.label}
-      </Link>
     </div>
   );
 }

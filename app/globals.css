@@ -1,113 +1,44 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------ */
-/* Brand tokens. Deck colours only; tints are opacity, never new hues. */
+/* Brand tokens. Brand colours only; tints are opacity, never new hues. */
 /* ------------------------------------------------------------------ */
 :root {
   --navy: #0a212d;
   --terracotta: #d4644d;
   --offwhite: #f0eeeb;
-
-  /* Page background, driven by SectionToneController for cross-fades. */
-  --page-bg: var(--offwhite);
-  --page-fg: var(--navy);
-
-  --gutter: 20px;
-  /* Fixed header, and the mobile bottom bar that covers the foot of the screen. */
-  --header-h: 4rem;
-  --bar-h: 4.5rem;
-  --chapter-pad: clamp(1.25rem, 4.5svh, 4rem);
-  /* Phones: the even space above and below each screen. */
-  --phone-gap: 3.5rem;
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
-}
-@media (min-width: 768px) {
-  :root { --gutter: 48px; --header-h: 5rem; --bar-h: 0px; }
-}
-@media (min-width: 1200px) {
-  :root { --gutter: 64px; }
 }
 
 @theme {
-  /* Only the three brand colours exist: Tailwind's default palette is switched off. */
+  /* Only the brand colours exist: Tailwind's default palette is switched off. */
   --color-*: initial;
   --color-navy: #0a212d;
   --color-terracotta: #d4644d;
   --color-offwhite: #f0eeeb;
-  /* The one exception: the strongest dial on the example dials (the style tile's diagram). */
-  --color-dial-green: #4a7458;
-
-  /* Type scale (fluid 375px → 1440px). See CLAUDE.md. */
-  --text-display: clamp(3rem, 2.12rem + 3.756vw, 5.5rem);
-  --text-display--line-height: 1.02;
-  --text-display--letter-spacing: -0.02em;
-  --text-display--font-weight: 300;
-
-  --text-h1: clamp(2.5rem, 1.97rem + 2.254vw, 4rem);
-  --text-h1--line-height: 1.05;
-  --text-h1--letter-spacing: -0.015em;
-  --text-h1--font-weight: 300;
-
-  --text-h2: clamp(2rem, 1.736rem + 1.127vw, 2.75rem);
-  --text-h2--line-height: 1.1;
-  --text-h2--letter-spacing: -0.01em;
-  --text-h2--font-weight: 400;
-
-  --text-h3: clamp(1.375rem, 1.287rem + 0.376vw, 1.625rem);
-  --text-h3--line-height: 1.25;
-  --text-h3--font-weight: 400;
-
-  --text-body-lg: 1.25rem;
-  --text-body-lg--line-height: 1.55;
-  --text-body: 1.125rem;
-  --text-body--line-height: 1.6;
-  --text-caption: 0.875rem;
-  --text-caption--line-height: 1.45;
-
-  --text-label: clamp(0.75rem, 0.728rem + 0.094vw, 0.8125rem);
-  --text-label--line-height: 1.3;
-  --text-label--letter-spacing: 0.16em;
-  --text-label--font-weight: 700;
-
-  /* Spacing additions (Tailwind's 4px scale covers 4 … 104). */
-  --spacing-section: clamp(5rem, 3.68rem + 5.634vw, 8.75rem);
-
-  /* Containers. */
-  --container-wide: 90rem;
-  --container-content: 75rem;
-  --container-text: 65ch;
-
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
   --font-sans: var(--font-anderson), ui-sans-serif, system-ui, sans-serif;
-  --spacing-gutter: var(--gutter);
 }
 
 /* ------------------------------------------------------------------ */
-/* Base                                                               */
+/* Base. The page is off-white with navy text, edges and overscroll   */
+/* included; on Home the navy switch (NavyZone) sets --site-bg.       */
 /* ------------------------------------------------------------------ */
-html {
-  background: var(--page-bg);
-  color: var(--page-fg);
-  -webkit-text-size-adjust: 100%;
-}
-/* Native scrolling, always at the visitor's pace. Only in-page links
-   (a button to the form on /book-now) glide, unless motion is reduced. */
-@media (prefers-reduced-motion: no-preference) {
-  html { scroll-behavior: smooth; }
-}
+html,
 body {
-  background: var(--page-bg);
-  color: var(--page-fg);
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-  line-height: var(--text-body--line-height);
-  /* Background is scroll-linked (SectionToneController); text eases. */
-  transition: color 700ms var(--ease-soft);
+  background: var(--site-bg, var(--offwhite));
+  color: var(--navy);
 }
-h1, h2, h3, .text-display { text-wrap: balance; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.55;
+}
+h1, h2, h3 { text-wrap: balance; }
 p { text-wrap: pretty; }
 ::selection {
   background: var(--terracotta);
@@ -118,119 +49,6 @@ p { text-wrap: pretty; }
   outline-offset: 3px;
 }
 
-/* ------------------------------------------------------------------ */
-/* Section tones. Without JS each section paints itself. With the     */
-/* controller running, sections go transparent and the page colour    */
-/* cross-fades instead of cutting hard.                               */
-/* ------------------------------------------------------------------ */
-[data-tone="light"] { background: var(--offwhite); color: var(--navy); }
-[data-tone="navy"] { background: var(--navy); color: var(--offwhite); }
-/* Each section keeps its own text colour (navy on light sections,
-   off-white on navy ones), so text never flips mid-fade. */
-html.tones-managed [data-tone] {
-  background: transparent;
-  color: inherit;
-}
-html.tones-managed main [data-tone="light"] { color: var(--navy); }
-html.tones-managed main [data-tone="navy"] { color: var(--offwhite); }
-/* The footer is always navy, also on pages with no navy section (the legal pages). */
-html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: var(--offwhite); }
-
-/* ------------------------------------------------------------------ */
-/* Chapters: each fills the screen, content centred,                  */
-/* clear of the mobile bottom bar. Taller content simply grows.       */
-/* In a layer so utilities on a chapter can override it.              */
-/* ------------------------------------------------------------------ */
-/* Short phones (under about 720px tall, phone layout): photos step aside
-   so each chapter's words fit one screen. Taller phones keep them. */
-@custom-variant short {
-  @media (max-width: 767px) and (max-height: 719px) {
-    @slot;
-  }
-}
-
-/* Every chapter takes the full screen. The floating navigation can slide
-   back over any chapter (light or navy), so each chapter keeps a band the
-   height of the navigation at its top (--chapter-band) and its content
-   never sits under it. */
-:root { --chapter-band: var(--header-h); }
-
-/* Short phones also get a little less breathing room above and below each chapter. */
-@media (max-width: 767px) and (max-height: 719px) {
-  :root { --chapter-pad: 1rem; }
-}
-
-@layer components {
-  .chapter {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100svh;
-    padding-top: calc(var(--chapter-band) + var(--chapter-pad));
-    padding-bottom: calc(var(--chapter-pad) + var(--bar-h));
-  }
-  /* The first chapter sits below the navigation at the top of the page. */
-  main > .chapter:first-child {
-    min-height: calc(100svh - var(--header-h));
-    padding-top: var(--chapter-pad);
-  }
-  /* Auto side margins would otherwise shrink a centred container to its content. */
-  .chapter > * { width: 100%; }
-
-  /* Phones: after the first, screens size to their content with the same
-     padding above and below, so there are no empty stretches between them.
-     The bottom bar's room is reserved once, at the foot of the page (the
-     footer), not under every screen. */
-  @media (max-width: 767px) {
-    .chapter {
-      min-height: 0;
-      padding-top: var(--phone-gap);
-      padding-bottom: var(--phone-gap);
-    }
-    /* A first screen of words only sizes to its content too; a first photo
-       screen sets its own full height (PhotoScreen). */
-    main > .chapter:first-child {
-      min-height: 0;
-      padding-top: var(--phone-gap);
-      padding-bottom: var(--phone-gap);
-    }
-  }
-}
-
-/* ------------------------------------------------------------------ */
-/* Load-time motion that needs no JS (hero subline, button, media).   */
-/* ------------------------------------------------------------------ */
-@keyframes fade-up {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes settle {
-  from { transform: scale(1.04); }
-  to { transform: none; }
-}
-.fade-up { animation: fade-up 700ms var(--ease-soft) both; }
-.settle { animation: settle 2400ms var(--ease-soft) both; }
-
-/* ------------------------------------------------------------------ */
-/* Member words: each word fades in once and stays.                   */
-/* ------------------------------------------------------------------ */
-.member-word {
-  transition: opacity 900ms var(--ease-soft);
-}
-
-/* ------------------------------------------------------------------ */
-/* Page cross-fade (React <ViewTransition> around <main>).            */
-/* ------------------------------------------------------------------ */
-::view-transition-old(*),
-::view-transition-new(*) {
-  animation-duration: 1000ms;
-  animation-timing-function: var(--ease-soft);
-}
-
-/* ------------------------------------------------------------------ */
-/* Reduced motion: no movement (rising, sliding, zooming, resizing).  */
-/* Colour and opacity changes still fade at their normal, slow pace:  */
-/* a colour never switches all at once, on any setting.               */
 /* ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -243,19 +61,11 @@ html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: va
       text-decoration-color, fill, stroke, opacity !important;
     scroll-behavior: auto !important;
   }
-  /* Hover zoom on photographs is movement: off. */
-  [class*="group-hover:scale"] {
-    transform: none !important;
-  }
-  /* The page cross-fade is a fade, so it stays; only the group's
-     position and size animation (movement) is removed. */
-  ::view-transition-group(*) {
-    animation: none !important;
-  }
 }
 
+
 /* ------------------------------------------------------------------ */
-/* The new design, round six (after ouraring.com and functionhealth.com):
+/* Type (from the style tile, after ouraring.com and functionhealth.com):
    a light page, Light headlines, Regular text, Bold only for small labels.
    Fluid from 375px to 1440px. */
 /* ------------------------------------------------------------------ */
@@ -295,7 +105,7 @@ html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: va
   letter-spacing: 0.01em;
 }
 
-/* The tile's content column: up to 1280px, 20px gutters on phones, 40px on
+/* The content column: up to 1280px, 20px gutters on phones, 40px on
    tablets, 64px on desktop. tile-edge: a full-width row (a carousel) whose
    first item lines up with that column. */
 @utility tile-wrap {
@@ -312,12 +122,4 @@ html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: va
   @media (width >= 64rem) { --edge: 4rem; }
   padding-inline: max(var(--edge), calc((100% - 1280px) / 2 + var(--edge)));
   scroll-padding-inline: max(var(--edge), calc((100% - 1280px) / 2 + var(--edge)));
-}
-
-/* The style tile's page: off-white, navy text, edges and overscroll
-   included. --tile-bg is set by the navy switch (NavyZone). */
-html:has([data-tile]),
-html:has([data-tile]) body {
-  background: var(--tile-bg, var(--offwhite));
-  color: var(--navy);
 }

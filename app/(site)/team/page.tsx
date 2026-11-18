@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { Founders, Sherpas, Story } from "@/components/team/TeamScreens";
+import { Footer } from "@/components/site/Footer";
+import { PageTitle } from "@/components/site/PageTitle";
+import { Founders, Sherpas, Why } from "@/components/team/TeamScreens";
 import { meta } from "@/content/site";
+import { team } from "@/content/team";
 
 export const metadata: Metadata = meta.pages.team;
 
-/** Team: why we built this, the four of us (light); your Sherpas (navy). */
 export default function TeamPage() {
   return (
     <>
-      <Story />
+      <PageTitle title={team.title} />
+      <Why />
       <Founders />
       <Sherpas />
+      <Footer />
     </>
   );
 }

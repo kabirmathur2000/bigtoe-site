@@ -15,7 +15,7 @@ type Tag = "div" | "ul" | "ol" | "section" | "header";
 type ItemTag = "div" | "p" | "h1" | "h2" | "h3" | "li" | "span";
 
 /**
- * The one motion on the tile (round six): content fades up about 16px over
+ * The one reveal on the site: content fades up about 16px over
  * 0.6s, once, as it arrives. Each RiseItem inside a Rise follows the one
  * before by a beat. Nothing is tied to scroll position and nothing moves
  * again. Reduced motion: shown as is.
@@ -49,11 +49,15 @@ export function RiseItem({ children, className, as = "div" }: { children: ReactN
 }
 
 /** One block that fades up on its own. */
-export function FadeUp({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+export function FadeUp({ children, className, delay = 0, as = "div" }: { children: ReactNode; className?: string; delay?: number; as?: "div" | "p" }) {
   const reduce = useReducedMotion();
-  if (reduce) return <div className={className}>{children}</div>;
+  if (reduce) {
+    const Static = as;
+    return <Static className={className}>{children}</Static>;
+  }
+  const M = motion[as];
   return (
-    <motion.div
+    <M
       className={className}
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -61,6 +65,6 @@ export function FadeUp({ children, className, delay = 0 }: { children: ReactNode
       transition={{ duration: 0.6, ease: EASE, delay }}
     >
       {children}
-    </motion.div>
+    </M>
   );
 }

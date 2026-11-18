@@ -1,112 +1,53 @@
-/**
- * Home (Version C, 17 Nov 2026): six screens and the FAQs. Screens 1 to 3
- * light; 4 to 6, the FAQs and the footer navy. Facts are imported, never
- * retyped. American spelling.
- */
-import { facts, todo } from "./facts";
+/** Home (agreed copy, 18 Nov 2026, with the 18 Nov build brief). */
+import { facts } from "./facts";
+import type { Accented } from "./site";
 
-/** Screen 1 (light, photo). */
-export const hero = {
-  headline: facts.heroLine,
-  line: "Not a gym. A strength studio for life after 40.",
-  /** Small caption on the photo, bottom left. */
-  caption: `${facts.address.short}.`,
-  /** docs/photos/studio-coffee-bar.jpg, compressed into public/photos. Alt text describes the photo. */
-  photo: {
-    alt: "The BigToe coffee bar: a long wooden table and stools under pendant lamps, the BigToe logo on the wall, the training floor behind",
-    /** Crop per screen (object-position): phones keep the logo wall and table; wide screens centre on the table and logo, with the floor in view. */
-    phone: "14% 52%",
-    wide: "50% 52%",
+export const home = {
+  /** 1. Hero, Function style: a full-screen photo, a navy gradient, the words on it. */
+  hero: {
+    place: facts.address.short,
+    headline: { text: facts.heroLine, accent: "stronger than the first" } as Accented,
+    line: "One-to-one training for life after 40.",
+    shot: "a real member training with a coach, the studio around them",
   },
-} as const;
 
-/** Screen 2 (light, no photo). */
-export const sport = {
-  headline: "We train for a sport called life.",
-  line: "Decline is the default. Not a destiny.",
-  link: { label: "Why we built this →", href: "/team" },
-} as const;
+  /** 2. Text only, centred. */
+  why: {
+    headline: { text: "We train for a sport called life." } as Accented,
+    lines: ["A suitcase to lift. Unexpected stairs. A trip to say yes to.", "Build the strength for what comes next."],
+    link: { label: "How we train", href: "/method" },
+  },
 
-/** Screen 3 (light, photo). */
-export const score = {
-  headline: "Looking fit isn't being fit.",
-  line: "Your Reserve Score, out of 100. Measured, trained, retested every sixteen sessions.",
-  shot: "A member at the coffee corner, real cups and chairs",
-} as const;
+  /** 3. The split: text left, the dials right. The navy switch begins here. */
+  coach: {
+    headline: { text: "Your coach. Your plan.", accent: "Your plan." } as Accented,
+    line: "A dedicated coach guides you through every session. Your Reserve Audit sets the starting point. Your progress shapes what comes next.",
+    link: { label: "Meet the team", href: "/team" },
+  },
 
-/**
- * Screen 4 (navy). Three quotes, each under its word, with a member
- * portrait placeholder. Placeholders until written consent: first name and
- * age show as TODOs.
- */
-export const members = {
-  headline: "Seen. Belong. Progress.",
-  line: "Don't believe us? Ask them.",
-  quotes: [
-    {
-      word: "Seen.",
-      /** docs/copy/testimonials.md, testimonial 2 (cut). */
-      quote: "It’s that level of attention that makes you feel seen.",
-      source: null,
-    },
-    {
-      word: "Belong.",
-      quote: "It’s more than a place. It’s family.",
-      source: todo("source: not in docs/copy/testimonials.md"),
-    },
-    {
-      word: "Progress.",
-      /** docs/copy/testimonials.md, testimonial 3 (cut). */
-      quote: "Today, I wake up without an alarm, looking forward to coming in.",
-      source: null,
-    },
-  ].map((q) => ({ ...q, source: q.source as string | null })),
-  /** Same plain wall, same distance, for all three. */
-  shot: (word: string) => `Member portrait for "${word.replace(".", "")}": plain wall, same distance as the others`,
-  name: todo("first name"),
-  age: todo("age"),
-} as const;
+  /** 4. Neko-style member cards (quotes in content/quotes.ts). */
+  members: {
+    headline: { text: "In our members' words." } as Accented,
+  },
 
-/** Screen 5 (navy, photo). */
-export const social = {
-  headline: "Get stronger. Keep the pizza.",
-  line: "Coffee at the social table. Pizza and beer, once a quarter.",
-  shot: "A member laughing mid-session",
-} as const;
+  /** 5. One photo card. */
+  pizza: {
+    headline: { text: "Get stronger. Keep the pizza.", accent: "Keep the pizza." } as Accented,
+    line: "A healthier life shouldn't mean giving up the things you enjoy.",
+    shot: "members around the social table, talking and laughing",
+  },
 
-/** Screen 6 (navy, no photo). Two supporting lines. */
-export const price = {
-  headline: facts.price.range,
-  lines: [facts.firstHour, facts.guarantee],
-} as const;
+  /** 6. Function's three steps, titles only. */
+  firstHour: {
+    headline: { text: "Your first hour." } as Accented,
+    steps: ["Meet a founder.", "A body scan and light assessment.", "Coffee and a chat."],
+  },
 
-/** FAQs, collapsed, under screen 6 (navy). */
-export const faqs = {
-  label: "Questions",
-  items: [
-    {
-      q: "Can someone like me actually do this?",
-      a: "Yes. Some of our members haven't trained in years. Some never have. Your Sherpa starts where you are, not where you think you should be.",
-    },
-    {
-      q: "I have an old injury. Is it safe?",
-      a: "You fill in a health-history form first. Where it matters, we check with your doctor. Hard is okay. Painful never is.",
-    },
-    {
-      q: "What if I can't make it?",
-      a: `Life gets busy. Move a session to a time that works for you, train online, or pause when you travel. ${facts.guaranteeRule}`,
-    },
-    {
-      q: "I'm on a GLP-1 medication. Is this for me?",
-      a: "Your doctor decides what's right for you. What we do is measure and train. Your Reserve Audit tracks strength and body composition, so you can see what your body is keeping, not just what it's losing.",
-    },
-    {
-      q: "Do you offer nutrition and blood tests?",
-      a: "Yes, as an option, for an added fee. Add a functional nutritionist and blood markers, and your Sherpa builds them into your program.",
-    },
-    {
-      q: "What is the Reserve Audit?",
-      a: "Your first session as a member, after your free hour, and deeper than its body scan. We assess mobility and balance, strength, conditioning and body composition. It gives your Reserve Score, out of 100: our own measure of what your body can do. It's your starting line, not a grade. It doesn't diagnose.",
-    },
-  ],
+  /** 7. The ending: the invitation, the price, the free hour, the guarantee, the button. */
+  ending: {
+    headline: { text: "Come and meet us.", accent: "meet us." } as Accented,
+    price: facts.price,
+    free: facts.firstHourFree,
+    guarantee: facts.guarantee,
+  },
 } as const;
