@@ -16,22 +16,54 @@ import {
   type ReactNode,
 } from "react";
 import { submitVisit } from "@/app/actions/visit";
-import { Button, ButtonLink, buttonClass } from "@/components/ui/Button";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { facts, whatsappHref } from "@/content/facts";
 import { footer } from "@/content/site";
 import { tile } from "@/content/style-tile";
 import { VISIT_EMPTY, VISIT_HONEYPOT, VISIT_MAX, validateVisit, type VisitField, type VisitValues } from "@/lib/visit";
 
-const VisitContext = createContext<{ open: (placement: string) => void }>({ open: () => {} });
+const VisitContext = createContext<{ open: (placement: string) => void; isOpen: boolean }>({ open: () => {}, isOpen: false });
 export const useVisit = () => useContext(VisitContext);
 
-/** "Book your first visit": opens the request panel. */
-export function VisitButton({ placement, className = "" }: { placement: string; className?: string }) {
-  const { open } = useVisit();
+/**
+ * "Book your first visit": the one button, floating near the bottom centre
+ * of the screen on every device. Fully rounded, terracotta with navy text
+ * in sentence case, Bold 19px (navy on terracotta passes AA), a soft lift
+ * on hover. It steps aside while the request panel is open or the footer
+ * is in view.
+ */
+export function FloatingVisitButton() {
+  const { open, isOpen } = useVisit();
+  const [footer, setFooter] = useState(false);
+
+  useEffect(() => {
+    const el = document.querySelector("footer");
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setFooter(e.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const hidden = isOpen || footer;
   return (
-    <button type="button" aria-haspopup="dialog" className={buttonClass("primary", className)} onClick={() => open(placement)}>
-      {tile.cta}
-    </button>
+    <div
+      className={`pointer-events-none fixed inset-x-0 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 flex justify-center transition-[opacity,translate] duration-500 ease-soft md:bottom-6 ${
+        hidden ? "translate-y-4 opacity-0" : "translate-y-0 opacity-100"
+      }`}
+    >
+      <button
+        type="button"
+        aria-haspopup="dialog"
+        aria-hidden={hidden}
+        tabIndex={hidden ? -1 : 0}
+        onClick={() => open("floating")}
+        className={`rounded-full bg-terracotta px-7 py-3.5 text-[1.1875rem] leading-tight font-bold text-navy transition-transform duration-500 ease-soft hover:-translate-y-0.5 ${
+          hidden ? "pointer-events-none" : "pointer-events-auto"
+        }`}
+      >
+        {tile.cta}
+      </button>
+    </div>
   );
 }
 
@@ -164,7 +196,7 @@ export function VisitProvider({ children }: { children: ReactNode }) {
   const f = p.fields;
 
   return (
-    <VisitContext.Provider value={{ open: openPanel }}>
+    <VisitContext.Provider value={{ open: openPanel, isOpen: open }}>
       {children}
       <dialog
         ref={ref}

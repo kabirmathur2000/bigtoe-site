@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Coach, Dials, Invitation, Lead, Photo, Questions, Stories, Text } from "@/components/tile/TileScreens";
+import { PageTitle } from "@/components/tile/TileChrome";
+import { BigNumber, Chips, Coach, Dials, Invitation, Lead, Offset, Stories } from "@/components/tile/TileScreens";
 import { tile } from "@/content/style-tile";
 
 /** Not for search engines, not in the navigation or the sitemap. */
@@ -9,20 +10,22 @@ export const metadata: Metadata = {
 };
 
 /**
- * The style tile, round two: each screen type in its own panel, in order.
- * Panels rotate Light, Warm, Photo, Light, Warm, Navy, Navy, Light.
+ * The style tile, round three. An inner page, so it opens with its title
+ * and "← Back to home". Then each pairing in its own panel, rotating so
+ * neighbours differ: Light, Navy, Warm, Light, Warm, Light, Navy, Navy.
  */
 export default function StyleTilePage() {
   return (
     <>
+      <PageTitle title={tile.title} />
       <Lead />
-      <Text />
-      <Photo />
+      <Chips />
+      <Offset />
       <Coach />
       <Dials />
+      <BigNumber />
       <Stories />
       <Invitation />
-      <Questions />
     </>
   );
 }

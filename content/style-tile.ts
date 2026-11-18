@@ -1,7 +1,8 @@
 /**
- * The style tile, round two (/style-tile, 18 Nov 2026). Copy from
- * docs/copy/agreed-copy-2026-11-18.md; facts from `agreed` in facts.ts.
- * Not linked, not in the sitemap, noindex. The live pages are unchanged.
+ * The style tile, round three (/style-tile, 18 Nov 2026). Copy from
+ * docs/copy/agreed-copy-2026-11-18.md (with the round-three changes);
+ * facts from `agreed` in facts.ts. Not linked, not in the sitemap,
+ * noindex. The live pages are unchanged.
  */
 import { agreed, facts, todo } from "./facts";
 
@@ -28,18 +29,25 @@ const coffeeBar: Shot = {
 };
 
 export const tile = {
+  /** The inner-page title pattern, shown at the top of the tile. */
   title: "Style tile",
+  back: { label: "← Back to home", href: "/" },
   cta: agreed.cta,
 
-  nav: {
+  /** The navigation: the logo on the left, "Menu" on the right, opening a full-screen list. */
+  menu: {
+    open: "Menu",
+    close: "Close",
+    label: "Menu",
     links: [
-      { href: "/method", label: "Method" },
+      { href: "/", label: "Home" },
+      { href: "/method", label: "How we train" },
       { href: "/team", label: "Team" },
-      { href: "#faq", label: "FAQ" },
+      { href: "/faq", label: "Questions" },
     ],
   },
 
-  /** a. A-lead (Light panel). Home 1. */
+  /** A-lead (Light panel). Home 1. No button: the floating button carries it. */
   lead: {
     headline: { text: "The second half of life should be stronger than the first.", accent: "stronger than the first." } as Accented,
     line: "One-to-one training for life after 40.",
@@ -48,41 +56,55 @@ export const tile = {
     alt: "The BigToe coffee bar: the long wooden table and stools under pendant lamps, the BigToe logo on the wall, the training floor behind",
   },
 
-  /** b. Text screen (Warm panel). Home 2. */
-  text: {
+  /** b. Inline photo chips (Navy panel). Home 2: a small rounded photo after each phrase. */
+  chips: {
     headline: { text: "We train for a sport called life.", accent: "a sport called life." } as Accented,
-    lines: ["A suitcase to lift. Unexpected stairs. A trip to say yes to.", "Build the strength for what comes next."],
+    phrases: [
+      { text: "A suitcase to lift.", shot: "A member lifting a suitcase into a car boot" },
+      { text: "Unexpected stairs.", shot: "A member taking a flight of stairs" },
+      { text: "A trip to say yes to.", shot: "A member on a trek or a trip" },
+    ],
+    chip: { ratio: "2:1", size: "480x240" },
+    close: "Build the strength for what comes next.",
   },
 
-  /** c. Photo screen (Photo panel, full-bleed). Home 3. */
-  photo: {
+  /** c. Offset pair (Warm panel). Home 3: the words, then two photos at different sizes, slightly overlapping. */
+  offset: {
     headline: { text: "Get stronger. Keep the pizza.", accent: "Keep the pizza." } as Accented,
     line: "A healthier life shouldn't mean giving up the things you enjoy.",
-    shot: {
+    large: {
       name: "Members around the social table, talking and laughing (people first, food incidental)",
-      desktop: { ratio: "16:9", size: "2880x1620" },
-      phone: { ratio: "4:5", size: "1600x2000" },
+      short: "Members at the social table",
+      desktop: { ratio: "3:2", size: "2400x1600" },
+      phone: { ratio: "4:3", size: "1600x1200" },
+    } as Shot,
+    small: {
+      name: "Coffee cups on the bar",
+      short: "Coffee cups",
+      desktop: { ratio: "4:5", size: "1200x1500" },
+      phone: { ratio: "4:5", size: "800x1000" },
     } as Shot,
   },
 
-  /** d. Photo screen, split (Light panel). Home 4. */
+  /** a. Split (Light panel). Home 4, with "Sherpa" in the headline (round three). */
   coach: {
-    headline: { text: "Your coach. Your plan.", accent: "Your plan." } as Accented,
+    headline: { text: "Your Sherpa. Your plan.", accent: "Your plan." } as Accented,
     lines: [
       "A dedicated coach guides you through every session.",
       "Your Reserve Audit sets the starting point.",
       "Your progress shapes what comes next.",
       "Mobility, strength and conditioning for the life you want to lead.",
     ],
-    link: { label: "How we train", href: "/method" },
+    link: { label: "How we train →", href: "/method" },
     shot: {
-      name: "One coach guiding one member, close: the attention, not the equipment",
+      name: "One Sherpa guiding one member, close: the attention, not the equipment",
+      short: "Sherpa guiding a member",
       desktop: { ratio: "4:5", size: "1600x2000" },
       phone: { ratio: "4:5", size: "1600x2000" },
     } as Shot,
   },
 
-  /** e. Diagram (Warm panel). Method 1. Example dials, as on the Scoreboard. */
+  /** d. Diagram beside text (Warm panel). Method 1. Example dials, as on the Scoreboard. */
   dials: {
     headline: { text: "Know your starting point.", accent: "starting point." } as Accented,
     line: "Your plan starts with the dial that needs the most attention.",
@@ -96,7 +118,14 @@ export const tile = {
     ],
   },
 
-  /** f. Member stories (Navy panel). Quotes in content/quotes.ts (drafts). */
+  /** e. Big number (Light panel). From facts. */
+  number: {
+    figure: facts.coachingHours,
+    line: "coaching hours behind every workout template.",
+    link: { label: "Meet the team →", href: "/team" },
+  },
+
+  /** Member stories (Navy panel), Oura's expandable style. Quotes in content/quotes.ts (drafts). */
   stories: {
     headline: { text: "In our members' words." } as Accented,
     portrait: {
@@ -108,12 +137,14 @@ export const tile = {
     name: todo("first name"),
     age: todo("age"),
     draftLabel: "Draft",
+    open: "Read the story",
+    close: "Close the story",
     previous: "Previous story",
     next: "Next story",
     regionLabel: "Member stories",
   },
 
-  /** g. Invitation (Navy panel, split). Home 6. */
+  /** Invitation (Navy panel, split). Home 6. No button; one link to all questions. */
   invitation: {
     headline: { text: "Come and meet us." } as Accented,
     line: "Meet a founder. Have a body scan and light assessment. Stay for coffee and a chat.",
@@ -121,26 +152,7 @@ export const tile = {
     free: agreed.firstHourFree,
     guarantee: agreed.guarantee,
     shot: coffeeBar,
-  },
-
-  /** h. Questions (Light panel). FAQ 1, 2 and 10 of the agreed copy. */
-  faq: {
-    label: "Questions",
-    items: [
-      {
-        q: "Who is BigToe for?",
-        a: "Men and women in their 40s, 50s, 60s, 70s and beyond. Whether you're new to training, returning after a break or already active, we start with your ability and your goals. There is no one else's pace to keep up with.",
-      },
-      {
-        q: "I have an old injury or a health condition. Can I train?",
-        a: "Tell us in your intake form before your first visit, and check any exercise restrictions with your doctor. We already train members taking GLP-1 medication. We'll discuss what's appropriate for you before you begin.",
-      },
-      {
-        q: "What happens at my first visit?",
-        a: "You'll meet a founder, have a body scan and a light assessment, and stay for coffee and a chat. It's a chance to talk about your goals and understand how we train. The team will confirm your preferred time.",
-      },
-    ],
-    all: { label: "All questions", href: "/faq" },
+    all: { label: "All questions →", href: "/faq" },
   },
 
   /** The request panel. */

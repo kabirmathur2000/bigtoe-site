@@ -18,10 +18,11 @@ const strongest = values.indexOf(Math.max(...values));
  * that fill once on entry to 78, 42, 90 and 66 with the number inside.
  * Then the weakest (Balance and mobility) turns terracotta and the
  * strongest (Functional strength) the muted green; the others stay navy.
- * Always labelled "Example". Four in a row on desktop, 2 x 2 on phones.
+ * Always labelled "Example". Full width: four in a row on desktop, 2 x 2
+ * on phones; `compact` (beside text): 2 x 2 everywhere.
  * Reduced motion: the final numbers at once.
  */
-export function RingDials() {
+export function RingDials({ compact = false }: { compact?: boolean }) {
   const d = tile.dials;
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
@@ -57,9 +58,10 @@ export function RingDials() {
   const done = t >= 1;
 
   return (
-    <div ref={ref} className="mt-10 border-t border-current/15 pt-5 md:mt-14 md:pt-6">
+    <div ref={ref} className={compact ? "" : "mt-10 border-t border-current/15 pt-5 md:mt-14 md:pt-6"}>
       <p className="t-label">{d.example}</p>
-      <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 md:mt-8 md:grid-cols-4 md:gap-10">
+      {/* Beside text (compact): 2 x 2 everywhere. Full width: four in a row on desktop. */}
+      <ul className={`mt-6 grid grid-cols-2 gap-x-6 gap-y-8 md:mt-8 ${compact ? "md:gap-x-10 md:gap-y-10" : "md:grid-cols-4 md:gap-10"}`}>
         {d.items.map((item, i) => {
           const now = Math.round(item.value * t);
           const tint = !done ? "" : i === weakest ? "text-terracotta" : i === strongest ? "text-dial-green" : "";

@@ -274,6 +274,19 @@ html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: va
   font-size: clamp(1.125rem, 1.103rem + 0.094vw, 1.1875rem);
   line-height: 1.6;
 }
+/* One step smaller than body: the footer. */
+@utility t-small {
+  font-weight: 300;
+  font-size: clamp(0.9375rem, 0.915rem + 0.094vw, 1rem);
+  line-height: 1.55;
+}
+/* The big number (e.g. "20,000+"): Bold, very large, tight. */
+@utility t-number {
+  font-weight: 700;
+  font-size: clamp(5.5rem, 3.4rem + 9vw, 11rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
 @utility t-label {
   font-weight: 700;
   font-size: clamp(0.75rem, 0.728rem + 0.094vw, 0.8125rem);
