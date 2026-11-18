@@ -307,6 +307,11 @@ html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: va
 
 /* The new design (round four): a navy page. Paint the whole page navy
    while the tile is shown, so overscroll and the edges never flash light. */
+/* The new design's inset from the screen edges (cards and page content). */
+:root { --tile-inset: 16px; }
+@media (min-width: 768px) { :root { --tile-inset: 48px; } }
+@media (min-width: 1024px) { :root { --tile-inset: 64px; } }
+
 html:has([data-tile]),
 html:has([data-tile]) body {
   background: var(--navy);

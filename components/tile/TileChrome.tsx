@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import { HeaderShell } from "@/components/layout/HeaderShell";
 import { nav } from "@/content/site";
 import { tile } from "@/content/style-tile";
-import logo from "@/public/brand/logo.png";
 import logoLight from "@/public/brand/logo-tag-light.png";
 import { BookPill } from "./VisitPanel";
 
@@ -61,12 +60,14 @@ export function TileHeader() {
 
   return (
     <>
-      <HeaderShell>
+      <HeaderShell glass>
         <div className="flex h-12 items-center justify-between gap-2 pr-1 pl-3 md:h-14 md:pr-2 md:pl-5">
+          {/* On the dark glass: the light LogoTag (a light plain logo is still needed). */}
           <Link href="/" aria-label={nav.homeLabel} className="flex min-h-11 shrink-0 items-center">
-            <Image src={logo} alt="" priority className="h-6 w-auto md:h-9" sizes="(min-width: 768px) 136px, 92px" />
+            <Image src={logoLight} alt="" priority className="h-8 w-auto md:h-10" sizes="(min-width: 768px) 150px, 120px" />
           </Link>
-          <div className="flex items-center gap-1 md:gap-3">
+          {/* The pill opens the request panel; the icon opens the menu. Kept apart so a tap never lands on the wrong one. */}
+          <div className="flex items-center gap-2 md:gap-3">
             <BookPill placement="tile-header" size="small" />
             <button
               ref={button}

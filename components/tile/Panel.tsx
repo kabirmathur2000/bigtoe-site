@@ -1,6 +1,7 @@
 import Image, { type StaticImageData } from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 import { shotLabel, type Accented, type Shot } from "@/content/style-tile";
+import { Parallax } from "./Parallax";
 import { CardRise, Settle } from "./Rise";
 
 export type CardVariant = "light" | "warm" | "photo";
@@ -75,6 +76,7 @@ export function PhotoFill({
 }) {
   if (src) {
     return (
+      <Parallax>
       <Settle className="absolute inset-0">
         <Image
           src={src}
@@ -89,9 +91,11 @@ export function PhotoFill({
           className="object-cover object-(--pos-phone) md:object-(--pos-wide)"
         />
       </Settle>
+      </Parallax>
     );
   }
   return (
+    <Parallax>
     <div role="img" aria-label={shot.name} className="absolute inset-0 bg-current/15">
       <p className="max-w-md p-4 text-[0.75rem] leading-snug opacity-80 md:p-6 md:text-[0.8125rem]">
         {shot.short ? (
@@ -105,5 +109,6 @@ export function PhotoFill({
         )}
       </p>
     </div>
+    </Parallax>
   );
 }

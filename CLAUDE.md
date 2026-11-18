@@ -28,7 +28,7 @@ Sources: the Version C plan (above), then `docs/website-guide.md`, the decks in 
 
 ---
 
-## The new design (style tile, round four, 18 Nov 2026)
+## The new design (style tile, rounds four and five, 18 Nov 2026)
 
 `/style-tile` shows the new design for approval; every page will be rebuilt from it. Not linked, not in the sitemap, `noindex`. Its own layout (`app/(tile)/`), components in `components/tile/`, copy in `content/style-tile.ts`. **Copy comes from `docs/copy/agreed-copy-2026-11-18.md` and the lines in each brief** (a line given in the brief wins). Facts from `agreed` in `content/facts.ts` (₹25,000 to ₹50,000 a month; the six-session guarantee; "Book your first visit"); the live pages keep the older facts and look until they are rebuilt.
 
@@ -45,10 +45,15 @@ Sources: the Version C plan (above), then `docs/website-guide.md`, the decks in 
 
 ### Header (floating, every page)
 
-- The logo on the left; on the right the **"Book your first visit" pill** (soft rounded pill, terracotta, navy text, sentence case, Bold; 15px on phones, 17px on desktop, so the header fits on a 375px phone) and a **three-line menu icon** with the accessible label "Menu".
-- It hides on scroll down and returns on scroll up (`HeaderShell`).
-- The menu opens a **full-screen navy overlay** listing Home, How we train, Team, Questions, with the book pill at the bottom.
-- There is no floating bottom button. The pill (header, menu, ending) is the only way to open the request panel.
+- **Glass:** a frosted, slightly translucent navy background (`bg-navy/70` with backdrop blur), so content blurs as it passes beneath. On the dark glass the logo is the light LogoTag (a light plain logo, without the tagline, is still needed).
+- The logo on the left; on the right the **book pill** (soft rounded pill, terracotta, navy text, sentence case, Bold; 15px on phones, 17px on desktop) and a **three-line menu icon** with the accessible label "Menu". **Below 380px screen width the pill reads "Book a visit"; at 380px and wider "Book your first visit".**
+- **The menu icon only ever opens the menu overlay,** never the request panel. Only the book pill and the overlay's book button open the request panel. They are spaced apart so a tap never lands on the wrong one.
+- It hides on scroll down and returns on scroll up (`HeaderShell`). The menu opens a full-screen navy overlay listing Home, How we train, Team, Questions, with the book pill at the bottom.
+- There is no floating bottom button.
+
+### Inner pages
+
+Method, Team and FAQ start with a clear page title and "← Back to home" at the top.
 
 ### Type hierarchy
 
@@ -61,27 +66,37 @@ Named styles in `app/globals.css`; use only these. The invitation is the referen
 - **`t-number`:** the big number only ("20,000+"): Bold, about 176px desktop, 76px phones, tight.
 Light, Regular and Bold are loaded.
 
-### Transitions (Soma-like, on native scroll, no snapping)
+### Scroll-linked motion
 
-- **Cards** rise about 40px, fade in and settle from 98% to full size over about 0.8s as they arrive (`CardRise`).
-- Adapted to the content: **photos** ease from a very slight zoom; **dial arcs** fill and their numbers count up; **headline lines** fade up one after another; **a member's quote** fades in as its card reaches the middle of the screen.
-- **Reduced motion:** everything visible and still.
+**Rules:**
+- Built with Motion's `useScroll` (`components/tile/Scroll.tsx`, `Parallax.tsx`, `RingDials.tsx`). **Every effect is tied to scroll position:** it plays forward as the visitor scrolls down and rewinds as they scroll up.
+- **Native scrolling throughout:** no snapping, no scroll hijacking.
+- **Animate transform and opacity only.** The one exception: the dial arcs fill by changing an SVG stroke (four small circles).
+- **Text must be readable at every point mid-effect.** (Unlit words start at 40%, about 3.3:1 on navy at headline size; story texts never overlap mid-change.)
+- **Every effect switches off under reduced motion;** everything is then visible and still.
+
+**Effects:**
+- **A. Expanding hero:** the coffee bar photo card starts inset with rounded corners; as the visitor scrolls it grows to the full screen width (scale) while its corners ease to square (navy corner pieces fade out), then holds while the next section scrolls up over it.
+- **B. Words lighting up:** in "We train for a sport called life." and its lines, every word starts dim and brightens to full one word at a time as the visitor scrolls through the section.
+- **C. Stacking cards:** the Sherpa, dials, pizza and four-of-us sections stack. Each sticks near the top of the screen while the next slides up over it; the one underneath scales to about 94% and dims slightly. Headlines travel with their cards. A section taller than the screen sticks with its bottom in view, so none of it is lost.
+- **D. Scroll-driven dials:** the arcs fill and the numbers count up in step with scroll as the dials card comes up the screen, and rewind on scroll up; once full, the weakest turns terracotta and the strongest green.
+- **E. Depth in photos:** every photo moves about 8% slower than its card, inside the card's rounded frame.
+- **F. Member story sequence:** the members section pins for about one screen per story. As the visitor scrolls, the photo cross-fades to the next member, the name and age change, the quote fades in, and a thin terracotta progress line along the top fills. After the last story the section releases. On phones the photo fills most of the screen. Drafts and the build check stay.
+- **H. Glass header** (above).
+- Cards outside these effects still rise about 40px, fade in and settle from 98% over about 0.8s; headline lines fade up one after another.
 
 ### The tile, in order
 
-1. **Hero:** on navy, "The second half of life should be stronger than the first." ("stronger than the first" in terracotta) / "One-to-one coaching for life after 40." Then a photo card with the coffee bar (16:9 desktop, 4:5 phones); the caption "Vasant Vihar, New Delhi." sits below the card.
-2. **Pause,** no card: "We train for a sport called life." / "A suitcase to lift. Unexpected stairs. A trip to say yes to." / "Build the strength for what comes next."
-3. "Your Sherpa. Your plan." / its line / "How we train →". Then a **Light card** holding one photo (one Sherpa guiding one member; 3:2 desktop, 4:5 phones).
-4. "Know your starting point." / its line. Then a **Warm card** with the example ring dials (78, 42, 90, 66; weakest terracotta, strongest the muted green #4A7458; labelled "Example").
-5. "Get stronger. Keep the pizza." / its line. Then **one photo card**: members around the social table (16:9 desktop, 4:5 phones).
-6. "In our members' words." Then **one card per member, stacked** (no carousel): the photo fills the card (16:9 desktop, 4:5 phones), the first name and age at the bottom left over a soft gradient; the quote fades in below the name as the card reaches the middle of the screen. Quotes from `content/quotes.ts` (drafts until consent; the build check stays).
-7. "The four of us." / "We met at Decode, Jeevan's gym." Then a **Light card** with "20,000+", "coaching hours behind every workout template." and "Meet the team →".
+1. **Hero:** on navy, "The second half of life should be stronger than the first." ("stronger than the first" in terracotta) / "One-to-one coaching for life after 40." Then the coffee bar photo card (16:9 desktop, 4:5 phones), expanding (A); the caption "Vasant Vihar, New Delhi." sits below it.
+2. **Pause,** no card, words lighting up (B): "We train for a sport called life." / "A suitcase to lift. Unexpected stairs. A trip to say yes to." / "Build the strength for what comes next."
+3. to 6. **The stack (C):** "Your Sherpa. Your plan." with a **Light card** holding one photo; "Know your starting point." with a **Warm card** and the scroll-driven dials (D); "Get stronger. Keep the pizza." with **one photo card**; "The four of us." / "We met at Decode, Jeevan's gym." with a **Light card**: "20,000+", "coaching hours behind every workout template." and "Meet the team →".
+7. **"In our members' words."** The member story sequence (F).
 8. One line on navy: "Questions? All answers →".
-9. **Ending, curtain reveal** (`Ending`): the page content (rounded at the bottom) scrolls away to reveal a full-screen ending fixed beneath it: the coffee bar photo darkened (navy at 75%), and over it, left-aligned, "Come and meet us.", the visit, the price, the free first hour, the guarantee and the book pill; below, the footer in `t-small` (address, hours, WhatsApp, email, Careers, Location on Maps, Terms, Privacy, the light LogoTag). Where the ending is taller than the screen (phones), it sits in the normal flow and scrolls like the rest of the page.
+9. **Ending, curtain reveal** (`Ending`), unchanged: the page content (rounded at the bottom) scrolls away to reveal a full-screen ending beneath it: the coffee bar photo darkened, "Come and meet us.", the visit, the price, the free first hour, the guarantee and the book pill, then the footer in `t-small`. Where the ending is taller than the screen (phones), it scrolls normally.
 
 ### Removed from the tile
 
-The inline photo chips, the two-photo collage, the sideways member carousel, the questions preview and the floating bottom button.
+The inline photo chips, the two-photo collage, the sideways member carousel, the questions preview and the floating bottom button. (Round five replaced the stacked member cards with the pinned story sequence.)
 
 ### Images
 

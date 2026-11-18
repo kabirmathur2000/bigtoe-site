@@ -14,7 +14,7 @@ export default function TileLayout({ children }: { children: React.ReactNode }) 
       <div data-tile className="relative bg-navy text-offwhite">
         {/* Full width so the ending never shows at the sides; rounded at the bottom like a lifting curtain. */}
         <main className="relative z-10 rounded-b-[28px] bg-navy md:rounded-b-[32px]">
-          <div className="mx-auto flex max-w-[1440px] flex-col gap-24 px-4 pt-28 pb-24 md:gap-40 md:px-12 md:pt-36 md:pb-40 lg:px-16">{children}</div>
+          <div className="mx-auto flex max-w-[1440px] flex-col gap-24 px-(--tile-inset) pt-28 pb-24 md:gap-40 md:pt-36 md:pb-40">{children}</div>
         </main>
         <Ending />
       </div>

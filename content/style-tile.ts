@@ -1,5 +1,5 @@
 /**
- * The style tile, round four (/style-tile, 18 Nov 2026). Copy from
+ * The style tile, round five (/style-tile, 18 Nov 2026). Copy from
  * docs/copy/agreed-copy-2026-11-18.md and the round-four brief (where the
  * brief gives a line, it wins); facts from `agreed` in facts.ts. Not
  * linked, not in the sitemap, noindex. The live pages are unchanged.
@@ -27,6 +27,8 @@ export const tile = {
   title: "Style tile",
   back: { label: "← Back to home", href: "/" },
   cta: agreed.cta,
+  /** The header pill below 380px screen width. */
+  ctaShort: "Book a visit",
 
   /** The header: the logo, the book pill and a menu icon (labelled "Menu") opening a full-screen navy overlay. */
   menu: {
@@ -111,6 +113,8 @@ export const tile = {
     name: todo("first name"),
     age: todo("age"),
     draftLabel: "Draft",
+    /** Screen-reader name for the story sequence. */
+    regionLabel: "Member stories",
   },
 
   /** g. Words on navy, then a Light card with the big number. */

@@ -1,10 +1,9 @@
 "use client";
 
-import { useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
+import { useRef, useState } from "react";
 import { tile } from "@/content/style-tile";
 
-const DURATION = 1800;
 const R = 44;
 const C = 2 * Math.PI * R;
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -14,54 +13,30 @@ const weakest = values.indexOf(Math.min(...values));
 const strongest = values.indexOf(Math.max(...values));
 
 /**
- * The example dials, restored from the Scoreboard (commit 89c3973): rings
- * that fill once on entry to 78, 42, 90 and 66 with the number inside.
- * Then the weakest (Balance and mobility) turns terracotta and the
- * strongest (Functional strength) the muted green; the others stay navy.
- * Always labelled "Example". Full width: four in a row on desktop, 2 x 2
- * on phones; `compact` (beside text): 2 x 2 everywhere.
- * Reduced motion: the final numbers at once.
+ * The example dials (78, 42, 90, 66, the number inside), driven by scroll:
+ * the arcs fill and the numbers count up in step with scroll progress as
+ * the dials card comes up the screen, and rewind on the way up. Once full,
+ * the weakest turns terracotta and the strongest the muted green; the
+ * others stay navy. Always labelled "Example". Four in a row on desktop,
+ * 2 x 2 on phones. Reduced motion: the final numbers, still.
+ * (The arcs are an SVG stroke, the one effect that is not a transform or
+ * an opacity; four small circles, cheap to draw.)
  */
-export function RingDials({ compact = false, plain = false }: { compact?: boolean; plain?: boolean }) {
+export function RingDials() {
   const d = tile.dials;
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const [counted, setT] = useState(0);
-  const t = reduce ? 1 : counted;
+  const [progress, setProgress] = useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.95", "start 0.35"] });
+  useMotionValueEvent(scrollYProgress, "change", (v) => setProgress(v));
 
-  useEffect(() => {
-    if (reduce) return;
-    const el = ref.current;
-    if (!el) return;
-    let frame = 0;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        io.disconnect();
-        const start = performance.now();
-        const tick = (now: number) => {
-          const p = Math.min(1, (now - start) / DURATION);
-          setT(easeOut(p));
-          if (p < 1) frame = requestAnimationFrame(tick);
-        };
-        frame = requestAnimationFrame(tick);
-      },
-      { threshold: 0.4 },
-    );
-    io.observe(el);
-    return () => {
-      io.disconnect();
-      cancelAnimationFrame(frame);
-    };
-  }, [reduce]);
-
-  const done = t >= 1;
+  const t = reduce ? 1 : easeOut(Math.min(1, Math.max(0, progress)));
+  const done = t >= 0.999;
 
   return (
-    <div ref={ref} className={compact || plain ? "" : "mt-10 border-t border-current/15 pt-5 md:mt-14 md:pt-6"}>
+    <div ref={ref}>
       <p className="t-label">{d.example}</p>
-      {/* Beside text (compact): 2 x 2 everywhere. Full width: four in a row on desktop. */}
-      <ul className={`mt-6 grid grid-cols-2 gap-x-6 gap-y-8 md:mt-8 ${compact ? "md:gap-x-10 md:gap-y-10" : "md:grid-cols-4 md:gap-10"}`}>
+      <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 md:mt-8 md:grid-cols-4 md:gap-10">
         {d.items.map((item, i) => {
           const now = Math.round(item.value * t);
           const tint = !done ? "" : i === weakest ? "text-terracotta" : i === strongest ? "text-dial-green" : "";

@@ -3,13 +3,13 @@ import type { ReactNode } from "react";
 import { memberQuotes } from "@/content/quotes";
 import { tile, type Accented } from "@/content/style-tile";
 import coffeeBar from "@/public/photos/studio-coffee-bar.jpg";
-import { MemberCard } from "./MemberCard";
 import { Accent, Card, PhotoFill } from "./Panel";
 import { RingDials } from "./RingDials";
 import { Rise, RiseItem } from "./Rise";
+import { ExpandingHero, LightWords, MemberSequence, StackCards } from "./Scroll";
 
 /**
- * Round four, after soma-health.co: one idea per scroll. A short headline
+ * Rounds four and five, after soma-health.co: one idea per scroll. A short headline
  * on the navy page, then one card holding one visual, then breathing room
  * before the next idea. Text is never on a photo, except a member's name
  * and age (and their quote) on member cards. Nothing needs a tap to read.
@@ -55,23 +55,43 @@ function Idea({
   );
 }
 
-/** a. Hero: the words on navy, then the coffee bar photo card, its caption below (never on the photo). */
+/** a. Hero: the words on navy, then the coffee bar photo card that expands to the screen width as you scroll. */
 export function Hero() {
   const h = tile.hero;
   return (
-    <Idea as="h1" headline={h.headline} lines={[h.line]}>
-      <Card variant="photo" className="aspect-[4/5] md:aspect-video">
-        <PhotoFill shot={h.shot} src={coffeeBar} alt={h.alt} preload sizes="100vw" phonePos="18% 55%" desktopPos="50% 55%" />
-      </Card>
-      <p className="mt-3 t-label">{h.caption}</p>
-    </Idea>
+    <section>
+      <Rise className="max-w-4xl" stagger={0.15}>
+        <RiseItem as="h1" className="t-headline">
+          <Accent value={h.headline} />
+        </RiseItem>
+        <RiseItem as="p" className="mt-4 max-w-2xl t-sub md:mt-6">{h.line}</RiseItem>
+      </Rise>
+      <div className="mt-6">
+        <ExpandingHero
+          caption={h.caption}
+          photo={<PhotoFill shot={h.shot} src={coffeeBar} alt={h.alt} preload sizes="100vw" phonePos="18% 55%" desktopPos="50% 55%" />}
+        />
+      </div>
+    </section>
   );
 }
 
-/** b. A pause: words only, no card. */
+/**
+ * b. A pause: words only, no card, lighting up word by word. It slides up
+ * over the held hero photo, so it spans the full screen width in the page
+ * navy, its top corners rounded.
+ */
 export function Pause() {
   const p = tile.pause;
-  return <Idea headline={p.headline} lines={p.lines} />;
+  return (
+    <section className="relative z-10 -mt-[45svh] ml-[calc(50%-50vw)] w-screen rounded-t-[28px] bg-navy pt-16 md:rounded-t-[32px] md:pt-24">
+      <div className="mx-auto max-w-[1440px] px-(--tile-inset)">
+        <div className="max-w-4xl">
+          <LightWords headline={p.headline} lines={p.lines} />
+        </div>
+      </div>
+    </section>
+  );
 }
 
 /** c. The words on navy, then a Light card holding one photo (3:2 desktop, 4:5 phones). */
@@ -88,13 +108,13 @@ export function Coach() {
   );
 }
 
-/** d. The words on navy, then a Warm card with the example ring dials. */
+/** d. The words on navy, then a Warm card with the example ring dials (driven by scroll). */
 export function Dials() {
   const d = tile.dials;
   return (
     <Idea headline={d.headline} lines={[d.line]}>
       <Card variant="warm" className="px-6 py-8 md:px-12 md:py-12">
-        <RingDials plain />
+        <RingDials />
       </Card>
     </Idea>
   );
@@ -112,19 +132,6 @@ export function Social() {
   );
 }
 
-/** f. Member stories, stacked down the page: one photo card per member; each quote fades in at the middle of the screen. */
-export function Stories() {
-  return (
-    <Idea headline={tile.stories.headline}>
-      <div className="space-y-6">
-        {memberQuotes.map((q, i) => (
-          <MemberCard key={i} quote={q} />
-        ))}
-      </div>
-    </Idea>
-  );
-}
-
 /** g. The words on navy, then a Light card with the big number. */
 export function Team() {
   const t = tile.team;
@@ -136,6 +143,32 @@ export function Team() {
         <Link href={t.link.href} className={`mt-6 ${link}`}>{t.link.label}</Link>
       </Card>
     </Idea>
+  );
+}
+
+/** c to g. The Sherpa, dials, pizza and four-of-us sections, stacking as you scroll. */
+export function Stack() {
+  return (
+    <StackCards>
+      <Coach />
+      <Dials />
+      <Social />
+      <Team />
+    </StackCards>
+  );
+}
+
+/** f. Member stories: pinned, one screen per story. */
+export function Stories() {
+  return (
+    <MemberSequence
+      quotes={memberQuotes}
+      headline={
+        <h2 className="t-headline">
+          <Accent value={tile.stories.headline} />
+        </h2>
+      }
+    />
   );
 }
 

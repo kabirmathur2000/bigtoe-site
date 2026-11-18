@@ -55,7 +55,15 @@ export function BookPill({
       }}
       className={`inline-flex items-center justify-center rounded-full bg-terracotta leading-tight font-bold whitespace-nowrap text-navy transition-transform duration-500 ease-soft hover:-translate-y-0.5 ${sizes} ${className}`}
     >
-      {tile.cta}
+      {size === "small" ? (
+        <>
+          {/* Below 380px screen width the header pill reads "Book a visit". */}
+          <span className="min-[380px]:hidden">{tile.ctaShort}</span>
+          <span className="hidden min-[380px]:inline">{tile.cta}</span>
+        </>
+      ) : (
+        tile.cta
+      )}
     </button>
   );
 }

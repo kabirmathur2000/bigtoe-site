@@ -11,7 +11,7 @@ import { useEffect, useState, type ReactNode } from "react";
  * navy zones alike. Always visible at the very top of the page and whenever
  * a keyboard user tabs into it. Reduced motion: it simply stays visible.
  */
-export function HeaderShell({ children }: { children: ReactNode }) {
+export function HeaderShell({ children, glass = false }: { children: ReactNode; glass?: boolean }) {
   const reduce = useReducedMotion();
   const pathname = usePathname();
   const [state, setState] = useState({ path: pathname, hidden: false });
@@ -47,7 +47,10 @@ export function HeaderShell({ children }: { children: ReactNode }) {
   return (
     <header
       onFocusCapture={() => setState({ path: pathname, hidden: false })}
-      className={`fixed inset-x-3 top-2 z-40 mx-auto max-w-wide rounded-lg border border-navy/15 bg-offwhite text-navy transition-[translate,opacity] duration-500 ease-soft md:inset-x-6 md:top-3 ${
+      // glass (the new design): frosted, slightly translucent navy, so content blurs as it passes beneath.
+      className={`fixed inset-x-3 top-2 z-40 mx-auto max-w-wide rounded-lg border transition-[translate,opacity] duration-500 ease-soft md:inset-x-6 md:top-3 ${
+        glass ? "border-offwhite/15 bg-navy/70 text-offwhite backdrop-blur-md" : "border-navy/15 bg-offwhite text-navy"
+      } ${
         hidden ? "pointer-events-none -translate-y-[calc(100%+1rem)] opacity-0" : ""
       }`}
     >
