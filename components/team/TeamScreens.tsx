@@ -1,10 +1,9 @@
 import { Accent } from "@/components/site/Accent";
-import { Photo } from "@/components/site/Photo";
 import { Rise, RiseItem } from "@/components/site/Rise";
 import { space } from "@/components/site/styles";
 import { BookPill } from "@/components/site/VisitPanel";
 import { team } from "@/content/team";
-import { SherpaCards } from "./SherpaCards";
+import { PortraitCards } from "./PortraitCards";
 
 /** Team: three screens on the light page, after the page title. */
 
@@ -28,35 +27,28 @@ export function Why() {
   );
 }
 
-/** 2. The four of us: the story, then four founder portraits (a list with small portraits on phones). */
+/** 2. The four of us: the Decode story, then the four founders as portrait cards (PortraitCards): the plus shows age and credential. */
 export function Founders() {
   const f = team.founders;
   return (
-    <section className={`tile-wrap ${space}`}>
-      <Rise>
+    <section className={space}>
+      <Rise className="tile-wrap">
         <RiseItem as="h2" className="max-w-3xl ty-headline">
           <Accent value={f.headline} />
         </RiseItem>
         <RiseItem as="p" className="mt-5 max-w-2xl ty-body opacity-80 md:mt-6 md:ty-sub">{f.line}</RiseItem>
       </Rise>
-      <Rise as="ul" className="mt-10 grid gap-6 md:mt-14 md:grid-cols-4 md:gap-6" stagger={0.1}>
-        {f.people.map((p, i) => (
-          <RiseItem as="li" key={p.name} className="flex items-start gap-5 md:flex-col md:gap-0">
-            <div className="relative aspect-[4/5] w-28 shrink-0 overflow-hidden rounded-2xl md:w-full">
-              <Photo shot={`${f.shot}: ${p.name}`} pos={["20% 50%", "45% 50%", "65% 50%", "85% 50%"][i]} sizes="(min-width: 768px) 25vw, 112px" />
-            </div>
-            <div className="md:mt-5">
-              <p className="ty-sub">{`${p.name}, ${p.age}.`}</p>
-              <p className="mt-2 ty-small opacity-80">{p.role}</p>
-            </div>
-          </RiseItem>
-        ))}
-      </Rise>
+      {/* Not inside a fade: a moving parent would break the open card's fixed position. */}
+      <PortraitCards
+        id="founder"
+        items={f.people.map((p) => ({ name: p.name, label: f.age(p.age), line: p.role, shot: `${f.shot}: ${p.name}`, more: f.more(p.name), less: f.less(p.name) }))}
+        labels={{ previous: f.previous, next: f.next }}
+      />
     </section>
   );
 }
 
-/** 3. Your Sherpas: the line, the five cards (SherpaCards), Jeevan's standard, the button. */
+/** 3. Your Sherpas: the line, the five cards (PortraitCards), Jeevan's standard, the button. */
 export function Sherpas() {
   const s = team.sherpas;
   return (
@@ -68,7 +60,8 @@ export function Sherpas() {
         <RiseItem as="p" className="mt-5 max-w-2xl ty-sub opacity-80 md:mt-6">{s.line}</RiseItem>
       </Rise>
       {/* Not inside a fade: a moving parent would break the open card's fixed position. */}
-      <SherpaCards />
+      <PortraitCards id="sherpa" items={s.people.map((p) => ({ ...p, shot: `${s.shot}: ${p.name}`, more: s.more(p.name), less: s.less(p.name) }))}
+        labels={{ previous: s.previous, next: s.next }} />
       <Rise className="tile-wrap mt-12 md:mt-16">
         <RiseItem as="p" className="max-w-2xl ty-sub">{s.standard}</RiseItem>
         <RiseItem className="mt-8 md:mt-10">

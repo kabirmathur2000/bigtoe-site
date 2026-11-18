@@ -6,7 +6,8 @@ export const home = {
   /** 1. Hero, Function style: a full-screen photo, a navy gradient, the words on it. */
   hero: {
     place: facts.address.short,
-    headline: { text: facts.heroLine, accent: "stronger than the first" } as Accented,
+    /** Only the full stop in terracotta: no terracotta text on the orange wood. */
+    headline: { text: facts.heroLine, accent: "." } as Accented,
     line: "One-to-one training for life after 40.",
     shot: "a real member training with a coach, the studio around them",
   },
@@ -18,11 +19,12 @@ export const home = {
     link: { label: "How we train", href: "/method" },
   },
 
-  /** 3. The split: text left, the dials right. The navy switch begins here. */
+  /** 3. The split: text left, one photo card right. The navy switch begins here. */
   coach: {
     headline: { text: "Your coach. Your plan.", accent: "Your plan." } as Accented,
     line: "A dedicated coach guides you through every session. Your Reserve Audit sets the starting point. Your progress shapes what comes next.",
     link: { label: "Meet the team", href: "/team" },
+    shot: "one coach guiding one member: the attention and interaction, not the equipment",
   },
 
   /** 4. Neko-style member cards (quotes in content/quotes.ts). */

@@ -24,6 +24,12 @@ export const team = {
     headline: { text: "The four of us." } as Accented,
     line: "We met at Decode, Jeevan's gym. Through his coaching, Sunday get-togethers in the park and taking part in 5k runs as a team, training became part of a shared life. Decode closed during Covid, but that experience stayed with us. It's what we wanted to build on at BigToe.",
     shot: "founder portrait on the training floor (same crop and light for all four)",
+    /** Shown above the credential when a founder's card is open (proposed). */
+    age: (age: number) => `Age ${age}`,
+    more: (name: string) => `More about ${name}`,
+    less: (name: string) => `Close ${name}`,
+    previous: "Previous founder",
+    next: "Next founder",
     people: [
       { ...jay, role: "Co-founder and CEO. Founded the hospitality group behind Hard Rock Cafe India and Shiro." },
       { ...jeevan, role: `Co-founder and Chief Training Officer. ${facts.coachingHours} coaching hours. MSc, Middlesex University London.` },
@@ -46,8 +52,8 @@ export const team = {
     ],
     more: (name: string) => `More about ${name}`,
     less: (name: string) => `Close ${name}`,
-    previous: "Previous",
-    next: "Next",
+    previous: "Previous Sherpa",
+    next: "Next Sherpa",
     standard: "Every Sherpa trains under Jeevan, and every workout template is his.",
   },
 } as const;

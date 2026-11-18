@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Accent } from "@/components/site/Accent";
-import { DialSplit } from "@/components/site/Dials";
 import { Faq } from "@/components/site/Faq";
 import { MemberStack } from "@/components/site/Members";
 import { Photo } from "@/components/site/Photo";
@@ -26,7 +25,8 @@ export function Hero() {
       <div className="absolute inset-x-0 -top-[40%] bottom-0 md:top-0">
         <Photo shot={h.shot} posClass="object-[16%_50%] md:object-[50%_55%]" sizes="100vw" preload />
       </div>
-      <div aria-hidden className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-navy/95 via-navy/60 to-transparent md:h-[70%]" />
+      {/* Deepest behind the text block, clear at the top. */}
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-navy from-25% via-navy/75 via-60% to-transparent md:h-[70%] md:from-15%" />
       <Rise className={`tile-wrap absolute inset-x-0 bottom-0 pb-[max(2.5rem,calc(env(safe-area-inset-bottom)+1.5rem))] text-offwhite md:pb-16 ${shadow}`} stagger={0.1}>
         <RiseItem>
           <span className="inline-flex items-center rounded-full border border-offwhite/25 bg-offwhite/15 px-3.5 py-2 ty-label backdrop-blur-md">{h.place}</span>
@@ -65,17 +65,24 @@ export function Why() {
   );
 }
 
-/** 3. The Soma-style split: the text on the left, the dials on the right (above and below on phones). The navy switch begins here. */
+/** 3. The split: the text on the left, one photo card on the right (below on phones). The navy switch begins here. */
 export function Coach() {
   const c = home.coach;
   return (
-    <DialSplit>
-      <h2 className="ty-headline">
-        <Accent value={c.headline} />
-      </h2>
-      <p className="mt-5 max-w-md ty-sub opacity-80 md:mt-6">{c.line}</p>
-      <Link href={c.link.href} className={`mt-8 ${softPill}`}>{c.link.label}</Link>
-    </DialSplit>
+    <section className={`tile-wrap grid gap-10 md:grid-cols-12 md:items-center md:gap-12 ${space}`}>
+      <Rise className="md:col-span-5">
+        <RiseItem as="h2" className="ty-headline">
+          <Accent value={c.headline} />
+        </RiseItem>
+        <RiseItem as="p" className="mt-5 max-w-md ty-sub opacity-80 md:mt-6">{c.line}</RiseItem>
+        <RiseItem className="mt-8">
+          <Link href={c.link.href} className={softPill}>{c.link.label}</Link>
+        </RiseItem>
+      </Rise>
+      <FadeUp className="relative aspect-[4/5] overflow-hidden rounded-2xl md:col-span-7 md:aspect-[5/4]">
+        <Photo shot={c.shot} pos="70% 50%" sizes="(min-width: 768px) 60vw, 100vw" />
+      </FadeUp>
+    </section>
   );
 }
 

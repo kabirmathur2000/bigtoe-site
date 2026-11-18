@@ -5,9 +5,9 @@ import { useId, useState } from "react";
 import type { Question } from "@/content/faq";
 import { Icon } from "./Icons";
 
-/** Questions, after Function's FAQ: an accordion, one open at a time (the first open). Hairlines in the current text colour. */
-export function Faq({ items, all }: { items: Question[]; all?: { label: string; href: string } }) {
-  const [open, setOpen] = useState<number | null>(0);
+/** Questions, after Function's FAQ: an accordion, one open at a time (the first open unless `firstOpen` is false). Hairlines in the current text colour. */
+export function Faq({ items, all, firstOpen = true }: { items: Question[]; all?: { label: string; href: string }; firstOpen?: boolean }) {
+  const [open, setOpen] = useState<number | null>(firstOpen ? 0 : null);
   const base = useId();
   return (
     <div>

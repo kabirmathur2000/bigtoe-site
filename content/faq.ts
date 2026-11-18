@@ -70,5 +70,15 @@ export const faq = {
   ] as Question[],
 };
 
+const [who, injury, trainer, session, howMany, schedule, cost, notForMe, community, firstVisit, wear, others, membership] = faq.items;
+
+/** The FAQ page in four groups, each under a small label with its own accordion. */
+export const faqGroups: { label: string; items: Question[] }[] = [
+  { label: "Getting started", items: [who, firstVisit, wear] },
+  { label: "Training", items: [trainer, session, others, howMany] },
+  { label: "Health and safety", items: [injury] },
+  { label: "Membership", items: [cost, membership, schedule, notForMe, community] },
+];
+
 /** Home's three: who it's for, injuries, cost. */
-export const homeQuestions = [faq.items[0], faq.items[1], faq.items[6]];
+export const homeQuestions = [who, injury, cost];

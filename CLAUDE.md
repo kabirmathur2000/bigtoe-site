@@ -13,7 +13,7 @@
 - **One button label everywhere:** "Book your first visit" (`facts.cta`); "Book a visit" (`facts.ctaShort`) only in the phone header, where the full label does not fit. Every button opens the request panel.
 - **Facts are used everywhere from `content/facts.ts`, never retyped:** price "₹25,000 to ₹50,000 a month, depending on how often you train."; "Your first hour is free."; the guarantee "Complete six sessions within three weeks of joining. Not for you? Your money back, no questions asked." (the FAQ adds "Studio and online sessions both count."); hours Monday to Saturday, 6 am to 8 pm, Sunday, 8 am to 1 pm; up to five members at a time; 20,000+ coaching hours (Jeevan); founders Jay Singh 59, Jeevan Aujla 41, Seema Jindal 58, Rodrigo Pérez 51; Sherpas Himanshu, Saurav, Sumit, Tanuj, Kabir.
 - **Member quotes and photos are placeholders until written consent:** first name and age show as visible TODOs and each card carries a "Draft" badge. A quote is a member's own words, never reworded or added to; `source` in `content/quotes.ts` says where each comes from.
-- **"Reserve Audit"** is the assessment; its example dials show "Strength Reserve" 69 and four dials (Body composition 78, Balance and mobility 42, Functional strength 90, Conditioning 66), always labelled "Example".
+- **"Reserve Audit"** is the assessment; its example dials (Method only) show four dials (Body composition 78, Balance and mobility 42, Functional strength 90, Conditioning 66), always labelled "Example".
 - **All page copy lives in `content/*.ts`,** never inside components. Missing facts become visible TODOs (rendered as `TODO: …`), listed in "Still open".
 - **No health promises.** Nothing that says prevent, reverse, cure or live longer; no diagnosis. Medical questions defer to the member's doctor.
 - **American spelling throughout.**
@@ -29,13 +29,13 @@
 
 ## Design (built from the approved style tile, 18 Nov 2026)
 
-References: ouraring.com and functionhealth.com for layouts, cards, type and spacing; soma-health.co for the scroll-linked split; Neko for the stacking member cards. `/style-tile` (round seven, as approved) stays reachable for reference: noindex, not in the sitemap or the menu. Its tile-only screens live in `components/tile/` and `content/style-tile.ts`; everything shared is in `components/site/`.
+References: ouraring.com and functionhealth.com for layouts, cards, type and spacing; Oura's "Sleep and Rest" cards for the founder and Sherpa cards. `/style-tile` (round seven, as approved) stays reachable for reference: noindex, not in the sitemap or the menu. Its tile-only screens live in `components/tile/` and `content/style-tile.ts`; everything shared is in `components/site/`.
 
 ### Base style
 
 - **Page background #F0EEEB, text navy #0A212D** (edges and overscroll included) on every page.
 - **The navy switch (Home only):** from "Your coach. Your plan." to the footer the page is navy with #F0EEEB text; cards stay off-white with navy text. A slow fade of the page colour over about half a screen as that section arrives (`NavyZone`, which sets `--site-bg`). One change only, never back. Method, Team, FAQ and the legal pages stay light, footer included.
-- **Terracotta #D4644D** only for the button and at most one accent phrase per headline (`Accented` in the content files).
+- **Terracotta #D4644D** only for the button and at most one accent phrase per headline (`Accented` in the content files). Never terracotta text on a photo: the hero headline is all #F0EEEB with only its full stop in terracotta.
 - **Type, named styles in `app/globals.css` only:** `ty-hero` (40px phones, 88px desktop, Light: the Home hero and the inner page titles), `ty-headline` (36 to 64px Light), `ty-sub` (20 to 24px Regular: lines under headlines, step titles, quotes, questions), `ty-body` (16 to 18px), `ty-small` (14 to 15px, the footer), `ty-label` (13px Bold, sentence case: pills and small labels). The member card title is the one uppercase label (13px Bold, spaced).
 - **Cards:** 16px corners; off-white with a hairline navy border on the light page; off-white in the navy zone. Pills are fully rounded.
 - **Layout:** content in a 1280px column (`tile-wrap`: 20px gutters on phones, 40px on tablets, 64px on desktop); the hero runs edge to edge; carousels run to the screen edge with the first card on the column (`tile-edge`). About 96px between screens on phones, 144px on desktop (`space` in `components/site/styles.ts`).
@@ -57,13 +57,12 @@ Method, Team and FAQ start with "← Back to home", then the page title in `ty-h
 ### Motion
 
 - **Content fades up once as it arrives** (about 16px, 0.6s; lines one after another; `components/site/Rise.tsx`). Native scrolling, no page snapping, no scroll hijacking.
-- **The dials split (Home, `DialSplit` in `components/site/Dials.tsx`):** on desktop (768px and wider) the section pins for about a screen; the text stays put while the "Strength Reserve" ring counts up to 69 and the four dials rise out of it and fill, in step with scroll, rewinding on the way up. On phones a pinned split does not fit the screen, so the same sequence plays once as the card arrives.
-- **Method's four dials** (`FourDials`) fill one after another, once, as the card arrives.
-- **Stacking member cards** (Neko, `components/site/Members.tsx`): each card sticks near the top and the next slides over it; a card taller than the screen sticks with its bottom in view.
-- **Sherpa cards** (Oura's "Sleep and Rest", `components/team/SherpaCards.tsx`): the plus grows the card to fill most of the screen (a shared layout animation) and reveals the Sherpa's line beneath the name; ×, Escape or a tap outside returns it and focus goes back to the plus.
+- **The dials appear once, on Method screen 1** (`FourDials` in `components/site/Dials.tsx`): the four fill one after another, once, as the card arrives. (`DialSplit`, the scroll-linked version, is used only by /style-tile.)
+- **Member cards** (`components/site/Members.tsx`): no stacking; the cards scroll normally, each fully visible. The photo keeps its own shape and is never cropped: about 85% of the card's width on phones with the name and quote below it, beside them on desktop.
+- **Founder and Sherpa cards** (Oura's "Sleep and Rest", `components/team/PortraitCards.tsx`): the plus grows the card to fill most of the screen (a shared layout animation) and reveals the label (founders: "Age 59") and line beneath the name; ×, Escape or a tap outside returns it and focus goes back to the plus.
 - **Carousels are manual** (swipe on phones, arrows on desktop; snap points inside the row only). Never autoplay.
 - Small interface transitions (the plus, the accordion) take about 0.3s.
-- **Reduced motion: everything still** and shown in its final state; the Sherpa card appears without growing. The navy switch still runs: it is a colour fade, not movement.
+- **Reduced motion: everything still** and shown in its final state; an opened portrait card appears without growing. The navy switch still runs: it is a colour fade, not movement.
 
 ---
 
@@ -79,10 +78,10 @@ Centred dialog on desktop, bottom sheet on phones. Name, mobile number, preferre
 
 ### Home (`content/home.ts`, `components/home/HomeScreens.tsx`)
 
-1. **Hero** (after Function's "Check your health."): a full-screen photo; a navy gradient rising from the bottom to about 60% of the height on phones and 70% on desktop. The frosted pill "Vasant Vihar, New Delhi."; "The second half of life should be stronger than the first." (accent "stronger than the first"); "One-to-one training for life after 40."; the button. Text #F0EEEB with a faint shadow; phones crop the photo higher so the logo wall clears the words; safe-area padding below.
+1. **Hero** (after Function's "Check your health."): a full-screen photo; a navy gradient rising from the bottom to about 60% of the height on phones and 70% on desktop, solid navy behind the text block and clear at the top. The frosted pill "Vasant Vihar, New Delhi."; "The second half of life should be stronger than the first." (all #F0EEEB, only the full stop terracotta); "One-to-one training for life after 40."; the button. Text #F0EEEB with a faint shadow; phones crop the photo higher so the logo wall clears the words; safe-area padding below.
 2. **Text only, centred:** "We train for a sport called life." / "A suitcase to lift. Unexpected stairs. A trip to say yes to." / "Build the strength for what comes next." Pill link "How we train" → /method.
-3. **The dials split (the navy switch begins here):** "Your coach. Your plan." / "A dedicated coach guides you through every session. Your Reserve Audit sets the starting point. Your progress shapes what comes next." Pill link "Meet the team" → /team. The dials card on the right (below on phones), "Your Reserve Audit" and "Example"; no tap interaction.
-4. **"In our members' words."** Three Neko-style cards (`content/quotes.ts`): a large photo (4:5 phones, 3:2 desktop), "TODO: first name, TODO: age" with a Draft badge, the quote. Each quote has a `video` slot for later, not used yet.
+3. **The split (the navy switch begins here):** "Your coach. Your plan." / "A dedicated coach guides you through every session. Your Reserve Audit sets the starting point. Your progress shapes what comes next." Pill link "Meet the team" → /team. One photo card on the right (below on phones): a coach guiding a member.
+4. **"In our members' words."** Three cards (`content/quotes.ts`), scrolling normally: the photo at its own shape, "TODO: first name, TODO: age" with a Draft badge, the quote. Each quote has a `video` slot for later, not used yet.
 5. **"Get stronger. Keep the pizza."** / "A healthier life shouldn't mean giving up the things you enjoy." One photo card.
 6. **"Your first hour."** Function's three steps, titles only: 01 Meet a founder. 02 A body scan and light assessment. 03 Coffee and a chat.
 7. **Ending, centred:** "Come and meet us." / the price / "Your first hour is free." / the guarantee / the button.
@@ -98,12 +97,12 @@ Centred dialog on desktop, bottom sheet on phones. Name, mobile number, preferre
 ### Team (`content/team.ts`, `components/team/`)
 
 1. "Why we built this." Jay's story in three lines, signed "Jay". Text only, generous space.
-2. "The four of us." The Decode story, then four founder portraits (a list with small portraits on phones): name and age, role and background.
-3. "Your Sherpas." / "A Sherpa walks the path with you: …" Five portrait cards (4:5) with the first name in a pill and a round plus (`SherpaCards`), each Sherpa's line in first person when opened. Then "Every Sherpa trains under Jeevan, and every workout template is his." and the button.
+2. "The four of us." The Decode story, then the four founders as portrait cards (4:5, `PortraitCards`): the name in a pill and a round plus; opened, "Age 59" (proposed wording) and the credential. Swipe on phones, arrows on desktop.
+3. "Your Sherpas." / "A Sherpa walks the path with you: …" Five portrait cards (4:5, `PortraitCards`) with the first name in a pill and a round plus, each Sherpa's line in first person when opened. Then "Every Sherpa trains under Jeevan, and every workout template is his." and the button.
 
 ### FAQ, "Questions" (`content/faq.ts`)
 
-An accordion, one open at a time: the ten agreed questions and answers word for word, then three drafted from site facts (what to wear and bring; training in front of others; membership and pausing), with TODOs where a fact needs confirming. Then the button.
+Thirteen questions in four groups (`faqGroups`), each under a small label with its own accordion (one open at a time; the first group opens its first question): Getting started (who it's for, first visit, what to wear), Training (who trains me, session length, training in front of others, how many at a time), Health and safety (injury or condition), Membership (cost, membership and pausing, scheduling, if it isn't for me, community). The ten agreed answers word for word; three drafted from site facts, with TODOs where a fact needs confirming. Then the button.
 
 ### Terms and privacy (`content/legal.ts`, `components/legal/LegalText.tsx`)
 
@@ -147,7 +146,8 @@ Fetched from bigtoe.in on 17 Nov 2026 and published **word for word**, plain tex
 - [ ] Map link ("Location on Maps").
 - [ ] Member quotes (`content/quotes.ts`): first name, age and written consent for each; card 1 is an illustrative draft and card 4 proposed wording (see the agreed copy), not yet members' words.
 - [ ] FAQ drafts to confirm: towels and water provided; monthly billing and pause rules.
-- [ ] The example dial numbers: the agreed copy's Method direction says "without invented scores"; the 18 Nov brief keeps the example numbers.
+- [ ] The example dial numbers (Method): the agreed copy's direction says "without invented scores"; the 18 Nov brief keeps the example numbers.
+- [ ] "Age 59" on the opened founder cards is proposed wording.
 - [ ] Sherpa name spellings, and each Sherpa's OK to publish their line.
 - [ ] Jay's son has seen the story before it goes public.
 - [ ] Founder lines to confirm with each founder (Hard Rock Cafe India and Shiro; MSc, Middlesex University London; Nourish Organics; a career leading finance teams).

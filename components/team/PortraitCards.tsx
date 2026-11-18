@@ -4,33 +4,34 @@ import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/site/Icons";
 import { Photo } from "@/components/site/Photo";
-import { team } from "@/content/team";
 
 const POSITIONS = ["18% 50%", "40% 50%", "60% 55%", "78% 50%", "92% 45%"];
 const EASE = [0.22, 1, 0.36, 1] as const;
 const frost = "bg-offwhite/85 text-navy backdrop-blur-md";
-const s = team.sherpas;
 
-type Person = (typeof s.people)[number];
+/** One card: the name in the pill; `label` (optional) and `line` show beneath it when the card is open. */
+export type Portrait = { name: string; label?: string; line: string; shot: string; /** The plus and × labels. */ more: string; less: string };
+export type PortraitLabels = { previous: string; next: string };
 
-/** The card's face: the photo, the name pill top left, and (open) the Sherpa's line beneath it. */
-function Face({ p, i, open }: { p: Person; i: number; open: boolean }) {
+/** The card's face: the photo, the name pill top left, and (open) the label and line beneath it. */
+function Face({ p, i, open }: { p: Portrait; i: number; open: boolean }) {
   return (
     <>
       <motion.div layout className="absolute inset-0">
-        <Photo shot={`${s.shot}: ${p.name}`} pos={POSITIONS[i % POSITIONS.length]} sizes={open ? "(min-width: 768px) 1024px, 92vw" : "(min-width: 1024px) 360px, 78vw"} />
+        <Photo shot={p.shot} pos={POSITIONS[i % POSITIONS.length]} sizes={open ? "(min-width: 768px) 1024px, 92vw" : "(min-width: 1024px) 360px, 78vw"} />
       </motion.div>
       <motion.div layout="position" className="absolute top-3 left-3 flex max-w-[calc(100%-4.5rem)] flex-col items-start gap-2">
         <span className={`inline-flex items-center rounded-full px-3 py-2 ty-label ${frost}`}>{p.name}</span>
         {open && (
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.25, duration: 0.4 } }}
             exit={{ opacity: 0, transition: { duration: 0.15 } }}
-            className={`max-w-sm rounded-xl p-4 ty-sub ${frost}`}
+            className={`max-w-sm rounded-xl p-4 ${frost}`}
           >
-            {p.line}
-          </motion.p>
+            {p.label && <p className="mb-2 ty-label">{p.label}</p>}
+            <p className="ty-sub">{p.line}</p>
+          </motion.div>
         )}
       </motion.div>
     </>
@@ -38,15 +39,16 @@ function Face({ p, i, open }: { p: Person; i: number; open: boolean }) {
 }
 
 /**
- * Your Sherpas, after Oura's "Sleep and Rest" cards: five portrait photo
- * cards (4:5, 16px corners) in a row, each with the first name in a pill
- * top left and a round plus top right. The plus grows the card to fill
- * most of the screen and reveals the Sherpa's line beneath the name; ×
+ * After Oura's "Sleep and Rest" cards (Team: the founders and the
+ * Sherpas): portrait photo cards (4:5, 16px corners) in a row, each with
+ * the name in a pill top left and a round plus top right. The plus grows
+ * the card to fill most of the screen and reveals the label and line
+ * beneath the name; ×
  * (or Escape, or a tap outside) returns it, and focus goes back to the
  * plus. Swipe on phones, arrows on desktop; manual, snap points inside the
  * row only. Reduced motion: the card appears and leaves without growing.
  */
-export function SherpaCards() {
+export function PortraitCards({ id, items, labels: s }: { id: string; items: Portrait[]; labels: PortraitLabels }) {
   const track = useRef<HTMLUListElement>(null);
   const close = useRef<HTMLButtonElement>(null);
   const pluses = useRef<(HTMLButtonElement | null)[]>([]);
@@ -104,7 +106,7 @@ export function SherpaCards() {
   const arrow =
     "flex h-11 w-11 items-center justify-center rounded-full border border-navy/20 transition-opacity duration-300 hover:bg-navy/5 disabled:opacity-30 disabled:hover:bg-transparent";
   const round = `flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-transform duration-300 ease-soft hover:scale-105 ${frost}`;
-  const open = openAt === null ? null : s.people[openAt];
+  const open = openAt === null ? null : items[openAt];
 
   return (
     <MotionConfig reducedMotion="user" transition={{ duration: 0.55, ease: EASE }}>
@@ -121,10 +123,10 @@ export function SherpaCards() {
         onScroll={measure}
         className="tile-edge mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 [scrollbar-width:none] md:mt-4 md:gap-4 [&::-webkit-scrollbar]:hidden"
       >
-        {s.people.map((p, i) => (
+        {items.map((p, i) => (
           <li key={p.name} className="relative aspect-[4/5] w-[78%] max-w-[22rem] shrink-0 snap-start md:w-[20rem] lg:w-[22.5rem]">
             <motion.div
-              layoutId={`sherpa-${p.name}`}
+              layoutId={`${id}-${i}`}
               style={{ borderRadius: 16 }}
               className={`absolute inset-0 overflow-hidden bg-navy ${openAt === i ? "invisible" : ""}`}
             >
@@ -136,7 +138,7 @@ export function SherpaCards() {
               }}
               type="button"
               aria-haspopup="dialog"
-              aria-label={s.more(p.name)}
+              aria-label={p.more}
               onClick={() => setOpenAt(i)}
               className={`absolute top-3 right-3 ${round}`}
             >
@@ -161,7 +163,7 @@ export function SherpaCards() {
               role="dialog"
               aria-modal="true"
               aria-label={open.name}
-              layoutId={`sherpa-${open.name}`}
+              layoutId={`${id}-${openAt}`}
               style={{ borderRadius: 16 }}
               className="relative h-[min(85svh,52rem)] w-full max-w-[64rem] overflow-hidden bg-navy"
             >
@@ -170,7 +172,7 @@ export function SherpaCards() {
                 ref={close}
                 layout="position"
                 type="button"
-                aria-label={s.less(open.name)}
+                aria-label={open.less}
                 onClick={closeCard}
                 className={`absolute top-3 right-3 ${round}`}
               >

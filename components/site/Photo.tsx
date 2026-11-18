@@ -14,6 +14,7 @@ export function Photo({
   posClass,
   sizes,
   preload = false,
+  natural = false,
 }: {
   shot: string;
   pos?: string;
@@ -21,7 +22,12 @@ export function Photo({
   posClass?: string;
   sizes: string;
   preload?: boolean;
+  /** At the photo's own shape, never cropped (width from the parent), in place of filling it. */
+  natural?: boolean;
 }) {
+  if (natural) {
+    return <Image src={coffeeBar} alt={shot ? photo.placeholder(shot) : photo.alt} sizes={sizes} quality={75} className="block h-auto w-full" />;
+  }
   return (
     <Image
       src={coffeeBar}
