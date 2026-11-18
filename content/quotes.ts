@@ -26,7 +26,7 @@ export const memberQuotes: MemberQuote[] = [
     name: null,
     age: null,
     draft: true,
-    shot: "Member portrait, square: plain wall, same distance and light as the others",
+    shot: "Member portrait, relaxed, in the studio (same crop and size for every member)",
     source: "Style tile brief, 18 Nov 2026 (not in docs/copy/testimonials.md)",
   },
   {
@@ -35,7 +35,7 @@ export const memberQuotes: MemberQuote[] = [
     name: null,
     age: null,
     draft: true,
-    shot: "Member portrait, square: plain wall, same distance and light as the others",
+    shot: "Member portrait, relaxed, in the studio (same crop and size for every member)",
     source: "docs/copy/testimonials.md 4, with \"which says it all!\" added in the brief (not in the member's words)",
   },
   {
@@ -44,7 +44,7 @@ export const memberQuotes: MemberQuote[] = [
     name: null,
     age: null,
     draft: true,
-    shot: "Member portrait, square: plain wall, same distance and light as the others",
+    shot: "Member portrait, relaxed, in the studio (same crop and size for every member)",
     source: "Style tile brief, 18 Nov 2026 (not in docs/copy/testimonials.md)",
   },
 ];

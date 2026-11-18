@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 
-/** Collapsed questions, one open at a time. */
+/** Collapsed questions, one open at a time (the new type styles). */
 export function Faq({ label, items }: { label: string; items: readonly { q: string; a: string }[] }) {
   const id = useId();
   const [open, setOpen] = useState<number | null>(null);
@@ -21,7 +21,7 @@ export function Faq({ label, items }: { label: string; items: readonly { q: stri
                   aria-expanded={isOpen}
                   aria-controls={panel}
                   onClick={() => setOpen(isOpen ? null : i)}
-                  className="flex min-h-11 w-full items-baseline justify-between gap-6 py-5 text-left text-h3"
+                  className="flex min-h-11 w-full items-baseline justify-between gap-6 py-5 text-left t-sub"
                 >
                   <span>{item.q}</span>
                   <span aria-hidden className={`shrink-0 transition-transform duration-500 ease-soft ${isOpen ? "rotate-45" : ""}`}>+</span>
@@ -34,7 +34,7 @@ export function Faq({ label, items }: { label: string; items: readonly { q: stri
                 className={`grid transition-[grid-template-rows,opacity] duration-700 ease-soft ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
               >
                 <div className="overflow-hidden">
-                  <p className={`max-w-text pb-8 text-body-lg opacity-85 ${item.a.startsWith("TODO:") ? "text-terracotta" : ""}`}>{item.a}</p>
+                  <p className="max-w-text pb-8 t-body">{item.a}</p>
                 </div>
               </div>
             </li>

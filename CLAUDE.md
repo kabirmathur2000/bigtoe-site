@@ -20,7 +20,7 @@
 
 ### Words
 
-- **Never:** crush, shred, grind, push, transform, burn, beast, no excuses, limited, spots left, hurry.
+- **Never:** crush, shred, grind, push, transform, burn, beast, no excuses, limited, spots left, hurry. The list covers force language ("push you past your limits"), not movement names: "push" stays in the Big Seven (Squat. Hinge. Lunge. Push. Pull. Rotate. Walk or run.) and in "lift, push and carry".
 - **Prefer:** build, restore, calibrate, cultivate, steward, guide.
 - The tone is fitness meets high-end hospitality: calm, warm, unhurried.
 
@@ -28,21 +28,50 @@ Sources: the Version C plan (above), then `docs/website-guide.md`, the decks in 
 
 ---
 
-## Style tile (`/style-tile`, 18 Nov 2026)
+## The new design (style tile, round two, 18 Nov 2026)
 
-One working example of each screen type, for approval before every page is rebuilt from these patterns. Not linked, not in the sitemap, `noindex`. Its own layout (`app/(tile)/`): the navigation as it will be (logo to Home, Method, Team, FAQ, "Book your first visit"; phones: the button fixed to the bottom) and the request panel. Copy in `content/style-tile.ts` (its price, guarantee, first visit and button label are **proposed** and differ from `facts.ts`; move the approved ones into `facts.ts` when the pages are rebuilt). Components in `components/tile/`.
+`/style-tile` shows one working example of each screen type for approval; every page will be rebuilt from these patterns. Not linked, not in the sitemap, `noindex`. Its own layout (`app/(tile)/`), components in `components/tile/`, copy in `content/style-tile.ts`. **Source for all copy: `docs/copy/agreed-copy-2026-11-18.md`.** Facts from `agreed` in `content/facts.ts` (₹25,000 to ₹50,000 a month; the six-session guarantee; "Book your first visit"); the live pages keep the older facts until they are rebuilt. The live pages are otherwise unchanged. References: ouraring.com (type hierarchy, carousels), functionhealth.com (blocks, terracotta accents), nekohealth.com (colour blocks and gradients), equinox.com (large photo carousels).
 
-- **Inspiration:** ouraring.com and functionhealth.com. Very few words, one action per block, a small set of repeated screen types, generous space, pictures and objects carrying the meaning.
-- **A. Photo screen** (light): desktop, the photo on one half running to the screen edge, the words on the other, sides alternating; phones, the photo on top at 4:5, the words below.
-- **B. Text screen** (light): a large headline, its lines, generous space.
-- **C. Member card** (navy): one card at a time, square portrait left and quote right on desktop, stacked on phones; arrows, swipe and a "1 / 3" counter; no autoplay, no loop.
-- **D. Diagram screen** (light): four labelled dials as hairline line drawings, no scores; four in a row on desktop, 2 x 2 on phones; the lines draw once on entry.
-- **E. Invitation** (navy, centred): the visit, the price, the free hour, the guarantee, the button. Then three questions (one open at a time) and "All questions".
-- **Sign-off** above the footer: "We get better at what we practice." / "At BigToe, we Practice Possibility."
-- **One colour change only:** light for A, B and D, then one slow fade to navy for C, E, the questions and the sign-off (so D comes before C on the tile).
-- **Images are art-directed:** every photo has a desktop shape and a phone shape (`ArtImage`); placeholders show the shot name, both shapes and the pixel size to supply (e.g. "Members around the social table · desktop 3:2, 2400x1600 · phone 4:5, 1600x2000"). The coffee bar photo stands in wherever the space is the subject.
-- **Motion on the tile:** text rises about 12px and fades in over 0.6s; photos settle from a very slight zoom; nothing moves on its own; reduced motion shows everything still.
-- **Request panel** (`VisitPanel`): centred dialog on desktop, bottom sheet on phones. Name, mobile number, preferred time (weekday morning, weekday evening, weekend). Thank you: "Thank you, [name]. We'll confirm your visit on WhatsApp." with the intake form (`facts.intakeFormUrl`, new tab) and WhatsApp. Server action `app/actions/visit.ts`. Analytics: "Visit panel" on open, "Visit submit" on submit.
+### Panels
+
+- **Every screen is its own panel:** softly rounded corners (24px), inset 12px from the screen edges on phones and 24px on desktop, with a small gap (12px / 24px) between panels on the page background (#F0EEEB). Buttons keep their square corners. Light and Warm panels carry a hairline edge so they read on the page background.
+- **Panel settings, rotated so neighbours differ:** **Light** #F0EEEB; **Warm**, a soft vertical gradient from #F0EEEB to #F0EEEB mixed with about 12% terracotta (`panel-warm`); **Navy** #0A212D; **Photo**, a full-bleed photograph filling the panel, its text on a soft dark gradient (`photo-scrim`) over the lower part.
+- **This replaces the one-colour-change rule** in the new design: no hard cuts between full-width colours; the panels and gaps mark each new section. (The live pages keep the old fade until rebuilt.)
+- Desktop: a panel fills the window (less the inset) or takes its photo's shape; phones: panels size to their content.
+
+### Type hierarchy (one set, used everywhere in the new design)
+
+Named styles in `app/globals.css`; use only these:
+- **`t-headline`:** Anderson Grotesk Bold, about 72px desktop and 42px phones, tight line spacing (1.02), slightly negative letter spacing (-0.02em).
+- **`t-sub`** (subheading): Light, about 28px desktop, 22px phones.
+- **`t-body`:** Light, 19px desktop, 18px phones, full-strength navy or #F0EEEB, never greyed.
+- **`t-label`** (caption and label): Bold, 12 to 13px, spaced capitals.
+Light, Regular and Bold are loaded. (This supersedes the Light-headline rule for the new design; the live pages keep theirs until rebuilt.)
+
+### Terracotta accents
+
+At most one phrase per screen in #D4644D, only at headline or subheading size ("Keep the pizza." in "Get stronger. Keep the pizza."; "a sport called life." in "We train for a sport called life."). Set with `accent` in the content file.
+
+### Screen types (in the order shown on the tile)
+
+- **a. A-lead** (Light, the first screen of a page): desktop, the words on one half and the photo (4:5) on the other; phones, headline, line and button first, the photo below. The coffee bar photo, caption "Vasant Vihar, New Delhi.".
+- **b. Text** (Warm): a large headline, its lines.
+- **c. Photo** (Photo panel, full-bleed; 16:9 desktop, 4:5 phones): the words on a soft dark gradient over the lower part.
+- **d. Split photo** (Light): the photo (4:5) on one half, the words on the other; phones, words then photo.
+- **e. Diagram** (Warm): the example ring dials from the Scoreboard (78, 42, 90, 66, the number inside; weakest terracotta, strongest the muted green #4A7458, the others navy; labelled "Example"); they fill once on entry; four in a row on desktop, 2 x 2 on phones.
+- **f. Member stories** (Navy), Equinox format: large 4:5 portrait cards with the quote over a soft dark gradient, then first name and age. Phones: one card at 90% of the width, the next card's edge visible, swipe one at a time. Desktop: cards about 4:5, two to three visible, scrolling sideways with arrows or by dragging. Manual only, no loop. Quotes from `content/quotes.ts` (drafts until consent; the build check stays).
+- **g. Invitation** (Navy, split like d): the visit, the price, the free first hour, the guarantee, the button; the coffee bar photo on the other half.
+- **h. Questions** (Light): three, one open at a time, then "All questions".
+- **Footer** (a navy panel): the light LogoTag, the address, the hours (Monday to Saturday, 6 am to 8 pm. Sunday, 8 am to 1 pm), WhatsApp, email, Careers, Location on Maps, Terms, Privacy. No sign-off poem, no parking line.
+
+### Images
+
+Art-directed: every photo has a desktop shape and a phone shape, and its panel or card holds that exact shape. Placeholders show the shot name and the pixel size per shape (small placeholders on phones show a short name and the phone shape). The coffee bar photo (`docs/photos/studio-coffee-bar.jpg`) stands in wherever the space is the subject.
+
+### Motion and the request panel
+
+- Text rises about 12px and fades in over 0.6s; photos settle from a very slight zoom; nothing moves on its own; reduced motion shows everything still.
+- **Request panel** (`VisitPanel`): centred dialog on desktop, bottom sheet on phones. Name, mobile number, preferred time (weekday morning, weekday evening, weekend). Thank you: "Thank you, [name]. We'll confirm your visit on WhatsApp." with the intake form (`facts.intakeFormUrl`, new tab) and WhatsApp. A request, not a confirmed appointment; no health questions (that is what the intake form is for). Server action `app/actions/visit.ts`. Analytics: "Visit panel" on open, "Visit submit" on submit.
 
 ---
 
@@ -106,7 +135,7 @@ Fetched from bigtoe.in on 17 Nov 2026 and published **word for word**, plain tex
 
 ### Colour
 
-- **Brand colours only.** Tokens: `--color-navy #0A212D`, `--color-terracotta #D4644D`, `--color-offwhite #F0EEEB`. Tailwind's default palette is switched off (`--color-*: initial`), so no other colour class exists. No exceptions (the dials' green is gone with the Scoreboard). Tints for hairlines and secondary text are made from these with opacity, never new hues. "Off-white" always means #F0EEEB.
+- **Brand colours only.** Tokens: `--color-navy #0A212D`, `--color-terracotta #D4644D`, `--color-offwhite #F0EEEB`. Tailwind's default palette is switched off (`--color-*: initial`), so no other colour class exists. One exception: the muted green #4A7458 (`--color-dial-green`, 4.6:1 on off-white) for the strongest of the example dials, nowhere else. The new design's Warm panel and photo scrim mix brand colours by design. Tints for hairlines and secondary text are made from these with opacity, never new hues. "Off-white" always means #F0EEEB.
 - **Main button:** terracotta fill with off-white text, label 19px Bold uppercase so it passes AA as large text. The same on light and navy. Hover: a slow opacity change. Square corners, no shadows.
 - **Terracotta beyond the button** is one accent per screen (the rising line in the loop). Terracotta text must be large (24px+, or 19px+ bold); the temporary TODO text is the only exception and goes at launch.
 - **Contrast:** all text passes WCAG AA. Secondary text uses navy or off-white at 75% opacity or more.
@@ -186,7 +215,7 @@ A floating bar on every page: inset from the screen edges, 8px corners, off-whit
 ## Still open
 
 - [ ] WhatsApp number to publish (footer, thank-you "Message us now", the tile's request panel).
-- [ ] Style tile: the proposed facts to approve (₹25,000 to ₹50,000; six sessions within three weeks; the first visit with a founder; "Book your first visit"); the answer to "What happens at my first visit?"; an "All questions" page (the tile links to /faq, which does not exist yet); the three tile quotes (two not in `docs/copy/testimonials.md`; the second adds "which says it all!").
+- [ ] New design: an "All questions" page (the tile links to /faq, which does not exist yet); the member quotes in `content/quotes.ts` are drafts until each member's words, consent, name and age are recorded (see the agreed copy for which cards are illustrative, proposed or real).
 - [ ] Map link ("Location on Maps").
 - [ ] Member quotes: first name, age and written consent for all four (three on Home, one on Team). Source needed for two not in `docs/copy/testimonials.md`: "It's more than a place. It's family." and "Jeevan can absolutely kick your butt…".
 - [ ] Sherpa name spellings (Himanshu, Saurav, Sumit, Tanuj, Kabir), and each Sherpa's OK to publish their line.

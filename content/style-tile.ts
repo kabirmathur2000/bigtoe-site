@@ -1,29 +1,35 @@
 /**
- * The style tile (/style-tile, 18 Nov 2026): one working example of each
- * screen type, with real copy, to approve the look before the pages are
- * rebuilt from these patterns. Not linked, not in the sitemap, noindex.
- *
- * PROPOSED FACTS: the price, the guarantee, the first visit and the button
- * label here differ from content/facts.ts (which the live pages still use).
- * When the pages are rebuilt, move the approved versions into facts.ts.
+ * The style tile, round two (/style-tile, 18 Nov 2026). Copy from
+ * docs/copy/agreed-copy-2026-11-18.md; facts from `agreed` in facts.ts.
+ * Not linked, not in the sitemap, noindex. The live pages are unchanged.
  */
-import { facts, todo } from "./facts";
+import { agreed, facts, todo } from "./facts";
 
 /** A photo's two shapes: what to supply for desktop and for phones. */
 export type Shot = {
   name: string;
+  /** A short name for small placeholders on phones. */
+  short?: string;
   desktop: { ratio: string; size: string };
   phone: { ratio: string; size: string };
 };
 
-/** How a placeholder labels itself: shot name, shape and pixel size to supply. */
+/** How a placeholder labels itself: the shot name, then each shape and the pixel size to supply. */
 export const shotLabel = (s: Shot) =>
   `${s.name} · desktop ${s.desktop.ratio}, ${s.desktop.size} · phone ${s.phone.ratio}, ${s.phone.size}`;
 
+/** A headline with at most one phrase in terracotta (`accent` must appear in `text`). */
+export type Accented = { text: string; accent?: string };
+
+const coffeeBar: Shot = {
+  name: "The studio coffee bar",
+  desktop: { ratio: "4:5", size: "1600x2000" },
+  phone: { ratio: "4:5", size: "1600x2000" },
+};
+
 export const tile = {
   title: "Style tile",
-  /** The one button label in the new flow (proposed; the live pages say "Book your free first hour"). */
-  cta: "Book your first visit",
+  cta: agreed.cta,
 
   nav: {
     links: [
@@ -33,98 +39,113 @@ export const tile = {
     ],
   },
 
-  /** A. Photo screens (light), alternating sides. */
-  photoScreens: [
-    {
-      headline: "Get stronger. Keep the pizza.",
-      line: "A healthier life shouldn't mean giving up the things you enjoy.",
-      shot: {
-        name: "Members around the social table",
-        desktop: { ratio: "3:2", size: "2400x1600" },
-        phone: { ratio: "4:5", size: "1600x2000" },
-      } satisfies Shot,
-      /** Until the shoot, the studio's coffee bar (the social table, empty) stands in. */
-      useStudioPhoto: true,
-    },
-    {
-      headline: "Your Sherpa. Your plan.",
-      line: "A dedicated coach for every session. Your Reserve Audit sets the starting point; your progress shapes the next step.",
-      link: { label: "How we train", href: "/method" },
-      shot: {
-        name: "One Sherpa guiding one member, close",
-        desktop: { ratio: "4:5", size: "1600x2000" },
-        phone: { ratio: "4:5", size: "1600x2000" },
-      } satisfies Shot,
-      useStudioPhoto: false,
-    },
-  ],
+  /** a. A-lead (Light panel). Home 1. */
+  lead: {
+    headline: { text: "The second half of life should be stronger than the first.", accent: "stronger than the first." } as Accented,
+    line: "One-to-one training for life after 40.",
+    caption: `${facts.address.short}.`,
+    shot: coffeeBar,
+    alt: "The BigToe coffee bar: the long wooden table and stools under pendant lamps, the BigToe logo on the wall, the training floor behind",
+  },
 
-  /** B. Text screen (light). */
+  /** b. Text screen (Warm panel). Home 2. */
   text: {
-    headline: "We train for a sport called life.",
+    headline: { text: "We train for a sport called life.", accent: "a sport called life." } as Accented,
     lines: ["A suitcase to lift. Unexpected stairs. A trip to say yes to.", "Build the strength for what comes next."],
   },
 
-  /** D. Diagram screen (light): four dials, no scores. */
-  dials: {
-    headline: "Know your starting point.",
-    line: "Your plan starts with the dial that needs the most attention.",
-    names: ["Body composition", "Balance and mobility", "Functional strength", "Conditioning"],
+  /** c. Photo screen (Photo panel, full-bleed). Home 3. */
+  photo: {
+    headline: { text: "Get stronger. Keep the pizza.", accent: "Keep the pizza." } as Accented,
+    line: "A healthier life shouldn't mean giving up the things you enjoy.",
+    shot: {
+      name: "Members around the social table, talking and laughing (people first, food incidental)",
+      desktop: { ratio: "16:9", size: "2880x1620" },
+      phone: { ratio: "4:5", size: "1600x2000" },
+    } as Shot,
   },
 
-  /** C. Member card (navy). Quotes live in content/quotes.ts (all drafts). */
-  members: {
-    heading: "In our members' words.",
+  /** d. Photo screen, split (Light panel). Home 4. */
+  coach: {
+    headline: { text: "Your coach. Your plan.", accent: "Your plan." } as Accented,
+    lines: [
+      "A dedicated coach guides you through every session.",
+      "Your Reserve Audit sets the starting point.",
+      "Your progress shapes what comes next.",
+      "Mobility, strength and conditioning for the life you want to lead.",
+    ],
+    link: { label: "How we train", href: "/method" },
+    shot: {
+      name: "One coach guiding one member, close: the attention, not the equipment",
+      desktop: { ratio: "4:5", size: "1600x2000" },
+      phone: { ratio: "4:5", size: "1600x2000" },
+    } as Shot,
+  },
+
+  /** e. Diagram (Warm panel). Method 1. Example dials, as on the Scoreboard. */
+  dials: {
+    headline: { text: "Know your starting point.", accent: "starting point." } as Accented,
+    line: "Your plan starts with the dial that needs the most attention.",
+    example: "Example",
+    outOf: "out of 100",
+    items: [
+      { name: "Body composition", value: 78 },
+      { name: "Balance and mobility", value: 42 },
+      { name: "Functional strength", value: 90 },
+      { name: "Conditioning", value: 66 },
+    ],
+  },
+
+  /** f. Member stories (Navy panel). Quotes in content/quotes.ts (drafts). */
+  stories: {
+    headline: { text: "In our members' words." } as Accented,
+    portrait: {
+      name: "Member portrait, relaxed, in the studio (same crop and size for every member)",
+      short: "Member portrait",
+      desktop: { ratio: "4:5", size: "1200x1500" },
+      phone: { ratio: "4:5", size: "1200x1500" },
+    } as Shot,
     name: todo("first name"),
     age: todo("age"),
     draftLabel: "Draft",
-    portrait: {
-      name: "Member portrait",
-      desktop: { ratio: "1:1", size: "1200x1200" },
-      phone: { ratio: "1:1", size: "1200x1200" },
-    } satisfies Shot,
-    previous: "Previous member",
-    next: "Next member",
-    regionLabel: "Member quotes",
+    previous: "Previous story",
+    next: "Next story",
+    regionLabel: "Member stories",
   },
 
-  /** E. Invitation (navy, centred). Proposed facts: see the note at the top. */
+  /** g. Invitation (Navy panel, split). Home 6. */
   invitation: {
-    headline: "Come and meet us.",
-    line: "Meet a founder, take a body scan and a light assessment, then stay for coffee.",
-    price: "₹25,000 to ₹50,000 a month, depending on how often you train.",
-    free: "Your first hour is free.",
-    guarantee: "Complete six sessions within three weeks of joining. Not for you? Your money back, no questions asked.",
+    headline: { text: "Come and meet us." } as Accented,
+    line: "Meet a founder. Have a body scan and light assessment. Stay for coffee and a chat.",
+    price: agreed.price,
+    free: agreed.firstHourFree,
+    guarantee: agreed.guarantee,
+    shot: coffeeBar,
   },
 
-  /** Accordion under E: three questions, one open at a time. */
+  /** h. Questions (Light panel). FAQ 1, 2 and 10 of the agreed copy. */
   faq: {
     label: "Questions",
     items: [
       {
         q: "Who is BigToe for?",
-        /** Agreed FAQ copy, 17 Nov 2026 (Deck 1: youngest 40, oldest 69, average 54, 65% women). */
-        a: "Our youngest member is 40. Our oldest is 69, so far. Average age 54. About two thirds women. All you need is an open mind.",
+        a: "Men and women in their 40s, 50s, 60s, 70s and beyond. Whether you're new to training, returning after a break or already active, we start with your ability and your goals. There is no one else's pace to keep up with.",
       },
       {
         q: "I have an old injury or a health condition. Can I train?",
-        /** Agreed FAQ copy (Version C). */
-        a: "You fill in a health-history form first. Where it matters, we check with your doctor. Hard is okay. Painful never is.",
+        a: "Tell us in your intake form before your first visit, and check any exercise restrictions with your doctor. We already train members taking GLP-1 medication. We'll discuss what's appropriate for you before you begin.",
       },
       {
         q: "What happens at my first visit?",
-        a: todo("answer for the first visit (no agreed FAQ copy yet)"),
+        a: "You'll meet a founder, have a body scan and a light assessment, and stay for coffee and a chat. It's a chance to talk about your goals and understand how we train. The team will confirm your preferred time.",
       },
     ],
     all: { label: "All questions", href: "/faq" },
   },
 
-  /** The sign-off above the footer: the poem's first and last lines (fixed wording). */
-  signOff: ["We get better at what we practice.", "At BigToe, we Practice Possibility."],
-
   /** The request panel. */
   panel: {
-    heading: "Book your first visit",
+    heading: agreed.cta,
     fields: {
       name: { label: "Name" },
       mobile: { label: "Mobile number" },
@@ -140,7 +161,7 @@ export const tile = {
       time: "Please choose a time.",
       failed: `Something went wrong and your details weren't sent. Please try again, or email ${facts.email}.`,
     },
-    submit: "Book your first visit",
+    submit: agreed.cta,
     close: "Close",
     honeypotLabel: "Company",
     thanks: {
@@ -149,5 +170,10 @@ export const tile = {
       whatsappLabel: "Message us on WhatsApp",
       whatsappMessage: (name: string) => `Hi BigToe, this is ${name}. I've just asked to book my first visit.`,
     },
+  },
+
+  /** The tile's footer (no tagline line, no parking line). */
+  footer: {
+    hours: agreed.hours,
   },
 } as const;

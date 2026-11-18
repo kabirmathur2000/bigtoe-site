@@ -78,6 +78,21 @@ export const facts = {
     "https://docs.google.com/forms/d/e/1FAIpQLSdtFRybz94zmLgkWQT9pnLRGVndA5rfe-K_NI1pd8Q72B8iHw/viewform",
 } as const;
 
+/**
+ * The agreed facts (docs/copy/agreed-copy-2026-11-18.md), used by the style
+ * tile now and by every page once they are rebuilt from it. The live pages
+ * still read the older values above until then.
+ */
+export const agreed = {
+  /** The one button label in the new flow. */
+  cta: "Book your first visit",
+  price: "₹25,000 to ₹50,000 a month, depending on how often you train.",
+  firstHourFree: "Your first hour is free.",
+  guarantee:
+    "Complete six sessions within three weeks of joining. Studio and online sessions both count. Not for you? Your money back, no questions asked.",
+  hours: facts.hours,
+} as const;
+
 export const whatsappHref = (message?: string) =>
   facts.whatsappNumber
     ? `https://wa.me/${facts.whatsappNumber}${message ? `?text=${encodeURIComponent(message)}` : ""}`
