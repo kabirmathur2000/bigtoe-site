@@ -19,19 +19,18 @@ export const tile = {
   /** The inner-page pattern (Method, Team, FAQ): a page title, then this link. */
   back: { label: "← Back to home", href: "/" },
   cta: agreed.cta,
-  /** The header pill below 380px screen width. */
+  /** The header pill on phones. */
   ctaShort: "Book a visit",
 
-  /** The header: the logo, the book pill and a menu icon (labelled "Menu") opening a full-screen overlay. */
+  /** The header: Method, Team, FAQ as text links on desktop; on phones the same list behind the menu icon. */
   menu: {
     open: "Menu",
     close: "Close",
     label: "Menu",
     links: [
-      { href: "/", label: "Home" },
-      { href: "/method", label: "How we train" },
+      { href: "/method", label: "Method" },
       { href: "/team", label: "Team" },
-      { href: "/faq", label: "Questions" },
+      { href: "/faq", label: "FAQ" },
     ],
   },
 

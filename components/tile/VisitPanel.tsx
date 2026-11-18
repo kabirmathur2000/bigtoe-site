@@ -57,9 +57,9 @@ export function BookPill({
     >
       {size === "small" ? (
         <>
-          {/* Below 380px screen width the header pill reads "Book a visit". */}
-          <span className="min-[380px]:hidden">{tile.ctaShort}</span>
-          <span className="hidden min-[380px]:inline">{tile.cta}</span>
+          {/* On phones the header pill reads "Book a visit"; on desktop "Book your first visit". */}
+          <span className="md:hidden">{tile.ctaShort}</span>
+          <span className="hidden md:inline">{tile.cta}</span>
         </>
       ) : (
         tile.cta

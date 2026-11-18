@@ -259,10 +259,11 @@ html.tones-managed footer[data-tone="navy"] { background: var(--navy); color: va
    a light page, Light headlines, Regular text, Bold only for small labels.
    Fluid from 375px to 1440px. */
 /* ------------------------------------------------------------------ */
-@utility ty-display {
+/* The hero headline: about 15% larger than round six on desktop, a step larger on phones. */
+@utility ty-hero {
   font-weight: 300;
-  font-size: clamp(2.75rem, 1.76rem + 4.23vw, 5.5rem);
-  line-height: 1.02;
+  font-size: clamp(2.875rem, 1.62rem + 5.35vw, 6.25rem);
+  line-height: 1.0;
   letter-spacing: -0.03em;
 }
 @utility ty-headline {

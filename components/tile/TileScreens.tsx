@@ -40,19 +40,27 @@ const softPill = "inline-flex min-h-11 items-center rounded-full bg-navy/[0.07] 
 /** 1. Hero, after Function's "Check your health.": a full-screen photo, a soft dark gradient over the lower half, the words on it. */
 export function Hero() {
   const h = tile.hero;
+  const shadow = "[text-shadow:0_1px_20px_rgb(10_33_45_/_0.35)]";
   return (
     <section className="relative h-svh min-h-[36rem] overflow-hidden bg-navy">
-      <Image src={coffeeBar} alt={tile.photoAlt} fill preload sizes="100vw" quality={75} className="object-cover object-[18%_55%] md:object-[50%_55%]" />
-      <div aria-hidden className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-navy/90 via-navy/45 to-transparent" />
-      <Rise className="tile-wrap absolute inset-x-0 bottom-0 pb-10 text-offwhite md:pb-16" stagger={0.1}>
+      {/* Phones: the frame runs 40% above the screen, so the logo wall sits higher, clear of the words. */}
+      <div className="absolute inset-x-0 -top-[40%] bottom-0 md:top-0">
+        <Image src={coffeeBar} alt={tile.photoAlt} fill preload sizes="100vw" quality={75} className="object-cover object-[16%_50%] md:object-[50%_55%]" />
+      </div>
+      {/* A soft navy gradient behind the words only: strongest at the bottom, clear above about 60% of the height. */}
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-navy/95 via-navy/60 to-transparent" />
+      <Rise
+        className={`tile-wrap absolute inset-x-0 bottom-0 pb-[max(2.5rem,calc(env(safe-area-inset-bottom)+1.5rem))] text-offwhite md:pb-16 ${shadow}`}
+        stagger={0.1}
+      >
         <RiseItem>
           <span className="inline-flex items-center rounded-full border border-offwhite/25 bg-offwhite/15 px-3.5 py-2 ty-label backdrop-blur-md">{h.place}</span>
         </RiseItem>
-        <RiseItem as="h1" className="mt-5 max-w-4xl ty-display">
+        <RiseItem as="h1" className="mt-6 max-w-5xl ty-hero">
           <Accent value={h.headline} />
         </RiseItem>
-        <RiseItem as="p" className="mt-4 max-w-xl ty-sub text-offwhite/90 md:mt-6">{h.line}</RiseItem>
-        <RiseItem className="mt-8">
+        <RiseItem as="p" className="mt-5 max-w-xl ty-sub md:mt-8">{h.line}</RiseItem>
+        <RiseItem className="mt-8 md:mt-10">
           <BookPill placement="tile-hero" />
         </RiseItem>
       </Rise>

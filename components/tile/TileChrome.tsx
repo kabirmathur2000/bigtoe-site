@@ -4,7 +4,6 @@ import { useReducedMotion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { HeaderShell } from "@/components/layout/HeaderShell";
 import { nav } from "@/content/site";
 import { tile } from "@/content/style-tile";
 import logo from "@/public/brand/logo.png";
@@ -20,12 +19,15 @@ function MenuIcon() {
 }
 
 /**
- * The floating header on every page: the logo on the left; on the right
- * the "Book your first visit" pill and a three-line menu icon (labelled
- * "Menu"). It hides on scroll down and returns on scroll up (HeaderShell).
- * The menu opens a full-screen off-white overlay: Home, How we train, Team,
- * Questions, with the book pill at the bottom. Close or Escape closes it;
- * focus returns to the icon. Reduced motion: a fade, no movement.
+ * The header, after Function's: always visible, never hides. A frosted
+ * light bar across the top with a hairline at the bottom.
+ * Desktop: the logo, then Method, Team, FAQ as text links and the
+ * "Book your first visit" pill on the right; no menu icon.
+ * Phones: the logo, then the pill ("Book a visit" below 380px) and a
+ * three-line icon (labelled "Menu") opening a full-screen list of
+ * Method, Team, FAQ. The icon only ever opens the menu. Close or Escape
+ * closes it; focus returns to the icon. 44px tap targets throughout.
+ * Reduced motion: a fade, no movement.
  */
 export function TileHeader() {
   const reduce = useReducedMotion();
@@ -60,14 +62,22 @@ export function TileHeader() {
 
   return (
     <>
-      <HeaderShell glass>
-        <div className="flex h-12 items-center justify-between gap-2 pr-1 pl-3 md:h-14 md:pr-2 md:pl-5">
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-navy/10 bg-offwhite/80 text-navy backdrop-blur-xl">
+        <div className="tile-wrap flex h-16 items-center justify-between gap-3">
           <Link href="/" aria-label={nav.homeLabel} className="flex min-h-11 shrink-0 items-center">
             <Image src={logo} alt="" priority className="h-6 w-auto md:h-7" sizes="(min-width: 768px) 140px, 120px" />
           </Link>
-          {/* The pill opens the request panel; the icon opens the menu. Kept apart so a tap never lands on the wrong one. */}
-          <div className="flex items-center gap-2 md:gap-3">
-            <BookPill placement="tile-header" size="small" />
+          <div className="flex items-center gap-1 md:gap-8">
+            <nav aria-label={m.label} className="hidden md:block">
+              <ul className="flex items-center gap-6">
+                {m.links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className="inline-flex min-h-11 items-center ty-body transition-opacity duration-300 hover:opacity-70">{l.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <BookPill placement="tile-header" size="small" className="min-h-11" />
             <button
               ref={button}
               type="button"
@@ -75,13 +85,13 @@ export function TileHeader() {
               aria-haspopup="dialog"
               aria-expanded={open}
               onClick={() => setOpen(true)}
-              className="flex h-11 w-11 items-center justify-center transition-opacity duration-500 hover:opacity-75"
+              className="ml-1 flex h-11 w-11 items-center justify-center transition-opacity duration-300 hover:opacity-70 md:hidden"
             >
               <MenuIcon />
             </button>
           </div>
         </div>
-      </HeaderShell>
+      </header>
 
       <dialog
         ref={ref}
