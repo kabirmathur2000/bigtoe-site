@@ -1,14 +1,12 @@
 # Space photos
 
-BigToe's own 3D renders of the studio (from the current bigtoe.in). Use them only where the space is the subject, never for people.
+BigToe's own 3D renders of the studio (from the current bigtoe.in), with the "3D artistic impressions" caption cropped off the bottom. Use them only where the space is the subject, never for people, and only until the real photos arrive (both are on the shot list as "replace with real photo"). The hero keeps the coffee bar photo.
 
 Each slot takes the first file found under one of its names:
 
 | File | Slot |
 |---|---|
-| `hero.jpg` or `training-floor.jpg` | The hero photo, until the real hero photo (a member training with a coach) arrives |
-| `table.jpg` or `coffee-bar-render.jpg` | The "Get stronger. Keep the pizza." card (the social table), until the real photo arrives |
+| `coach.jpg` or `training-floor.jpg` | The photo card under "Your coach. Your plan." |
+| `table.jpg` or `coffee-bar-render.jpg` | The "Get stronger. Keep the pizza." card |
 
-The renders carry a burned-in disclaimer along the bottom edge ("3D artistic impressions are indicative of design intent…"); the slots enlarge them 8% from the top so the strip falls outside the frame.
-
-`.jpeg`, `.png`, `.webp` and `.avif` work too. `npm run dev` and `npm run build` pick them up (`scripts/space-photos.mjs`); a slot with no file shows the coffee bar photo.
+`.jpeg`, `.png`, `.webp` and `.avif` work too. `npm run dev` and `npm run build` pick them up (`scripts/space-photos.mjs`); a slot with no file shows the coffee bar photo. Crop any caption off a new render before adding it.

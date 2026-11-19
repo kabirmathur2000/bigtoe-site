@@ -49,7 +49,7 @@ export const photo = {
   alt: "The BigToe coffee bar: the long wooden table and stools under pendant lamps, the training floor behind",
   /** BigToe's own 3D renders of the space (docs/photos/space/), for the slots where the space is the subject. */
   spaceAlt: {
-    hero: "The BigToe studio: the training floor, a render of the space",
+    coach: "The BigToe training floor, a render of the space",
     table: "The BigToe social table, a render of the space",
   },
   placeholder: (shot: string) => `Placeholder for the photo: ${shot}`,

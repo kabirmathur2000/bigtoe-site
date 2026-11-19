@@ -25,7 +25,8 @@ export function Coach() {
         <After>{c.after}</After>
       </SectionText>
       <FadeUp className={`aspect-[4/5] md:col-span-7 md:aspect-[5/4] ${photoCard}`}>
-        <Photo shot={c.shot} pos="70% 50%" sizes="(min-width: 768px) 60vw, 100vw" />
+        {/* The training-floor render until the real shot arrives: centred on the windows at the end of the floor. */}
+        <Photo shot={c.shot} space="coach" pos="56% 50%" sizes="(min-width: 768px) 60vw, 240vw" />
       </FadeUp>
     </section>
   );

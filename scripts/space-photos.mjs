@@ -1,11 +1,12 @@
 /**
  * BigToe's own 3D renders of the space (docs/photos/space/), for the photo
- * slots where the space is the subject: the hero (until the real hero
- * photo) and the social-table card. Never for people.
+ * slots where the space is the subject, until the real photos arrive: the
+ * coach-and-member card ("Your coach. Your plan.") and the social-table
+ * card. Never for people. The hero keeps the coffee bar photo.
  *
  * Each slot takes the first file found under one of its names (any of
- * .jpg, .jpeg, .png, .webp, .avif): hero (hero, training-floor) and table
- * (table, coffee-bar-render). This copies them to public/photos/space/ (not tracked)
+ * .jpg, .jpeg, .png, .webp, .avif): coach (coach, training-floor) and
+ * table (table, coffee-bar-render). This copies them to public/photos/space/ (not tracked)
  * and writes content/space-photos.json, which the slots read; a slot with
  * no file shows the coffee bar photo as before. Runs before `dev` and
  * `build`.
@@ -14,7 +15,7 @@ import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync
 import { extname, join } from "node:path";
 
 /** Slot → the file names it accepts, in order. */
-const NAMES = { hero: ["hero", "training-floor"], table: ["table", "coffee-bar-render"] };
+const NAMES = { coach: ["coach", "training-floor"], table: ["table", "coffee-bar-render"] };
 const SLOTS = Object.keys(NAMES);
 const EXT = [".jpg", ".jpeg", ".png", ".webp", ".avif"];
 const from = "docs/photos/space";

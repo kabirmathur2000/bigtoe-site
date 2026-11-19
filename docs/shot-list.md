@@ -6,15 +6,15 @@ Real studio photography, warm natural colour, men and women across the members' 
 
 **Consent:** a written yes, with first name and age, from every member shown. No member photo goes live without it.
 
-**Space renders:** until the real photos arrive, BigToe's own 3D renders can fill the two slots where the space is the subject (marked below): in place now: `docs/photos/space/training-floor.jpg` (hero) and `coffee-bar-render.jpg` (table). Never for people.
+**Space renders:** two slots show BigToe's own 3D renders for now (`docs/photos/space/`, caption cropped off): marked "replace with real photo" below. Renders are used only where the space is the subject, never for people. The hero keeps the coffee bar photo until its shoot.
 
 Every slot is cropped to two shapes (phones and desktop), so shoot with room around the subject.
 
 | # | Section | What the shot shows | Shape on the site | Notes |
 |---|---|---|---|---|
-| 1 | 1, hero | A real member training with a coach, the studio around them. Natural concentration, not a posed smile or extreme effort. | Full screen: tall on phones, wide on desktop | The words sit on the lower half (solid navy gradient): keep the faces in the upper half. Member: consent. Space render `hero.*` until then. |
-| 2 | 3, "Get stronger. Keep the pizza." | Members around the social table, talking and laughing. People first, food incidental; not a pizza close-up. | 4:5 on phones, 16:9 on desktop | Members: consent. Space render `table.*` until then. |
-| 3 | 4, "Your coach. Your plan." | One coach guiding one member, closer than the hero: the attention and interaction, not the equipment | 4:5 on phones, 5:4 on desktop | Distinct from the hero. Member: consent. |
+| 1 | 1, hero | A real member training with a coach, the studio around them. Natural concentration, not a posed smile or extreme effort. | Full screen: tall on phones, wide on desktop | The words sit on the lower half (solid navy gradient): keep the faces in the upper half. Member: consent. Coffee bar photo until then. |
+| 2 | 3, "Get stronger. Keep the pizza." | Members around the social table, talking and laughing. People first, food incidental; not a pizza close-up. | 4:5 on phones, 16:9 on desktop | Members: consent. **Replace with real photo:** shows the render `coffee-bar-render.jpg` for now. |
+| 3 | 4, "Your coach. Your plan." | One coach guiding one member, closer than the hero: the attention and interaction, not the equipment | 4:5 on phones, 5:4 on desktop | Distinct from the hero. Member: consent. **Replace with real photo:** shows the render `training-floor.jpg` for now. |
 | 4 | 7, "Train from the ground up." | Bare feet on the training floor | 4:5 on phones, 5:4 on desktop | Free weights in frame. |
 | 5 | 8, "Your goals." | The pledge partnership photo (the photo, not the poster) | 4:5 on phones, 16:9 on desktop | Crop out the signed card; both people's permission. |
 | 6 | 9, "The four of us." | The four founders together in the studio | 4:3 on phones, 16:9 on desktop | New. Relaxed, together, not lined up. |
