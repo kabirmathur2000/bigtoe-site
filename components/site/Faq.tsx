@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useId, useState } from "react";
 import type { Question } from "@/content/faq";
 import { Icon } from "./Icons";
 
-/** Questions, after Function's FAQ: an accordion, one open at a time (the first open unless `firstOpen` is false). Hairlines in the current text colour. */
-export function Faq({ items, all, firstOpen = true }: { items: Question[]; all?: { label: string; href: string }; firstOpen?: boolean }) {
+/** Questions, after Function's FAQ: expandable rows, one open at a time (the first open unless `firstOpen` is false). Hairlines in the current text colour. */
+export function Faq({ items, firstOpen = true, level = "h3" }: { items: Question[]; firstOpen?: boolean; level?: "h3" | "h4" }) {
+  const H = level;
   const [open, setOpen] = useState<number | null>(firstOpen ? 0 : null);
   const base = useId();
   return (
@@ -16,7 +16,7 @@ export function Faq({ items, all, firstOpen = true }: { items: Question[]; all?:
           const isOpen = open === i;
           return (
             <li key={item.q} className="border-b border-current/20">
-              <h3>
+              <H>
                 <button
                   type="button"
                   id={`${base}-q${i}`}
@@ -28,7 +28,7 @@ export function Faq({ items, all, firstOpen = true }: { items: Question[]; all?:
                   {item.q}
                   <Icon name="plus" className={`mt-1 h-5 w-5 shrink-0 transition-transform duration-300 ease-soft motion-reduce:transition-none ${isOpen ? "rotate-45" : ""}`} />
                 </button>
-              </h3>
+              </H>
               <div
                 id={`${base}-a${i}`}
                 role="region"
@@ -44,11 +44,6 @@ export function Faq({ items, all, firstOpen = true }: { items: Question[]; all?:
           );
         })}
       </ul>
-      {all && (
-        <Link href={all.href} className="mt-8 inline-flex min-h-11 items-center ty-body underline decoration-current/30 underline-offset-[6px] transition-opacity duration-300 hover:opacity-70">
-          {all.label}
-        </Link>
-      )}
     </div>
   );
 }

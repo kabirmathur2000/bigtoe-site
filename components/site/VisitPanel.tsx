@@ -28,8 +28,8 @@ export const useVisit = () => useContext(VisitContext);
 /**
  * "Book your first visit" as a soft rounded pill: terracotta, navy text in
  * sentence case, Bold (navy on terracotta passes AA at any size), a soft
- * lift on hover. `size="small"` for the header (15px phones, 17px desktop);
- * `size="large"` (19px) in the menu and the ending.
+ * lift on hover. `size="small"` for the header ("Book a visit" on phones);
+ * `size="large"` in the menu. The only buttons on the site: no section has one.
  */
 export function BookPill({
   placement,
@@ -44,7 +44,7 @@ export function BookPill({
   onOpen?: () => void;
 }) {
   const { open } = useVisit();
-  const sizes = size === "small" ? "px-3.5 py-2 text-[0.9375rem] md:px-5 md:text-[1.0625rem]" : "px-7 py-3.5 text-[1.1875rem]";
+  const sizes = size === "small" ? "px-3.5 py-2 text-[clamp(15px,calc(15px+5*var(--fl)),20px)] md:px-5" : "px-7 py-3.5 text-[clamp(19px,calc(19px+5*var(--fl)),24px)]";
   return (
     <button
       type="button"
@@ -72,7 +72,7 @@ const FADE = 700;
 type Errors = Partial<Record<VisitField, string>>;
 const p = booking;
 const messages = (v: VisitValues): Errors =>
-  Object.fromEntries(Object.entries(validateVisit(v, p.fields.time.options)).map(([k, key]) => [k, p.errors[key]]));
+  Object.fromEntries(Object.entries(validateVisit(v)).map(([k, key]) => [k, p.errors[key]]));
 
 const field =
   "block w-full border-0 border-b border-navy/30 bg-transparent px-0 py-3 ty-sub transition-colors duration-500 focus:border-terracotta focus:outline-none focus:ring-0 aria-[invalid=true]:border-terracotta";
@@ -109,7 +109,7 @@ function Thanks({ name }: { name: string }) {
 /**
  * The request panel ("Book your first visit", every page). A centred dialog on
  * desktop, a bottom sheet that slides up on phones: name, mobile number,
- * preferred time, one button. On submit: email via Resend (server action),
+ * one button. On submit: email via Resend (server action),
  * then the thank-you with the intake form (new tab) and WhatsApp. Modal
  * <dialog>: focus stays inside and returns to the button; Close, Escape or
  * a tap outside closes it; the page does not scroll behind it. Reduced
@@ -257,22 +257,6 @@ export function VisitProvider({ children }: { children: ReactNode }) {
                 />
                 {errors.mobile && <p id={`${id}-mobile-error`} className="mt-2 ty-small text-terracotta">{errors.mobile}</p>}
               </div>
-
-              <fieldset aria-describedby={describe("time")}>
-                <legend className="ty-label opacity-80">{f.time.label}</legend>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {f.time.options.map((o) => (
-                    <label
-                      key={o}
-                      className="inline-flex min-h-11 cursor-pointer items-center rounded-full border border-navy/30 px-4 ty-body transition-colors duration-500 has-checked:border-navy has-checked:bg-navy has-checked:text-offwhite has-focus-visible:outline-2 has-focus-visible:outline-terracotta"
-                    >
-                      <input type="radio" name="time" value={o} checked={values.time === o} onChange={set("time")} className="sr-only" />
-                      {o}
-                    </label>
-                  ))}
-                </div>
-                {errors.time && <p id={`${id}-time-error`} className="mt-2 ty-small text-terracotta">{errors.time}</p>}
-              </fieldset>
 
               <div>
                 <Button type="submit" disabled={pending} className="w-full disabled:opacity-60">

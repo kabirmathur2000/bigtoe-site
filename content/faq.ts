@@ -1,18 +1,16 @@
 /**
- * The questions (FAQ page; Home shows the first two and the cost). The ten
+ * The questions (anchor `questions`, section 13 of the one page). The ten
  * agreed questions word for word (docs/copy/agreed-copy-2026-11-18.md),
  * then three drafted from facts on the site (18 Nov brief), with TODOs
  * where a fact needs confirming.
  */
 import { facts, todo } from "./facts";
+import type { Accented } from "./site";
 
 export type Question = { q: string; a: string };
 
 export const faq = {
-  title: "Questions",
-  /** Home's accordion. */
-  homeHeadline: "Questions.",
-  all: { label: "See all questions →", href: "/faq" },
+  headline: { text: "Questions.", accent: "Questions." } as Accented,
   items: [
     {
       q: "Who is BigToe for?",
@@ -72,7 +70,7 @@ export const faq = {
 
 const [who, injury, trainer, session, howMany, schedule, cost, notForMe, community, firstVisit, wear, others, membership] = faq.items;
 
-/** The FAQ page in four groups, each under a small label with its own accordion. */
+/** The thirteen in four groups, each under a small label with its own expandable rows. */
 export const faqGroups: { label: string; items: Question[] }[] = [
   { label: "Getting started", items: [who, firstVisit, wear] },
   { label: "Training", items: [trainer, session, others, howMany] },
@@ -80,5 +78,3 @@ export const faqGroups: { label: string; items: Question[] }[] = [
   { label: "Membership", items: [cost, membership, schedule, notForMe, community] },
 ];
 
-/** Home's three: who it's for, injuries, cost. */
-export const homeQuestions = [who, injury, cost];

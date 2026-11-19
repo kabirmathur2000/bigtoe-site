@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-drafts.mjs && next build",
+    "dev": "node scripts/space-photos.mjs && next dev",
+    "build": "node scripts/space-photos.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-drafts.mjs && next build",
     "start": "next start",
     "lint": "eslint",
     "check:drafts": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-drafts.mjs"

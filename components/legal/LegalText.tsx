@@ -14,7 +14,7 @@ export function LegalText({ blocks }: { blocks: LegalBlock[] }) {
     } else groups.push(b);
   }
   return (
-    <section className="tile-wrap pt-28 pb-24 md:pt-40 md:pb-36">
+    <section className="page-wrap pt-28 pb-24 md:pt-40 md:pb-36">
       <article className="max-w-[65ch]">
         {groups.map((g, i) => {
           if (Array.isArray(g)) {

@@ -1,22 +1,31 @@
-import { Coach, Ending, FirstHour, Hero, Members, Pizza, Questions, Why } from "@/components/home/HomeScreens";
+import { Hero, Members, Pizza, Questions, Visit, Why } from "@/components/home/HomeSections";
+import { Build, Coach, Goals, Ground, Start } from "@/components/method/MethodSections";
 import { Footer } from "@/components/site/Footer";
-import { NavyZone } from "@/components/site/NavyZone";
+import { Founders, Sherpas, Story } from "@/components/team/TeamSections";
 
-/** Home: light for the hero and "We train for a sport called life."; navy from "Your coach. Your plan." to the footer. */
+/**
+ * The one page: Home, How we train, The team, Members' words, Questions,
+ * Come and meet us, then the footer. The menu and jump links glide to the
+ * anchors (content/site.ts, `anchors`).
+ */
 export default function HomePage() {
   return (
     <>
       <Hero />
       <Why />
-      <NavyZone>
-        <Coach />
-        <Members />
-        <Pizza />
-        <FirstHour />
-        <Ending />
-        <Questions />
-        <Footer tone="navy" />
-      </NavyZone>
+      <Pizza />
+      <Coach />
+      <Start />
+      <Build />
+      <Ground />
+      <Goals />
+      <Founders />
+      <Sherpas />
+      <Story />
+      <Members />
+      <Questions />
+      <Visit />
+      <Footer />
     </>
   );
 }

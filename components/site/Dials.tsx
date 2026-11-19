@@ -1,12 +1,12 @@
 "use client";
 
-import { animate, motion, useInView, useMotionValue, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { motion, useMotionValue, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { dials } from "@/content/site";
 
 /**
- * The example dials (Home, Method, the style tile). Native scrolling, no
- * snapping. Reduced motion: shown in the final state.
+ * The example dials ("Know your starting point."). Native scrolling, no
+ * snapping, nothing pinned. Reduced motion: shown in the final state.
  */
 
 const R = 44;
@@ -39,14 +39,10 @@ function Ring({ fill, strokeWidth }: { fill: MotionValue<number>; strokeWidth: n
 const values: number[] = dials.items.map((d) => d.value);
 const weakest = values.indexOf(Math.min(...values));
 
-/**
- * One of the four dials. `rise`: it rises out of the big ring and settles
- * in its place, then fills (Home). Otherwise it stays put and only fills,
- * one after another (Method).
- */
-function SmallDial({ i, p, desktop, rise }: { i: number; p: MotionValue<number>; desktop: boolean; rise: boolean }) {
+/** One of the four dials: it grows out of the big ring, settles in its place beneath it, then fills. */
+function SmallDial({ i, p, desktop }: { i: number; p: MotionValue<number>; desktop: boolean }) {
   const d = dials.items[i];
-  const start = rise ? 0.38 + i * 0.06 : i * 0.12;
+  const start = 0.38 + i * 0.06;
   const t = useTransform(p, [start, start + 0.25], [0, 1]);
   // Where the big ring sits, measured in this dial's own size: centred above the row.
   const col = desktop ? i : i % 2;
@@ -58,11 +54,11 @@ function SmallDial({ i, p, desktop, rise }: { i: number; p: MotionValue<number>;
   const scale = useTransform(t, [0, 1], [0.4, 1]);
   const opacity = useTransform(t, [0.15, 0.55, 1], [0, 1, 1]);
   // Every fill completes before the end, so the last dial reaches its value.
-  const fill = useTransform(p, rise ? [start + 0.12, start + 0.32] : [start, start + 0.6], [0, d.value]);
+  const fill = useTransform(p, [start + 0.12, start + 0.32], [0, d.value]);
   const shown = useTransform(fill, (v) => Math.round(v));
   return (
-    <motion.li style={rise ? { x, y, scale, opacity } : undefined} className="flex flex-col items-center text-center">
-      <div className={`relative w-full max-w-[6.5rem] md:max-w-[7.5rem] ${i === weakest ? "text-terracotta" : ""}`}>
+    <motion.li style={{ x, y, scale, opacity }} className="flex flex-col items-center text-center">
+      <div className={`relative w-full max-w-26 md:max-w-30 ${i === weakest ? "text-terracotta" : ""}`}>
         <Ring fill={fill} strokeWidth={2} />
         <motion.span aria-hidden className="absolute inset-0 flex items-center justify-center ty-sub tabular-nums">{shown}</motion.span>
       </div>
@@ -72,8 +68,8 @@ function SmallDial({ i, p, desktop, rise }: { i: number; p: MotionValue<number>;
   );
 }
 
-/** The card: the title, the "Example" pill, then (`score`) the big ring and the four dials. */
-function Card({ p, desktop, score }: { p: MotionValue<number>; desktop: boolean; score: boolean }) {
+/** The card: the title and the "Example" label, the big ring, then the four dials beneath it (2 x 2 on phones, a row of four on desktop). */
+function Card({ p, desktop }: { p: MotionValue<number>; desktop: boolean }) {
   const big = useTransform(p, [0, 0.35], [0, dials.score.value]);
   const shown = useTransform(big, (v) => Math.round(v));
   return (
@@ -82,76 +78,40 @@ function Card({ p, desktop, score }: { p: MotionValue<number>; desktop: boolean;
         <p className="ty-sub">{dials.card}</p>
         <span className="rounded-full bg-navy/[0.07] px-3 py-1.5 ty-label">{dials.example}</span>
       </div>
-      {score && (
-        <div className="mt-6 flex flex-col items-center md:mt-8">
-          <div className="relative w-36 md:w-44">
-            <Ring fill={big} strokeWidth={2.5} />
-            <motion.span aria-hidden className="absolute inset-0 flex items-center justify-center ty-headline tabular-nums">{shown}</motion.span>
-          </div>
-          <p aria-hidden className="mt-3 ty-label">{dials.score.name}</p>
-          <p className="sr-only">{`${dials.score.name}: ${dials.score.value} ${dials.outOf}`}</p>
+      <div className="mt-6 flex flex-col items-center md:mt-8">
+        <div className="relative w-36 md:w-44">
+          <Ring fill={big} strokeWidth={2.5} />
+          <motion.span aria-hidden className="absolute inset-0 flex items-center justify-center ty-headline tabular-nums">{shown}</motion.span>
         </div>
-      )}
+        <p aria-hidden className="mt-3 ty-label">{dials.score.name}</p>
+        <p className="sr-only">{`${dials.score.name}: ${dials.score.value} ${dials.outOf}`}</p>
+      </div>
       <ul className="relative mt-8 grid grid-cols-2 gap-x-4 gap-y-6 md:mt-10 md:grid-cols-4">
         {dials.items.map((d, i) => (
-          <SmallDial key={d.name} i={i} p={p} desktop={desktop} rise={score} />
+          <SmallDial key={d.name} i={i} p={p} desktop={desktop} />
         ))}
       </ul>
     </div>
   );
 }
 
-/** Plays 0 → 1 once when `ref` comes into view (phones, and Method's four dials). */
-function usePlayOnce(ref: React.RefObject<HTMLElement | null>, enabled: boolean, duration: number) {
-  const played = useMotionValue(0);
-  const inView = useInView(ref, { once: true, amount: 0.4 });
-  useEffect(() => {
-    if (!enabled || !inView) return;
-    const c = animate(played, 1, { duration, ease: "easeOut" });
-    return () => c.stop();
-  }, [enabled, inView, played, duration]);
-  return played;
-}
-
 /**
- * The Soma-style split: text on the left (`children`), the card on the
- * right; on phones the text sits above. Desktop: the section pins for
- * about a screen; the text stays put while the big "Strength Reserve"
- * ring counts up to 69 and the four dials rise out of it, in step with
- * scroll, rewinding on the way up. Phones: a pinned split does not fit
- * the screen, so the same sequence plays once as the card arrives.
+ * The Reserve Audit dials, in step with scroll on every screen: as the
+ * card comes up the screen the big "Strength Reserve" ring counts up to
+ * 69, then the four smaller dials grow out of it and settle beneath it
+ * (the big ring stays), each filling to its value; scrolling back
+ * rewinds. Nothing is pinned: the page scrolls as normal.
  */
-export function DialSplit({ children }: { children: ReactNode }) {
+export function ReserveDials() {
   const reduce = useReducedMotion();
   const desktop = useIsDesktop();
-  const section = useRef<HTMLElement>(null);
   const card = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: section, offset: ["start 0.35", "end end"] });
-  const played = usePlayOnce(card, !desktop && !reduce, 2.6);
-  const final = useMotionValue(1);
-  const p = reduce ? final : desktop ? scrollYProgress : played;
-
-  return (
-    <section ref={section} className="py-24 md:h-[220svh] md:py-0">
-      <div className="tile-wrap grid gap-10 md:sticky md:top-0 md:h-svh md:grid-cols-12 md:items-center md:gap-12 md:pt-16">
-        <div className="md:col-span-5">{children}</div>
-        <div ref={card} className="md:col-span-7">
-          <Card p={p} desktop={desktop} score />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/** The four dials alone (Method): each fills in turn, once, as the card arrives. */
-export function FourDials() {
-  const reduce = useReducedMotion();
-  const card = useRef<HTMLDivElement>(null);
-  const played = usePlayOnce(card, !reduce, 2);
+  // From the card's top at 90% of the screen to its bottom at 75%: about a screen of scrolling.
+  const { scrollYProgress } = useScroll({ target: card, offset: ["start 0.9", "end 0.75"] });
   const final = useMotionValue(1);
   return (
     <div ref={card}>
-      <Card p={reduce ? final : played} desktop={false} score={false} />
+      <Card p={reduce ? final : scrollYProgress} desktop={desktop} />
     </div>
   );
 }

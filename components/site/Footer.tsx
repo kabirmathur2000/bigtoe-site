@@ -2,24 +2,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { facts, mailtoHref, whatsappHref } from "@/content/facts";
 import { footer } from "@/content/site";
-import logoTagLight from "@/public/brand/logo-tag-light.png";
-import logoTag from "@/public/brand/logo-tag.png";
+import logo from "@/public/brand/logo.png";
 
 const footLink = "inline-flex min-h-11 items-center ty-small transition-opacity duration-300 hover:opacity-70";
 const inline = "underline decoration-current/30 underline-offset-4 transition-opacity duration-300 hover:opacity-70";
 
 /**
- * The footer, every page: the LogoTag, address, hours, WhatsApp, email,
- * then Careers, Maps, Terms, Privacy. Text and hairlines take the current
- * colour; `tone="navy"` (Home, inside the navy zone) shows the light LogoTag.
+ * The footer, every page: the plain BigToe logo (only the hero shows the
+ * LogoTag), address, hours, WhatsApp, email, then Careers, Maps, Terms,
+ * Privacy.
  */
-export function Footer({ tone = "light" }: { tone?: "light" | "navy" }) {
+export function Footer() {
   const wa = whatsappHref();
   return (
-    <footer className="tile-wrap pb-10 md:pb-12">
+    <footer className="page-wrap pb-10 md:pb-12">
       <div className="grid gap-8 border-t border-current/20 pt-10 md:grid-cols-12 md:gap-10">
         <div className="md:col-span-4">
-          <Image src={tone === "navy" ? logoTagLight : logoTag} alt={footer.logoAlt} className="h-16 w-auto md:h-20" sizes="(min-width: 768px) 200px, 160px" />
+          <Image src={logo} alt={footer.logoAlt} className="h-7 w-auto md:h-8" sizes="(min-width: 1440px) 220px, 160px" />
         </div>
         <div className="space-y-1 md:col-span-5">
           <p className="ty-small">{facts.address.line}</p>

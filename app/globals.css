@@ -8,9 +8,35 @@
   --terracotta: #d4644d;
   --offwhite: #f0eeeb;
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Fluid sizing: every size runs in a straight line from a 375px phone
+     to a 2560px (27-inch) display, clamped at both ends, so a large screen
+     shows a larger version of the design, never a small one. --fl is 0 at
+     375px and 1px per 2185th of the width above it. */
+  --fl: calc((100vw - 375px) / 2185);
+  --gutter: clamp(20px, calc(20px + 76 * var(--fl)), 96px);
+  --column: 1600px;
+  /* The space above and below each section: 96px phones, about 144px at 1440, 200px at 2560. */
+  --space-section: clamp(96px, calc(96px + 104 * var(--fl)), 200px);
+  --header-h: calc(var(--spacing) * 16);
 }
 
 @theme {
+  /* Tailwind's spacing unit (p-4, gap-6, h-16 …): 4px up to 1024px wide,
+     growing to 5.25px at 2560px, so every margin, gap and box scales with
+     the type. Containers (max-w-xl …) and corners follow the same unit. */
+  --spacing: clamp(4px, calc(4px + 1.25 * (100vw - 1024px) / 1536), 5.25px);
+  --container-sm: calc(var(--spacing) * 96);
+  --container-md: calc(var(--spacing) * 112);
+  --container-lg: calc(var(--spacing) * 128);
+  --container-xl: calc(var(--spacing) * 144);
+  --container-2xl: calc(var(--spacing) * 168);
+  --container-3xl: calc(var(--spacing) * 192);
+  --container-4xl: calc(var(--spacing) * 224);
+  --container-5xl: calc(var(--spacing) * 256);
+  --radius-xl: calc(var(--spacing) * 3);
+  --radius-2xl: calc(var(--spacing) * 4);
+
   /* Only the brand colours exist: Tailwind's default palette is switched off. */
   --color-*: initial;
   --color-navy: #0a212d;
@@ -32,10 +58,15 @@ body {
   background: var(--site-bg, var(--offwhite));
   color: var(--navy);
 }
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Jump links glide to their section and stop below the header. */
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+}
 body {
   font-family: var(--font-sans);
-  font-size: 1.125rem;
+  font-size: clamp(16px, calc(16px + 7 * var(--fl)), 23px);
   line-height: 1.55;
 }
 h1, h2, h3 { text-wrap: balance; }
@@ -65,61 +96,61 @@ p { text-wrap: pretty; }
 
 
 /* ------------------------------------------------------------------ */
-/* Type (from the style tile, after ouraring.com and functionhealth.com):
-   a light page, Light headlines, Regular text, Bold only for small labels.
-   Fluid from 375px to 1440px. */
+/* Type: a light page, Light headlines, Regular text, Bold only for the
+   button and small labels. Phone size, then the size at 2560px; about
+   the approved desktop size at 1440px. */
 /* ------------------------------------------------------------------ */
-/* The hero headline: 40px on phones, 88px on desktop. */
+/* The hero headline: 40px phones, about 87px at 1440, 136px at 2560. */
 @utility ty-hero {
   font-weight: 300;
-  font-size: clamp(2.5rem, 1.444rem + 4.507vw, 5.5rem);
+  font-size: clamp(40px, calc(40px + 96 * var(--fl)), 136px);
   line-height: 1.0;
   letter-spacing: -0.03em;
 }
+/* Section headlines: 36px phones, about 65px at 1440, 96px at 2560. */
 @utility ty-headline {
   font-weight: 300;
-  font-size: clamp(2.25rem, 1.62rem + 2.68vw, 4rem);
+  font-size: clamp(36px, calc(36px + 60 * var(--fl)), 96px);
   line-height: 1.06;
   letter-spacing: -0.025em;
 }
+/* Lines under headlines, row titles, quotes, questions: 20 to 32px. */
 @utility ty-sub {
   font-weight: 400;
-  font-size: clamp(1.25rem, 1.16rem + 0.38vw, 1.5rem);
+  font-size: clamp(20px, calc(20px + 12 * var(--fl)), 32px);
   line-height: 1.35;
   letter-spacing: -0.01em;
 }
 @utility ty-body {
   font-weight: 400;
-  font-size: clamp(1rem, 0.96rem + 0.19vw, 1.125rem);
+  font-size: clamp(16px, calc(16px + 7 * var(--fl)), 23px);
   line-height: 1.55;
 }
 @utility ty-small {
   font-weight: 400;
-  font-size: clamp(0.875rem, 0.85rem + 0.09vw, 0.9375rem);
+  font-size: clamp(14px, calc(14px + 5 * var(--fl)), 19px);
   line-height: 1.5;
 }
 @utility ty-label {
   font-weight: 700;
-  font-size: 0.8125rem;
+  font-size: clamp(13px, calc(13px + 4 * var(--fl)), 17px);
   line-height: 1.2;
   letter-spacing: 0.01em;
 }
 
-/* The content column: up to 1280px, 20px gutters on phones, 40px on
-   tablets, 64px on desktop. tile-edge: a full-width row (a carousel) whose
-   first item lines up with that column. */
-@utility tile-wrap {
+/* The content column: up to 1600px, centred, fluid gutters (20px phones,
+   96px at 2560). page-edge: a full-width row (a carousel) whose first item
+   lines up with that column. section: the space above and below a section. */
+@utility page-wrap {
   margin-inline: auto;
   width: 100%;
-  max-width: 1280px;
-  padding-inline: 1.25rem;
-  @media (width >= 48rem) { padding-inline: 2.5rem; }
-  @media (width >= 64rem) { padding-inline: 4rem; }
+  max-width: calc(var(--column) + 2 * var(--gutter));
+  padding-inline: var(--gutter);
 }
-@utility tile-edge {
-  --edge: 1.25rem;
-  @media (width >= 48rem) { --edge: 2.5rem; }
-  @media (width >= 64rem) { --edge: 4rem; }
-  padding-inline: max(var(--edge), calc((100% - 1280px) / 2 + var(--edge)));
-  scroll-padding-inline: max(var(--edge), calc((100% - 1280px) / 2 + var(--edge)));
+@utility page-edge {
+  padding-inline: max(var(--gutter), calc((100% - var(--column)) / 2));
+  scroll-padding-inline: max(var(--gutter), calc((100% - var(--column)) / 2));
+}
+@utility section-space {
+  padding-block: var(--space-section);
 }

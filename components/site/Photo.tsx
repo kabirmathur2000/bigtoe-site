@@ -1,12 +1,15 @@
 import Image from "next/image";
 import { photo } from "@/content/site";
+import space from "@/content/space-photos.json";
 import coffeeBar from "@/public/photos/studio-coffee-bar.jpg";
 
 /**
  * A photo slot. Until the shoot every slot shows the coffee bar photo,
  * cropped per slot (`pos`); `shot` names the photo it stands in for (in
- * the alt text and docs/shot-list.md). Fills its parent, which sets the
- * shape and corners.
+ * the alt text and docs/shot-list.md). `space`: a slot where the space is
+ * the subject shows BigToe's render of it when one is in
+ * docs/photos/space/ (scripts/space-photos.mjs). Fills its parent, which
+ * sets the shape and corners.
  */
 export function Photo({
   shot,
@@ -14,7 +17,7 @@ export function Photo({
   posClass,
   sizes,
   preload = false,
-  natural = false,
+  space: slot,
 }: {
   shot: string;
   pos?: string;
@@ -22,18 +25,16 @@ export function Photo({
   posClass?: string;
   sizes: string;
   preload?: boolean;
-  /** At the photo's own shape, never cropped (width from the parent), in place of filling it. */
-  natural?: boolean;
+  space?: keyof typeof space;
 }) {
-  if (natural) {
-    return <Image src={coffeeBar} alt={shot ? photo.placeholder(shot) : photo.alt} sizes={sizes} quality={75} className="block h-auto w-full" />;
-  }
+  const render = slot ? space[slot] : null;
   return (
     <Image
-      src={coffeeBar}
-      alt={shot ? photo.placeholder(shot) : photo.alt}
+      src={render ?? coffeeBar}
+      alt={render && slot ? photo.spaceAlt[slot] : shot ? photo.placeholder(shot) : photo.alt}
       fill
       preload={preload}
+      draggable={false}
       sizes={sizes}
       quality={75}
       className={`object-cover ${posClass ?? ""}`}

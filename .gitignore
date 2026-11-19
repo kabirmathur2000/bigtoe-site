@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 docs/decks
+
+# Copied from docs/photos/space by scripts/space-photos.mjs
+/public/photos/space/

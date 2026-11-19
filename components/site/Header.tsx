@@ -2,14 +2,13 @@
 
 import { useReducedMotion } from "motion/react";
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { nav } from "@/content/site";
 import logo from "@/public/brand/logo.png";
+import { JumpLink } from "./Jump";
 import { BookPill } from "./VisitPanel";
 
-/** Three lines that become a cross when the menu is open. */
+/** Three lines. */
 function MenuIcon() {
   return (
     <svg aria-hidden viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -18,15 +17,16 @@ function MenuIcon() {
   );
 }
 
+const logoClass = "h-6 w-auto md:h-7";
+
 /**
- * The header, after Function's, every page: always visible, never hides.
- * A frosted light bar across the top with a hairline at the bottom: the
- * logo (to Home) on the left; on the right the terracotta pill ("Book
- * your first visit" on desktop, "Book a visit" on phones) and a three-line
- * icon (labelled "Menu") opening a full-screen list of Home, Method,
- * Team, FAQ. No text links in the bar. The icon only ever opens the menu.
- * Close or Escape closes it; focus returns to the icon. 44px tap targets
- * throughout. Reduced motion: a fade, no movement.
+ * The header, every page: always visible, never hides. A frosted light
+ * bar with a hairline at the bottom: the plain BigToe logo on the left
+ * (back to the top of Home); on the right the terracotta pill ("Book your
+ * first visit" on desktop, "Book a visit" on phones) and the three-line
+ * icon, which opens a full-screen list of jump links to the sections.
+ * Close or Escape closes it; focus returns to the icon. 44px tap targets.
+ * Reduced motion: a fade, no movement.
  */
 export function Header() {
   const reduce = useReducedMotion();
@@ -35,7 +35,6 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [shown, setShown] = useState(false);
   const m = nav;
-  const path = usePathname();
 
   useEffect(() => {
     const d = ref.current;
@@ -48,6 +47,7 @@ export function Header() {
       return () => cancelAnimationFrame(f);
     }
     if (!d.open) return;
+    // The page glides to the chosen section behind the menu as it fades.
     const t = window.setTimeout(() => {
       setShown(false);
       d.close();
@@ -63,10 +63,10 @@ export function Header() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-40 border-b border-navy/10 bg-offwhite/80 text-navy backdrop-blur-xl">
-        <div className="tile-wrap flex h-16 items-center justify-between gap-3">
-          <Link href="/" aria-label={nav.homeLabel} className="flex min-h-11 shrink-0 items-center">
-            <Image src={logo} alt="" priority className="h-6 w-auto md:h-7" sizes="(min-width: 768px) 140px, 120px" />
-          </Link>
+        <div className="page-wrap flex h-(--header-h) items-center justify-between gap-3">
+          <JumpLink id={null} label={nav.homeLabel} className="flex min-h-11 shrink-0 items-center">
+            <Image src={logo} alt="" priority className={logoClass} sizes="(min-width: 1440px) 200px, (min-width: 768px) 140px, 120px" />
+          </JumpLink>
           <div className="flex items-center gap-1 md:gap-3">
             <BookPill placement="header" size="small" className="min-h-11" />
             <button
@@ -97,31 +97,30 @@ export function Header() {
       >
         <div className="flex h-full flex-col pb-[max(2rem,env(safe-area-inset-bottom))] md:pb-12">
           {/* The same row as the header, so the logo stays in place as the menu opens. */}
-          <div className="tile-wrap flex h-16 shrink-0 items-center justify-between">
-            <Link href="/" aria-label={nav.homeLabel} onClick={() => setOpen(false)} className="flex min-h-11 items-center">
-              <Image src={logo} alt="" className="h-6 w-auto md:h-7" sizes="(min-width: 768px) 140px, 120px" />
-            </Link>
+          <div className="page-wrap flex h-(--header-h) shrink-0 items-center justify-between">
+            <JumpLink id={null} label={nav.homeLabel} onJump={() => setOpen(false)} className="flex min-h-11 items-center">
+              <Image src={logo} alt="" className={logoClass} sizes="(min-width: 1440px) 200px, (min-width: 768px) 140px, 120px" />
+            </JumpLink>
             <button type="button" autoFocus onClick={() => setOpen(false)} className="-mr-3 inline-flex min-h-11 items-center px-3 ty-body transition-opacity duration-500 hover:opacity-75">
               {m.close}
             </button>
           </div>
-          <nav aria-label={m.label} className="tile-wrap flex flex-1 items-center">
-            <ul className="space-y-2 md:space-y-4">
+          <nav aria-label={m.label} className="page-wrap flex flex-1 items-center overflow-y-auto">
+            <ul className="space-y-1 md:space-y-3">
               {m.links.map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    aria-current={path === l.href ? "page" : undefined}
-                    onClick={() => setOpen(false)}
-                    className="inline-flex min-h-11 items-center ty-headline transition-opacity duration-500 hover:opacity-70 aria-[current=page]:text-terracotta"
+                <li key={l.id}>
+                  <JumpLink
+                    id={l.id}
+                    onJump={() => setOpen(false)}
+                    className="inline-flex min-h-11 items-center ty-headline transition-opacity duration-500 hover:opacity-70"
                   >
                     {l.label}
-                  </Link>
+                  </JumpLink>
                 </li>
               ))}
             </ul>
           </nav>
-          <div className="tile-wrap">
+          <div className="page-wrap">
             <BookPill placement="menu" onOpen={() => setOpen(false)} />
           </div>
         </div>

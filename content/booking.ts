@@ -1,6 +1,6 @@
 /**
  * The request panel: "Book your first visit" opens it from every button,
- * anywhere on the site. A visit request, not a confirmed appointment; no
+ * (the header and the menu). Name and mobile number only. A visit request, not a confirmed appointment; no
  * health questions (the intake form's job). Agreed 18 Nov 2026.
  */
 import { facts } from "./facts";
@@ -10,16 +10,11 @@ export const booking = {
   fields: {
     name: { label: "Name" },
     mobile: { label: "Mobile number" },
-    time: {
-      label: "Preferred time",
-      options: ["Weekday morning", "Weekday evening", "Weekend"],
-    },
   },
   errors: {
     name: "Please add your name.",
     mobileMissing: "Please add your mobile number.",
     mobileInvalid: "That doesn't look like a mobile number.",
-    time: "Please choose a time.",
     failed: `Something went wrong and your details weren't sent. Please try again, or email ${facts.email}.`,
   },
   submit: facts.cta,

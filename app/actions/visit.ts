@@ -9,7 +9,7 @@ export type VisitResult = { ok: true } | { ok: false; reason: "invalid" | "faile
 const oneLine = (s: string) => s.replace(/[\r\n\t]+/g, " ").trim();
 
 /**
- * Sends a first-visit request (name, mobile, preferred time) to
+ * Sends a first-visit request (name, mobile number) to
  * CONTACT_EMAIL through Resend. Honeypot and validation run here
  * regardless of the browser.
  */
@@ -20,12 +20,11 @@ export async function submitVisit(formData: FormData): Promise<VisitResult> {
     VISIT_FIELDS.map((k) => [k, String(formData.get(k) ?? "").slice(0, VISIT_MAX[k])]),
   ) as VisitValues;
   const f = booking.fields;
-  if (Object.keys(validateVisit(values, f.time.options)).length) return { ok: false, reason: "invalid" };
+  if (Object.keys(validateVisit(values)).length) return { ok: false, reason: "invalid" };
 
   const text = [
     `${f.name.label}: ${values.name.trim()}`,
     `${f.mobile.label}: ${values.mobile.trim()}`,
-    `${f.time.label}: ${values.time}`,
     "",
     `Form: ${booking.heading}`,
   ].join("\n");

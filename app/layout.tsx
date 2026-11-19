@@ -37,7 +37,7 @@ const localBusiness = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${anderson.variable} antialiased`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${anderson.variable} antialiased`}>
       <body className="flex min-h-svh flex-col">
         {/* The header, main and request panel come from app/(site)/layout.tsx; each page ends with its footer. */}
         {children}

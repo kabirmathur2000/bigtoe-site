@@ -1,55 +1,57 @@
-/** Home (agreed copy, 18 Nov 2026, with the 18 Nov build brief). */
+/**
+ * The one page, first part and last part (agreed copy, 18 Nov 2026, with
+ * the 19 Nov one-page brief): the hero, "We train for a sport called
+ * life.", "Get stronger. Keep the pizza.", the members' words heading and
+ * "Come and meet us." The method is in content/method.ts, the team in
+ * content/team.ts, the questions in content/faq.ts.
+ *
+ * Every section headline carries its key words (3 to 4) in terracotta.
+ */
 import { facts } from "./facts";
-import type { Accented } from "./site";
+import { anchors, type Accented } from "./site";
 
 export const home = {
-  /** 1. Hero, Function style: a full-screen photo, a navy gradient, the words on it. */
+  /** 1. Hero: a full-screen photo, a deep navy gradient, the words on its darkest part. No button. */
   hero: {
-    place: facts.address.short,
-    /** Only the full stop in terracotta: no terracotta text on the orange wood. */
-    headline: { text: facts.heroLine, accent: "." } as Accented,
+    headline: { text: facts.heroLine, accent: "stronger than the first." } as Accented,
     line: "One-to-one training for life after 40.",
+    /** A small plain caption at the photo's bottom left. */
+    place: facts.address.short,
+    /** Only the hero shows the LogoTag; everywhere else the plain logo. */
+    logoAlt: `${facts.brand}. ${facts.tagline}`,
     shot: "a real member training with a coach, the studio around them",
   },
 
-  /** 2. Text only, centred. */
+  /** 2. Why BigToe. Text only, then two jump links. */
   why: {
-    headline: { text: "We train for a sport called life." } as Accented,
+    headline: { text: "We train for a sport called life.", accent: "a sport called life." } as Accented,
     lines: ["A suitcase to lift. Unexpected stairs. A trip to say yes to.", "Build the strength for what comes next."],
-    link: { label: "How we train", href: "/method" },
+    links: [
+      { label: "How we train", id: anchors.method },
+      { label: "Meet the team", id: anchors.team },
+    ],
   },
 
-  /** 3. The split: text left, one photo card right. The navy switch begins here. */
-  coach: {
-    headline: { text: "Your coach. Your plan.", accent: "Your plan." } as Accented,
-    line: "A dedicated coach guides you through every session. Your Reserve Audit sets the starting point. Your progress shapes what comes next.",
-    link: { label: "Meet the team", href: "/team" },
-    shot: "one coach guiding one member: the attention and interaction, not the equipment",
-  },
-
-  /** 4. Neko-style member cards (quotes in content/quotes.ts). */
-  members: {
-    headline: { text: "In our members' words." } as Accented,
-  },
-
-  /** 5. One photo card. */
+  /** 3. The headline and line, then one photo card. */
   pizza: {
     headline: { text: "Get stronger. Keep the pizza.", accent: "Keep the pizza." } as Accented,
     line: "A healthier life shouldn't mean giving up the things you enjoy.",
     shot: "members around the social table, talking and laughing",
   },
 
-  /** 6. Function's three steps, titles only. */
-  firstHour: {
-    headline: { text: "Your first hour." } as Accented,
-    steps: ["Meet a founder.", "A body scan and light assessment.", "Coffee and a chat."],
+  /** 12. Member stories (the quotes are in content/quotes.ts). */
+  members: {
+    headline: { text: "In our members' words.", accent: "our members' words." } as Accented,
   },
 
-  /** 7. The ending: the invitation, the price, the free hour, the guarantee, the button. */
-  ending: {
-    headline: { text: "Come and meet us.", accent: "meet us." } as Accented,
-    price: facts.price,
-    free: facts.firstHourFree,
+  /** 14. The invitation and the agreed lines. No button: the header pill books. */
+  visit: {
+    headline: { text: "Come and meet us.", accent: "Come and meet us." } as Accented,
+    lines: [
+      "Meet a founder. Have a body scan and light assessment. Stay for coffee and a chat.",
+      facts.price,
+      facts.firstHourFree,
+    ],
     guarantee: facts.guarantee,
   },
 } as const;
