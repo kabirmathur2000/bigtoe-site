@@ -10,6 +10,7 @@ import { photoCard, softPill } from "@/components/site/styles";
 import { faq, faqGroups } from "@/content/faq";
 import { home } from "@/content/home";
 import { anchors } from "@/content/site";
+import space from "@/content/space-photos.json";
 import logoTagLight from "@/public/brand/logo-tag-light.png";
 
 /**
@@ -24,9 +25,10 @@ export function Hero() {
   const h = home.hero;
   return (
     <section className="relative h-svh min-h-150 overflow-hidden bg-navy text-offwhite">
-      {/* Phones: the frame runs 40% above the screen, so the coffee bar's logo wall sits higher, clear of the words. */}
+      {/* Phones: the frame runs 40% above the screen, so the middle of the photo (the coffee bar's logo wall, the
+          render's windows at the end of the floor) sits higher, clear of the words. */}
       <div className="absolute inset-x-0 -top-[40%] bottom-0 md:top-0">
-        <Photo shot={h.shot} space="hero" posClass="object-[16%_50%] md:object-[50%_55%]" sizes="100vw" preload />
+        <Photo shot={h.shot} space="hero" posClass={space.hero ? "object-[52%_50%] md:object-[50%_50%]" : "object-[16%_50%] md:object-[50%_55%]"} sizes="100vw" preload />
       </div>
       {/* Solid navy behind the words, rising to clear at the top. */}
       <div aria-hidden className="absolute inset-x-0 bottom-0 h-[85%] bg-gradient-to-t from-navy from-45% via-navy/80 via-70% to-transparent md:h-[80%] md:from-35%" />

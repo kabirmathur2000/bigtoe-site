@@ -37,7 +37,8 @@ export function Photo({
       draggable={false}
       sizes={sizes}
       quality={75}
-      className={`object-cover ${posClass ?? ""}`}
+      // A render's burned-in disclaimer runs along its bottom edge: enlarged 8% from the top, it falls outside the frame.
+      className={`object-cover ${render ? "origin-top scale-[1.08]" : ""} ${posClass ?? ""}`}
       style={posClass ? undefined : { objectPosition: pos }}
     />
   );

@@ -6,7 +6,7 @@ Real studio photography, warm natural colour, men and women across the members' 
 
 **Consent:** a written yes, with first name and age, from every member shown. No member photo goes live without it.
 
-**Space renders:** until the real photos arrive, BigToe's own 3D renders can fill the two slots where the space is the subject (marked below): put them in `docs/photos/space/` as `hero.*` and `table.*`. Never for people.
+**Space renders:** until the real photos arrive, BigToe's own 3D renders can fill the two slots where the space is the subject (marked below): in place now: `docs/photos/space/training-floor.jpg` (hero) and `coffee-bar-render.jpg` (table). Never for people.
 
 Every slot is cropped to two shapes (phones and desktop), so shoot with room around the subject.
 

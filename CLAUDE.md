@@ -41,7 +41,7 @@ Built from the approved style tile (round seven, commit 6be62d3; the /style-tile
 - **Cards and photos:** 16px corners at 1440 (they scale with the spacing unit); the dials card off-white with a hairline navy border. Pills are fully rounded.
 - **Layout:** content in a column capped at 1600px and centred (`page-wrap`); the hero runs edge to edge; card rows run to the screen edge with the first card on the column (`page-edge`); `section-space` above and below every section.
 - **Logos:** only the hero shows the LogoTag (light, above the headline); the header, menu and footer show the plain BigToe logo.
-- **Photos:** every slot shows the coffee bar photo until the shoot, cropped per slot (`components/site/Photo.tsx`); the alt text names the shot it stands in for (`docs/shot-list.md`). **Space renders:** BigToe's own 3D renders go in `docs/photos/space/` as `hero.*` and `table.*`; `scripts/space-photos.mjs` (run by `dev` and `build`) copies them to `public/photos/space/` and writes `content/space-photos.json`, and the hero and the social-table card show them in place of the coffee bar. Renders only where the space is the subject, never for people.
+- **Photos:** every slot shows the coffee bar photo until the shoot, cropped per slot (`components/site/Photo.tsx`); the alt text names the shot it stands in for (`docs/shot-list.md`). **Space renders:** BigToe's own 3D renders go in `docs/photos/space/` (hero: `hero.*` or `training-floor.*`; table: `table.*` or `coffee-bar-render.*`), enlarged 8% from the top so their burned-in disclaimer falls outside the frame; `scripts/space-photos.mjs` (run by `dev` and `build`) copies them to `public/photos/space/` and writes `content/space-photos.json`, and the hero and the social-table card show them in place of the coffee bar. Renders only where the space is the subject, never for people.
 
 ### Header and menu (every page, `components/site/Header.tsx`)
 
@@ -143,7 +143,7 @@ Fetched from bigtoe.in on 17 Nov 2026 and published **word for word**, plain tex
 - [ ] Member quotes (`content/quotes.ts`): first name, age and written consent for each; card 1 is an illustrative draft and card 4 proposed wording (see the agreed copy), not yet members' words.
 - [ ] FAQ drafts to confirm: towels and water provided; monthly billing and pause rules.
 - [ ] The example dial numbers: the agreed copy's direction says "without invented scores"; the 18 and 19 Nov briefs keep the example numbers.
-- [ ] Space renders for `docs/photos/space/` (`hero.*`, `table.*`).
+- [ ] The renders' burned-in disclaimer ("3D artistic impressions are indicative of design intent…") is cropped out on the site: decide whether the page should say the hero and table images are renders.
 - [ ] Sherpa name spellings, and each Sherpa's OK to publish their line.
 - [ ] Jay's son has seen the story before it goes public.
 - [ ] Founder lines to confirm with each founder (Hard Rock Cafe India and Shiro; MSc, Middlesex University London; Nourish Organics; a career leading finance teams).
