@@ -11,14 +11,12 @@ import { facts } from "./facts";
 import { anchors, type Accented } from "./site";
 
 export const home = {
-  /** 1. Hero: a full-screen photo, a deep navy gradient, the words on its darkest part. No button. */
+  /** 1. Hero: a pinned full-screen photo, a navy band on its lower 40%, the words in it. No button. */
   hero: {
     headline: { text: facts.heroLine, accent: "stronger than the first." } as Accented,
     line: "One-to-one training for life after 40.",
     /** A small plain caption at the photo's bottom left. */
     place: facts.address.short,
-    /** Only the hero shows the LogoTag; everywhere else the plain logo. */
-    logoAlt: `${facts.brand}. ${facts.tagline}`,
     shot: "a real member training with a coach, the studio around them",
   },
 

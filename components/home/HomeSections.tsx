@@ -1,4 +1,4 @@
-import Image from "next/image";
+import type { ReactNode } from "react";
 import { Accent } from "@/components/site/Accent";
 import { Faq } from "@/components/site/Faq";
 import { JumpLink } from "@/components/site/Jump";
@@ -10,7 +10,6 @@ import { photoCard, softPill } from "@/components/site/styles";
 import { faq, faqGroups } from "@/content/faq";
 import { home } from "@/content/home";
 import { anchors } from "@/content/site";
-import logoTagLight from "@/public/brand/logo-tag-light.png";
 
 /**
  * The one page's first and last parts: the hero, Why BigToe, the pizza,
@@ -19,28 +18,49 @@ import logoTagLight from "@/public/brand/logo-tag-light.png";
  * visual below or beside. No buttons in any section: the header books.
  */
 
-/** 1. Hero: a full-screen photo; a deep navy gradient; the LogoTag, the headline on the darkest part, the line, the place as a small caption. */
-export function Hero() {
+/**
+ * 1. Hero, scrolling after 10 Squared: the photo is pinned full screen
+ * (sticky) while the headline, line and caption scroll up and away with
+ * the page, then the sections after it (`children`) slide over the photo.
+ * Native scroll, no snapping. A navy band on the lower 40% of the screen,
+ * strongest at the very bottom and clear above, holds the words and
+ * scrolls away with them. Under
+ * reduced motion the photo is not pinned: a normal section.
+ */
+export function Hero({ children }: { children: ReactNode }) {
   const h = home.hero;
   return (
-    <section className="relative h-svh min-h-150 overflow-hidden bg-navy text-offwhite">
-      {/* Phones: the frame runs 40% above the screen, so the coffee bar's logo wall sits higher, clear of the words. */}
-      <div className="absolute inset-x-0 -top-[40%] bottom-0 md:top-0">
-        <Photo shot={h.shot} posClass="object-[16%_50%] md:object-[50%_55%]" sizes="100vw" preload />
+    <div>
+      {/* The tone, on the hero photo only: a slight cool shift (red down, blue up). */}
+      <svg aria-hidden className="absolute h-0 w-0">
+        <filter id="hero-cool" colorInterpolationFilters="sRGB">
+          <feColorMatrix type="matrix" values="0.95 0 0 0 0  0 1 0 0 0  0 0 1.06 0 0  0 0 0 1 0" />
+        </filter>
+      </svg>
+      <div className="top-0 h-[max(100svh,37.5rem)] overflow-hidden bg-navy motion-safe:sticky motion-reduce:relative">
+        <Photo
+          shot={h.shot}
+          // Phones: the full height of the room, the logo wall and the bar in frame. Desktop: the whole width of the
+          // room; on screens taller than wide the photo shows whole, sitting on the bottom, navy above.
+          posClass="object-[38%_50%] md:object-[50%_53%] [@media(min-width:768px)_and_(max-aspect-ratio:1/1)]:object-contain [@media(min-width:768px)_and_(max-aspect-ratio:1/1)]:object-bottom"
+          filter="url(#hero-cool) saturate(0.9) contrast(1.1)"
+          sizes="(min-width: 768px) 100vw, 230vw"
+          preload
+        />
       </div>
-      {/* Solid navy behind the words, rising to clear at the top. */}
-      <div aria-hidden className="absolute inset-x-0 bottom-0 h-[85%] bg-gradient-to-t from-navy from-45% via-navy/80 via-70% to-transparent md:h-[80%] md:from-35%" />
-      <Rise className="page-wrap absolute inset-x-0 bottom-0 pb-[max(1.5rem,calc(env(safe-area-inset-bottom)+1rem))] md:pb-10" stagger={0.1}>
-        <RiseItem>
-          <Image src={logoTagLight} alt={home.hero.logoAlt} priority className="h-12 w-auto md:h-16" sizes="(min-width: 1440px) 260px, (min-width: 768px) 190px, 140px" />
-        </RiseItem>
-        <RiseItem as="h1" className="mt-8 max-w-5xl ty-hero md:mt-12">
-          <Accent value={h.headline} />
-        </RiseItem>
-        <RiseItem as="p" className="mt-4 max-w-xl ty-sub md:mt-6">{h.line}</RiseItem>
-        <RiseItem as="p" className="mt-10 ty-small opacity-75 md:mt-16">{h.place}</RiseItem>
-      </Rise>
-    </section>
+      <section className="relative -mt-[max(100svh,37.5rem)] flex h-[max(100svh,37.5rem)] flex-col justify-end text-offwhite">
+        {/* The band travels with the words, so they keep their navy as they scroll away over the photo. */}
+        <div aria-hidden className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-navy via-navy/80 via-65% to-transparent" />
+        <Rise className="relative page-wrap pb-[max(1.5rem,calc(env(safe-area-inset-bottom)+1rem))] [text-shadow:0_1px_24px_rgb(10_33_45_/_0.45)] md:pb-10" stagger={0.1}>
+          <RiseItem as="h1" className="max-w-5xl ty-hero">
+            <Accent value={h.headline} />
+          </RiseItem>
+          <RiseItem as="p" className="mt-3 max-w-xl ty-sub md:mt-5">{h.line}</RiseItem>
+          <RiseItem as="p" className="mt-5 ty-small opacity-80 md:mt-8">{h.place}</RiseItem>
+        </Rise>
+      </section>
+      <div className="relative bg-offwhite">{children}</div>
+    </div>
   );
 }
 

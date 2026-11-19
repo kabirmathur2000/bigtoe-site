@@ -18,6 +18,7 @@ export function Photo({
   sizes,
   preload = false,
   space: slot,
+  filter,
 }: {
   shot: string;
   pos?: string;
@@ -26,6 +27,8 @@ export function Photo({
   sizes: string;
   preload?: boolean;
   space?: keyof typeof space;
+  /** A CSS filter for this slot only (the hero's tone); the source file stays as it is. */
+  filter?: string;
 }) {
   const render = slot ? space[slot] : null;
   return (
@@ -38,7 +41,7 @@ export function Photo({
       sizes={sizes}
       quality={75}
       className={`object-cover ${posClass ?? ""}`}
-      style={posClass ? undefined : { objectPosition: pos }}
+      style={{ ...(posClass ? {} : { objectPosition: pos }), ...(filter ? { filter } : {}) }}
     />
   );
 }

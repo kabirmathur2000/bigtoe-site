@@ -11,9 +11,11 @@ import { Founders, Sherpas, Story } from "@/components/team/TeamSections";
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <Why />
-      <Pizza />
+      {/* The hero photo stays pinned while these slide over it. */}
+      <Hero>
+        <Why />
+        <Pizza />
+      </Hero>
       <Coach />
       <Start />
       <Build />
